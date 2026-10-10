@@ -114,8 +114,9 @@ body.default-theme .card.lenn { border-color: rgba(52,211,153,0.35); }
 .card.faz .rank { background: var(--faz-dim); color: var(--faz); }
 .card.bill .rank { background: var(--bill-dim); color: var(--bill); }
 .card.lenn .rank { background: var(--lenn-dim); color: var(--lenn); }
-.card .name { font-size: 1rem; font-weight: 600; margin-bottom: 2px; display: flex; align-items: center; justify-content: space-between; }
-.card .name::after { content: '🔍 Click stats'; font-size: 0.65rem; color: var(--muted); font-weight: 400; }
+.card .name { 
+  font-size: 1rem; font-weight: 600; margin-bottom: 2px; 
+}
 .card .score {
   font-size: 2.25rem; font-weight: 800; line-height: 1.1;
   font-family: 'JetBrains Mono', monospace;
@@ -124,12 +125,12 @@ body.default-theme .card.lenn { border-color: rgba(52,211,153,0.35); }
 .card.bill .score { color: var(--bill); }
 .card.lenn .score { color: var(--lenn); }
 .card .meta {
-  margin-top: 6px; display: flex; gap: 10px; flex-wrap: wrap;
+  margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
   font-size: 0.78rem; color: var(--muted);
 }
 .card .meta span strong { color: var(--text); font-weight: 600; }
 .streak-badge {
-  display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-top: 6px;
+  display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 1px 6px; border-radius: 4px;
 }
 .streak-hot { background: rgba(52,211,153,0.15); color: var(--lenn); }
 .streak-cold { background: rgba(248,113,113,0.15); color: var(--danger); }
@@ -263,8 +264,8 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
         <span><strong>13</strong> correct</span>
         <span><strong>119</strong> predicted</span>
         <span><strong>10.9%</strong> accuracy</span>
+        <span class="streak-badge streak-cold">❄️ 19</span>
       </div>
-      <div><span class="streak-badge streak-cold">❄️ Cold: 19 matches</span></div>
     </div>
     <div class="card bill" onclick="openPlayerModal('Bill')">
       <span class="rank">2nd</span>
@@ -274,8 +275,8 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
         <span><strong>11</strong> correct</span>
         <span><strong>124</strong> predicted</span>
         <span><strong>8.9%</strong> accuracy</span>
+        <span class="streak-badge streak-cold">❄️ 8</span>
       </div>
-      <div><span class="streak-badge streak-cold">❄️ Cold: 8 matches</span></div>
     </div>
     <div class="card lenn" onclick="openPlayerModal('Lenn')">
       <span class="rank">3rd</span>
@@ -285,8 +286,8 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
         <span><strong>10</strong> correct</span>
         <span><strong>124</strong> predicted</span>
         <span><strong>8.1%</strong> accuracy</span>
+        <span class="streak-badge streak-cold">❄️ 14</span>
       </div>
-      <div><span class="streak-badge streak-cold">❄️ Cold: 14 matches</span></div>
     </div>
   </div>
 
