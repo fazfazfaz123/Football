@@ -198,8 +198,8 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 <div class="container">
   <header>
     <div>
-      <h1>⚽ Evil Plotters · Prediction Race</h1>
-      <p class="subtitle">Correct score predictions · Running totals by date · 2026/27 season</p>
+      <h1>⚽ Evil Plotters · Predictions</h1>
+      <p class="subtitle">Correct score predictions · 2026/27 season</p>
     </div>
     <div>
       <button class="btn theme-toggle-btn" onclick="toggleTheme()">🌌 Toggle Theme</button>
@@ -341,7 +341,7 @@ function toggleTheme() {
   const isStarWars = body.classList.contains('starwars-theme');
   localStorage.setItem('dashboard_theme', isStarWars ? 'starwars' : 'default');
   const btn = document.querySelector('.theme-toggle-btn');
-  btn.textContent = isStarWars ? '⚡ Switch to Default Theme' : '🌌 Toggle Theme';
+  btn.textContent = isStarWars ? '⚡ Default Theme' : '🌌 Toggle Theme';
 
   // Update chart colors dynamically on theme switch
   const colors = getColors();
@@ -366,7 +366,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (savedTheme === 'starwars') {
     document.body.classList.add('starwars-theme');
     const btn = document.querySelector('.theme-toggle-btn');
-    if (btn) btn.textContent = '⚡ Switch to Default Theme';
+    if (btn) btn.textContent = '⚡ Default Theme';
   }
 });
 
