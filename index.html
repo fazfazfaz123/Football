@@ -477,7 +477,7 @@ function toggleTheme() {
     body.classList.remove('starwars-theme');
     body.classList.add('default-theme');
     localStorage.setItem('dashboard_theme', 'default');
-    btn.textContent = '🌌 Star Wars Theme';
+    btn.textContent = '🌌 Change theme';
   } else {
     body.classList.remove('default-theme');
     body.classList.add('starwars-theme');
@@ -508,7 +508,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if (savedTheme === 'default') {
     document.body.classList.remove('starwars-theme');
     document.body.classList.add('default-theme');
-    if (btn) btn.textContent = '🌌 Star Wars Theme';
+    if (btn) btn.textContent = '🌌 Chnage theme';
   } else {
     document.body.classList.add('starwars-theme');
     if (btn) btn.textContent = '⚡ Default Theme';
