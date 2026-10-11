@@ -859,10 +859,12 @@ function renderWhatsAppSection() {
   container.innerHTML = players.map(p => {
     let customLines = TODAYS_MATCHES.map(m => {
       let rawPred = m[p.key] || '1 - 1';
-      let cleanPred = rawPred.replace(/\s*-\s*/g, ' - ');
+      let parts = rawPred.split('-');
+      let hScore = parts[0] ? parts[0].trim() : '1';
+      let aScore = parts[1] ? parts[1].trim() : '1';
       let homeClean = cleanTeamName(m.home);
       let awayClean = cleanTeamName(m.away);
-      return `${homeClean} ${cleanPred}${awayClean}`;
+      return `${homeClean}${hScore} - ${aScore}${awayClean}`;
     }).join('\n');
 
     let fullText = `` + customLines;
