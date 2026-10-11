@@ -483,7 +483,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
   <!-- WhatsApp Quick-Copy Predictions Section -->
   <div class="panel">
     <h2>💬 WhatsApp Predictions Share</h2>
-    <p class="hint">Matches scheduled for today with pre-populated predictions formatted as `home team &lt;home goals&gt; - &lt;away goals&gt; away team` (with 'FC' and 'AFC' stripped). Click copy to share directly to WhatsApp.</p>
+    <p class="hint">Matches scheduled for today with pre-populated predictions.</p>
     <div class="whatsapp-grid" id="whatsappContainer"></div>
   </div>
 
@@ -866,10 +866,10 @@ function renderWhatsAppSection() {
       return `${homeClean} ${cleanPred} ${awayClean}`;
     }).join('\n');
 
-    let fullText = `*${p.name}'s Predictions:*\n` + customLines;
+    let fullText = `` + customLines;
 
     return `<div class="whatsapp-card">
-      <h3><span>${p.name}</span><span style="font-size:0.75rem; color:var(--muted)">WhatsApp Template</span></h3>
+      <h3><span>${p.name}</span></h3>
       <textarea class="whatsapp-textarea" id="wa-${p.name.toLowerCase()}">${fullText}</textarea>
       <button class="whatsapp-btn" onclick="copyWhatsApp('${p.name.toLowerCase()}', this)">
         📋 Copy for WhatsApp
