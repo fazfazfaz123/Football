@@ -483,7 +483,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
   <!-- WhatsApp Quick-Copy Predictions Section -->
   <div class="panel">
     <h2>💬 WhatsApp Predictions Share</h2>
-    <p class="hint">Matches scheduled for today with pre-populated predictions formatted as `home team &lt;home goals&gt; - &lt;away goals&gt; away team`. Click copy to share directly to WhatsApp.</p>
+    <p class="hint">Matches scheduled for today with pre-populated predictions formatted as `home team &lt;home goals&gt; - &lt;away goals&gt; away team` (with 'FC' and 'AFC' stripped). Click copy to share directly to WhatsApp.</p>
     <div class="whatsapp-grid" id="whatsappContainer"></div>
   </div>
 
@@ -838,6 +838,11 @@ function filterStadiums() {
   renderStadiums(list);
 }
 
+function cleanTeamName(name) {
+  if (!name) return '';
+  return name.replace(/\s+FC$/i, '').replace(/\s+AFC$/i, '').trim();
+}
+
 function renderWhatsAppSection() {
   const container = document.getElementById('whatsappContainer');
   if (!TODAYS_MATCHES.length) {
@@ -853,10 +858,12 @@ function renderWhatsAppSection() {
 
   container.innerHTML = players.map(p => {
     let customLines = TODAYS_MATCHES.map(m => {
-      let rawPred = m[p.key] || '1-1';
+      let rawPred = m[p.key] || '1 - 1';
       let cleanPred = rawPred.replace('-', ' - ');
-      // Format: home team <home goals> - <away goals> away team
-      return `${m.home} ${cleanPred} ${m.away}`;
+      let homeClean = cleanTeamName(m.home);
+      let awayClean = cleanTeamName(m.away);
+      // Format: home team <home goals> - <away goals> away team (without FC/AFC)
+      return `${homeClean} ${cleanPred} ${awayClean}`;
     }).join('\n');
 
     let fullText = `*${p.name}'s Predictions:*\n` + customLines;
