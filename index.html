@@ -859,7 +859,7 @@ function renderWhatsAppSection() {
   container.innerHTML = players.map(p => {
     let customLines = TODAYS_MATCHES.map(m => {
       let rawPred = m[p.key] || '1 - 1';
-      let cleanPred = rawPred.replace('-', ' - ');
+      let cleanPred = rawPred.replace(/\s*-\s*/g, ' - ');
       let homeClean = cleanTeamName(m.home);
       let awayClean = cleanTeamName(m.away);
       return `${homeClean} ${cleanPred}${awayClean}`;
