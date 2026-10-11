@@ -745,7 +745,7 @@ function renderBangers() {
     const pBg = b.player === 'Faz' ? 'var(--faz-dim)' : (b.player === 'Bill' ? 'var(--bill-dim)' : 'var(--lenn-dim)');
     return `<div class="banger-card">
       <div class="b-header"><span>${b.date} ·${b.comp}</span><span class="banger-tag" style="background:${pBg}; color:${pColor}">${b.player}</span></div>
-      <div class="b-match">${shortTeam(b.match.split(' vs ')[0])} vs${shortTeam(b.match.split(' vs ')[1])}</div>
+      <div class="b-match">${shortTeam(b.match.split(' vs ')[0])} &nbsp;vs&nbsp; ${shortTeam(b.match.split(' vs ')[1])}</div>
       <div class="b-footer"><span style="color:var(--muted)">Actual: <strong class="scoreline">${b.score}</strong></span><span style="color:var(--muted)">Pred: <strong class="scoreline" style="color:${pColor}">${b.pred}</strong></span></div>
     </div>`;
   }).join('');
@@ -775,7 +775,7 @@ function renderUpcoming() {
     return `<tr>
       <td>${u.date}</td>
       <td><span class="comp-tag">${u.comp.replace('UEFA ','').replace('EFL ','')}</span></td>
-      <td>${shortTeam(u.home)} vs${shortTeam(u.away)}</td>
+      <td>${shortTeam(u.home)} &nbsp;vs&nbsp; ${shortTeam(u.away)}</td>
       <td class="scoreline">${u.faz}</td>
       <td class="scoreline">${u.bill}</td>
       <td class="scoreline">${u.lenn}</td>
@@ -903,7 +903,7 @@ function renderTable(rows) {
     return `<tr>
       <td>${m.date}</td>
       <td><span class="comp-tag">${m.comp.replace('UEFA ','').replace('EFL ','')}</span></td>
-      <td>${shortTeam(m.home)} vs ${shortTeam(m.away)}</td>
+      <td>${shortTeam(m.home)} &nbsp;vs&nbsp; ${shortTeam(m.away)}</td>
       <td class="scoreline">${m.score}</td>
       <td>${m.faz_pred || '–'}</td>
       <td>${pill(m.faz_ok, hasF)}</td>
