@@ -261,6 +261,29 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 .stadium-player-pill { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 4px; text-align: center; font-size: 0.72rem; }
 .stadium-player-pill .p-name { color: var(--muted); font-weight: 600; }
 .stadium-player-pill .p-score { font-family: 'JetBrains Mono', monospace; font-weight: 700; margin-top: 1px; }
+
+/* WhatsApp Sharing Section Styles */
+.whatsapp-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+@media (max-width: 900px) { .whatsapp-grid { grid-template-columns: 1fr; } }
+.whatsapp-card {
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px; display: flex; flex-direction: column; justify-content: space-between;
+}
+.whatsapp-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.whatsapp-textarea {
+  width: 100%; height: 110px; background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+  padding: 10px; border-radius: 8px; resize: none; margin-bottom: 12px;
+}
+.whatsapp-textarea:focus { outline: none; border-color: var(--muted); }
+.whatsapp-btn {
+  background: #25d366; color: #000000; border: none; font-weight: 700; padding: 8px 12px;
+  border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: inherit; font-size: 0.85rem; transition: opacity 0.15s;
+}
+.whatsapp-btn:hover { opacity: 0.9; }
 </style>
 </head>
 <body class="starwars-theme">
@@ -447,7 +470,6 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     </div>
   </div>
 
-  <!-- Stadium Heatmap Panel Added at Bottom -->
   <div class="panel">
     <h2>🏟️ Predictor-Friendly Stadium Heatmap</h2>
     <p class="hint">Grounds ranked by group prediction success rate. Spot which stadiums are goldmines or graveyard shifts.</p>
@@ -456,6 +478,13 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
       <button class="btn" onclick="document.getElementById('stadiumSearchBox').value='';filterStadiums()">Clear</button>
     </div>
     <div class="heatmap-grid" id="heatmapContainer"></div>
+  </div>
+
+  <!-- WhatsApp Quick-Copy Predictions Section -->
+  <div class="panel">
+    <h2>💬 WhatsApp Predictions Share</h2>
+    <p class="hint">Matches scheduled for today with pre-populated predictions formatted as `home team &lt;home goals&gt; - &lt;away goals&gt; away team`. Click copy to share directly to WhatsApp.</p>
+    <div class="whatsapp-grid" id="whatsappContainer"></div>
   </div>
 
   <footer></footer>
@@ -470,6 +499,7 @@ const BANGERS = [{"date": "10/10/2026", "comp": "Premier League", "match": "Arse
 const H2H = [{"p1": "Faz", "p2": "Bill", "p1_wins": 12, "p2_wins": 10, "draws": 97}, {"p1": "Faz", "p2": "Lenn", "p1_wins": 11, "p2_wins": 8, "draws": 100}, {"p1": "Bill", "p2": "Lenn", "p1_wins": 9, "p2_wins": 8, "draws": 107}];
 const UPCOMING = [{"date": "11/10/2026", "comp": "Premier League", "home": "Hull City AFC", "away": "Everton FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "11/10/2026", "comp": "Premier League", "home": "Crystal Palace FC", "away": "Nottingham Forest FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "11/10/2026", "comp": "Premier League", "home": "Liverpool FC", "away": "Manchester City FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "12/10/2026", "comp": "Premier League", "home": "Coventry City FC", "away": "Newcastle United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "13/10/2026", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "Bolton Wanderers FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "13/10/2026", "comp": "UEFA Champions League", "home": "Club Atl\u00e9tico de Madrid", "away": "Manchester United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "13/10/2026", "comp": "UEFA Champions League", "home": "Arsenal FC", "away": "Lille OSC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "UEFA Champions League", "home": "LASK Linz", "away": "Liverpool FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "Championship", "home": "Portsmouth FC", "away": "Sheffield United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "UEFA Champions League", "home": "Manchester City FC", "away": "Paris Saint-Germain FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "UEFA Champions League", "home": "Aston Villa FC", "away": "Fenerbah\u00e7e", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "Torreense", "away": "Sunderland AFC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "Lyon", "away": "Crystal Palace FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "Benfica", "away": "Celtic", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "AFC Bournemouth", "away": "Sturm Graz", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}];
 const STADIUMS = [{"stadium": "Fortuna Arena", "matches": 1, "total_correct": 2, "total_preds": 3, "accuracy": 66.7, "players": {"faz": {"correct": 1, "preds": 1, "acc": 100.0}, "bill": {"correct": 1, "preds": 1, "acc": 100.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stadium of Light", "matches": 4, "total_correct": 4, "total_preds": 12, "accuracy": 33.3, "players": {"faz": {"correct": 3, "preds": 4, "acc": 75.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 1, "preds": 4, "acc": 25.0}}}, {"stadium": "Emirates Stadium", "matches": 3, "total_correct": 3, "total_preds": 9, "accuracy": 33.3, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 3, "preds": 3, "acc": 100.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Goodison Park", "matches": 3, "total_correct": 3, "total_preds": 9, "accuracy": 33.3, "players": {"faz": {"correct": 2, "preds": 3, "acc": 66.7}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 1, "preds": 3, "acc": 33.3}}}, {"stadium": "Boris Paichadzis Dinamo Arena", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 1, "preds": 1, "acc": 100.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Hillsborough Stadium", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 1, "preds": 1, "acc": 100.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "One Call Stadium", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 1, "preds": 1, "acc": 100.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Parken", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 1, "preds": 1, "acc": 100.0}}}, {"stadium": "Elland Road", "matches": 3, "total_correct": 2, "total_preds": 9, "accuracy": 22.2, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 1, "preds": 3, "acc": 33.3}}}, {"stadium": "Molineux Stadium", "matches": 4, "total_correct": 2, "total_preds": 12, "accuracy": 16.7, "players": {"faz": {"correct": 1, "preds": 4, "acc": 25.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 1, "preds": 4, "acc": 25.0}}}, {"stadium": "Cardiff City Stadium", "matches": 2, "total_correct": 1, "total_preds": 6, "accuracy": 16.7, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 1, "preds": 2, "acc": 50.0}}}, {"stadium": "MKM Stadium", "matches": 2, "total_correct": 1, "total_preds": 6, "accuracy": 16.7, "players": {"faz": {"correct": 1, "preds": 2, "acc": 50.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Wembley Stadium connected by EE", "matches": 2, "total_correct": 1, "total_preds": 6, "accuracy": 16.7, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 1, "preds": 2, "acc": 50.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Windsor Park", "matches": 2, "total_correct": 1, "total_preds": 6, "accuracy": 16.7, "players": {"faz": {"correct": 1, "preds": 2, "acc": 50.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "City Ground", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 1, "preds": 3, "acc": 33.3}}}, {"stadium": "Portman Road", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "The Kassam Stadium", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Villa Park", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 1, "preds": 3, "acc": 33.3}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Vitality Stadium", "matches": 4, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Anfield", "matches": 4, "total_correct": 1, "total_preds": 12, "accuracy": 8.3, "players": {"faz": {"correct": 1, "preds": 4, "acc": 25.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 0, "preds": 4, "acc": 0.0}}}, {"stadium": "Bramall Lane", "matches": 5, "total_correct": 1, "total_preds": 15, "accuracy": 6.7, "players": {"faz": {"correct": 0, "preds": 5, "acc": 0.0}, "bill": {"correct": 0, "preds": 5, "acc": 0.0}, "lenn": {"correct": 1, "preds": 5, "acc": 20.0}}}, {"stadium": "Accu Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Amex Stadium", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Aviva Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Barclays Hampden", "matches": 2, "total_correct": 0, "total_preds": 6, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "CBS Arena", "matches": 2, "total_correct": 0, "total_preds": 6, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Celtic Park", "matches": 1, "total_correct": 0, "total_preds": 2, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "City Arena Trnava", "matches": 1, "total_correct": 0, "total_preds": 2, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Coventry Building Society Arena", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Craven Cottage", "matches": 4, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Deepdale Stadium", "matches": 1, "total_correct": 0, "total_preds": 0, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 0, "acc": 0.0}, "lenn": {"correct": 0, "preds": 0, "acc": 0.0}}}, {"stadium": "Est\u00e1dio Jos\u00e9 Alvalade", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Etihad Stadium", "matches": 4, "total_correct": 0, "total_preds": 11, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 0, "preds": 4, "acc": 0.0}}}, {"stadium": "Ewood Park", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Gtech Community Stadium", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Highbury Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Hill Dickinson Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Home Park", "matches": 1, "total_correct": 0, "total_preds": 0, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 0, "acc": 0.0}, "lenn": {"correct": 0, "preds": 0, "acc": 0.0}}}, {"stadium": "JobServe Community Stadium", "matches": 1, "total_correct": 0, "total_preds": 0, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 0, "acc": 0.0}, "lenn": {"correct": 0, "preds": 0, "acc": 0.0}}}, {"stadium": "King Power Stadium", "matches": 2, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "London Stadium", "matches": 3, "total_correct": 0, "total_preds": 6, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Meadow Lane", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Nagyerdei Stadion", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Nationala Arena To\u0161e Proeski", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Old Trafford", "matches": 5, "total_correct": 0, "total_preds": 15, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 5, "acc": 0.0}, "bill": {"correct": 0, "preds": 5, "acc": 0.0}, "lenn": {"correct": 0, "preds": 5, "acc": 0.0}}}, {"stadium": "Portman Road Stadium", "matches": 2, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Reale Arena", "matches": 1, "total_correct": 0, "total_preds": 2, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Red Bull Arena (Neutral Site)", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "SPORTA Arena", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Select Car Leasing Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Selhurst Park", "matches": 4, "total_correct": 0, "total_preds": 8, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "St Andrew's @ Knighthead Park", "matches": 1, "total_correct": 0, "total_preds": 0, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 0, "acc": 0.0}, "lenn": {"correct": 0, "preds": 0, "acc": 0.0}}}, {"stadium": "St James Park", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "St James' Park", "matches": 4, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "St Mary's Stadium", "matches": 1, "total_correct": 0, "total_preds": 0, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 0, "acc": 0.0}, "lenn": {"correct": 0, "preds": 0, "acc": 0.0}}}, {"stadium": "Stadion HNK Rijeka", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stadion Sto\u017eice", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stadiumi Fadil Vokrri", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stamford Bridge", "matches": 5, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "TSC Arena", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "The BetWright Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "The Den", "matches": 1, "total_correct": 0, "total_preds": 0, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 0, "acc": 0.0}, "bill": {"correct": 0, "preds": 0, "acc": 0.0}, "lenn": {"correct": 0, "preds": 0, "acc": 0.0}}}, {"stadium": "Tottenham Hotspur Stadium", "matches": 4, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}];
+const TODAYS_MATCHES = [{"home": "Hull City AFC", "away": "Everton FC", "comp": "Premier League", "faz_default": "0-1", "bill_default": "1-1", "lenn_default": "1-1"}, {"home": "Crystal Palace FC", "away": "Nottingham Forest FC", "comp": "Premier League", "faz_default": "0-1", "bill_default": "1-1", "lenn_default": "1-1"}, {"home": "Liverpool FC", "away": "Manchester City FC", "comp": "Premier League", "faz_default": "0-1", "bill_default": "1-1", "lenn_default": "1-1"}];
 
 function getColors() {
   const styles = getComputedStyle(document.body);
@@ -549,6 +579,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderH2H();
   renderUpcoming();
   renderStadiums(STADIUMS);
+  renderWhatsAppSection();
 });
 
 const initialColors = getColors();
@@ -759,7 +790,6 @@ function renderStadiums(stadiumList) {
     return;
   }
   container.innerHTML = stadiumList.map(s => {
-    // Heatmap color scaling based on accuracy %
     let badgeBg = 'rgba(248,113,113,0.15)';
     let badgeColor = 'var(--danger)';
     if (s.accuracy >= 40) {
@@ -806,6 +836,48 @@ function filterStadiums() {
     list = list.filter(s => s.stadium.toLowerCase().includes(q));
   }
   renderStadiums(list);
+}
+
+function renderWhatsAppSection() {
+  const container = document.getElementById('whatsappContainer');
+  if (!TODAYS_MATCHES.length) {
+    container.innerHTML = '<p style="color:var(--muted)">No matches scheduled for today.</p>';
+    return;
+  }
+
+  const players = [
+    { name: 'Faz', key: 'faz_default' },
+    { name: 'Bill', key: 'bill_default' },
+    { name: 'Lenn', key: 'lenn_default' }
+  ];
+
+  container.innerHTML = players.map(p => {
+    let customLines = TODAYS_MATCHES.map(m => {
+      let scorePick = m[p.key] || '1-1';
+      // Format: home team <home goals> - <away goals> away team
+      return `${m.home} ${scorePick} ${m.away}`;
+    }).join('\n');
+
+    let fullText = `*${p.name}'s Predictions:*\n` + customLines;
+
+    return `<div class="whatsapp-card">
+      <h3><span>${p.name}</span><span style="font-size:0.75rem; color:var(--muted)">WhatsApp Template</span></h3>
+      <textarea class="whatsapp-textarea" id="wa-${p.name.toLowerCase()}">${fullText}</textarea>
+      <button class="whatsapp-btn" onclick="copyWhatsApp('${p.name.toLowerCase()}', this)">
+        📋 Copy for WhatsApp
+      </button>
+    </div>`;
+  }).join('');
+}
+
+function copyWhatsApp(playerName, btn) {
+  const textarea = document.getElementById('wa-' + playerName);
+  textarea.select();
+  navigator.clipboard.writeText(textarea.value).then(() => {
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '✅ Copied!';
+    setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+  });
 }
 
 function pill(ok, hasPred) {
