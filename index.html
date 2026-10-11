@@ -864,7 +864,7 @@ function renderWhatsAppSection() {
       let aScore = parts[1] ? parts[1].trim() : '1';
       let homeClean = cleanTeamName(m.home);
       let awayClean = cleanTeamName(m.away);
-      return `${homeClean}${hScore} - ${aScore}${awayClean}`;
+      return `${homeClean} ${hScore} - ${aScore} ${awayClean}`;
     }).join('\n');
 
     let fullText = `` + customLines;
