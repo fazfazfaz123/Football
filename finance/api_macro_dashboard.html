@@ -51,6 +51,11 @@
             background: var(--text-muted);
         }
 
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-color);
@@ -62,6 +67,7 @@
 
         .wrapper {
             max-width: 1500px;
+            width: 100%;
             margin: 0 auto;
             background: var(--card-bg);
             padding: 2.5rem;
@@ -157,6 +163,11 @@
             align-items: start;
         }
 
+        /* Ensure grid columns handle min-width properly on mobile */
+        .dashboard-grid > * {
+            min-width: 0;
+        }
+
         @media (max-width: 1200px) {
             .dashboard-grid { grid-template-columns: 1fr; }
         }
@@ -166,6 +177,7 @@
             border: 1px solid var(--border);
             border-radius: 14px;
             padding: 1.25rem;
+            max-width: 100%;
         }
 
         .panel-header {
@@ -220,6 +232,7 @@
         }
 
         .table-container {
+            width: 100%;
             overflow-x: auto;
             max-height: 650px;
             border-radius: 10px;
@@ -326,17 +339,17 @@
         /* Mobile Adjustments */
         @media (max-width: 768px) {
             body {
-                padding: 0.75rem 0.25rem;
+                padding: 0.5rem 0.25rem;
             }
             .wrapper {
-                padding: 1rem 0.75rem;
-                border-radius: 12px;
+                padding: 0.75rem 0.5rem;
+                border-radius: 8px;
             }
             .panel {
-                padding: 0.85rem;
+                padding: 0.75rem;
             }
             .nfp-value {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -348,7 +361,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-12 19:56:54</div>
+            <div class="timestamp">SYNCED: 2026-10-12 19:59:44</div>
         </header>
 
         <div class="top-toolbar">
