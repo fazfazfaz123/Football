@@ -24,7 +24,6 @@
   --danger: #ff453a;
   --header-grad: linear-gradient(135deg, #ffe81f, #ff334b 50%, #38bdf8);
 }
-
 body.starwars-theme, body {
   --bg: #000000;
   --surface: #0c0d12;
@@ -41,7 +40,6 @@ body.starwars-theme, body {
   --danger: #ff453a;
   --header-grad: linear-gradient(135deg, #ffe81f, #ff334b 50%, #38bdf8);
 }
-
 body.default-theme {
   --bg: #000000;
   --surface: #121826;
@@ -58,7 +56,6 @@ body.default-theme {
   --danger: #f87171;
   --header-grad: linear-gradient(135deg, #22d3ee, #a78bfa 50%, #34d399);
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   font-family: 'Outfit', system-ui, sans-serif;
@@ -82,27 +79,16 @@ header .subtitle { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px;
 }
 @media (max-width: 720px) { .leaderboard { grid-template-columns: 1fr; } }
-
 .card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 18px;
-  position: relative; overflow: hidden;
-  cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px 18px; position: relative; overflow: hidden; cursor: pointer;
   transition: transform 0.2s, border-color 0.2s;
 }
 .card:hover { transform: translateY(-3px); border-color: var(--text); }
 .card.faz { border-color: rgba(255,232,31,0.4); }
 .card.bill { border-color: rgba(255,51,75,0.4); }
 .card.lenn { border-color: rgba(56,189,248,0.4); }
-body.default-theme .card.faz { border-color: rgba(34,211,238,0.35); }
-body.default-theme .card.bill { border-color: rgba(167,139,250,0.35); }
-body.default-theme .card.lenn { border-color: rgba(52,211,153,0.35); }
-
-.card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-}
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
 .card.faz::before { background: var(--faz); }
 .card.bill::before { background: var(--bill); }
 .card.lenn::before { background: var(--lenn); }
@@ -114,9 +100,7 @@ body.default-theme .card.lenn { border-color: rgba(52,211,153,0.35); }
 .card.faz .rank { background: var(--faz-dim); color: var(--faz); }
 .card.bill .rank { background: var(--bill-dim); color: var(--bill); }
 .card.lenn .rank { background: var(--lenn-dim); color: var(--lenn); }
-.card .name { 
-  font-size: 1rem; font-weight: 600; margin-bottom: 2px; 
-}
+.card .name { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
 .card .score {
   font-size: 2.25rem; font-weight: 800; line-height: 1.1;
   font-family: 'JetBrains Mono', monospace;
@@ -134,8 +118,6 @@ body.default-theme .card.lenn { border-color: rgba(52,211,153,0.35); }
 }
 .streak-hot { background: rgba(52,211,153,0.15); color: var(--lenn); }
 .streak-cold { background: rgba(248,113,113,0.15); color: var(--danger); }
-
-/* Modal styles */
 .modal-overlay {
   display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;
@@ -157,57 +139,40 @@ body.default-theme .card.lenn { border-color: rgba(52,211,153,0.35); }
 .modal-stat-box { background: var(--surface2); padding: 12px; border-radius: 10px; border: 1px solid var(--border); }
 .modal-stat-box .label { font-size: 0.75rem; color: var(--muted); margin-bottom: 2px; }
 .modal-stat-box .val { font-size: 1.1rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
-
 .panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px 22px;
-  margin-bottom: 20px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px 22px; margin-bottom: 20px;
 }
 .panel h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
 .panel .hint { color: var(--muted); font-size: 0.82rem; margin-bottom: 16px; }
 .chart-wrap { position: relative; height: 340px; }
 .chart-wrap.tall { height: 280px; }
-.grid-2 {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;
-}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
 @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
-.controls {
-  display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px;
-}
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
 .btn {
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); padding: 7px 14px; border-radius: 8px;
-  font-family: inherit; font-size: 0.85rem; font-weight: 600;
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+  padding: 7px 14px; border-radius: 8px; font-family: inherit; font-size: 0.85rem; font-weight: 600;
   cursor: pointer; transition: all 0.15s;
 }
-.btn:hover, .btn.active {
-  background: var(--faz-dim); border-color: var(--faz); color: var(--faz);
-}
+.btn:hover, .btn.active { background: var(--faz-dim); border-color: var(--faz); color: var(--faz); }
 select, input[type="search"] {
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); padding: 7px 12px; border-radius: 8px;
-  font-family: inherit; font-size: 0.85rem;
+  background: var(--surface2); border: 1px solid var(--border); color: var(--text);
+  padding: 7px 12px; border-radius: 8px; font-family: inherit; font-size: 0.85rem;
 }
 input[type="search"] { min-width: 180px; }
 .table-scroll { overflow-x: auto; max-height: 420px; overflow-y: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
 th {
-  position: sticky; top: 0; background: var(--surface2);
-  text-align: left; padding: 10px 12px; font-weight: 600;
-  color: var(--muted); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; background: var(--surface2); text-align: left;
+  padding: 10px 12px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border);
   white-space: nowrap; z-index: 1;
 }
-td {
-  padding: 9px 12px; border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
 tr:hover td { background: rgba(255,255,255,0.02); }
 .pill {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 22px; height: 22px; border-radius: 50%;
-  font-size: 0.7rem; font-weight: 700;
+  width: 22px; height: 22px; border-radius: 50%; font-size: 0.7rem; font-weight: 700;
 }
 .pill.yes { background: rgba(52,211,153,0.2); color: var(--lenn); }
 .pill.no { background: rgba(248,113,113,0.15); color: var(--danger); }
@@ -218,17 +183,14 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   background: var(--surface2); color: var(--muted); border: 1px solid var(--border);
 }
 footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 32px; }
-.legend-inline {
-  display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 8px;
-}
+.legend-inline { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 8px; }
 .legend-inline span::before {
-  content: ''; display: inline-block; width: 10px; height: 10px;
-  border-radius: 50%; margin-right: 6px; vertical-align: middle;
+  content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%;
+  margin-right: 6px; vertical-align: middle;
 }
 .legend-inline .l-faz::before { background: var(--faz); }
 .legend-inline .l-bill::before { background: var(--bill); }
 .legend-inline .l-lenn::before { background: var(--lenn); }
-
 .bangers-grid, .h2h-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;
   max-height: 260px; overflow-y: auto; padding-right: 4px;
@@ -241,8 +203,6 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 .banger-card .b-match { font-weight: 600; margin-bottom: 2px; }
 .banger-card .b-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.78rem; }
 .banger-tag { font-weight: 700; padding: 2px 6px; border-radius: 4px; }
-
-/* Stadium Heatmap specific styles */
 .heatmap-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px;
   max-height: 400px; overflow-y: auto; padding-right: 4px;
@@ -250,9 +210,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 .stadium-card {
   background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
   padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between;
-  transition: transform 0.15s, border-color 0.15s;
 }
-.stadium-card:hover { transform: translateY(-2px); border-color: var(--muted); }
 .stadium-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
 .stadium-name { font-weight: 700; font-size: 0.92rem; }
 .stadium-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; padding: 2px 6px; border-radius: 6px; }
@@ -261,11 +219,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 .stadium-player-pill { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 4px; text-align: center; font-size: 0.72rem; }
 .stadium-player-pill .p-name { color: var(--muted); font-weight: 600; }
 .stadium-player-pill .p-score { font-family: 'JetBrains Mono', monospace; font-weight: 700; margin-top: 1px; }
-
-/* WhatsApp Sharing Section Styles */
-.whatsapp-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-}
+.whatsapp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 @media (max-width: 900px) { .whatsapp-grid { grid-template-columns: 1fr; } }
 .whatsapp-card {
   background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
@@ -277,13 +231,11 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
   color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
   padding: 10px; border-radius: 8px; resize: none; margin-bottom: 12px;
 }
-.whatsapp-textarea:focus { outline: none; border-color: var(--muted); }
 .whatsapp-btn {
   background: #25d366; color: #000000; border: none; font-weight: 700; padding: 8px 12px;
   border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
-  font-family: inherit; font-size: 0.85rem; transition: opacity 0.15s;
+  font-family: inherit; font-size: 0.85rem;
 }
-.whatsapp-btn:hover { opacity: 0.9; }
 </style>
 </head>
 <body class="starwars-theme">
@@ -334,7 +286,6 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     </div>
   </div>
 
-  <!-- Player Drill-Down Modal -->
   <div class="modal-overlay" id="playerModal" onclick="closePlayerModal(event)">
     <div class="modal" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closePlayerModal()">×</button>
@@ -353,7 +304,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 
   <div class="panel">
     <h2>📈 Running totals over time</h2>
-    <p class="hint">Cumulative correct predictions after each matchday. Use buttons to replay the race.</p>
+    <p class="hint">Cumulative correct predictions after each matchday.</p>
     <div class="controls">
       <button class="btn active" onclick="resetRace()">Full race</button>
       <button class="btn" onclick="playRace()">▶ Animate</button>
@@ -371,7 +322,6 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 
   <div class="panel">
     <h2>🏎️ Title Race Momentum (Rolling Form - Last 15 Matches)</h2>
-    <p class="hint">Rolling success percentage over recent predictions to spot who is pulling away or slumping.</p>
     <div class="chart-wrap tall">
       <canvas id="rollingChart"></canvas>
     </div>
@@ -380,14 +330,12 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
   <div class="grid-2">
     <div class="panel">
       <h2>🎯 Bullseyes vs Match Outcomes</h2>
-      <p class="hint">Exact score bullseyes vs correct winner/draw vs complete misses.</p>
       <div class="chart-wrap tall">
         <canvas id="matrixChart"></canvas>
       </div>
     </div>
     <div class="panel">
       <h2>🏆 Accuracy by competition</h2>
-      <p class="hint">% correct among matches predicted per tournament.</p>
       <div class="chart-wrap tall">
         <canvas id="compChart"></canvas>
       </div>
@@ -396,34 +344,23 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
 
   <div class="panel">
     <h2>📅 Upcoming Fixtures Preview</h2>
-    <p class="hint">Next scheduled matches and predictions locked in by the group.</p>
     <div class="table-scroll">
       <table>
         <thead>
-          <tr>
-            <th>Date</th>
-            <th>Competition</th>
-            <th>Fixture</th>
-            <th>Faz</th>
-            <th>Bill</th>
-            <th>Lenn</th>
-          </tr>
+          <tr><th>Date</th><th>Competition</th><th>Fixture</th><th>Faz</th><th>Bill</th><th>Lenn</th></tr>
         </thead>
         <tbody id="upcomingBody"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- WhatsApp Quick-Copy Predictions Section -->
   <div class="panel">
     <h2>💬 WhatsApp Predictions Share</h2>
-    <p class="hint">Matches scheduled for today with pre-populated predictions.</p>
     <div class="whatsapp-grid" id="whatsappContainer"></div>
   </div>
 
-    <div class="panel">
+  <div class="panel">
     <h2>🔍 Match explorer</h2>
-    <p class="hint">Finished matches with predictions. Filter by competition or search team names.</p>
     <div class="controls">
       <select id="compFilter" onchange="filterTable()">
         <option value="">All competitions</option>
@@ -445,19 +382,9 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
       <table id="matchTable">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Competition</th>
-            <th>Match</th>
-            <th>Score</th>
-            <th>Faz</th>
-            <th>✓</th>
-            <th>Bill</th>
-            <th>✓</th>
-            <th>Lenn</th>
-            <th>✓</th>
-            <th>Faz RT</th>
-            <th>Bill RT</th>
-            <th>Lenn RT</th>
+            <th>Date</th><th>Competition</th><th>Match</th><th>Score</th>
+            <th>Faz</th><th>✓</th><th>Bill</th><th>✓</th><th>Lenn</th><th>✓</th>
+            <th>Faz RT</th><th>Bill RT</th><th>Lenn RT</th>
           </tr>
         </thead>
         <tbody id="matchBody"></tbody>
@@ -468,41 +395,33 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
   <div class="grid-2">
     <div class="panel">
       <h2>⚔️ Head-to-Head (H2H) Rivalry</h2>
-      <p class="hint">Direct matchups: matches where one predictor scored while the other missed.</p>
       <div class="h2h-grid" id="h2hContainer"></div>
     </div>
     <div class="panel">
       <h2>⚡ Hero Predictions ("Bangers") Hall of Fame</h2>
-      <p class="hint">Matches where only one predictor got it right while everyone else failed.</p>
       <div class="bangers-grid" id="bangersContainer"></div>
     </div>
   </div>
-  
-
 
   <div class="panel">
     <h2>🏟️ Predictor-Friendly Stadium Heatmap</h2>
-    <p class="hint">Grounds ranked by group prediction success rate. Spot which stadiums are goldmines or graveyard shifts.</p>
     <div class="controls">
       <input type="search" id="stadiumSearchBox" placeholder="Search stadium name…" oninput="filterStadiums()">
       <button class="btn" onclick="document.getElementById('stadiumSearchBox').value='';filterStadiums()">Clear</button>
     </div>
     <div class="heatmap-grid" id="heatmapContainer"></div>
   </div>
-
-
-
   <footer></footer>
 </div>
 
 <script>
-const CHART = {"dates": ["2026-08-07", "2026-08-08", "2026-08-09", "2026-08-12", "2026-08-14", "2026-08-15", "2026-08-16", "2026-08-21", "2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-28", "2026-08-29", "2026-08-30", "2026-08-31", "2026-09-01", "2026-09-04", "2026-09-05", "2026-09-06", "2026-09-08", "2026-09-09", "2026-09-10", "2026-09-12", "2026-09-13", "2026-09-14", "2026-09-15", "2026-09-16", "2026-09-17", "2026-09-18", "2026-09-19", "2026-09-20", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27", "2026-09-28", "2026-09-29", "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05", "2026-10-06", "2026-10-10", "2026-10-11"], "faz": [0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 7, 7, 7, 7, 8, 8, 8, 9, 10, 10, 11, 11, 11, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13], "bill": [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 11, 11], "lenn": [1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10], "faz_daily": [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], "bill_daily": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0], "lenn_daily": [1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], "rolling_dates": ["07/08/2026", "08/08/2026", "09/08/2026", "12/08/2026", "14/08/2026", "15/08/2026", "15/08/2026", "16/08/2026", "21/08/2026", "22/08/2026", "22/08/2026", "22/08/2026", "22/08/2026", "22/08/2026", "22/08/2026", "22/08/2026", "22/08/2026", "23/08/2026", "23/08/2026", "23/08/2026", "24/08/2026", "25/08/2026", "25/08/2026", "28/08/2026", "29/08/2026", "29/08/2026", "29/08/2026", "29/08/2026", "29/08/2026", "29/08/2026", "30/08/2026", "30/08/2026", "30/08/2026", "30/08/2026", "31/08/2026", "01/09/2026", "01/09/2026", "01/09/2026", "04/09/2026", "05/09/2026", "05/09/2026", "05/09/2026", "05/09/2026", "05/09/2026", "05/09/2026", "05/09/2026", "05/09/2026", "05/09/2026", "06/09/2026", "06/09/2026", "06/09/2026", "08/09/2026", "08/09/2026", "08/09/2026", "09/09/2026", "09/09/2026", "10/09/2026", "12/09/2026", "12/09/2026", "12/09/2026", "12/09/2026", "12/09/2026", "12/09/2026", "12/09/2026", "12/09/2026", "13/09/2026", "13/09/2026", "13/09/2026", "14/09/2026", "15/09/2026", "15/09/2026", "15/09/2026", "15/09/2026", "15/09/2026", "16/09/2026", "16/09/2026", "16/09/2026", "16/09/2026", "16/09/2026", "17/09/2026", "17/09/2026", "17/09/2026", "17/09/2026", "18/09/2026", "19/09/2026", "19/09/2026", "19/09/2026", "19/09/2026", "19/09/2026", "19/09/2026", "19/09/2026", "20/09/2026", "20/09/2026", "20/09/2026", "20/09/2026", "20/09/2026", "24/09/2026", "24/09/2026", "24/09/2026", "25/09/2026", "26/09/2026", "26/09/2026", "27/09/2026", "27/09/2026", "28/09/2026", "29/09/2026", "29/09/2026", "01/10/2026", "01/10/2026", "02/10/2026", "03/10/2026", "03/10/2026", "04/10/2026", "04/10/2026", "05/10/2026", "06/10/2026", "06/10/2026", "06/10/2026", "10/10/2026", "10/10/2026", "10/10/2026", "10/10/2026", "10/10/2026", "10/10/2026", "10/10/2026", "10/10/2026", "10/10/2026", "11/10/2026", "11/10/2026", "11/10/2026"], "rolling_faz": [0.0, 0.0, 33.3, 25.0, 20.0, 16.7, 14.3, 12.5, 11.1, 10.0, 18.2, 16.7, 15.4, 14.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "rolling_bill": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 11.1, 10.0, 9.1, 8.3, 7.7, 7.1, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3], "rolling_lenn": [100.0, 50.0, 33.3, 25.0, 20.0, 16.7, 14.3, 12.5, 11.1, 10.0, 18.2, 16.7, 23.1, 21.4, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0]};
-const MATCHES = [{"date": "2026-10-11", "comp": "Premier League", "home": "Liverpool FC", "away": "Manchester City FC", "score": "0-3", "faz_pred": "1-1", "bill_pred": "1-2", "lenn_pred": "1-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-11", "comp": "Premier League", "home": "Hull City AFC", "away": "Everton FC", "score": "2-2", "faz_pred": "0-2", "bill_pred": "1-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-11", "comp": "Premier League", "home": "Crystal Palace FC", "away": "Nottingham Forest FC", "score": "3-1", "faz_pred": "1-1", "bill_pred": "1-2", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Manchester United FC", "away": "Tottenham Hotspur FC", "score": "1-1", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "3-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Sunderland AFC", "away": "Brighton & Hove Albion FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Championship", "home": "Sheffield United FC", "away": "Lincoln City FC", "score": "3-0", "faz_pred": "3-1", "bill_pred": "2-0", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Championship", "home": "Middlesbrough FC", "away": "Wolverhampton Wanderers FC", "score": "1-0", "faz_pred": "0-2", "bill_pred": "2-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Ipswich Town FC", "away": "Fulham FC", "score": "2-1", "faz_pred": "1-0", "bill_pred": "1-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Chelsea FC", "away": "AFC Bournemouth", "score": "5-1", "faz_pred": "2-0", "bill_pred": "3-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Aston Villa FC", "away": "Brentford FC", "score": "2-2", "faz_pred": "1-2", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "EFL League One", "home": "Notts County", "away": "Oxford United FC", "score": "1-2", "faz_pred": "0-2", "bill_pred": "0-3", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Arsenal FC", "away": "Leeds United FC", "score": "2-1", "faz_pred": "3-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-06", "comp": "EFL Trophy South", "home": "Exeter City", "away": "Oxford United FC", "score": "2-2", "faz_pred": "1-2", "bill_pred": "1-2", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 10, "lenn_rt": 10}, {"date": "2026-10-06", "comp": "UEFA Nations League", "home": "Scotland", "away": "Slovenia", "score": "1-2", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 10, "lenn_rt": 10}, {"date": "2026-10-06", "comp": "UEFA Nations League", "home": "England", "away": "Czechia", "score": "3-0", "faz_pred": "4-0", "bill_pred": "3-0", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 10, "lenn_rt": 10}, {"date": "2026-10-05", "comp": "UEFA Nations League", "home": "Northern Ireland", "away": "Georgia", "score": "0-0", "faz_pred": "1-1", "bill_pred": "1-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 10}, {"date": "2026-10-04", "comp": "UEFA Nations League", "home": "Republic of Ireland", "away": "Israel", "score": "1-1", "faz_pred": "0-1", "bill_pred": "2-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 10}, {"date": "2026-10-04", "comp": "UEFA Nations League", "home": "Wales", "away": "Denmark", "score": "0-1", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 10}, {"date": "2026-10-03", "comp": "UEFA Nations League", "home": "No. Macedonia", "away": "Scotland", "score": "0-2", "faz_pred": "0-1", "bill_pred": "1-0", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-03", "comp": "UEFA Nations League", "home": "Croatia", "away": "England", "score": "0-7", "faz_pred": "1-3", "bill_pred": "1-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-02", "comp": "UEFA Nations League", "home": "Ukraine", "away": "Northern Ireland", "score": "0-3", "faz_pred": "", "bill_pred": "1-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-01", "comp": "UEFA Nations League", "home": "Wales", "away": "Norway", "score": "2-1", "faz_pred": "1-1", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-01", "comp": "UEFA Nations League", "home": "Republic of Ireland", "away": "Austria", "score": "2-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-09-29", "comp": "UEFA Nations League", "home": "Czechia", "away": "England", "score": "0-2", "faz_pred": "0-2", "bill_pred": "0-2", "lenn_pred": "1-3", "faz_ok": 1, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-09-29", "comp": "UEFA Nations League", "home": "Scotland", "away": "Switzerland", "score": "0-3", "faz_pred": "0-1", "bill_pred": "1-2", "lenn_pred": "1-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 12, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-28", "comp": "UEFA Nations League", "home": "Northern Ireland", "away": "Hungary", "score": "0-0", "faz_pred": "0-0", "bill_pred": "1-0", "lenn_pred": "0-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 12, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-27", "comp": "UEFA Nations League", "home": "Israel", "away": "Republic of Ireland", "score": "0-3", "faz_pred": "0-0", "bill_pred": "1-0", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-27", "comp": "UEFA Nations League", "home": "Denmark", "away": "Wales", "score": "2-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-26", "comp": "UEFA Nations League", "home": "England", "away": "Spain", "score": "2-3", "faz_pred": "2-1", "bill_pred": "1-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-26", "comp": "UEFA Nations League", "home": "Slovenia", "away": "Scotland", "score": "0-0", "faz_pred": "1-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-25", "comp": "UEFA Nations League", "home": "Georgia", "away": "Northern Ireland", "score": "0-1", "faz_pred": "0-1", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-24", "comp": "UEFA Nations League", "home": "Netherlands", "away": "Germany", "score": "1-1", "faz_pred": "1-0", "bill_pred": "1-2", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-24", "comp": "UEFA Nations League", "home": "Kosovo", "away": "Republic of Ireland", "score": "1-0", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-24", "comp": "UEFA Nations League", "home": "Portugal", "away": "Wales", "score": "1-0", "faz_pred": "2-1", "bill_pred": "3-0", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "Fulham FC", "away": "Manchester United FC", "score": "1-1", "faz_pred": "0-1", "bill_pred": "1-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "Manchester City FC", "away": "Sunderland AFC", "score": "5-3", "faz_pred": "2-0", "bill_pred": "3-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "Leeds United FC", "away": "Crystal Palace FC", "score": "0-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "AFC Bournemouth", "away": "Liverpool FC", "score": "0-1", "faz_pred": "0-2", "bill_pred": "1-2", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "West Bromwich Albion FC", "score": "1-0", "faz_pred": "1-0", "bill_pred": "0-1", "lenn_pred": "2-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Nottingham Forest FC", "away": "Coventry City FC", "score": "0-1", "faz_pred": "1-0", "bill_pred": "3-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "EFL League One", "home": "Oxford United FC", "away": "Cambridge United", "score": "1-1", "faz_pred": "2-0", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Newcastle United FC", "away": "Hull City AFC", "score": "2-1", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Everton FC", "away": "Ipswich Town FC", "score": "1-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Brighton & Hove Albion FC", "away": "Arsenal FC", "score": "3-0", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Tottenham Hotspur FC", "away": "Aston Villa FC", "score": "2-3", "faz_pred": "2-1", "bill_pred": "1-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Championship", "home": "Stoke City FC", "away": "Sheffield United FC", "score": "2-1", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-18", "comp": "Premier League", "home": "Brentford FC", "away": "Chelsea FC", "score": "3-0", "faz_pred": "1-2", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "UEFA Europa League", "home": "Real Sociedad", "away": "AFC Bournemouth", "score": "1-2", "faz_pred": "", "bill_pred": "2-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "UEFA Europa League", "home": "Crystal Palace FC", "away": "Lech Poznan", "score": "4-0", "faz_pred": "", "bill_pred": "2-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "UEFA Europa League", "home": "Celtic", "away": "Ferencv\u00e1ros", "score": "1-3", "faz_pred": "", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "EFL Cup", "home": "Manchester City FC", "away": "Norwich City FC", "score": "5-0", "faz_pred": "", "bill_pred": "3-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-16", "comp": "UEFA Europa League", "home": "Sunderland AFC", "away": "AZ Alkmaar", "score": "1-0", "faz_pred": "1-0", "bill_pred": "2-0", "lenn_pred": "1-0", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Manchester United FC", "away": "Brighton & Hove Albion FC", "score": "2-3", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "3-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Coventry City FC", "away": "Aston Villa FC", "score": "1-3", "faz_pred": "1-2", "bill_pred": "0-1", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Fleetwood Town", "away": "Sheffield United FC", "score": "1-0", "faz_pred": "0-3", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Everton FC", "away": "Wolverhampton Wanderers FC", "score": "1-0", "faz_pred": "1-2", "bill_pred": "2-0", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Reading", "away": "Brentford FC", "score": "1-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "1-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Liverpool FC", "away": "Tottenham Hotspur FC", "score": "3-1", "faz_pred": "3-2", "bill_pred": "2-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Ipswich Town FC", "away": "Arsenal FC", "score": "2-4", "faz_pred": "0-2", "bill_pred": "0-2", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "West Ham United FC", "away": "Fulham FC", "score": "2-3", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Peterborough United", "away": "Barnsley FC", "score": "3-3", "faz_pred": "1-0", "bill_pred": "2-0", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-14", "comp": "Premier League", "home": "Leeds United FC", "away": "Newcastle United FC", "score": "4-1", "faz_pred": "0-1", "bill_pred": "2-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-13", "comp": "Premier League", "home": "Manchester United FC", "away": "Manchester City FC", "score": "0-1", "faz_pred": "1-2", "bill_pred": "2-2", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-13", "comp": "Premier League", "home": "Coventry City FC", "away": "Brighton & Hove Albion FC", "score": "0-5", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-13", "comp": "Championship", "home": "Sheffield United FC", "away": "Wolverhampton Wanderers FC", "score": "0-1", "faz_pred": "0-0", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-12", "comp": "Premier League", "home": "Sunderland AFC", "away": "Arsenal FC", "score": "0-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "0-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Tottenham Hotspur FC", "away": "Everton FC", "score": "0-0", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "EFL League One", "home": "Oxford United FC", "away": "Burton Albion", "score": "3-0", "faz_pred": "2-1", "bill_pred": "3-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Liverpool FC", "away": "Fulham FC", "score": "0-0", "faz_pred": "2-0", "bill_pred": "2-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Crystal Palace FC", "away": "Ipswich Town FC", "score": "2-3", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Chelsea FC", "away": "Hull City AFC", "score": "2-2", "faz_pred": "2-1", "bill_pred": "4-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Aston Villa FC", "away": "Nottingham Forest FC", "score": "1-2", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "AFC Bournemouth", "away": "Brentford FC", "score": "2-2", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 5, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-10", "comp": "UEFA Champions League", "home": "Manchester United FC", "away": "Sabah FK", "score": "4-0", "faz_pred": "2-0", "bill_pred": "3-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 5, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-09", "comp": "UEFA Champions League", "home": "SSC Napoli", "away": "Arsenal FC", "score": "0-1", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 1, "faz_rt": 5, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-09", "comp": "UEFA Champions League", "home": "Liverpool FC", "away": "Club Atl\u00e9tico de Madrid", "score": "2-1", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 5, "bill_rt": 6, "lenn_rt": 5}, {"date": "2026-09-08", "comp": "UEFA Champions League", "home": "FC Porto", "away": "Manchester City FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "1-2", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 5}, {"date": "2026-09-08", "comp": "Championship", "home": "Blackburn Rovers FC", "away": "Sheffield United FC", "score": "1-2", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 4}, {"date": "2026-09-08", "comp": "UEFA Champions League", "home": "Club Brugge KV", "away": "Aston Villa FC", "score": "2-3", "faz_pred": "1-1", "bill_pred": "0-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 4}, {"date": "2026-09-06", "comp": "Premier League", "home": "Arsenal FC", "away": "Chelsea FC", "score": "2-1", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 4}, {"date": "2026-09-06", "comp": "Premier League", "home": "Everton FC", "away": "Manchester United FC", "score": "2-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-06", "comp": "Championship", "home": "Birmingham City FC", "away": "Wolverhampton Wanderers FC", "score": "2-2", "faz_pred": "0-2", "bill_pred": "1-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Hull City AFC", "away": "Aston Villa FC", "score": "0-0", "faz_pred": "0-0", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "EFL League One", "home": "Leicester City", "away": "Oxford United FC", "score": "0-4", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Championship", "home": "Sheffield United FC", "away": "Norwich City FC", "score": "1-3", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Nottingham Forest FC", "away": "Tottenham Hotspur FC", "score": "0-0", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Manchester City FC", "away": "Coventry City FC", "score": "1-0", "faz_pred": "2-0", "bill_pred": "4-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Fulham FC", "away": "Crystal Palace FC", "score": "2-3", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Brighton & Hove Albion FC", "away": "Leeds United FC", "score": "1-1", "faz_pred": "2-0", "bill_pred": "2-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Brentford FC", "away": "Sunderland AFC", "score": "1-1", "faz_pred": "2-0", "bill_pred": "1-0", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Newcastle United FC", "away": "AFC Bournemouth", "score": "2-2", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-04", "comp": "Premier League", "home": "Ipswich Town FC", "away": "Liverpool FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-01", "comp": "EFL League One", "home": "Huddersfield Town", "away": "Oxford United FC", "score": "3-1", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-09-01", "comp": "Championship", "home": "West Ham United FC", "away": "Wolverhampton Wanderers FC", "score": "4-2", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-09-01", "comp": "Championship", "home": "Sheffield United FC", "away": "Bolton Wanderers FC", "score": "3-2", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-31", "comp": "Premier League", "home": "Aston Villa FC", "away": "Arsenal FC", "score": "0-1", "faz_pred": "0-4", "bill_pred": "0-3", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Manchester United FC", "away": "Ipswich Town FC", "score": "5-2", "faz_pred": "2-0", "bill_pred": "3-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Sunderland AFC", "away": "Fulham FC", "score": "1-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Leeds United FC", "away": "Brentford FC", "score": "1-1", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 1, "faz_rt": 2, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Chelsea FC", "away": "Brighton & Hove Albion FC", "score": "4-3", "faz_pred": "1-1", "bill_pred": "2-1", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "Tottenham Hotspur FC", "away": "Newcastle United FC", "score": "0-2", "faz_pred": "1-0", "bill_pred": "2-2", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "Coventry City FC", "away": "Hull City AFC", "score": "0-1", "faz_pred": "1-2", "bill_pred": "3-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Championship", "home": "Cardiff City FC", "away": "Sheffield United FC", "score": "2-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "AFC Bournemouth", "away": "Everton FC", "score": "1-1", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "Stoke City FC", "score": "4-1", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "Liverpool FC", "away": "Nottingham Forest FC", "score": "2-2", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-28", "comp": "Premier League", "home": "Crystal Palace FC", "away": "Manchester City FC", "score": "1-4", "faz_pred": "0-3", "bill_pred": "1-3", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-25", "comp": "EFL Cup", "home": "Sheffield Weds", "away": "Wolverhampton Wanderers FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-25", "comp": "EFL Cup", "home": "Blackburn Rovers FC", "away": "Sheffield United FC", "score": "1-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-24", "comp": "Premier League", "home": "Fulham FC", "away": "Chelsea FC", "score": "2-3", "faz_pred": "1-2", "bill_pred": "0-3", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-23", "comp": "Premier League", "home": "Newcastle United FC", "away": "Liverpool FC", "score": "2-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-23", "comp": "Premier League", "home": "Manchester City FC", "away": "AFC Bournemouth", "score": "2-1", "faz_pred": "2-0", "bill_pred": "3-1", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-23", "comp": "Premier League", "home": "Brighton & Hove Albion FC", "away": "Aston Villa FC", "score": "4-0", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Premier League", "home": "Brentford FC", "away": "Tottenham Hotspur FC", "score": "3-0", "faz_pred": "1-2", "bill_pred": "0-2", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "EFL League One", "home": "Stevenage", "away": "Oxford United FC", "score": "1-2", "faz_pred": "1-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Championship", "home": "Swansea City AFC", "away": "Sheffield United FC", "score": "0-0", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Championship", "home": "Preston North End FC", "away": "Wolverhampton Wanderers FC", "score": "1-3", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Premier League", "home": "Nottingham Forest FC", "away": "Leeds United FC", "score": "0-1", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Premier League", "home": "Ipswich Town FC", "away": "Sunderland AFC", "score": "2-1", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 2}, {"date": "2026-08-22", "comp": "Premier League", "home": "Everton FC", "away": "Crystal Palace FC", "score": "2-0", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "2-0", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 2}, {"date": "2026-08-22", "comp": "Premier League", "home": "Hull City AFC", "away": "Manchester United FC", "score": "2-0", "faz_pred": "0-2", "bill_pred": "0-3", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 1, "lenn_rt": 1}, {"date": "2026-08-21", "comp": "Premier League", "home": "Arsenal FC", "away": "Coventry City FC", "score": "3-0", "faz_pred": "3-1", "bill_pred": "3-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 1, "lenn_rt": 1}, {"date": "2026-08-16", "comp": "FA Community Shield", "home": "Arsenal FC", "away": "Manchester City FC", "score": "3-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-15", "comp": "Championship", "home": "Sheffield United FC", "away": "Birmingham City FC", "score": "0-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-15", "comp": "EFL League One", "home": "Oxford United FC", "away": "Dons", "score": "2-2", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-14", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "Blackburn Rovers FC", "score": "2-2", "faz_pred": "2-1", "bill_pred": "1-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-12", "comp": "UEFA Super Cup", "home": "Paris Saint-Germain", "away": "Aston Villa FC", "score": "2-1", "faz_pred": "1-1", "bill_pred": "3-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-09", "comp": "EFL Cup", "home": "Mansfield Town", "away": "Sheffield United FC", "score": "0-3", "faz_pred": "0-3", "bill_pred": "0-2", "lenn_pred": "1-3", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-08", "comp": "EFL Cup", "home": "Leyton Orient", "away": "Oxford United FC", "score": "2-0", "faz_pred": "1-0", "bill_pred": "1-2", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 0, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-07", "comp": "EFL Cup", "home": "Wolverhampton Wanderers FC", "away": "Port Vale", "score": "3-0", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 0, "bill_rt": 0, "lenn_rt": 1}];
+const CHART = {"dates": ["2026-08-07", "2026-08-08", "2026-08-09", "2026-08-12", "2026-08-14", "2026-08-15", "2026-08-16", "2026-08-21", "2026-08-22", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-28", "2026-08-29", "2026-08-30", "2026-08-31", "2026-09-01", "2026-09-04", "2026-09-05", "2026-09-06", "2026-09-08", "2026-09-09", "2026-09-10", "2026-09-12", "2026-09-13", "2026-09-14", "2026-09-15", "2026-09-16", "2026-09-17", "2026-09-18", "2026-09-19", "2026-09-20", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27", "2026-09-28", "2026-09-29", "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-04", "2026-10-05", "2026-10-06", "2026-10-10", "2026-10-11"], "faz": [0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 7, 7, 7, 7, 8, 8, 8, 9, 10, 10, 11, 11, 11, 12, 13, 13, 13, 13, 13, 13, 13, 13, 13], "bill": [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4, 4, 4, 5, 5, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 11, 11], "lenn": [1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10], "faz_daily": [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], "bill_daily": [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0], "lenn_daily": [1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0], "rolling_dates": ["2026-08-07", "2026-08-08", "2026-08-09", "2026-08-12", "2026-08-14", "2026-08-15", "2026-08-15", "2026-08-16", "2026-08-21", "2026-08-22", "2026-08-22", "2026-08-22", "2026-08-22", "2026-08-22", "2026-08-22", "2026-08-22", "2026-08-22", "2026-08-23", "2026-08-23", "2026-08-23", "2026-08-24", "2026-08-25", "2026-08-25", "2026-08-28", "2026-08-29", "2026-08-29", "2026-08-29", "2026-08-29", "2026-08-29", "2026-08-29", "2026-08-30", "2026-08-30", "2026-08-30", "2026-08-30", "2026-08-31", "2026-09-01", "2026-09-01", "2026-09-01", "2026-09-04", "2026-09-05", "2026-09-05", "2026-09-05", "2026-09-05", "2026-09-05", "2026-09-05", "2026-09-05", "2026-09-05", "2026-09-05", "2026-09-06", "2026-09-06", "2026-09-06", "2026-09-08", "2026-09-08", "2026-09-08", "2026-09-09", "2026-09-09", "2026-09-10", "2026-09-12", "2026-09-12", "2026-09-12", "2026-09-12", "2026-09-12", "2026-09-12", "2026-09-12", "2026-09-12", "2026-09-13", "2026-09-13", "2026-09-13", "2026-09-14", "2026-09-15", "2026-09-15", "2026-09-15", "2026-09-15", "2026-09-15", "2026-09-16", "2026-09-16", "2026-09-16", "2026-09-16", "2026-09-16", "2026-09-17", "2026-09-17", "2026-09-17", "2026-09-17", "2026-09-18", "2026-09-19", "2026-09-19", "2026-09-19", "2026-09-19", "2026-09-19", "2026-09-19", "2026-09-19", "2026-09-20", "2026-09-20", "2026-09-20", "2026-09-20", "2026-09-20", "2026-09-24", "2026-09-24", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-26", "2026-09-27", "2026-09-27", "2026-09-28", "2026-09-29", "2026-09-29", "2026-10-01", "2026-10-01", "2026-10-02", "2026-10-03", "2026-10-03", "2026-10-04", "2026-10-04", "2026-10-05", "2026-10-06", "2026-10-06", "2026-10-06", "2026-10-10", "2026-10-10", "2026-10-10", "2026-10-10", "2026-10-10", "2026-10-10", "2026-10-10", "2026-10-10", "2026-10-10", "2026-10-11", "2026-10-11", "2026-10-11"], "rolling_faz": [0.0, 0.0, 33.3, 25.0, 20.0, 16.7, 14.3, 12.5, 11.1, 10.0, 18.2, 16.7, 15.4, 14.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "rolling_bill": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 11.1, 10.0, 9.1, 8.3, 7.7, 7.1, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3], "rolling_lenn": [100.0, 50.0, 33.3, 25.0, 20.0, 16.7, 14.3, 12.5, 11.1, 10.0, 18.2, 16.7, 23.1, 21.4, 20.0, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 13.3, 20.0, 20.0, 20.0, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 13.3, 13.3, 13.3, 13.3, 13.3, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 6.7, 0.0, 0.0, 0.0]};
+const MATCHES = [{"date": "2026-10-11", "comp": "Premier League", "home": "Liverpool FC", "away": "Manchester City FC", "score": "0-3", "faz_pred": "1-1", "bill_pred": "1-2", "lenn_pred": "1-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-11", "comp": "Premier League", "home": "Hull City AFC", "away": "Everton FC", "score": "2-2", "faz_pred": "0-2", "bill_pred": "1-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-11", "comp": "Premier League", "home": "Crystal Palace FC", "away": "Nottingham Forest FC", "score": "3-1", "faz_pred": "1-1", "bill_pred": "1-2", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Manchester United FC", "away": "Tottenham Hotspur FC", "score": "1-1", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "3-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Sunderland AFC", "away": "Brighton & Hove Albion FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Championship", "home": "Sheffield United FC", "away": "Lincoln City FC", "score": "3-0", "faz_pred": "3-1", "bill_pred": "2-0", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Championship", "home": "Middlesbrough FC", "away": "Wolverhampton Wanderers FC", "score": "1-0", "faz_pred": "0-2", "bill_pred": "2-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Ipswich Town FC", "away": "Fulham FC", "score": "2-1", "faz_pred": "1-0", "bill_pred": "1-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Chelsea FC", "away": "AFC Bournemouth", "score": "5-1", "faz_pred": "2-0", "bill_pred": "3-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Aston Villa FC", "away": "Brentford FC", "score": "2-2", "faz_pred": "1-2", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "EFL League One", "home": "Notts County", "away": "Oxford United FC", "score": "1-2", "faz_pred": "0-2", "bill_pred": "0-3", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-10", "comp": "Premier League", "home": "Arsenal FC", "away": "Leeds United FC", "score": "2-1", "faz_pred": "3-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 11, "lenn_rt": 10}, {"date": "2026-10-06", "comp": "UEFA Nations League", "home": "Scotland", "away": "Slovenia", "score": "1-2", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 10, "lenn_rt": 10}, {"date": "2026-10-06", "comp": "UEFA Nations League", "home": "England", "away": "Czechia", "score": "3-0", "faz_pred": "4-0", "bill_pred": "3-0", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 10, "lenn_rt": 10}, {"date": "2026-10-06", "comp": "EFL Trophy South", "home": "Exeter City", "away": "Oxford United FC", "score": "2-2", "faz_pred": "1-2", "bill_pred": "1-2", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 10}, {"date": "2026-10-05", "comp": "UEFA Nations League", "home": "Northern Ireland", "away": "Georgia", "score": "0-0", "faz_pred": "1-1", "bill_pred": "1-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 10}, {"date": "2026-10-04", "comp": "UEFA Nations League", "home": "Republic of Ireland", "away": "Israel", "score": "1-1", "faz_pred": "0-1", "bill_pred": "2-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 10}, {"date": "2026-10-04", "comp": "UEFA Nations League", "home": "Wales", "away": "Denmark", "score": "0-1", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 10}, {"date": "2026-10-03", "comp": "UEFA Nations League", "home": "No. Macedonia", "away": "Scotland", "score": "0-2", "faz_pred": "0-1", "bill_pred": "1-0", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-03", "comp": "UEFA Nations League", "home": "Croatia", "away": "England", "score": "0-7", "faz_pred": "1-3", "bill_pred": "1-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-02", "comp": "UEFA Nations League", "home": "Ukraine", "away": "Northern Ireland", "score": "0-3", "faz_pred": "", "bill_pred": "1-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-01", "comp": "UEFA Nations League", "home": "Wales", "away": "Norway", "score": "2-1", "faz_pred": "1-1", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-10-01", "comp": "UEFA Nations League", "home": "Republic of Ireland", "away": "Austria", "score": "2-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-09-29", "comp": "UEFA Nations League", "home": "Czechia", "away": "England", "score": "0-2", "faz_pred": "0-2", "bill_pred": "0-2", "lenn_pred": "1-3", "faz_ok": 1, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 13, "bill_rt": 9, "lenn_rt": 9}, {"date": "2026-09-29", "comp": "UEFA Nations League", "home": "Scotland", "away": "Switzerland", "score": "0-3", "faz_pred": "0-1", "bill_pred": "1-2", "lenn_pred": "1-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 12, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-28", "comp": "UEFA Nations League", "home": "Northern Ireland", "away": "Hungary", "score": "0-0", "faz_pred": "0-0", "bill_pred": "1-0", "lenn_pred": "0-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 12, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-27", "comp": "UEFA Nations League", "home": "Israel", "away": "Republic of Ireland", "score": "0-3", "faz_pred": "0-0", "bill_pred": "1-0", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-27", "comp": "UEFA Nations League", "home": "Denmark", "away": "Wales", "score": "2-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 9}, {"date": "2026-09-26", "comp": "UEFA Nations League", "home": "England", "away": "Spain", "score": "2-3", "faz_pred": "2-1", "bill_pred": "1-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-26", "comp": "UEFA Nations League", "home": "Slovenia", "away": "Scotland", "score": "0-0", "faz_pred": "1-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-25", "comp": "UEFA Nations League", "home": "Georgia", "away": "Northern Ireland", "score": "0-1", "faz_pred": "0-1", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 11, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-24", "comp": "UEFA Nations League", "home": "Netherlands", "away": "Germany", "score": "1-1", "faz_pred": "1-0", "bill_pred": "1-2", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-24", "comp": "UEFA Nations League", "home": "Kosovo", "away": "Republic of Ireland", "score": "1-0", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-24", "comp": "UEFA Nations League", "home": "Portugal", "away": "Wales", "score": "1-0", "faz_pred": "2-1", "bill_pred": "3-0", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "Fulham FC", "away": "Manchester United FC", "score": "1-1", "faz_pred": "0-1", "bill_pred": "1-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "Manchester City FC", "away": "Sunderland AFC", "score": "5-3", "faz_pred": "2-0", "bill_pred": "3-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "Leeds United FC", "away": "Crystal Palace FC", "score": "0-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Premier League", "home": "AFC Bournemouth", "away": "Liverpool FC", "score": "0-1", "faz_pred": "0-2", "bill_pred": "1-2", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-20", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "West Bromwich Albion FC", "score": "1-0", "faz_pred": "1-0", "bill_pred": "0-1", "lenn_pred": "2-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 10, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Nottingham Forest FC", "away": "Coventry City FC", "score": "0-1", "faz_pred": "1-0", "bill_pred": "3-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "EFL League One", "home": "Oxford United FC", "away": "Cambridge United", "score": "1-1", "faz_pred": "2-0", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 8, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Newcastle United FC", "away": "Hull City AFC", "score": "2-1", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Everton FC", "away": "Ipswich Town FC", "score": "1-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 9, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Brighton & Hove Albion FC", "away": "Arsenal FC", "score": "3-0", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Premier League", "home": "Tottenham Hotspur FC", "away": "Aston Villa FC", "score": "2-3", "faz_pred": "2-1", "bill_pred": "1-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-19", "comp": "Championship", "home": "Stoke City FC", "away": "Sheffield United FC", "score": "2-1", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-18", "comp": "Premier League", "home": "Brentford FC", "away": "Chelsea FC", "score": "3-0", "faz_pred": "1-2", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "UEFA Europa League", "home": "Real Sociedad", "away": "AFC Bournemouth", "score": "1-2", "faz_pred": "", "bill_pred": "2-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "UEFA Europa League", "home": "Crystal Palace FC", "away": "Lech Poznan", "score": "4-0", "faz_pred": "", "bill_pred": "2-0", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "UEFA Europa League", "home": "Celtic", "away": "Ferencv\u00e1ros", "score": "1-3", "faz_pred": "", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-17", "comp": "EFL Cup", "home": "Manchester City FC", "away": "Norwich City FC", "score": "5-0", "faz_pred": "", "bill_pred": "3-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-16", "comp": "UEFA Europa League", "home": "Sunderland AFC", "away": "AZ Alkmaar", "score": "1-0", "faz_pred": "1-0", "bill_pred": "2-0", "lenn_pred": "1-0", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 8, "bill_rt": 7, "lenn_rt": 8}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Manchester United FC", "away": "Brighton & Hove Albion FC", "score": "2-3", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "3-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Coventry City FC", "away": "Aston Villa FC", "score": "1-3", "faz_pred": "1-2", "bill_pred": "0-1", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Fleetwood Town", "away": "Sheffield United FC", "score": "1-0", "faz_pred": "0-3", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-16", "comp": "EFL Cup", "home": "Everton FC", "away": "Wolverhampton Wanderers FC", "score": "1-0", "faz_pred": "1-2", "bill_pred": "2-0", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Reading", "away": "Brentford FC", "score": "1-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "1-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Liverpool FC", "away": "Tottenham Hotspur FC", "score": "3-1", "faz_pred": "3-2", "bill_pred": "2-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Ipswich Town FC", "away": "Arsenal FC", "score": "2-4", "faz_pred": "0-2", "bill_pred": "0-2", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "West Ham United FC", "away": "Fulham FC", "score": "2-3", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-15", "comp": "EFL Cup", "home": "Peterborough United", "away": "Barnsley FC", "score": "3-3", "faz_pred": "1-0", "bill_pred": "2-0", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-14", "comp": "Premier League", "home": "Leeds United FC", "away": "Newcastle United FC", "score": "4-1", "faz_pred": "0-1", "bill_pred": "2-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-13", "comp": "Premier League", "home": "Manchester United FC", "away": "Manchester City FC", "score": "0-1", "faz_pred": "1-2", "bill_pred": "2-2", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-13", "comp": "Premier League", "home": "Coventry City FC", "away": "Brighton & Hove Albion FC", "score": "0-5", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-13", "comp": "Championship", "home": "Sheffield United FC", "away": "Wolverhampton Wanderers FC", "score": "0-1", "faz_pred": "0-0", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 7}, {"date": "2026-09-12", "comp": "Premier League", "home": "Sunderland AFC", "away": "Arsenal FC", "score": "0-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "0-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 7, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Tottenham Hotspur FC", "away": "Everton FC", "score": "0-0", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "EFL League One", "home": "Oxford United FC", "away": "Burton Albion", "score": "3-0", "faz_pred": "2-1", "bill_pred": "3-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Liverpool FC", "away": "Fulham FC", "score": "0-0", "faz_pred": "2-0", "bill_pred": "2-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Crystal Palace FC", "away": "Ipswich Town FC", "score": "2-3", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Chelsea FC", "away": "Hull City AFC", "score": "2-2", "faz_pred": "2-1", "bill_pred": "4-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "Aston Villa FC", "away": "Nottingham Forest FC", "score": "1-2", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 6, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-12", "comp": "Premier League", "home": "AFC Bournemouth", "away": "Brentford FC", "score": "2-2", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 5, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-10", "comp": "UEFA Champions League", "home": "Manchester United FC", "away": "Sabah FK", "score": "4-0", "faz_pred": "2-0", "bill_pred": "3-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 5, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-09", "comp": "UEFA Champions League", "home": "SSC Napoli", "away": "Arsenal FC", "score": "0-1", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 1, "faz_rt": 5, "bill_rt": 7, "lenn_rt": 6}, {"date": "2026-09-09", "comp": "UEFA Champions League", "home": "Liverpool FC", "away": "Club Atl\u00e9tico de Madrid", "score": "2-1", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 5, "bill_rt": 6, "lenn_rt": 5}, {"date": "2026-09-08", "comp": "UEFA Champions League", "home": "FC Porto", "away": "Manchester City FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "1-2", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 5}, {"date": "2026-09-08", "comp": "Championship", "home": "Blackburn Rovers FC", "away": "Sheffield United FC", "score": "1-2", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 4}, {"date": "2026-09-08", "comp": "UEFA Champions League", "home": "Club Brugge KV", "away": "Aston Villa FC", "score": "2-3", "faz_pred": "1-1", "bill_pred": "0-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 4}, {"date": "2026-09-06", "comp": "Premier League", "home": "Arsenal FC", "away": "Chelsea FC", "score": "2-1", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 6, "lenn_rt": 4}, {"date": "2026-09-06", "comp": "Premier League", "home": "Everton FC", "away": "Manchester United FC", "score": "2-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-06", "comp": "Championship", "home": "Birmingham City FC", "away": "Wolverhampton Wanderers FC", "score": "2-2", "faz_pred": "0-2", "bill_pred": "1-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Hull City AFC", "away": "Aston Villa FC", "score": "0-0", "faz_pred": "0-0", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 4, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "EFL League One", "home": "Leicester City", "away": "Oxford United FC", "score": "0-4", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Championship", "home": "Sheffield United FC", "away": "Norwich City FC", "score": "1-3", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Nottingham Forest FC", "away": "Tottenham Hotspur FC", "score": "0-0", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Manchester City FC", "away": "Coventry City FC", "score": "1-0", "faz_pred": "2-0", "bill_pred": "4-0", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Fulham FC", "away": "Crystal Palace FC", "score": "2-3", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Brighton & Hove Albion FC", "away": "Leeds United FC", "score": "1-1", "faz_pred": "2-0", "bill_pred": "2-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Brentford FC", "away": "Sunderland AFC", "score": "1-1", "faz_pred": "2-0", "bill_pred": "1-0", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-05", "comp": "Premier League", "home": "Newcastle United FC", "away": "AFC Bournemouth", "score": "2-2", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-04", "comp": "Premier League", "home": "Ipswich Town FC", "away": "Liverpool FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 5, "lenn_rt": 4}, {"date": "2026-09-01", "comp": "EFL League One", "home": "Huddersfield Town", "away": "Oxford United FC", "score": "3-1", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-09-01", "comp": "Championship", "home": "West Ham United FC", "away": "Wolverhampton Wanderers FC", "score": "4-2", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-09-01", "comp": "Championship", "home": "Sheffield United FC", "away": "Bolton Wanderers FC", "score": "3-2", "faz_pred": "2-1", "bill_pred": "1-0", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-31", "comp": "Premier League", "home": "Aston Villa FC", "away": "Arsenal FC", "score": "0-1", "faz_pred": "0-4", "bill_pred": "0-3", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Manchester United FC", "away": "Ipswich Town FC", "score": "5-2", "faz_pred": "2-0", "bill_pred": "3-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Sunderland AFC", "away": "Fulham FC", "score": "1-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 3, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Leeds United FC", "away": "Brentford FC", "score": "1-1", "faz_pred": "0-1", "bill_pred": "1-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 1, "faz_rt": 2, "bill_rt": 4, "lenn_rt": 4}, {"date": "2026-08-30", "comp": "Premier League", "home": "Chelsea FC", "away": "Brighton & Hove Albion FC", "score": "4-3", "faz_pred": "1-1", "bill_pred": "2-1", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "Tottenham Hotspur FC", "away": "Newcastle United FC", "score": "0-2", "faz_pred": "1-0", "bill_pred": "2-2", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "Coventry City FC", "away": "Hull City AFC", "score": "0-1", "faz_pred": "1-2", "bill_pred": "3-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Championship", "home": "Cardiff City FC", "away": "Sheffield United FC", "score": "2-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "AFC Bournemouth", "away": "Everton FC", "score": "1-1", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "0-0", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 3, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "Stoke City FC", "score": "4-1", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-29", "comp": "Premier League", "home": "Liverpool FC", "away": "Nottingham Forest FC", "score": "2-2", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-28", "comp": "Premier League", "home": "Crystal Palace FC", "away": "Manchester City FC", "score": "1-4", "faz_pred": "0-3", "bill_pred": "1-3", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-25", "comp": "EFL Cup", "home": "Sheffield Weds", "away": "Wolverhampton Wanderers FC", "score": "0-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 2, "lenn_rt": 3}, {"date": "2026-08-25", "comp": "EFL Cup", "home": "Blackburn Rovers FC", "away": "Sheffield United FC", "score": "1-2", "faz_pred": "0-2", "bill_pred": "0-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-24", "comp": "Premier League", "home": "Fulham FC", "away": "Chelsea FC", "score": "2-3", "faz_pred": "1-2", "bill_pred": "0-3", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-23", "comp": "Premier League", "home": "Newcastle United FC", "away": "Liverpool FC", "score": "2-2", "faz_pred": "0-1", "bill_pred": "0-2", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-23", "comp": "Premier League", "home": "Manchester City FC", "away": "AFC Bournemouth", "score": "2-1", "faz_pred": "2-0", "bill_pred": "3-1", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-23", "comp": "Premier League", "home": "Brighton & Hove Albion FC", "away": "Aston Villa FC", "score": "4-0", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Premier League", "home": "Brentford FC", "away": "Tottenham Hotspur FC", "score": "3-0", "faz_pred": "1-2", "bill_pred": "0-2", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "EFL League One", "home": "Stevenage", "away": "Oxford United FC", "score": "1-2", "faz_pred": "1-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Championship", "home": "Swansea City AFC", "away": "Sheffield United FC", "score": "0-0", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "1-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Championship", "home": "Preston North End FC", "away": "Wolverhampton Wanderers FC", "score": "1-3", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Premier League", "home": "Nottingham Forest FC", "away": "Leeds United FC", "score": "0-1", "faz_pred": "1-0", "bill_pred": "1-1", "lenn_pred": "0-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 3}, {"date": "2026-08-22", "comp": "Premier League", "home": "Ipswich Town FC", "away": "Sunderland AFC", "score": "2-1", "faz_pred": "0-1", "bill_pred": "0-1", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 2}, {"date": "2026-08-22", "comp": "Premier League", "home": "Everton FC", "away": "Crystal Palace FC", "score": "2-0", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "2-0", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 2, "bill_rt": 1, "lenn_rt": 2}, {"date": "2026-08-22", "comp": "Premier League", "home": "Hull City AFC", "away": "Manchester United FC", "score": "2-0", "faz_pred": "0-2", "bill_pred": "0-3", "lenn_pred": "0-3", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 1, "lenn_rt": 1}, {"date": "2026-08-21", "comp": "Premier League", "home": "Arsenal FC", "away": "Coventry City FC", "score": "3-0", "faz_pred": "3-1", "bill_pred": "3-0", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 1, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 1, "lenn_rt": 1}, {"date": "2026-08-16", "comp": "FA Community Shield", "home": "Arsenal FC", "away": "Manchester City FC", "score": "3-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "1-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-15", "comp": "Championship", "home": "Sheffield United FC", "away": "Birmingham City FC", "score": "0-0", "faz_pred": "1-0", "bill_pred": "2-1", "lenn_pred": "2-1", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-15", "comp": "EFL League One", "home": "Oxford United FC", "away": "Dons", "score": "2-2", "faz_pred": "1-2", "bill_pred": "1-1", "lenn_pred": "1-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-14", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "Blackburn Rovers FC", "score": "2-2", "faz_pred": "2-1", "bill_pred": "1-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-12", "comp": "UEFA Super Cup", "home": "Paris Saint-Germain", "away": "Aston Villa FC", "score": "2-1", "faz_pred": "1-1", "bill_pred": "3-1", "lenn_pred": "2-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-09", "comp": "EFL Cup", "home": "Mansfield Town", "away": "Sheffield United FC", "score": "0-3", "faz_pred": "0-3", "bill_pred": "0-2", "lenn_pred": "1-3", "faz_ok": 1, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 1, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-08", "comp": "EFL Cup", "home": "Leyton Orient", "away": "Oxford United FC", "score": "2-0", "faz_pred": "1-0", "bill_pred": "1-2", "lenn_pred": "0-2", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 0, "faz_rt": 0, "bill_rt": 0, "lenn_rt": 1}, {"date": "2026-08-07", "comp": "EFL Cup", "home": "Wolverhampton Wanderers FC", "away": "Port Vale", "score": "3-0", "faz_pred": "2-0", "bill_pred": "2-1", "lenn_pred": "3-0", "faz_ok": 0, "bill_ok": 0, "lenn_ok": 1, "faz_rt": 0, "bill_rt": 0, "lenn_rt": 1}];
 const COMP_STATS = [{"competition": "EFL Cup", "player": "Faz", "correct": 1, "total": 15, "accuracy": 6.7}, {"competition": "EFL Cup", "player": "Bill", "correct": 1, "total": 15, "accuracy": 6.7}, {"competition": "EFL Cup", "player": "Lenn", "correct": 1, "total": 15, "accuracy": 6.7}, {"competition": "UEFA Super Cup", "player": "Faz", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "UEFA Super Cup", "player": "Bill", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "UEFA Super Cup", "player": "Lenn", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "Championship", "player": "Faz", "correct": 1, "total": 16, "accuracy": 6.2}, {"competition": "Championship", "player": "Bill", "correct": 0, "total": 16, "accuracy": 0.0}, {"competition": "Championship", "player": "Lenn", "correct": 1, "total": 16, "accuracy": 6.2}, {"competition": "EFL League One", "player": "Faz", "correct": 0, "total": 7, "accuracy": 0.0}, {"competition": "EFL League One", "player": "Bill", "correct": 1, "total": 7, "accuracy": 14.3}, {"competition": "EFL League One", "player": "Lenn", "correct": 0, "total": 7, "accuracy": 0.0}, {"competition": "FA Community Shield", "player": "Faz", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "FA Community Shield", "player": "Bill", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "FA Community Shield", "player": "Lenn", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "Premier League", "player": "Faz", "correct": 6, "total": 59, "accuracy": 10.2}, {"competition": "Premier League", "player": "Bill", "correct": 6, "total": 59, "accuracy": 10.2}, {"competition": "Premier League", "player": "Lenn", "correct": 3, "total": 59, "accuracy": 5.1}, {"competition": "UEFA Champions League", "player": "Faz", "correct": 1, "total": 5, "accuracy": 20.0}, {"competition": "UEFA Champions League", "player": "Bill", "correct": 1, "total": 5, "accuracy": 20.0}, {"competition": "UEFA Champions League", "player": "Lenn", "correct": 2, "total": 5, "accuracy": 40.0}, {"competition": "UEFA Europa League", "player": "Faz", "correct": 1, "total": 4, "accuracy": 25.0}, {"competition": "UEFA Europa League", "player": "Bill", "correct": 0, "total": 4, "accuracy": 0.0}, {"competition": "UEFA Europa League", "player": "Lenn", "correct": 1, "total": 4, "accuracy": 25.0}, {"competition": "UEFA Nations League", "player": "Faz", "correct": 3, "total": 21, "accuracy": 14.3}, {"competition": "UEFA Nations League", "player": "Bill", "correct": 2, "total": 21, "accuracy": 9.5}, {"competition": "UEFA Nations League", "player": "Lenn", "correct": 2, "total": 21, "accuracy": 9.5}, {"competition": "EFL Trophy South", "player": "Faz", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "EFL Trophy South", "player": "Bill", "correct": 0, "total": 1, "accuracy": 0.0}, {"competition": "EFL Trophy South", "player": "Lenn", "correct": 0, "total": 1, "accuracy": 0.0}];
 const OVERALL = {"faz": {"correct": 13, "rt": 13, "predictions": 125, "accuracy": 10.4, "exact": 13, "outcome": 49, "wrong": 63, "streak": {"type": "cold", "count": 22, "max_hot": 1, "max_cold": 22}, "drilldown": {"common_pred": "1 - 0", "fav_comp": "Premier League", "max_hot": 1, "max_cold": 22}}, "bill": {"correct": 11, "rt": 11, "predictions": 130, "accuracy": 8.5, "exact": 11, "outcome": 55, "wrong": 64, "streak": {"type": "cold", "count": 11, "max_hot": 1, "max_cold": 33}, "drilldown": {"common_pred": "1 - 1", "fav_comp": "Premier League", "max_hot": 1, "max_cold": 33}}, "lenn": {"correct": 10, "rt": 10, "predictions": 130, "accuracy": 7.7, "exact": 10, "outcome": 51, "wrong": 69, "streak": {"type": "cold", "count": 17, "max_hot": 1, "max_cold": 23}, "drilldown": {"common_pred": "1 - 1", "fav_comp": "Premier League", "max_hot": 1, "max_cold": 23}}};
 const BANGERS = [{"date": "10/10/2026", "comp": "Premier League", "match": "Arsenal FC vs Leeds United FC", "score": "2-1", "player": "Bill", "pred": "2-1"}, {"date": "06/10/2026", "comp": "UEFA Nations League", "match": "England vs Czechia", "score": "3-0", "player": "Bill", "pred": "3-0"}, {"date": "04/10/2026", "comp": "UEFA Nations League", "match": "Wales vs Denmark", "score": "0-1", "player": "Lenn", "pred": "0-1"}, {"date": "28/09/2026", "comp": "UEFA Nations League", "match": "Northern Ireland vs Hungary", "score": "0-0", "player": "Faz", "pred": "0-0"}, {"date": "27/09/2026", "comp": "UEFA Nations League", "match": "Denmark vs Wales", "score": "2-0", "player": "Lenn", "pred": "2-0"}, {"date": "25/09/2026", "comp": "UEFA Nations League", "match": "Georgia vs Northern Ireland", "score": "0-1", "player": "Faz", "pred": "0-1"}, {"date": "20/09/2026", "comp": "Championship", "match": "Wolverhampton Wanderers FC vs West Bromwich Albion FC", "score": "1-0", "player": "Faz", "pred": "1-0"}, {"date": "19/09/2026", "comp": "EFL League One", "match": "Oxford United FC vs Cambridge United", "score": "1-1", "player": "Bill", "pred": "1-1"}, {"date": "19/09/2026", "comp": "Premier League", "match": "Everton FC vs Ipswich Town FC", "score": "1-0", "player": "Faz", "pred": "1-0"}, {"date": "13/09/2026", "comp": "Championship", "match": "Sheffield United FC vs Wolverhampton Wanderers FC", "score": "0-1", "player": "Lenn", "pred": "0-1"}, {"date": "12/09/2026", "comp": "Premier League", "match": "Sunderland AFC vs Arsenal FC", "score": "0-2", "player": "Faz", "pred": "0-2"}, {"date": "12/09/2026", "comp": "Premier League", "match": "Aston Villa FC vs Nottingham Forest FC", "score": "1-2", "player": "Faz", "pred": "1-2"}, {"date": "09/09/2026", "comp": "UEFA Champions League", "match": "Liverpool FC vs Club Atl\u00e9tico de Madrid", "score": "2-1", "player": "Faz", "pred": "2-1"}, {"date": "08/09/2026", "comp": "UEFA Champions League", "match": "FC Porto vs Manchester City FC", "score": "0-2", "player": "Lenn", "pred": "0-2"}, {"date": "06/09/2026", "comp": "Premier League", "match": "Arsenal FC vs Chelsea FC", "score": "2-1", "player": "Bill", "pred": "2-1"}, {"date": "05/09/2026", "comp": "Premier League", "match": "Hull City AFC vs Aston Villa FC", "score": "0-0", "player": "Faz", "pred": "0-0"}, {"date": "04/09/2026", "comp": "Premier League", "match": "Ipswich Town FC vs Liverpool FC", "score": "0-2", "player": "Bill", "pred": "0-2"}, {"date": "30/08/2026", "comp": "Premier League", "match": "Sunderland AFC vs Fulham FC", "score": "1-0", "player": "Faz", "pred": "1-0"}, {"date": "29/08/2026", "comp": "Premier League", "match": "AFC Bournemouth vs Everton FC", "score": "1-1", "player": "Bill", "pred": "1-1"}, {"date": "25/08/2026", "comp": "EFL Cup", "match": "Sheffield Weds vs Wolverhampton Wanderers FC", "score": "0-2", "player": "Bill", "pred": "0-2"}, {"date": "22/08/2026", "comp": "Premier League", "match": "Nottingham Forest FC vs Leeds United FC", "score": "0-1", "player": "Lenn", "pred": "0-1"}, {"date": "21/08/2026", "comp": "Premier League", "match": "Arsenal FC vs Coventry City FC", "score": "3-0", "player": "Bill", "pred": "3-0"}, {"date": "09/08/2026", "comp": "EFL Cup", "match": "Mansfield Town vs Sheffield United FC", "score": "0-3", "player": "Faz", "pred": "0-3"}, {"date": "07/08/2026", "comp": "EFL Cup", "match": "Wolverhampton Wanderers FC vs Port Vale", "score": "3-0", "player": "Lenn", "pred": "3-0"}];
 const H2H = [{"p1": "Faz", "p2": "Bill", "p1_wins": 12, "p2_wins": 10, "draws": 103}, {"p1": "Faz", "p2": "Lenn", "p1_wins": 11, "p2_wins": 8, "draws": 106}, {"p1": "Bill", "p2": "Lenn", "p1_wins": 9, "p2_wins": 8, "draws": 113}];
-const UPCOMING = [{"date": "12/10/2026", "comp": "Premier League", "home": "Coventry City FC", "away": "Newcastle United FC", "faz": "0-1", "bill": "0-2", "lenn": "1-1"}, {"date": "13/10/2026", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "Bolton Wanderers FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "13/10/2026", "comp": "UEFA Champions League", "home": "Arsenal FC", "away": "Lille OSC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "13/10/2026", "comp": "UEFA Champions League", "home": "Club Atl\u00e9tico de Madrid", "away": "Manchester United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "UEFA Champions League", "home": "LASK Linz", "away": "Liverpool FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "Championship", "home": "Portsmouth FC", "away": "Sheffield United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "UEFA Champions League", "home": "Aston Villa FC", "away": "Fenerbah\u00e7e", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "14/10/2026", "comp": "UEFA Champions League", "home": "Manchester City FC", "away": "Paris Saint-Germain FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "Torreense", "away": "Sunderland AFC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "Lyon", "away": "Crystal Palace FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "AFC Bournemouth", "away": "Sturm Graz", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "UEFA Europa League", "home": "Benfica", "away": "Celtic", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "15/10/2026", "comp": "EFL League One", "home": "Mansfield Town", "away": "Oxford United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "16/10/2026", "comp": "Championship", "home": "Burnley FC", "away": "Wolverhampton Wanderers FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "17/10/2026", "comp": "Premier League", "home": "Everton FC", "away": "Chelsea FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}];
+const UPCOMING = [{"date": "2026-10-12 00:00:00", "comp": "Premier League", "home": "Coventry City FC", "away": "Newcastle United FC", "faz": "0-1", "bill": "0-2", "lenn": "1-1"}, {"date": "2026-10-13 00:00:00", "comp": "Championship", "home": "Wolverhampton Wanderers FC", "away": "Bolton Wanderers FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-13 00:00:00", "comp": "UEFA Champions League", "home": "Arsenal FC", "away": "Lille OSC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-13 00:00:00", "comp": "UEFA Champions League", "home": "Club Atl\u00e9tico de Madrid", "away": "Manchester United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-14 00:00:00", "comp": "UEFA Champions League", "home": "LASK Linz", "away": "Liverpool FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-14 00:00:00", "comp": "Championship", "home": "Portsmouth FC", "away": "Sheffield United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-14 00:00:00", "comp": "UEFA Champions League", "home": "Aston Villa FC", "away": "Fenerbah\u00e7e", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-14 00:00:00", "comp": "UEFA Champions League", "home": "Manchester City FC", "away": "Paris Saint-Germain FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-15 00:00:00", "comp": "UEFA Europa League", "home": "Torreense", "away": "Sunderland AFC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-15 00:00:00", "comp": "UEFA Europa League", "home": "Lyon", "away": "Crystal Palace FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-15 00:00:00", "comp": "UEFA Europa League", "home": "AFC Bournemouth", "away": "Sturm Graz", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-15 00:00:00", "comp": "UEFA Europa League", "home": "Benfica", "away": "Celtic", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-15 00:00:00", "comp": "EFL League One", "home": "Mansfield Town", "away": "Oxford United FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-16 00:00:00", "comp": "Championship", "home": "Burnley FC", "away": "Wolverhampton Wanderers FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}, {"date": "2026-10-17 00:00:00", "comp": "Premier League", "home": "Everton FC", "away": "Chelsea FC", "faz": "\u2013", "bill": "\u2013", "lenn": "\u2013"}];
 const STADIUMS = [{"stadium": "Fortuna Arena", "matches": 1, "total_correct": 2, "total_preds": 3, "accuracy": 66.7, "players": {"faz": {"correct": 1, "preds": 1, "acc": 100.0}, "bill": {"correct": 1, "preds": 1, "acc": 100.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stadio Diego Armando Maradona", "matches": 1, "total_correct": 2, "total_preds": 3, "accuracy": 66.7, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 1, "preds": 1, "acc": 100.0}, "lenn": {"correct": 1, "preds": 1, "acc": 100.0}}}, {"stadium": "Stadium of Light", "matches": 4, "total_correct": 4, "total_preds": 12, "accuracy": 33.3, "players": {"faz": {"correct": 3, "preds": 4, "acc": 75.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 1, "preds": 4, "acc": 25.0}}}, {"stadium": "Emirates Stadium", "matches": 3, "total_correct": 3, "total_preds": 9, "accuracy": 33.3, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 3, "preds": 3, "acc": 100.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Goodison Park", "matches": 3, "total_correct": 3, "total_preds": 9, "accuracy": 33.3, "players": {"faz": {"correct": 2, "preds": 3, "acc": 66.7}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 1, "preds": 3, "acc": 33.3}}}, {"stadium": "Boris Paichadzis Dinamo Arena", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 1, "preds": 1, "acc": 100.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Est\u00e1dio do Drag\u00e3o", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 1, "preds": 1, "acc": 100.0}}}, {"stadium": "Hillsborough Stadium", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 1, "preds": 1, "acc": 100.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "One Call Stadium", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 1, "preds": 1, "acc": 100.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Parken", "matches": 1, "total_correct": 1, "total_preds": 3, "accuracy": 33.3, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 1, "preds": 1, "acc": 100.0}}}, {"stadium": "Elland Road", "matches": 3, "total_correct": 2, "total_preds": 9, "accuracy": 22.2, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 1, "preds": 3, "acc": 33.3}}}, {"stadium": "Molineux Stadium", "matches": 4, "total_correct": 2, "total_preds": 12, "accuracy": 16.7, "players": {"faz": {"correct": 1, "preds": 4, "acc": 25.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 1, "preds": 4, "acc": 25.0}}}, {"stadium": "Wembley Stadium connected by EE", "matches": 2, "total_correct": 1, "total_preds": 6, "accuracy": 16.7, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 1, "preds": 2, "acc": 50.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Windsor Park", "matches": 2, "total_correct": 1, "total_preds": 6, "accuracy": 16.7, "players": {"faz": {"correct": 1, "preds": 2, "acc": 50.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Cardiff City Stadium", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 1, "preds": 3, "acc": 33.3}}}, {"stadium": "City Ground", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 1, "preds": 3, "acc": 33.3}}}, {"stadium": "MKM Stadium", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 1, "preds": 3, "acc": 33.3}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Portman Road", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "The Kassam Stadium", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Villa Park", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 1, "preds": 3, "acc": 33.3}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Vitality Stadium", "matches": 3, "total_correct": 1, "total_preds": 9, "accuracy": 11.1, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 1, "preds": 3, "acc": 33.3}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Anfield", "matches": 5, "total_correct": 1, "total_preds": 15, "accuracy": 6.7, "players": {"faz": {"correct": 1, "preds": 5, "acc": 20.0}, "bill": {"correct": 0, "preds": 5, "acc": 0.0}, "lenn": {"correct": 0, "preds": 5, "acc": 0.0}}}, {"stadium": "Bramall Lane", "matches": 5, "total_correct": 1, "total_preds": 15, "accuracy": 6.7, "players": {"faz": {"correct": 0, "preds": 5, "acc": 0.0}, "bill": {"correct": 0, "preds": 5, "acc": 0.0}, "lenn": {"correct": 1, "preds": 5, "acc": 20.0}}}, {"stadium": "Accu Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Amex Stadium", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Aviva Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Barclays Hampden", "matches": 2, "total_correct": 0, "total_preds": 6, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "CBS Arena", "matches": 2, "total_correct": 0, "total_preds": 6, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Celtic Park", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "City Arena Trnava", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Coventry Building Society Arena", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Craven Cottage", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Deepdale", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Est\u00e1dio Jos\u00e9 Alvalade", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Etihad Stadium", "matches": 4, "total_correct": 0, "total_preds": 12, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 4, "acc": 0.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 0, "preds": 4, "acc": 0.0}}}, {"stadium": "Ewood Park", "matches": 2, "total_correct": 0, "total_preds": 6, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Gtech Community Stadium", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Highbury Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Hill Dickinson Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Jan Breydel Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Johan Cruijff Arena", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "King Power Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "London Stadium", "matches": 2, "total_correct": 0, "total_preds": 6, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 2, "acc": 0.0}, "bill": {"correct": 0, "preds": 2, "acc": 0.0}, "lenn": {"correct": 0, "preds": 2, "acc": 0.0}}}, {"stadium": "Meadow Lane Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Nagyerdei Stadion", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Nationala Arena To\u0161e Proeski", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Old Trafford", "matches": 5, "total_correct": 0, "total_preds": 15, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 5, "acc": 0.0}, "bill": {"correct": 0, "preds": 5, "acc": 0.0}, "lenn": {"correct": 0, "preds": 5, "acc": 0.0}}}, {"stadium": "Portman Road Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Principality Stadium (Neutral Site)", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Reale Arena", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Red Bull Arena (Neutral Site)", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Riverside Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Select Car Leasing Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Selhurst Park", "matches": 4, "total_correct": 0, "total_preds": 12, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 4, "acc": 0.0}, "bill": {"correct": 0, "preds": 4, "acc": 0.0}, "lenn": {"correct": 0, "preds": 4, "acc": 0.0}}}, {"stadium": "St Andrew's @ Knighthead Park", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "St James' Park", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Stadion HNK Rijeka", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stadion Sto\u017eice", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stadiumi Fadil Vokrri", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Stamford Bridge", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "TSC Arena", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "The BetWright Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "The Lamex Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "Tottenham Hotspur Stadium", "matches": 3, "total_correct": 0, "total_preds": 9, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 3, "acc": 0.0}, "bill": {"correct": 0, "preds": 3, "acc": 0.0}, "lenn": {"correct": 0, "preds": 3, "acc": 0.0}}}, {"stadium": "Weston Homes Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}, {"stadium": "bet365 Stadium", "matches": 1, "total_correct": 0, "total_preds": 3, "accuracy": 0.0, "players": {"faz": {"correct": 0, "preds": 1, "acc": 0.0}, "bill": {"correct": 0, "preds": 1, "acc": 0.0}, "lenn": {"correct": 0, "preds": 1, "acc": 0.0}}}];
 const TODAYS_MATCHES = [{"home": "Coventry City FC", "away": "Newcastle United FC", "comp": "Premier League", "faz_default": "0 - 1", "bill_default": "0 - 2", "lenn_default": "1 - 1"}];
 
@@ -516,10 +435,8 @@ function getColors() {
 }
 
 function openPlayerModal(playerName) {
-  const pKey = playerName.toLowerCase();
-  const data = OVERALL[pKey];
+  const data = OVERALL[playerName.toLowerCase()];
   if (!data) return;
-
   document.getElementById('modalPlayerName').textContent = playerName + ' · Detailed Profile';
   document.getElementById('modalPlayerSub').textContent = `${data.correct} correct out of ${data.predictions} predictions (${data.accuracy}% accuracy)`;
   document.getElementById('modalBullseyes').textContent = data.exact;
@@ -528,7 +445,6 @@ function openPlayerModal(playerName) {
   document.getElementById('modalCommonPick').textContent = data.drilldown.common_pred;
   document.getElementById('modalMaxHot').textContent = data.drilldown.max_hot + ' matches';
   document.getElementById('modalMaxCold').textContent = data.drilldown.max_cold + ' matches';
-
   document.getElementById('playerModal').classList.add('active');
 }
 
@@ -539,7 +455,6 @@ function closePlayerModal() {
 function toggleTheme() {
   const body = document.body;
   const btn = document.querySelector('.theme-toggle-btn');
-  
   if (body.classList.contains('starwars-theme')) {
     body.classList.remove('starwars-theme');
     body.classList.add('default-theme');
@@ -551,18 +466,15 @@ function toggleTheme() {
     localStorage.setItem('dashboard_theme', 'starwars');
     btn.textContent = '⚡ Default Theme';
   }
-
   const colors = getColors();
   raceChart.data.datasets[0].borderColor = colors.faz;
   raceChart.data.datasets[1].borderColor = colors.bill;
   raceChart.data.datasets[2].borderColor = colors.lenn;
   raceChart.update();
-
   rollingChart.data.datasets[0].borderColor = colors.faz;
   rollingChart.data.datasets[1].borderColor = colors.bill;
   rollingChart.data.datasets[2].borderColor = colors.lenn;
   rollingChart.update();
-
   compChart.data.datasets[0].backgroundColor = colors.faz;
   compChart.data.datasets[1].backgroundColor = colors.bill;
   compChart.data.datasets[2].backgroundColor = colors.lenn;
@@ -570,15 +482,11 @@ function toggleTheme() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const savedTheme = localStorage.getItem('dashboard_theme');
-  const btn = document.querySelector('.theme-toggle-btn');
-  if (savedTheme === 'default') {
+  if (localStorage.getItem('dashboard_theme') === 'default') {
     document.body.classList.remove('starwars-theme');
     document.body.classList.add('default-theme');
+    const btn = document.querySelector('.theme-toggle-btn');
     if (btn) btn.textContent = '🌌 Change theme';
-  } else {
-    document.body.classList.add('starwars-theme');
-    if (btn) btn.textContent = '⚡ Default Theme';
   }
   renderBangers();
   renderH2H();
@@ -589,7 +497,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 const initialColors = getColors();
 
-// Race Chart
 const raceCtx = document.getElementById('raceChart').getContext('2d');
 let raceChart = new Chart(raceCtx, {
   type: 'line',
@@ -652,7 +559,6 @@ function resetRace() {
   document.getElementById('score-lenn').textContent = OVERALL.lenn.rt;
 }
 
-// Rolling Momentum Chart
 let rollingChart = new Chart(document.getElementById('rollingChart'), {
   type: 'line',
   data: {
@@ -667,9 +573,7 @@ let rollingChart = new Chart(document.getElementById('rollingChart'), {
     responsive: true, maintainAspectRatio: false,
     plugins: {
       legend: { labels: { color: '#8b9bb8', boxWidth: 12 } },
-      tooltip: {
-        callbacks: { label: ctx => `${ctx.dataset.label}:${ctx.raw}% accuracy (last 15)` }
-      }
+      tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}:${ctx.raw}% accuracy` } }
     },
     scales: {
       x: { grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', maxTicksLimit: 12 } },
@@ -678,14 +582,13 @@ let rollingChart = new Chart(document.getElementById('rollingChart'), {
   }
 });
 
-// Matrix Chart
 let matrixChart = new Chart(document.getElementById('matrixChart'), {
   type: 'bar',
   data: {
     labels: ['Faz', 'Bill', 'Lenn'],
     datasets: [
       { label: 'Bullseye (Exact Score)', data: [OVERALL.faz.exact, OVERALL.bill.exact, OVERALL.lenn.exact], backgroundColor: '#34d399' },
-      { label: 'Correct Outcome (Right Winner)', data: [OVERALL.faz.outcome, OVERALL.bill.outcome, OVERALL.lenn.outcome], backgroundColor: '#22d3ee' },
+      { label: 'Correct Outcome', data: [OVERALL.faz.outcome, OVERALL.bill.outcome, OVERALL.lenn.outcome], backgroundColor: '#22d3ee' },
       { label: 'Miss', data: [OVERALL.faz.wrong, OVERALL.bill.wrong, OVERALL.lenn.wrong], backgroundColor: '#f87171' }
     ]
   },
@@ -699,39 +602,20 @@ let matrixChart = new Chart(document.getElementById('matrixChart'), {
   }
 });
 
-// Competition Accuracy Chart
 const comps = [...new Set(COMP_STATS.map(c => c.competition))];
-const fazAcc = comps.map(c => { const r = COMP_STATS.find(x => x.competition === c && x.player === 'Faz'); return r ? r.accuracy : 0; });
-const billAcc = comps.map(c => { const r = COMP_STATS.find(x => x.competition === c && x.player === 'Bill'); return r ? r.accuracy : 0; });
-const lennAcc = comps.map(c => { const r = COMP_STATS.find(x => x.competition === c && x.player === 'Lenn'); return r ? r.accuracy : 0; });
-
 let compChart = new Chart(document.getElementById('compChart'), {
   type: 'bar',
   data: {
     labels: comps.map(c => c.replace('UEFA ', '').replace('EFL ', '')),
     datasets: [
-      { label: 'Faz', data: fazAcc, backgroundColor: initialColors.faz },
-      { label: 'Bill', data: billAcc, backgroundColor: initialColors.bill },
-      { label: 'Lenn', data: lennAcc, backgroundColor: initialColors.lenn },
+      { label: 'Faz', data: comps.map(c => (COMP_STATS.find(x => x.competition === c && x.player === 'Faz') || {accuracy:0}).accuracy), backgroundColor: initialColors.faz },
+      { label: 'Bill', data: comps.map(c => (COMP_STATS.find(x => x.competition === c && x.player === 'Bill') || {accuracy:0}).accuracy), backgroundColor: initialColors.bill },
+      { label: 'Lenn', data: comps.map(c => (COMP_STATS.find(x => x.competition === c && x.player === 'Lenn') || {accuracy:0}).accuracy), backgroundColor: initialColors.lenn },
     ]
   },
   options: {
-    indexAxis: 'y',
-    responsive: true, maintainAspectRatio: false,
-    plugins: {
-      legend: { labels: { color: '#8b9bb8', boxWidth: 12 } },
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const full = comps[ctx.dataIndex];
-            const p = ctx.dataset.label;
-            const r = COMP_STATS.find(x => x.competition === full && x.player === p);
-            if (!r) return ctx.raw + '%';
-            return `${p}:${r.correct}/${r.total} (${r.accuracy}%)`;
-          }
-        }
-      }
-    },
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { labels: { color: '#8b9bb8', boxWidth: 12 } } },
     scales: {
       x: { beginAtZero: true, max: 100, grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', callback: v => v + '%' } },
       y: { grid: { display: false }, ticks: { color: '#8b9bb8', font: { size: 11 } } }
@@ -741,15 +625,12 @@ let compChart = new Chart(document.getElementById('compChart'), {
 
 function renderBangers() {
   const container = document.getElementById('bangersContainer');
-  if (!BANGERS.length) {
-    container.innerHTML = '<p style="color:var(--muted)">No hero bangers recorded yet.</p>';
-    return;
-  }
+  if (!BANGERS.length) { container.innerHTML = '<p style="color:var(--muted)">No hero bangers recorded yet.</p>'; return; }
   container.innerHTML = BANGERS.map(b => {
     const pColor = b.player === 'Faz' ? 'var(--faz)' : (b.player === 'Bill' ? 'var(--bill)' : 'var(--lenn)');
     const pBg = b.player === 'Faz' ? 'var(--faz-dim)' : (b.player === 'Bill' ? 'var(--bill-dim)' : 'var(--lenn-dim)');
     return `<div class="banger-card">
-      <div class="b-header"><span>${b.date} ·${b.comp}</span><span class="banger-tag" style="background:${pBg}; color:${pColor}">${b.player}</span></div>
+      <div class="b-header"><span>${b.date} · ${b.comp}</span><span class="banger-tag" style="background:${pBg}; color:${pColor}">${b.player}</span></div>
       <div class="b-match">${shortTeam(b.match.split(' vs ')[0])} &nbsp;vs&nbsp; ${shortTeam(b.match.split(' vs ')[1])}</div>
       <div class="b-footer"><span style="color:var(--muted)">Actual: <strong class="scoreline">${b.score}</strong></span><span style="color:var(--muted)">Pred: <strong class="scoreline" style="color:${pColor}">${b.pred}</strong></span></div>
     </div>`;
@@ -760,7 +641,7 @@ function renderH2H() {
   const container = document.getElementById('h2hContainer');
   container.innerHTML = H2H.map(h => {
     return `<div class="h2h-card">
-      <div style="font-weight:600; margin-bottom:6px; display:flex; justify-content:space-between"><span>${h.p1} vs${h.p2}</span><span style="color:var(--muted); font-size:0.75rem">Head-to-Head</span></div>
+      <div style="font-weight:600; margin-bottom:6px; display:flex; justify-content:space-between"><span>${h.p1} vs ${h.p2}</span><span style="color:var(--muted); font-size:0.75rem">H2H</span></div>
       <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-top:4px">
         <span>${h.p1}: <strong style="color:var(--faz)">${h.p1_wins}</strong></span>
         <span style="color:var(--muted)">Draws: ${h.draws}</span>
@@ -772,63 +653,27 @@ function renderH2H() {
 
 function renderUpcoming() {
   const body = document.getElementById('upcomingBody');
-  if (!UPCOMING.length) {
-    body.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--muted)">No upcoming fixtures found.</td></tr>';
-    return;
-  }
+  if (!UPCOMING.length) { body.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--muted)">No upcoming fixtures found.</td></tr>'; return; }
   body.innerHTML = UPCOMING.map(u => {
-    return `<tr>
-      <td>${u.date}</td>
-      <td><span class="comp-tag">${u.comp.replace('UEFA ','').replace('EFL ','')}</span></td>
-      <td>${shortTeam(u.home)} &nbsp;vs&nbsp; ${shortTeam(u.away)}</td>
-      <td class="scoreline">${u.faz}</td>
-      <td class="scoreline">${u.bill}</td>
-      <td class="scoreline">${u.lenn}</td>
-    </tr>`;
+    return `<tr><td>${u.date}</td><td><span class="comp-tag">${u.comp.replace('UEFA ','').replace('EFL ','')}</span></td><td>${shortTeam(u.home)} &nbsp;vs&nbsp; ${shortTeam(u.away)}</td><td class="scoreline">${u.faz}</td><td class="scoreline">${u.bill}</td><td class="scoreline">${u.lenn}</td></tr>`;
   }).join('');
 }
 
-function renderStadiums(stadiumList) {
+function renderStadiums(list) {
   const container = document.getElementById('heatmapContainer');
-  if (!stadiumList.length) {
-    container.innerHTML = '<p style="color:var(--muted)">No stadium data available.</p>';
-    return;
-  }
-  container.innerHTML = stadiumList.map(s => {
-    let badgeBg = 'rgba(248,113,113,0.15)';
-    let badgeColor = 'var(--danger)';
-    if (s.accuracy >= 40) {
-      badgeBg = 'rgba(52,211,153,0.2)';
-      badgeColor = 'var(--lenn)';
-    } else if (s.accuracy >= 25) {
-      badgeBg = 'rgba(34,211,238,0.15)';
-      badgeColor = 'var(--faz)';
-    }
-
+  if (!list.length) { container.innerHTML = '<p style="color:var(--muted)">No stadium data available.</p>'; return; }
+  container.innerHTML = list.map(s => {
+    let badgeBg = s.accuracy >= 40 ? 'rgba(52,211,153,0.2)' : (s.accuracy >= 25 ? 'rgba(34,211,238,0.15)' : 'rgba(248,113,113,0.15)');
+    let badgeColor = s.accuracy >= 40 ? 'var(--lenn)' : (s.accuracy >= 25 ? 'var(--faz)' : 'var(--danger)');
     return `<div class="stadium-card">
       <div>
-        <div class="stadium-header">
-          <span class="stadium-name">${s.stadium}</span>
-          <span class="stadium-badge" style="background:${badgeBg}; color:${badgeColor}">${s.accuracy}%</span>
-        </div>
-        <div class="stadium-stats-row">
-          <span>${s.matches} match${s.matches > 1 ? 'es' : ''}</span>
-          <span>${s.total_correct}/${s.total_preds} correct</span>
-        </div>
+        <div class="stadium-header"><span class="stadium-name">${s.stadium}</span><span class="stadium-badge" style="background:${badgeBg}; color:${badgeColor}">${s.accuracy}%</span></div>
+        <div class="stadium-stats-row"><span>${s.matches} match${s.matches > 1 ? 'es' : ''}</span><span>${s.total_correct}/${s.total_preds} correct</span></div>
       </div>
       <div class="stadium-players">
-        <div class="stadium-player-pill">
-          <div class="p-name">Faz</div>
-          <div class="p-score">${s.players.faz.correct}/${s.players.faz.preds}</div>
-        </div>
-        <div class="stadium-player-pill">
-          <div class="p-name">Bill</div>
-          <div class="p-score">${s.players.bill.correct}/${s.players.bill.preds}</div>
-        </div>
-        <div class="stadium-player-pill">
-          <div class="p-name">Lenn</div>
-          <div class="p-score">${s.players.lenn.correct}/${s.players.lenn.preds}</div>
-        </div>
+        <div class="stadium-player-pill"><div class="p-name">Faz</div><div class="p-score">${s.players.faz.correct}/${s.players.faz.preds}</div></div>
+        <div class="stadium-player-pill"><div class="p-name">Bill</div><div class="p-score">${s.players.bill.correct}/${s.players.bill.preds}</div></div>
+        <div class="stadium-player-pill"><div class="p-name">Lenn</div><div class="p-score">${s.players.lenn.correct}/${s.players.lenn.preds}</div></div>
       </div>
     </div>`;
   }).join('');
@@ -836,11 +681,7 @@ function renderStadiums(stadiumList) {
 
 function filterStadiums() {
   const q = document.getElementById('stadiumSearchBox').value.toLowerCase().trim();
-  let list = STADIUMS;
-  if (q) {
-    list = list.filter(s => s.stadium.toLowerCase().includes(q));
-  }
-  renderStadiums(list);
+  renderStadiums(q ? STADIUMS.filter(s => s.stadium.toLowerCase().includes(q)) : STADIUMS);
 }
 
 function cleanTeamName(name) {
@@ -850,47 +691,26 @@ function cleanTeamName(name) {
 
 function renderWhatsAppSection() {
   const container = document.getElementById('whatsappContainer');
-  if (!TODAYS_MATCHES.length) {
-    container.innerHTML = '<p style="color:var(--muted)">No matches scheduled for today.</p>';
-    return;
-  }
-
-  const players = [
-    { name: 'Faz', key: 'faz_default' },
-    { name: 'Bill', key: 'bill_default' },
-    { name: 'Lenn', key: 'lenn_default' }
-  ];
-
-  container.innerHTML = players.map(p => {
-    let customLines = TODAYS_MATCHES.map(m => {
-      let rawPred = m[p.key] || '1 - 1';
-      let parts = rawPred.split('-');
-      let hScore = parts[0] ? parts[0].trim() : '1';
-      let aScore = parts[1] ? parts[1].trim() : '1';
-      let homeClean = cleanTeamName(m.home);
-      let awayClean = cleanTeamName(m.away);
-      return `${homeClean} ${hScore} - ${aScore} ${awayClean}`;
-    }).join('\n');
-
-    let fullText = `` + customLines;
-
+  if (!TODAYS_MATCHES.length) { container.innerHTML = '<p style="color:var(--muted)">No matches scheduled for today.</p>'; return; }
+  container.innerHTML = ['Faz', 'Bill', 'Lenn'].map(name => {
+    let pKey = name.toLowerCase() + '_default';
+    let lines = TODAYS_MATCHES.map(m => `${cleanTeamName(m.home)} ${m[pKey] || '1 - 1'} ${cleanTeamName(m.away)}`).join('
+');
     return `<div class="whatsapp-card">
-      <h3><span>${p.name}</span></h3>
-      <textarea class="whatsapp-textarea" id="wa-${p.name.toLowerCase()}">${fullText}</textarea>
-      <button class="whatsapp-btn" onclick="copyWhatsApp('${p.name.toLowerCase()}', this)">
-        📋 Copy for WhatsApp
-      </button>
+      <h3><span>${name}</span></h3>
+      <textarea class="whatsapp-textarea" id="wa-${name.toLowerCase()}">${lines}</textarea>
+      <button class="whatsapp-btn" onclick="copyWhatsApp('${name.toLowerCase()}', this)">📋 Copy for WhatsApp</button>
     </div>`;
   }).join('');
 }
 
 function copyWhatsApp(playerName, btn) {
-  const textarea = document.getElementById('wa-' + playerName);
-  textarea.select();
-  navigator.clipboard.writeText(textarea.value).then(() => {
-    const originalText = btn.innerHTML;
+  const ta = document.getElementById('wa-' + playerName);
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(() => {
+    const orig = btn.innerHTML;
     btn.innerHTML = '✅ Copied!';
-    setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+    setTimeout(() => { btn.innerHTML = orig; }, 2000);
   });
 }
 
@@ -902,25 +722,14 @@ function shortTeam(t) {
   return t.replace(/ FC$/,'').replace(/ AFC$/,'').replace(/ United$/,' Utd').replace(/Wanderers /,'').replace(/Hotspur /,'');
 }
 function renderTable(rows) {
-  const body = document.getElementById('matchBody');
-  body.innerHTML = rows.map(m => {
-    const hasF = m.faz_pred !== '';
-    const hasB = m.bill_pred !== '';
-    const hasL = m.lenn_pred !== '';
+  document.getElementById('matchBody').innerHTML = rows.map(m => {
     return `<tr>
-      <td>${m.date}</td>
-      <td><span class="comp-tag">${m.comp.replace('UEFA ','').replace('EFL ','')}</span></td>
-      <td>${shortTeam(m.home)} &nbsp;vs&nbsp; ${shortTeam(m.away)}</td>
-      <td class="scoreline">${m.score}</td>
-      <td>${m.faz_pred || '–'}</td>
-      <td>${pill(m.faz_ok, hasF)}</td>
-      <td>${m.bill_pred || '–'}</td>
-      <td>${pill(m.bill_ok, hasB)}</td>
-      <td>${m.lenn_pred || '–'}</td>
-      <td>${pill(m.lenn_ok, hasL)}</td>
-      <td>${m.faz_rt}</td>
-      <td>${m.bill_rt}</td>
-      <td>${m.lenn_rt}</td>
+      <td>${m.date}</td><td><span class="comp-tag">${m.comp.replace('UEFA ','').replace('EFL ','')}</span></td>
+      <td>${shortTeam(m.home)} &nbsp;vs&nbsp; ${shortTeam(m.away)}</td><td class="scoreline">${m.score}</td>
+      <td>${m.faz_pred || '–'}</td><td>${pill(m.faz_ok, m.faz_pred !== '')}</td>
+      <td>${m.bill_pred || '–'}</td><td>${pill(m.bill_ok, m.bill_pred !== '')}</td>
+      <td>${m.lenn_pred || '–'}</td><td>${pill(m.lenn_ok, m.lenn_pred !== '')}</td>
+      <td>${m.faz_rt}</td><td>${m.bill_rt}</td><td>${m.lenn_rt}</td>
     </tr>`;
   }).join('');
 }
