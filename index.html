@@ -694,8 +694,7 @@ function renderWhatsAppSection() {
   if (!TODAYS_MATCHES.length) { container.innerHTML = '<p style="color:var(--muted)">No matches scheduled for today.</p>'; return; }
   container.innerHTML = ['Faz', 'Bill', 'Lenn'].map(name => {
     let pKey = name.toLowerCase() + '_default';
-    let lines = TODAYS_MATCHES.map(m => `${cleanTeamName(m.home)} ${m[pKey] || '1 - 1'} ${cleanTeamName(m.away)}`).join('
-');
+    let lines = TODAYS_MATCHES.map(m => `${cleanTeamName(m.home)} ${m[pKey] || '1 - 1'} ${cleanTeamName(m.away)}`).join('\n');
     return `<div class="whatsapp-card">
       <h3><span>${name}</span></h3>
       <textarea class="whatsapp-textarea" id="wa-${name.toLowerCase()}">${lines}</textarea>
