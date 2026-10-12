@@ -394,19 +394,6 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     </div>
   </div>
 
-  <div class="grid-2">
-    <div class="panel">
-      <h2>⚔️ Head-to-Head (H2H) Rivalry</h2>
-      <p class="hint">Direct matchups: matches where one predictor scored while the other missed.</p>
-      <div class="h2h-grid" id="h2hContainer"></div>
-    </div>
-    <div class="panel">
-      <h2>⚡ Hero Predictions ("Bangers") Hall of Fame</h2>
-      <p class="hint">Matches where only one predictor got it right while everyone else failed.</p>
-      <div class="bangers-grid" id="bangersContainer"></div>
-    </div>
-  </div>
-
   <div class="panel">
     <h2>📅 Upcoming Fixtures Preview</h2>
     <p class="hint">Next scheduled matches and predictions locked in by the group.</p>
@@ -427,7 +414,14 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     </div>
   </div>
 
+  <!-- WhatsApp Quick-Copy Predictions Section -->
   <div class="panel">
+    <h2>💬 WhatsApp Predictions Share</h2>
+    <p class="hint">Matches scheduled for today with pre-populated predictions.</p>
+    <div class="whatsapp-grid" id="whatsappContainer"></div>
+  </div>
+
+    <div class="panel">
     <h2>🔍 Match explorer</h2>
     <p class="hint">Finished matches with predictions. Filter by competition or search team names.</p>
     <div class="controls">
@@ -470,6 +464,21 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     </div>
   </div>
 
+  <div class="grid-2">
+    <div class="panel">
+      <h2>⚔️ Head-to-Head (H2H) Rivalry</h2>
+      <p class="hint">Direct matchups: matches where one predictor scored while the other missed.</p>
+      <div class="h2h-grid" id="h2hContainer"></div>
+    </div>
+    <div class="panel">
+      <h2>⚡ Hero Predictions ("Bangers") Hall of Fame</h2>
+      <p class="hint">Matches where only one predictor got it right while everyone else failed.</p>
+      <div class="bangers-grid" id="bangersContainer"></div>
+    </div>
+  </div>
+  
+
+
   <div class="panel">
     <h2>🏟️ Predictor-Friendly Stadium Heatmap</h2>
     <p class="hint">Grounds ranked by group prediction success rate. Spot which stadiums are goldmines or graveyard shifts.</p>
@@ -480,12 +489,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     <div class="heatmap-grid" id="heatmapContainer"></div>
   </div>
 
-  <!-- WhatsApp Quick-Copy Predictions Section -->
-  <div class="panel">
-    <h2>💬 WhatsApp Predictions Share</h2>
-    <p class="hint">Matches scheduled for today with pre-populated predictions.</p>
-    <div class="whatsapp-grid" id="whatsappContainer"></div>
-  </div>
+
 
   <footer></footer>
 </div>
