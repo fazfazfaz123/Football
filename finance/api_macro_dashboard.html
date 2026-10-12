@@ -26,6 +26,31 @@
         
         * { box-sizing: border-box; }
 
+        /* Custom Dark Scrollbars */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-bright) var(--card-bg);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--card-bg);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-bright);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-color);
@@ -323,7 +348,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-12 19:55:32</div>
+            <div class="timestamp">SYNCED: 2026-10-12 19:56:54</div>
         </header>
 
         <div class="top-toolbar">
