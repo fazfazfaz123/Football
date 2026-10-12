@@ -200,6 +200,7 @@
             border-radius: 10px;
             border: 1px solid var(--border);
             background: var(--card-bg);
+            -webkit-overflow-scrolling: touch;
         }
 
         .nfp-table-wrap { max-height: 280px; }
@@ -271,6 +272,7 @@
             gap: 0.35rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -295,6 +297,23 @@
             border-color: rgba(59, 130, 246, 0.4);
             color: var(--text-main);
         }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.75rem 0.25rem;
+            }
+            .wrapper {
+                padding: 1rem 0.75rem;
+                border-radius: 12px;
+            }
+            .panel {
+                padding: 0.85rem;
+            }
+            .nfp-value {
+                font-size: 1.6rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -304,7 +323,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-12 19:51:00</div>
+            <div class="timestamp">SYNCED: 2026-10-12 19:55:32</div>
         </header>
 
         <div class="top-toolbar">
@@ -409,15 +428,16 @@
             </div>
             <div class="cb-content-wrap" style="margin-top: 0.75rem;">
                 <div id="cb-tab-0" class="cb-tab-content" style="display: block;">
-                <table class="macro-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Event / Meeting Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                <div class="table-container">
+                    <table class="macro-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event / Meeting Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                 <td class="country">05-11-2026</td>
                 <td>MPC Meeting (with MPR)</td>
             </tr><tr>
@@ -433,18 +453,20 @@
                 <td class="country">29-04-2027</td>
                 <td>MPC Meeting (with MPR)</td>
             </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div><div id="cb-tab-1" class="cb-tab-content" style="display: none;">
-                <table class="macro-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Event / Meeting Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                <div class="table-container">
+                    <table class="macro-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event / Meeting Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                 <td class="country">29-10-2026</td>
                 <td>Governing Council Meeting</td>
             </tr><tr>
@@ -460,18 +482,20 @@
                 <td class="country">29-04-2027</td>
                 <td>Governing Council Meeting</td>
             </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div><div id="cb-tab-2" class="cb-tab-content" style="display: none;">
-                <table class="macro-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Event / Meeting Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
+                <div class="table-container">
+                    <table class="macro-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Event / Meeting Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                 <td class="country">28-10-2026</td>
                 <td>FOMC Rate Decision</td>
             </tr><tr>
@@ -487,8 +511,9 @@
                 <td class="country">28-04-2027</td>
                 <td>FOMC Rate Decision</td>
             </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             </div>
         </div>
