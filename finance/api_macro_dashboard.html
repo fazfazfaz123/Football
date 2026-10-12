@@ -163,7 +163,6 @@
             align-items: start;
         }
 
-        /* Ensure grid columns handle min-width properly on mobile */
         .dashboard-grid > * {
             min-width: 0;
         }
@@ -276,6 +275,15 @@
 
         table.macro-table th.num-header { text-align: right; }
 
+        /* Centered column styling for NFP table */
+        table.macro-table td.center {
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        table.macro-table th.center-header { text-align: center; }
+
         table.macro-table tr:hover { background-color: var(--card-bg-hover); }
         td.country { font-weight: 500; }
 
@@ -361,7 +369,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-12 19:59:44</div>
+            <div class="timestamp">SYNCED: 2026-10-12 20:02:53</div>
         </header>
 
         <div class="top-toolbar">
@@ -395,59 +403,59 @@
                     <thead>
                         <tr>
                             <th>Period</th>
-                            <th>MoM</th>
-                            <th>Level</th>
+                            <th class="center-header">MoM</th>
+                            <th class="center-header">Level</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                 <td class="country">Sep 2026</td>
-                <td class="num dir-good"><span>+29K</span></td>
-                <td class="num"><span>159,044K</span></td>
+                <td class="center dir-good"><span>+29K</span></td>
+                <td class="center"><span>159,044K</span></td>
             </tr><tr>
                 <td class="country">Aug 2026</td>
-                <td class="num dir-good"><span>+133K</span></td>
-                <td class="num"><span>159,015K</span></td>
+                <td class="center dir-good"><span>+133K</span></td>
+                <td class="center"><span>159,015K</span></td>
             </tr><tr>
                 <td class="country">Jul 2026</td>
-                <td class="num dir-bad"><span>-10K</span></td>
-                <td class="num"><span>158,882K</span></td>
+                <td class="center dir-bad"><span>-10K</span></td>
+                <td class="center"><span>158,882K</span></td>
             </tr><tr>
                 <td class="country">Jun 2026</td>
-                <td class="num dir-good"><span>+31K</span></td>
-                <td class="num"><span>158,892K</span></td>
+                <td class="center dir-good"><span>+31K</span></td>
+                <td class="center"><span>158,892K</span></td>
             </tr><tr>
                 <td class="country">May 2026</td>
-                <td class="num dir-good"><span>+63K</span></td>
-                <td class="num"><span>158,861K</span></td>
+                <td class="center dir-good"><span>+63K</span></td>
+                <td class="center"><span>158,861K</span></td>
             </tr><tr>
                 <td class="country">Apr 2026</td>
-                <td class="num dir-good"><span>+148K</span></td>
-                <td class="num"><span>158,798K</span></td>
+                <td class="center dir-good"><span>+148K</span></td>
+                <td class="center"><span>158,798K</span></td>
             </tr><tr>
                 <td class="country">Mar 2026</td>
-                <td class="num dir-good"><span>+214K</span></td>
-                <td class="num"><span>158,650K</span></td>
+                <td class="center dir-good"><span>+214K</span></td>
+                <td class="center"><span>158,650K</span></td>
             </tr><tr>
                 <td class="country">Feb 2026</td>
-                <td class="num dir-bad"><span>-156K</span></td>
-                <td class="num"><span>158,436K</span></td>
+                <td class="center dir-bad"><span>-156K</span></td>
+                <td class="center"><span>158,436K</span></td>
             </tr><tr>
                 <td class="country">Jan 2026</td>
-                <td class="num dir-good"><span>+160K</span></td>
-                <td class="num"><span>158,592K</span></td>
+                <td class="center dir-good"><span>+160K</span></td>
+                <td class="center"><span>158,592K</span></td>
             </tr><tr>
                 <td class="country">Dec 2025</td>
-                <td class="num dir-bad"><span>-17K</span></td>
-                <td class="num"><span>158,432K</span></td>
+                <td class="center dir-bad"><span>-17K</span></td>
+                <td class="center"><span>158,432K</span></td>
             </tr><tr>
                 <td class="country">Nov 2025</td>
-                <td class="num dir-good"><span>+41K</span></td>
-                <td class="num"><span>158,449K</span></td>
+                <td class="center dir-good"><span>+41K</span></td>
+                <td class="center"><span>158,449K</span></td>
             </tr><tr>
                 <td class="country">Oct 2025</td>
-                <td class="num dir-bad"><span>-140K</span></td>
-                <td class="num"><span>158,408K</span></td>
+                <td class="center dir-bad"><span>-140K</span></td>
+                <td class="center"><span>158,408K</span></td>
             </tr>
                     </tbody>
                 </table>
