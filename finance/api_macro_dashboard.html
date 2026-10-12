@@ -24,9 +24,7 @@
             --accent-glow: rgba(59, 130, 246, 0.15);
         }
         
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -127,7 +125,6 @@
             letter-spacing: 0.05em;
         }
 
-        /* Dashboard Main Layout */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 360px 1fr;
@@ -136,9 +133,7 @@
         }
 
         @media (max-width: 1200px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
+            .dashboard-grid { grid-template-columns: 1fr; }
         }
 
         .panel {
@@ -168,7 +163,6 @@
             margin: 0.2rem 0 0;
         }
 
-        /* NFP Card specific */
         .nfp-metric-card {
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border);
@@ -208,9 +202,7 @@
             background: var(--card-bg);
         }
 
-        .nfp-table-wrap {
-            max-height: 280px;
-        }
+        .nfp-table-wrap { max-height: 280px; }
 
         table.macro-table {
             width: 100%;
@@ -243,30 +235,14 @@
             font-variant-numeric: tabular-nums;
         }
 
-        table.macro-table th.num-header {
-            text-align: right;
-        }
+        table.macro-table th.num-header { text-align: right; }
 
-        table.macro-table tr:hover {
-            background-color: var(--card-bg-hover);
-        }
+        table.macro-table tr:hover { background-color: var(--card-bg-hover); }
+        td.country { font-weight: 500; }
 
-        td.country {
-            font-weight: 500;
-        }
-
-        /* Color States */
-        td.dir-good {
-            color: var(--good);
-            background: var(--good-bg);
-        }
-        td.dir-bad {
-            color: var(--bad);
-            background: var(--bad-bg);
-        }
-        td.dir-flat {
-            color: var(--text-main);
-        }
+        td.dir-good { color: var(--good); background: var(--good-bg); }
+        td.dir-bad { color: var(--bad); background: var(--bad-bg); }
+        td.dir-flat { color: var(--text-main); }
 
         td.chg.dir-good { color: var(--good); background: transparent; }
         td.chg.dir-bad { color: var(--bad); background: transparent; }
@@ -288,6 +264,37 @@
             margin-bottom: 1.5rem;
             line-height: 1.4;
         }
+
+        /* Calendar Tabs */
+        .cb-tabs {
+            display: flex;
+            gap: 0.35rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 0.35rem 0.65rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: rgba(59, 130, 246, 0.12);
+            border-color: rgba(59, 130, 246, 0.4);
+            color: var(--text-main);
+        }
     </style>
 </head>
 <body>
@@ -297,7 +304,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-12 19:27:07</div>
+            <div class="timestamp">SYNCED: 2026-10-12 19:39:53</div>
         </header>
 
         <div class="top-toolbar">
@@ -314,7 +321,7 @@
         </div>
 
         <div class="dashboard-grid">
-            <!-- Left Column: NFP Panel -->
+            <!-- Left Column: NFP Panel & Central Bank Calendar -->
             <div>
                 
         <div class="panel nfp-panel">
@@ -395,6 +402,117 @@
                 </table>
             </div>
         </div>
+    
+                
+        <div class="panel cb-calendar-panel" style="margin-top: 1.5rem;">
+            <div class="panel-header">
+                <div>
+                    <h2>Upcoming Rate Decisions</h2>
+                    <p class="subtext">BoE, ECB &amp; Fed forward-looking schedule</p>
+                </div>
+                <div class="badge-pill">Calendar</div>
+            </div>
+            <div class="cb-tabs">
+                <button class="tab-btn active""
+        " onclick="switchCbTab(event, 'cb-tab-0')">Bank of England (BoE)</button><button class="tab-btn ""
+        " onclick="switchCbTab(event, 'cb-tab-1')">European Central Bank (ECB)</button><button class="tab-btn ""
+        " onclick="switchCbTab(event, 'cb-tab-2')">US Federal Reserve (FOMC)</button>
+            </div>
+            <div class="cb-content-wrap" style="margin-top: 0.75rem;">
+                <div id="cb-tab-0" class="cb-tab-content" style="display: block;">
+                <table class="macro-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Event / Meeting Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                <td class="country">2026-11-05</td>
+                <td>MPC Meeting (with MPR)</td>
+            </tr><tr>
+                <td class="country">2026-12-17</td>
+                <td>MPC Meeting</td>
+            </tr><tr>
+                <td class="country">2027-02-04</td>
+                <td>MPC Meeting (with MPR)</td>
+            </tr><tr>
+                <td class="country">2027-03-18</td>
+                <td>MPC Meeting</td>
+            </tr><tr>
+                <td class="country">2027-04-29</td>
+                <td>MPC Meeting (with MPR)</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div><div id="cb-tab-1" class="cb-tab-content" style="display: none;">
+                <table class="macro-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Event / Meeting Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                <td class="country">2026-10-29</td>
+                <td>Governing Council Meeting</td>
+            </tr><tr>
+                <td class="country">2026-12-17</td>
+                <td>Governing Council Meeting</td>
+            </tr><tr>
+                <td class="country">2027-02-04</td>
+                <td>Governing Council Meeting</td>
+            </tr><tr>
+                <td class="country">2027-03-18</td>
+                <td>Governing Council Meeting</td>
+            </tr><tr>
+                <td class="country">2027-04-29</td>
+                <td>Governing Council Meeting</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div><div id="cb-tab-2" class="cb-tab-content" style="display: none;">
+                <table class="macro-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Event / Meeting Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                <td class="country">2026-10-28</td>
+                <td>FOMC Rate Decision</td>
+            </tr><tr>
+                <td class="country">2026-12-09</td>
+                <td>FOMC Rate Decision & Projections</td>
+            </tr><tr>
+                <td class="country">2027-01-27</td>
+                <td>FOMC Rate Decision</td>
+            </tr><tr>
+                <td class="country">2027-03-17</td>
+                <td>FOMC Rate Decision & Projections</td>
+            </tr><tr>
+                <td class="country">2027-04-28</td>
+                <td>FOMC Rate Decision</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+        <script>
+            function switchCbTab(evt, tabId) {
+                const contents = document.getElementsByClassName("cb-tab-content");
+                for (let c of contents) { c.style.display = "none"; }
+                const buttons = document.getElementsByClassName("tab-btn");
+                for (let b of buttons) { b.classList.remove("active"); }
+                document.getElementById(tabId).style.display = "block";
+                evt.currentTarget.classList.add("active");
+            }
+        </script>
     
             </div>
 
