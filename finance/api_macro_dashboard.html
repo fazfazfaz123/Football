@@ -143,13 +143,77 @@
         td.chg.dir-good { color: var(--good); background: transparent; font-weight: 500; }
         td.chg.dir-bad { color: var(--bad); background: transparent; font-weight: 500; }
         td.chg.dir-flat { color: var(--flat); background: transparent; }
+        /* NFP panel */
+        .nfp-panel {
+            margin-bottom: 2rem;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.02);
+        }
+        .nfp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .nfp-header h2 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .nfp-latest {
+            text-align: right;
+        }
+        .nfp-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .nfp-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nfp-value.dir-good { color: var(--good); }
+        .nfp-value.dir-bad { color: var(--bad); }
+        .nfp-level {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+        }
+        .nfp-table-wrap {
+            max-height: 320px;
+            max-width: 340px;
+        }
+        table.nfp-table {
+            width: auto;
+            min-width: 0;
+            font-size: 0.82rem;
+        }
+        table.nfp-table th,
+        table.nfp-table td {
+            padding: 0.4rem 0.55rem;
+        }
+        table.nfp-table td.country {
+            width: 5.5rem;
+        }
+        .section-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 0 0 0.75rem;
+            color: var(--text-main);
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <header>
             <h1>Global Macroeconomic &amp; Central Bank Dashboard</h1>
-            <div class="timestamp">Synced: 2026-10-12 18:26:46</div>
+            <div class="timestamp">Synced: 2026-10-12 19:07:35</div>
         </header>
         <div class="legend">
             <span><span class="swatch good"></span> Favourable move (GDP ↑ · CPI/CB ↓)</span>
@@ -157,10 +221,92 @@
             <span><span class="swatch flat"></span> Unchanged</span>
         </div>
         <p class="note">
-            Colour reflects economic meaning: higher CPI or CB rate = red; higher GDP = green.
+            Colour reflects economic meaning: higher CPI or CB rate = red; higher GDP / jobs = green.
             CB Δ = latest month vs prior month (BIS). CPI &amp; GDP Δ = latest year vs prior year (World Bank).
             Sorted by real interest rate (lowest → highest).
         </p>
+
+        
+        <section class="nfp-panel">
+            <div class="nfp-header">
+                <div>
+                    <h2>US Nonfarm Payrolls</h2>
+                    <p class="note" style="margin:0.35rem 0 0;">
+                        Seasonally adjusted · thousands of persons · source: BLS / FRED (PAYEMS)
+                    </p>
+                </div>
+                <div class="nfp-latest">
+                    <div class="nfp-label">Latest MoM · Sep 2026</div>
+                    <div class="nfp-value dir-good">+29K</div>
+                    <div class="nfp-level">Level: 159,044K</div>
+                </div>
+            </div>
+            <div class="table-container nfp-table-wrap">
+                <table class="macro-table nfp-table">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>MoM</th>
+                            <th>Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                <td class="country">Sep 2026</td>
+                <td class="dir-good">+29K</td>
+                <td>159,044</td>
+            </tr><tr>
+                <td class="country">Aug 2026</td>
+                <td class="dir-good">+133K</td>
+                <td>159,015</td>
+            </tr><tr>
+                <td class="country">Jul 2026</td>
+                <td class="dir-bad">-10K</td>
+                <td>158,882</td>
+            </tr><tr>
+                <td class="country">Jun 2026</td>
+                <td class="dir-good">+31K</td>
+                <td>158,892</td>
+            </tr><tr>
+                <td class="country">May 2026</td>
+                <td class="dir-good">+63K</td>
+                <td>158,861</td>
+            </tr><tr>
+                <td class="country">Apr 2026</td>
+                <td class="dir-good">+148K</td>
+                <td>158,798</td>
+            </tr><tr>
+                <td class="country">Mar 2026</td>
+                <td class="dir-good">+214K</td>
+                <td>158,650</td>
+            </tr><tr>
+                <td class="country">Feb 2026</td>
+                <td class="dir-bad">-156K</td>
+                <td>158,436</td>
+            </tr><tr>
+                <td class="country">Jan 2026</td>
+                <td class="dir-good">+160K</td>
+                <td>158,592</td>
+            </tr><tr>
+                <td class="country">Dec 2025</td>
+                <td class="dir-bad">-17K</td>
+                <td>158,432</td>
+            </tr><tr>
+                <td class="country">Nov 2025</td>
+                <td class="dir-good">+41K</td>
+                <td>158,449</td>
+            </tr><tr>
+                <td class="country">Oct 2025</td>
+                <td class="dir-bad">-140K</td>
+                <td>158,408</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    
+
+        <h2 class="section-title">Global rates, inflation &amp; growth</h2>
         <div class="table-container">
             <table class="macro-table">
                 <thead>
