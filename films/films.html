@@ -2076,7 +2076,7 @@
                 
                 <div class="poster-card group relative bg-[#222831] rounded-lg overflow-hidden border border-[#2c3440] hover:border-[#00e054] transition duration-300 shadow-lg" data-year="2024">
                     <a href="https://boxd.it/LT5S" target="_blank">
-                        <img src="https://image.tmdb.org/t/p/w342/psJm3haNg6kBpGxfQ1rxckpfF74.jpg" alt="Ripley" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-300">
+                        <img src="https://image.tmdb.org/t/p/w342/rpSo8z9alultGVTqQ3dkLEyU8xx.jpg" alt="Ripley" class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-300">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-2">
                             <p class="text-white text-xs font-bold truncate">Ripley</p>
                             <p class="text-[10px] text-[#00e054]">2024 &bull; 2024-06-08</p>
@@ -4459,17 +4459,15 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
-                onClick: (event, elements) => {
+                onHover: (event, elements) => {
+                    const yearSelect = document.getElementById('yearFilter');
                     if (elements.length > 0) {
                         const index = elements[0].index;
-                        const clickedYear = yearChartInstance.data.labels[index];
-                        
-                        // Update the dropdown value
-                        const yearSelect = document.getElementById('yearFilter');
-                        yearSelect.value = clickedYear;
-                        
-                        // Trigger the filter function to update the poster wall in place
-                        filterPosters();
+                        const hoveredYear = yearChartInstance.data.labels[index];
+                        if (yearSelect.value !== hoveredYear) {
+                            yearSelect.value = hoveredYear;
+                            filterPosters();
+                        }
                     }
                 },
                 scales: {
