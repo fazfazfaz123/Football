@@ -4608,6 +4608,8 @@
                     },
                     onRegionClick(event, code) {
                         const lowerCode = code.toLowerCase();
+
+                        // Countries with no watched films are not interactive.
                         if (Number(countryData[lowerCode] || 0) <= 0) {
                             event.preventDefault();
                             return false;
