@@ -57,6 +57,30 @@ body.default-theme {
   --header-grad: linear-gradient(135deg, #22d3ee, #a78bfa 50%, #34d399);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  color-scheme: dark;
+  scrollbar-color: #3a4158 var(--surface);
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: var(--surface);
+}
+*::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+*::-webkit-scrollbar-thumb {
+  background: #3a4158;
+  border-radius: 8px;
+  border: 2px solid var(--surface);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #4e5670;
+}
+*::-webkit-scrollbar-corner {
+  background: var(--surface);
+}
 body {
   font-family: 'Outfit', system-ui, sans-serif;
   background-color: var(--bg) !important;
