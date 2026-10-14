@@ -142,6 +142,11 @@ h2 { font-family: var(--serif); font-weight: 500; font-size: 1.7rem; margin: 0 0
     <div class="records" id="records"></div>
   </header>
 
+ <section class="section block" style="padding:16px">
+    <h2>Current PM Milestone</h2>
+    <div id="incumbent-milestone"></div>
+  </section>
+
   <div class="controls">
     <div class="control-row">
       <div class="search">
@@ -160,11 +165,15 @@ h2 { font-family: var(--serif); font-weight: 500; font-size: 1.7rem; margin: 0 0
           <option value="name">Name</option>
         </select>
       </label>
+
+  
     </div>
     <div class="chips" id="chips"></div>
     <p class="count" id="count"></p>
   </div>
 
+ 
+  
   <div class="layout">
     <div>
       <p class="caption" id="caption"></p>
@@ -179,11 +188,7 @@ h2 { font-family: var(--serif); font-weight: 500; font-size: 1.7rem; margin: 0 0
     <div class="timeline-scroll"><div id="timeline"></div></div>
   </section>
 
-  <section class="section block" style="padding:16px">
-    <h2>Current Prime Minister Milestone</h2>
-    <p class="note">Tracking progress toward surpassing the next longest-serving term.</p>
-    <div id="incumbent-milestone"></div>
-  </section>
+
 
   <div class="insights">
     <section class="section block" style="padding:16px">
