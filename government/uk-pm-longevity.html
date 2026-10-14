@@ -385,8 +385,8 @@ function renderIncumbentMilestone() {
 
   const wrap = el("div");
   wrap.append(el("p", "insight", 
-    incumbentTerm.name + " (" + incumbentTerm.duration + " in office so far) is currently ranked #" + (index + 1) + 
-    " among all individual terms. To surpass the next longest-serving term held by " + 
+    incumbentTerm.name + " " + incumbentTerm.duration + " in office so far. Ranked #" + (index + 1) + 
+    ". To surpass the next longest-serving term held by " + 
     nextTerm.name + " (" + nextTerm.duration + ", " + nextTerm.year_span + "), they need to serve for another " + 
     formatDays(daysNeeded) + " (" + nf.format(daysNeeded) + " days)."
   ));
