@@ -179,6 +179,12 @@ h2 { font-family: var(--serif); font-weight: 500; font-size: 1.7rem; margin: 0 0
     <div class="timeline-scroll"><div id="timeline"></div></div>
   </section>
 
+  <section class="section block" style="padding:16px">
+    <h2>Current Prime Minister Milestone</h2>
+    <p class="note">Tracking progress toward surpassing the next longest-serving term.</p>
+    <div id="incumbent-milestone"></div>
+  </section>
+
   <div class="insights">
     <section class="section block" style="padding:16px">
       <h2>Days in office, by party</h2>
@@ -350,6 +356,38 @@ function renderInsight() {
   } else {
     host.textContent = longest.name + " holds the longest single term. " + top.name + " holds the longest career, " + nf.format(top.days) + " days over " + top.term_ids.length + " terms.";
   }
+}
+function renderIncumbentMilestone() {
+  const host = document.getElementById("incumbent-milestone");
+  if (!host) return;
+  host.replaceChildren();
+
+  const incumbentId = DATA.records.incumbent_term_id;
+  if (!incumbentId) {
+    host.append(el("p", "empty", "There is currently no incumbent prime minister in office."));
+    return;
+  }
+
+  const incumbentTerm = termById[incumbentId];
+  const sortedTerms = DATA.terms.slice().sort((a, b) => b.days - a.days || a.start.localeCompare(b.start));
+  const index = sortedTerms.findIndex(t => t.id === incumbentTerm.id);
+
+  if (index === 0) {
+    host.append(el("p", "insight", incumbentTerm.name + " is currently holding the longest-serving term in the dataset."));
+    return;
+  }
+
+  const nextTerm = sortedTerms[index - 1];
+  const daysNeeded = nextTerm.days - incumbentTerm.days + 1;
+
+  const wrap = el("div");
+  wrap.append(el("p", "insight", 
+    incumbentTerm.name + " (" + incumbentTerm.duration + " in office so far) is currently ranked #" + (index + 1) + 
+    " among all individual terms. To surpass the next longest-serving term held by " + 
+    nextTerm.name + " (" + nextTerm.duration + ", " + nextTerm.year_span + "), they need to serve for another " + 
+    formatDays(daysNeeded) + " (" + nf.format(daysNeeded) + " days)."
+  ));
+  host.append(wrap);
 }
 function renderList(rows, maxDays) {
   list.replaceChildren();
@@ -634,6 +672,7 @@ function init() {
   renderInsight();
   renderParties();
   renderHist();
+  renderIncumbentMilestone();
   render();
 }
 init();
