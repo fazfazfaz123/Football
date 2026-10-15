@@ -721,7 +721,15 @@ function renderWhatsAppSection() {
       if (lastComp !== null && lastComp !== m.comp) {
         lines.push(''); // One-line blank space between different competitions
       }
-      lines.push(`${m.home} ${m[pKey] || '1 - 1'} ${m.away}`);
+      let predStr = m[pKey] || '1 - 1';
+      if (name.toLowerCase() === 'lenn') {
+        let parts = predStr.split('-');
+        let hs = parts[0] ? parts[0].trim() : '1';
+        let as = parts[1] ? parts[1].trim() : '1';
+        lines.push(`${m.home} ${hs} ${m.away} ${as}`);
+      } else {
+        lines.push(`${m.home} ${predStr} ${m.away}`);
+      }
       lastComp = m.comp;
     });
     let textVal = lines.join('\n');
