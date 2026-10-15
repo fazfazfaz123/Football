@@ -214,6 +214,28 @@ const CLASS_OF = {
 const state = { mode: "term", sort: "longest", query: "", parties: new Set(), post1945: false, selected: "t:" + DATA.records.longest_term_id };
 let scrollNow = false;
 
+function getLiveDays(startDateIso) {
+  const start = new Date(startDateIso + "T00:00:00Z");
+  const today = new Date();
+  const utcToday = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()));
+  const diffTime = utcToday - start;
+  return Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+}
+
+function getTermDays(term) {
+  if (term.incumbent) {
+    return getLiveDays(term.start);
+  }
+  return term.days;
+}
+
+function getTermDuration(term) {
+  if (term.incumbent) {
+    return formatDays(getLiveDays(term.start));
+  }
+  return term.duration;
+}
+
 const q = document.getElementById("q");
 const list = document.getElementById("list");
 const detail = document.getElementById("detail");
@@ -256,12 +278,16 @@ function visibleTerms() {
 }
 function rowsFrom(terms) {
   if (state.mode === "term") {
-    return terms.map((term) => ({
-      key: "t:" + term.id, kind: "term", ref: term, days: term.days, start: term.start,
-      name: term.name, surname: term.surname, color: term.color,
-      meta: term.year_span + (term.term_count > 1 ? " · " + term.term_index + " of " + term.term_count : ""),
-      duration: term.incumbent ? term.duration + " " : term.duration
-    }));
+    return terms.map((term) => {
+      const days = getTermDays(term);
+      const duration = getTermDuration(term);
+      return {
+        key: "t:" + term.id, kind: "term", ref: term, days: days, start: term.start,
+        name: term.name, surname: term.surname, color: term.color,
+        meta: term.year_span + (term.term_count > 1 ? " · " + term.term_index + " of " + term.term_count : ""),
+        duration: term.incumbent ? duration + " " : duration
+      };
+    });
   }
   const grouped = new Map();
   terms.forEach((term) => {
@@ -270,7 +296,7 @@ function rowsFrom(terms) {
   });
   return [...grouped.entries()].map(([personId, spells]) => {
     const person = personById[personId];
-    const days = spells.reduce((sum, term) => sum + term.days, 0);
+    const days = spells.reduce((sum, term) => sum + getTermDays(term), 0);
     return {
       key: "p:" + personId, kind: "person", ref: person, spells, days,
       start: spells.map((term) => term.start).sort()[0],
@@ -291,7 +317,11 @@ function sortRows(rows) {
 }
 function scaleMax(rows) {
   const pool = state.mode === "term" ? DATA.terms : DATA.people;
-  return Math.max(...pool.map((item) => item.days), 1);
+  return Math.max(...pool.map((item) => {
+    if (state.mode === "term") return getTermDays(item);
+    const own = DATA.terms.filter(t => t.person_id === item.id);
+    return own.reduce((sum, t) => sum + getTermDays(t), 0);
+  }), 1);
 }
 function paintScale(maxDays) {
   const year = 365.2425;
@@ -314,15 +344,15 @@ function syncControls() {
 function renderRecords() {
   const host = document.getElementById("records");
   host.replaceChildren();
-  const longest = termById[DATA.records.longest_term_id];
-  const shortest = termById[DATA.records.shortest_term_id];
+  const longest = DATA.terms.slice().sort((a, b) => getTermDays(b) - getTermDays(a))[0];
+  const shortest = DATA.terms.slice().sort((a, b) => getTermDays(a) - getTermDays(b))[0];
   const cards = [
-    ["Longest term", longest, longest.duration, longest.year_span],
-    ["Shortest term", shortest, shortest.duration, shortest.year_span],
+    ["Longest term", longest, getTermDuration(longest), longest.year_span],
+    ["Shortest term", shortest, getTermDuration(shortest), shortest.year_span],
     ["Median term", null, nf.format(DATA.records.median_days) + " days", "Half of all terms were shorter"]
   ];
   const incumbent = DATA.records.incumbent_term_id ? termById[DATA.records.incumbent_term_id] : null;
-  if (incumbent) cards.push(["In office now", incumbent, incumbent.duration + " ", incumbent.party_label]);
+  if (incumbent) cards.push(["In office now", incumbent, getTermDuration(incumbent) + " ", incumbent.party_label]);
   else cards.push(["People", null, String(DATA.people.length), DATA.terms.length + " terms"]);
   cards.forEach(([kicker, term, line, extra]) => {
     const button = el("button", "record");
@@ -356,7 +386,7 @@ function renderIncumbentMilestone() {
   }
 
   const incumbentTerm = termById[incumbentId];
-  const sortedTerms = DATA.terms.slice().sort((a, b) => b.days - a.days || a.start.localeCompare(b.start));
+  const sortedTerms = DATA.terms.slice().sort((a, b) => getTermDays(b) - getTermDays(a) || a.start.localeCompare(b.start));
   const index = sortedTerms.findIndex(t => t.id === incumbentTerm.id);
 
   if (index === 0) {
@@ -365,18 +395,19 @@ function renderIncumbentMilestone() {
   }
 
   const nextTerm = sortedTerms[index - 1];
-  const daysNeeded = nextTerm.days - incumbentTerm.days + 1;
+  const incumbentDays = getTermDays(incumbentTerm);
+  const nextDays = getTermDays(nextTerm);
+  const daysNeeded = nextDays - incumbentDays + 1;
 
   const wrap = el("div");
   wrap.append(el("p", "insight", 
-    incumbentTerm.name + " " + incumbentTerm.duration + " in office. Ranked #" + (index + 1) + 
+    incumbentTerm.name + " " + getTermDuration(incumbentTerm) + " in office. Ranked #" + (index + 1) + 
     ". " + formatDays(daysNeeded) + " to surpass " + nextTerm.name + "."
   ));
   host.append(wrap);
 }
 function renderList(rows, maxDays) {
   list.replaceChildren();
-  const longest = termById[DATA.records.longest_term_id];
   
   if (!rows.length) {
     list.append(el("li", "empty", "Nothing matches. Clear the search or the party filter."));
@@ -450,9 +481,14 @@ function renderTermDetail(panel, term) {
   text.append(el("p", "sub", formal));
   id.append(portraitBlock(term.portrait, term.initials), text);
   panel.append(id);
-  panel.append(el("p", "big", term.incumbent ? term.duration + " so far" : term.duration));
+  
+  const termDays = getTermDays(term);
+  const termDuration = getTermDuration(term);
+  const longestDays = Math.max(...DATA.terms.map(getTermDays));
+  
+  panel.append(el("p", "big", term.incumbent ? termDuration + " so far" : termDuration));
   panel.append(el("p", "sub", term.start_label + " – " + term.end_label));
-  const share = Math.round(100 * term.days / termById[DATA.records.longest_term_id].days);
+  const share = Math.round(100 * termDays / longestDays);
   panel.append(el("p", "sub", share >= 100 ? "The longest continuous term." : share + "% as long as the longest term."));
   panel.append(el("p", "sub", "About " + term.age_at_start + " on taking office."));
   if (term.died_same_year) panel.append(el("p", "sub", "This term ended in the year of their death."));
@@ -468,6 +504,9 @@ function renderTermDetail(panel, term) {
 }
 function renderPersonDetail(panel, person) {
   if (!person) return;
+  const ownTerms = DATA.terms.filter(t => t.person_id === person.id);
+  const totalDays = ownTerms.reduce((sum, t) => sum + getTermDays(t), 0);
+  
   const id = el("div", "id");
   const text = el("div");
   text.append(el("p", "kicker", person.party_label));
@@ -475,15 +514,15 @@ function renderPersonDetail(panel, person) {
   text.append(el("p", "sub", (person.formal !== person.name ? person.formal + " · " : "") + person.lifespan));
   id.append(portraitBlock(person.portrait, person.initials), text);
   panel.append(id);
-  panel.append(el("p", "big", formatDays(person.days)));
-  panel.append(el("p", "sub", nf.format(person.days) + " days across " + person.term_ids.length + (person.term_ids.length === 1 ? " term" : " terms") + "."));
+  panel.append(el("p", "big", formatDays(totalDays)));
+  panel.append(el("p", "sub", nf.format(totalDays) + " days across " + person.term_ids.length + (person.term_ids.length === 1 ? " term" : " terms") + "."));
   panel.append(el("h3", null, "Terms"));
   person.term_ids.forEach((id) => panel.append(spellButton(termById[id])));
 }
 function spellButton(term) {
   const button = el("button", "spell");
   button.type = "button";
-  button.append(el("span", null, term.year_span + " · " + term.party_label), el("span", null, term.duration));
+  button.append(el("span", null, term.year_span + " · " + term.party_label), el("span", null, getTermDuration(term)));
   button.addEventListener("click", () => {
     state.mode = "term";
     state.selected = "t:" + term.id;
@@ -505,9 +544,10 @@ function renderTimeline(terms) {
   host.replaceChildren();
   const shown = new Set(terms.map((term) => term.id));
   const stamp = (iso) => Date.parse(iso + "T00:00:00Z");
-  const ends = DATA.terms.map((term) => term.end || term.start);
+  
+  const nowStamp = Date.now();
   const t0 = stamp(DATA.terms[0].start) - 86400000 * 400;
-  const t1 = Math.max(...DATA.terms.map((term) => stamp(term.end || term.start))) + 86400000 * 400;
+  const t1 = Math.max(...DATA.terms.map((term) => term.incumbent ? nowStamp : stamp(term.end || term.start))) + 86400000 * 400;
   const span = t1 - t0 || 1;
   const y0 = Number(DATA.terms[0].start.slice(0, 4));
   const y1 = new Date(t1).getUTCFullYear();
@@ -522,9 +562,10 @@ function renderTimeline(terms) {
   DATA.terms.forEach((term) => {
     const button = el("button", "segment " + classOf(term.color) + (shown.has(term.id) ? "" : " dim"));
     button.type = "button";
+    const endStamp = term.incumbent ? nowStamp : stamp(term.end || term.start);
     button.style.left = ((stamp(term.start) - t0) / span * 100) + "%";
-    button.style.width = Math.max(0.15, (stamp(term.end || term.start) - stamp(term.start)) / span * 100) + "%";
-    button.setAttribute("aria-label", term.name + ", " + term.year_span + ", " + term.duration);
+    button.style.width = Math.max(0.15, (endStamp - stamp(term.start)) / span * 100) + "%";
+    button.setAttribute("aria-label", term.name + ", " + term.year_span + ", " + getTermDuration(term));
     button.setAttribute("aria-pressed", state.selected === "t:" + term.id ? "true" : "false");
     button.addEventListener("click", () => {
       state.mode = "term";
@@ -538,7 +579,7 @@ function renderTimeline(terms) {
 }
 function renderParties() {
   const totals = new Map();
-  DATA.terms.forEach((term) => totals.set(term.color, (totals.get(term.color) || 0) + term.days));
+  DATA.terms.forEach((term) => totals.set(term.color, (totals.get(term.color) || 0) + getTermDays(term)));
   const entries = DATA.family_order.filter((family) => totals.has(family)).map((family) => [family, totals.get(family)]);
   const sum = entries.reduce((total, [, days]) => total + days, 0) || 1;
   const host = document.getElementById("parties");
@@ -565,7 +606,7 @@ function renderHist() {
     ["6 to 10 years", (days) => days >= 365 * 6 && days < 365 * 10],
     ["10 years or more", (days) => days >= 365 * 10]
   ];
-  const counts = buckets.map(([label, test]) => [label, DATA.terms.filter((term) => test(term.days)).length]);
+  const counts = buckets.map(([label, test]) => [label, DATA.terms.filter((term) => test(getTermDays(term))).length]);
   const max = Math.max(...counts.map(([, count]) => count), 1);
   const host = document.getElementById("hist");
   host.replaceChildren();
@@ -646,7 +687,7 @@ function init() {
   });
   const first = DATA.terms[0].start.slice(0, 4);
   const last = DATA.terms.filter((term) => term.incumbent).length ? "the incumbent" : DATA.terms.at(-1).end.slice(0, 4);
-  document.getElementById("footnote").innerHTML = DATA.source_rows + " list rows were joined into " + DATA.terms.length
+  document.getElementById("footnote").innerHTML = DATA.source_rows + " list rows were joined into " + DATA.terms.length;
   renderRecords();
   renderParties();
   renderHist();
