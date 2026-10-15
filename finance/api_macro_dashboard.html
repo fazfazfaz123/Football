@@ -21,12 +21,12 @@
             --flat: #91919d;
             --good-bg: rgba(16, 185, 129, 0.08);
             --bad-bg: rgba(244, 63, 94, 0.08);
-            --accent: #3b82f6;
             --accent-glow: rgba(59, 130, 246, 0.15);
         }
         
         * { box-sizing: border-box; }
 
+        /* Custom Dark Scrollbars */
         * {
             scrollbar-width: thin;
             scrollbar-color: var(--border-bright) var(--card-bg);
@@ -115,7 +115,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -144,9 +144,21 @@
         .swatch.bad { background: var(--bad); box-shadow: 0 0 8px var(--bad); }
         .swatch.flat { background: var(--flat); }
 
+        .badge-pill {
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 520px 1fr;
+            grid-template-columns: 360px 1fr;
             gap: 1.5rem;
             align-items: start;
         }
@@ -188,7 +200,7 @@
         }
 
         .nfp-metric-card {
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 1rem;
@@ -196,13 +208,6 @@
             text-align: center;
         }
 
-        .nfp-metric-card.compact {
-            margin-bottom: 0;
-            flex: 1;
-            padding: 0.85rem 0.75rem;
-        }
-
-        
         .nfp-label {
             font-size: 0.72rem;
             color: var(--text-muted);
@@ -211,106 +216,72 @@
         }
 
         .nfp-value {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 700;
             font-family: 'JetBrains Mono', monospace;
-            margin: 0.15rem 0;
-            line-height: 1.2;
+            margin: 0.2rem 0;
         }
 
         .nfp-value.dir-good { color: var(--good); }
         .nfp-value.dir-bad { color: var(--bad); }
 
         .nfp-level {
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
         }
 
-        /* ── CPI MoM Chart ─────────────────────────────────────────────── */
+        /* Scrollable Bar Chart Styles */
         .cpi-chart-container {
-            background: rgba(0, 0, 0, 0.25);
+            background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 1rem 0.6rem 0.4rem 0.4rem;
-            display: flex;
-            gap: 0.35rem;
-            overflow: hidden;
-        }
-
-        .cpi-y-axis {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: flex-end;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.58rem;
-            color: var(--text-muted);
-            padding: 0.15rem 0 1.6rem 0;
-            min-width: 2.4rem;
-            flex-shrink: 0;
-        }
-
-        .cpi-bar-chart-wrap {
-            position: relative;
-            flex: 1;
-            min-width: 0;
+            padding: 1rem 0.75rem 0.5rem 0.75rem;
             overflow-x: auto;
-            padding-bottom: 0.15rem;
         }
 
-        .cpi-zero-line {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 50%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.12);
-            pointer-events: none;
-            z-index: 1;
-            transform: translateY(-0.7rem);
+        .scrollable-chart {
+            min-width: 950px;
         }
 
         .cpi-bar-chart {
             display: flex;
             align-items: flex-end;
-            height: 150px;
-            gap: 2px;
-            min-width: 720px;
-            padding-top: 1.1rem;
-            position: relative;
-            z-index: 2;
+            justify-content: space-between;
+            height: 165px;
+            gap: 3px;
+            padding-top: 1.5rem;
         }
 
         .chart-bar-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1 1 0;
-            min-width: 12px;
+            flex: 1;
             height: 100%;
             position: relative;
-            cursor: default;
+            cursor: pointer;
+            padding: 2px;
+            border-radius: 4px;
+        }
+
+        /* Highlight style for the most recent 12 months window */
+        .chart-bar-wrap.recent-window {
+            background: rgba(59, 130, 246, 0.06);
+            border-bottom: 2px solid rgba(59, 130, 246, 0.4);
         }
 
         .chart-bar-wrap:hover .chart-bar {
-            filter: brightness(1.25);
-            opacity: 0.95;
-        }
-
-        .chart-bar-wrap:hover .chart-bar-value {
-            opacity: 1;
+            opacity: 0.85;
+            filter: brightness(1.2);
         }
 
         .chart-bar-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.52rem;
-            color: var(--text-main);
+            font-size: 0.5rem;
+            color: var(--text-muted);
             position: absolute;
             top: 0;
             white-space: nowrap;
-            opacity: 0.85;
-            pointer-events: none;
-            font-weight: 500;
         }
 
         .chart-bar-track {
@@ -319,70 +290,25 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.5rem;
         }
 
         .chart-bar {
             width: 100%;
-            max-width: 11px;
-            border-radius: 2px 2px 0 0;
-            transition: filter 0.15s, opacity 0.15s;
-            min-height: 3px;
-        }
-
-        .chart-bar.bar-positive {
-            background: linear-gradient(180deg, #fb7185 0%, #f43f5e 100%);
-            box-shadow: 0 0 6px rgba(244, 63, 94, 0.2);
-        }
-
-        .chart-bar.bar-negative {
-            background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
-            box-shadow: 0 0 6px rgba(16, 185, 129, 0.2);
-        }
-
-        .chart-bar-wrap.is-zero .chart-bar {
-            background: var(--flat);
-            box-shadow: none;
-            opacity: 0.5;
+            max-width: 14px;
+            border-radius: 3px 3px 0 0;
+            transition: all 0.2s;
+            background: #3b82f6;
+            box-shadow: 0 0 4px rgba(59, 130, 246, 0.25);
         }
 
         .chart-bar-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.52rem;
+            font-size: 0.58rem;
             color: var(--text-muted);
             white-space: nowrap;
-            letter-spacing: -0.02em;
         }
 
-        .chart-bar-label.year-label {
-            color: var(--text-main);
-            font-weight: 600;
-        }
-
-        .year-marker {
-            position: absolute;
-            bottom: -1.05rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.55rem;
-            color: var(--accent);
-            font-weight: 600;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        .chart-legend-note {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin: 0.85rem 0 0;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-            flex-wrap: wrap;
-        }
-
-        /* ── Tables ────────────────────────────────────────────────────── */
         .table-container {
             width: 100%;
             overflow-x: auto;
@@ -426,13 +352,6 @@
             font-variant-numeric: tabular-nums;
         }
 
-        table.macro-table td.real-rate {
-            font-family: 'JetBrains Mono', monospace;
-            text-align: right;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
         table.macro-table th.num-header { text-align: right; }
 
         table.macro-table td.center {
@@ -458,12 +377,6 @@
             font-size: 1rem;
             font-weight: 600;
             margin: 0 0 0.75rem 0;
-        }
-
-        .note {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin: 0.5rem 0;
         }
 
         /* Calendar Tabs */
@@ -498,6 +411,7 @@
             color: var(--text-main);
         }
 
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
             body {
                 padding: 0.5rem 0.25rem;
@@ -510,7 +424,7 @@
                 padding: 0.75rem;
             }
             .nfp-value {
-                font-size: 1.4rem;
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -522,11 +436,11 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-14 16:55:29</div>
+            <div class="timestamp">SYNCED: 2026-10-15 17:31:14</div>
         </header>
 
         <div class="dashboard-grid">
-            <!-- Left Column -->
+            <!-- Left Column: NFP Panel, US CPI MoM Chart, & Central Bank Calendar -->
             <div>
                 
         <div class="panel nfp-panel">
@@ -611,368 +525,174 @@
         <div class="panel cpi-mom-panel" style="margin-top: 1.5rem;">
             <div class="panel-header">
                 <div>
-                    <h2>US CPI Month-on-Month</h2>
-                    <p class="subtext">Seasonally adjusted · % change vs prior month · FRED (CPIAUCSL) · last 48 months</p>
+                    <h2>US CPI (Month-on-Month) - Monthly History</h2>
+                    <p class="subtext">Seasonally adjusted · % change (Actual) · Source: us_cpi_mom_cleaned.json</p>
                 </div>
+            </div>
+            
+            <div class="nfp-metric-card">
+                <div class="nfp-label">Latest MoM (Oct 14, 2026 (Sep))</div>
+                <div class="nfp-value dir-bad">+0.60%</div>
             </div>
 
-            <div class="cpi-chart-container">
-                <div class="cpi-y-axis">
-                    <span>+0.9%</span>
-                    <span>0</span>
-                    <span>−0.9%</span>
-                </div>
-                <div class="cpi-bar-chart-wrap">
-                    <div class="cpi-zero-line"></div>
-                    <div class="cpi-bar-chart">
-                        <div class="chart-bar-wrap " title="October 2022: +0.56%">
-                <div class="chart-bar-value"></div>
+            <div class="cpi-chart-container" id="cpiChartContainer">
+                <div class="cpi-bar-chart scrollable-chart">
+                    <div class="chart-bar-wrap " title="August 2024: +0.20%">
+                <div class="chart-bar-value">+0.20%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 64%;"></div>
-                </div>
-                <div class="chart-bar-label">Oct</div>
-                <span class="year-marker">2022</span>
-            </div><div class="chart-bar-wrap " title="November 2022: +0.26%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 30%;"></div>
-                </div>
-                <div class="chart-bar-label">Nov</div>
-                
-            </div><div class="chart-bar-wrap is-zero" title="December 2022: +0.02%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 6%;"></div>
-                </div>
-                <div class="chart-bar-label">Dec</div>
-                
-            </div><div class="chart-bar-wrap " title="January 2023: +0.53%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 61%;"></div>
-                </div>
-                <div class="chart-bar-label year-label">Jan</div>
-                <span class="year-marker">2023</span>
-            </div><div class="chart-bar-wrap " title="February 2023: +0.34%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 39%;"></div>
-                </div>
-                <div class="chart-bar-label">Feb</div>
-                
-            </div><div class="chart-bar-wrap " title="March 2023: +0.12%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 14%;"></div>
-                </div>
-                <div class="chart-bar-label">Mar</div>
-                
-            </div><div class="chart-bar-wrap " title="April 2023: +0.34%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 39%;"></div>
-                </div>
-                <div class="chart-bar-label">Apr</div>
-                
-            </div><div class="chart-bar-wrap " title="May 2023: +0.16%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 18%;"></div>
-                </div>
-                <div class="chart-bar-label">May</div>
-                
-            </div><div class="chart-bar-wrap " title="June 2023: +0.22%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 25%;"></div>
-                </div>
-                <div class="chart-bar-label">Jun</div>
-                
-            </div><div class="chart-bar-wrap " title="July 2023: +0.20%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 22%;"></div>
-                </div>
-                <div class="chart-bar-label">Jul</div>
-                
-            </div><div class="chart-bar-wrap " title="August 2023: +0.48%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 55%;"></div>
+                    <div class="chart-bar" style="height: 15%;"></div>
                 </div>
                 <div class="chart-bar-label">Aug</div>
-                
-            </div><div class="chart-bar-wrap " title="September 2023: +0.39%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="September 2024: +0.20%">
+                <div class="chart-bar-value">+0.20%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 45%;"></div>
+                    <div class="chart-bar" style="height: 15%;"></div>
                 </div>
                 <div class="chart-bar-label">Sep</div>
-                
-            </div><div class="chart-bar-wrap " title="October 2023: +0.14%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="October 2024: +0.20%">
+                <div class="chart-bar-value">+0.20%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 15%;"></div>
+                    <div class="chart-bar" style="height: 15%;"></div>
                 </div>
                 <div class="chart-bar-label">Oct</div>
-                
-            </div><div class="chart-bar-wrap " title="November 2023: +0.15%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="November 2024: +0.30%">
+                <div class="chart-bar-value">+0.30%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 16%;"></div>
+                    <div class="chart-bar" style="height: 23%;"></div>
                 </div>
                 <div class="chart-bar-label">Nov</div>
-                
-            </div><div class="chart-bar-wrap " title="December 2023: +0.19%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="December 2024: +0.40%">
+                <div class="chart-bar-value">+0.40%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 22%;"></div>
+                    <div class="chart-bar" style="height: 31%;"></div>
                 </div>
                 <div class="chart-bar-label">Dec</div>
-                
-            </div><div class="chart-bar-wrap " title="January 2024: +0.31%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="January 2025: +0.50%">
+                <div class="chart-bar-value">+0.50%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 35%;"></div>
+                    <div class="chart-bar" style="height: 38%;"></div>
                 </div>
-                <div class="chart-bar-label year-label">Jan</div>
-                <span class="year-marker">2024</span>
-            </div><div class="chart-bar-wrap " title="February 2024: +0.41%">
-                <div class="chart-bar-value"></div>
+                <div class="chart-bar-label">Jan '25</div>
+            </div><div class="chart-bar-wrap " title="February 2025: +0.20%">
+                <div class="chart-bar-value">+0.20%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 47%;"></div>
+                    <div class="chart-bar" style="height: 15%;"></div>
                 </div>
                 <div class="chart-bar-label">Feb</div>
-                
-            </div><div class="chart-bar-wrap " title="March 2024: +0.44%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="March 2025: -0.10%">
+                <div class="chart-bar-value">-0.10%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 51%;"></div>
+                    <div class="chart-bar" style="height: 8%;"></div>
                 </div>
                 <div class="chart-bar-label">Mar</div>
-                
-            </div><div class="chart-bar-wrap " title="April 2024: +0.22%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="April 2025: +0.20%">
+                <div class="chart-bar-value">+0.20%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 25%;"></div>
+                    <div class="chart-bar" style="height: 15%;"></div>
                 </div>
                 <div class="chart-bar-label">Apr</div>
-                
-            </div><div class="chart-bar-wrap is-zero" title="May 2024: +0.05%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 6%;"></div>
-                </div>
-                <div class="chart-bar-label">May</div>
-                
-            </div><div class="chart-bar-wrap is-zero" title="June 2024: -0.04%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-negative" style="height: 6%;"></div>
-                </div>
-                <div class="chart-bar-label">Jun</div>
-                
-            </div><div class="chart-bar-wrap " title="July 2024: +0.17%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 19%;"></div>
-                </div>
-                <div class="chart-bar-label">Jul</div>
-                
-            </div><div class="chart-bar-wrap " title="August 2024: +0.16%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 18%;"></div>
-                </div>
-                <div class="chart-bar-label">Aug</div>
-                
-            </div><div class="chart-bar-wrap " title="September 2024: +0.21%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 24%;"></div>
-                </div>
-                <div class="chart-bar-label">Sep</div>
-                
-            </div><div class="chart-bar-wrap " title="October 2024: +0.29%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 33%;"></div>
-                </div>
-                <div class="chart-bar-label">Oct</div>
-                
-            </div><div class="chart-bar-wrap " title="November 2024: +0.28%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 32%;"></div>
-                </div>
-                <div class="chart-bar-label">Nov</div>
-                
-            </div><div class="chart-bar-wrap " title="December 2024: +0.34%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 39%;"></div>
-                </div>
-                <div class="chart-bar-label">Dec</div>
-                
-            </div><div class="chart-bar-wrap " title="January 2025: +0.43%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 49%;"></div>
-                </div>
-                <div class="chart-bar-label year-label">Jan</div>
-                <span class="year-marker">2025</span>
-            </div><div class="chart-bar-wrap " title="February 2025: +0.23%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 26%;"></div>
-                </div>
-                <div class="chart-bar-label">Feb</div>
-                
-            </div><div class="chart-bar-wrap is-zero" title="March 2025: +0.03%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 6%;"></div>
-                </div>
-                <div class="chart-bar-label">Mar</div>
-                
-            </div><div class="chart-bar-wrap " title="April 2025: +0.16%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 18%;"></div>
-                </div>
-                <div class="chart-bar-label">Apr</div>
-                
             </div><div class="chart-bar-wrap " title="May 2025: +0.10%">
-                <div class="chart-bar-value"></div>
+                <div class="chart-bar-value">+0.10%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 11%;"></div>
+                    <div class="chart-bar" style="height: 8%;"></div>
                 </div>
                 <div class="chart-bar-label">May</div>
-                
-            </div><div class="chart-bar-wrap " title="June 2025: +0.25%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="June 2025: +0.30%">
+                <div class="chart-bar-value">+0.30%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 29%;"></div>
+                    <div class="chart-bar" style="height: 23%;"></div>
                 </div>
                 <div class="chart-bar-label">Jun</div>
-                
-            </div><div class="chart-bar-wrap " title="July 2025: +0.23%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap " title="July 2025: +0.20%">
+                <div class="chart-bar-value">+0.20%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 26%;"></div>
+                    <div class="chart-bar" style="height: 15%;"></div>
                 </div>
                 <div class="chart-bar-label">Jul</div>
-                
-            </div><div class="chart-bar-wrap " title="August 2025: +0.35%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="August 2025: +0.40%">
+                <div class="chart-bar-value">+0.40%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 40%;"></div>
+                    <div class="chart-bar" style="height: 31%;"></div>
                 </div>
                 <div class="chart-bar-label">Aug</div>
-                
-            </div><div class="chart-bar-wrap " title="September 2025: +0.30%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="September 2025: +0.30%">
+                <div class="chart-bar-value">+0.30%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 34%;"></div>
+                    <div class="chart-bar" style="height: 23%;"></div>
                 </div>
                 <div class="chart-bar-label">Sep</div>
-                
-            </div><div class="chart-bar-wrap is-zero" title="October 2025: +0.00%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="December 2025: +0.30%">
+                <div class="chart-bar-value">+0.30%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 6%;"></div>
-                </div>
-                <div class="chart-bar-label">Oct</div>
-                
-            </div><div class="chart-bar-wrap is-zero" title="November 2025: +0.00%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 6%;"></div>
-                </div>
-                <div class="chart-bar-label">Nov</div>
-                
-            </div><div class="chart-bar-wrap " title="December 2025: +0.30%">
-                <div class="chart-bar-value"></div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 34%;"></div>
+                    <div class="chart-bar" style="height: 23%;"></div>
                 </div>
                 <div class="chart-bar-label">Dec</div>
-                
-            </div><div class="chart-bar-wrap " title="January 2026: +0.17%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="January 2026: +0.20%">
+                <div class="chart-bar-value">+0.20%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 19%;"></div>
+                    <div class="chart-bar" style="height: 15%;"></div>
                 </div>
-                <div class="chart-bar-label year-label">Jan</div>
-                <span class="year-marker">2026</span>
-            </div><div class="chart-bar-wrap " title="February 2026: +0.27%">
-                <div class="chart-bar-value"></div>
+                <div class="chart-bar-label">Jan '26</div>
+            </div><div class="chart-bar-wrap recent-window" title="February 2026: +0.30%">
+                <div class="chart-bar-value">+0.30%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 30%;"></div>
+                    <div class="chart-bar" style="height: 23%;"></div>
                 </div>
                 <div class="chart-bar-label">Feb</div>
-                
-            </div><div class="chart-bar-wrap " title="March 2026: +0.87%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="March 2026: +0.90%">
+                <div class="chart-bar-value">+0.90%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 100%;"></div>
+                    <div class="chart-bar" style="height: 70%;"></div>
                 </div>
                 <div class="chart-bar-label">Mar</div>
-                
-            </div><div class="chart-bar-wrap " title="April 2026: +0.64%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="April 2026: +0.60%">
+                <div class="chart-bar-value">+0.60%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 73%;"></div>
+                    <div class="chart-bar" style="height: 46%;"></div>
                 </div>
                 <div class="chart-bar-label">Apr</div>
-                
-            </div><div class="chart-bar-wrap " title="May 2026: +0.47%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="May 2026: +0.50%">
+                <div class="chart-bar-value">+0.50%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 54%;"></div>
+                    <div class="chart-bar" style="height: 38%;"></div>
                 </div>
                 <div class="chart-bar-label">May</div>
-                
-            </div><div class="chart-bar-wrap " title="June 2026: -0.42%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="June 2026: -0.40%">
+                <div class="chart-bar-value">-0.40%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-negative" style="height: 48%;"></div>
+                    <div class="chart-bar" style="height: 31%;"></div>
                 </div>
                 <div class="chart-bar-label">Jun</div>
-                
-            </div><div class="chart-bar-wrap " title="July 2026: +0.07%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="July 2026: +0.10%">
+                <div class="chart-bar-value">+0.10%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 8%;"></div>
+                    <div class="chart-bar" style="height: 8%;"></div>
                 </div>
                 <div class="chart-bar-label">Jul</div>
-                
-            </div><div class="chart-bar-wrap " title="August 2026: +0.40%">
-                <div class="chart-bar-value"></div>
+            </div><div class="chart-bar-wrap recent-window" title="August 2026: +0.40%">
+                <div class="chart-bar-value">+0.40%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 45%;"></div>
+                    <div class="chart-bar" style="height: 31%;"></div>
                 </div>
                 <div class="chart-bar-label">Aug</div>
-                
-            </div><div class="chart-bar-wrap " title="September 2026: +0.65%">
-                <div class="chart-bar-value">+0.65</div>
+            </div><div class="chart-bar-wrap recent-window" title="September 2026: +0.60%">
+                <div class="chart-bar-value">+0.60%</div>
                 <div class="chart-bar-track">
-                    <div class="chart-bar bar-positive" style="height: 74%;"></div>
+                    <div class="chart-bar" style="height: 46%;"></div>
                 </div>
                 <div class="chart-bar-label">Sep</div>
-                
             </div>
-                    </div>
                 </div>
             </div>
-            <p class="chart-legend-note">
-                <span class="swatch bad" style="width:8px;height:8px;border-radius:2px;display:inline-block;vertical-align:middle;"></span>
-                Positive (inflation accelerating)
-                &nbsp;&nbsp;
-                <span class="swatch good" style="width:8px;height:8px;border-radius:2px;display:inline-block;vertical-align:middle;"></span>
-                Negative (disinflation)
-            </p>
         </div>
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const container = document.getElementById('cpiChartContainer');
+                if (container) {
+                    container.scrollLeft = container.scrollWidth;
+                }
+            });
+        </script>
     
                 
         <div class="panel cb-calendar-panel" style="margin-top: 1.5rem;">
@@ -996,19 +716,19 @@
                         </thead>
                         <tbody>
                             <tr>
-                <td class="country">05 Nov 2026</td>
+                <td class="country">05-11-2026</td>
                 <td>MPC Meeting (with MPR)</td>
             </tr><tr>
-                <td class="country">17 Dec 2026</td>
+                <td class="country">17-12-2026</td>
                 <td>MPC Meeting</td>
             </tr><tr>
-                <td class="country">04 Feb 2027</td>
+                <td class="country">04-02-2027</td>
                 <td>MPC Meeting (with MPR)</td>
             </tr><tr>
-                <td class="country">18 Mar 2027</td>
+                <td class="country">18-03-2027</td>
                 <td>MPC Meeting</td>
             </tr><tr>
-                <td class="country">29 Apr 2027</td>
+                <td class="country">29-04-2027</td>
                 <td>MPC Meeting (with MPR)</td>
             </tr>
                         </tbody>
@@ -1025,19 +745,19 @@
                         </thead>
                         <tbody>
                             <tr>
-                <td class="country">29 Oct 2026</td>
+                <td class="country">29-10-2026</td>
                 <td>Governing Council Meeting</td>
             </tr><tr>
-                <td class="country">17 Dec 2026</td>
+                <td class="country">17-12-2026</td>
                 <td>Governing Council Meeting</td>
             </tr><tr>
-                <td class="country">04 Feb 2027</td>
+                <td class="country">04-02-2027</td>
                 <td>Governing Council Meeting</td>
             </tr><tr>
-                <td class="country">18 Mar 2027</td>
+                <td class="country">18-03-2027</td>
                 <td>Governing Council Meeting</td>
             </tr><tr>
-                <td class="country">29 Apr 2027</td>
+                <td class="country">29-04-2027</td>
                 <td>Governing Council Meeting</td>
             </tr>
                         </tbody>
@@ -1054,19 +774,19 @@
                         </thead>
                         <tbody>
                             <tr>
-                <td class="country">28 Oct 2026</td>
+                <td class="country">28-10-2026</td>
                 <td>FOMC Rate Decision</td>
             </tr><tr>
-                <td class="country">09 Dec 2026</td>
+                <td class="country">09-12-2026</td>
                 <td>FOMC Rate Decision & Projections</td>
             </tr><tr>
-                <td class="country">27 Jan 2027</td>
+                <td class="country">27-01-2027</td>
                 <td>FOMC Rate Decision</td>
             </tr><tr>
-                <td class="country">17 Mar 2027</td>
+                <td class="country">17-03-2027</td>
                 <td>FOMC Rate Decision & Projections</td>
             </tr><tr>
-                <td class="country">28 Apr 2027</td>
+                <td class="country">28-04-2027</td>
                 <td>FOMC Rate Decision</td>
             </tr>
                         </tbody>
@@ -1093,7 +813,7 @@
                 <div class="panel-header">
                     <div>
                         <h2>Global Rates, Inflation &amp; Growth Matrix</h2>
-                        <p class="subtext">Sorted by real interest rate (lowest → highest)</p>
+                        <p class="subtext">Real interest rate sorted comparison</p>
                     </div>
                 </div>
                 <div class="table-container">
@@ -1115,7 +835,7 @@
                 <td class="country"><strong>Argentina</strong></td>
                 <td class="num dir-flat">29.00</td>
                 <td class="num dir-bad">219.88</td>
-                <td class="num real-rate"><strong>-190.88</strong></td>
+                <td class="num"><strong>-190.88</strong></td>
                 <td class="num dir-good">-1.34</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +86.39</td>
@@ -1125,7 +845,7 @@
                 <td class="country"><strong>Turkey</strong></td>
                 <td class="num dir-flat">37.00</td>
                 <td class="num dir-bad">58.51</td>
-                <td class="num real-rate"><strong>-21.51</strong></td>
+                <td class="num"><strong>-21.51</strong></td>
                 <td class="num dir-bad">3.33</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +4.65</td>
@@ -1135,7 +855,7 @@
                 <td class="country"><strong>Japan</strong></td>
                 <td class="num dir-bad">1.25</td>
                 <td class="num dir-good">2.74</td>
-                <td class="num real-rate"><strong>-1.49</strong></td>
+                <td class="num"><strong>-1.49</strong></td>
                 <td class="num dir-bad">-0.24</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -0.53</td>
@@ -1145,7 +865,7 @@
                 <td class="country"><strong>Switzerland</strong></td>
                 <td class="num dir-flat">0.00</td>
                 <td class="num dir-good">1.06</td>
-                <td class="num real-rate"><strong>-1.06</strong></td>
+                <td class="num"><strong>-1.06</strong></td>
                 <td class="num dir-good">1.39</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -1.07</td>
@@ -1155,7 +875,7 @@
                 <td class="country"><strong>Netherlands</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-good">3.35</td>
-                <td class="num real-rate"><strong>-0.85</strong></td>
+                <td class="num"><strong>-0.85</strong></td>
                 <td class="num dir-good">1.07</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -0.50</td>
@@ -1165,7 +885,7 @@
                 <td class="country"><strong>Spain</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-good">2.77</td>
-                <td class="num real-rate"><strong>-0.27</strong></td>
+                <td class="num"><strong>-0.27</strong></td>
                 <td class="num dir-good">3.46</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -0.76</td>
@@ -1175,7 +895,7 @@
                 <td class="country"><strong>Greece</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-good">2.74</td>
-                <td class="num real-rate"><strong>-0.24</strong></td>
+                <td class="num"><strong>-0.24</strong></td>
                 <td class="num dir-bad">2.09</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -0.72</td>
@@ -1185,7 +905,7 @@
                 <td class="country"><strong>Canada</strong></td>
                 <td class="num dir-flat">2.25</td>
                 <td class="num dir-good">2.38</td>
-                <td class="num real-rate"><strong>-0.13</strong></td>
+                <td class="num"><strong>-0.13</strong></td>
                 <td class="num dir-good">2.05</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -1.50</td>
@@ -1195,7 +915,7 @@
                 <td class="country"><strong>Poland</strong></td>
                 <td class="num dir-flat">3.75</td>
                 <td class="num dir-good">3.79</td>
-                <td class="num real-rate"><strong>-0.04</strong></td>
+                <td class="num"><strong>-0.04</strong></td>
                 <td class="num dir-good">3.03</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -7.74</td>
@@ -1205,7 +925,7 @@
                 <td class="country"><strong>Israel</strong></td>
                 <td class="num dir-good">3.25</td>
                 <td class="num dir-good">3.07</td>
-                <td class="num real-rate"><strong>0.18</strong></td>
+                <td class="num"><strong>0.18</strong></td>
                 <td class="num dir-bad">0.95</td>
                 <td class="num chg dir-good">▼ -0.25</td>
                 <td class="num chg dir-good">▼ -1.15</td>
@@ -1215,7 +935,7 @@
                 <td class="country"><strong>Germany</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-good">2.26</td>
-                <td class="num real-rate"><strong>0.24</strong></td>
+                <td class="num"><strong>0.24</strong></td>
                 <td class="num dir-good">-0.50</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -3.69</td>
@@ -1225,7 +945,7 @@
                 <td class="country"><strong>Eurozone</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-good">2.26</td>
-                <td class="num real-rate"><strong>0.24</strong></td>
+                <td class="num"><strong>0.24</strong></td>
                 <td class="num dir-good">0.94</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -3.69</td>
@@ -1235,27 +955,17 @@
                 <td class="country"><strong>India</strong></td>
                 <td class="num dir-flat">5.25</td>
                 <td class="num dir-good">4.95</td>
-                <td class="num real-rate"><strong>0.30</strong></td>
+                <td class="num"><strong>0.30</strong></td>
                 <td class="num dir-bad">7.10</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -0.70</td>
                 <td class="num chg dir-bad">▼ -0.11</td>
             </tr>
 <tr>
-                <td class="country"><strong>South Korea</strong></td>
-                <td class="num dir-bad">2.75</td>
-                <td class="num dir-good">2.32</td>
-                <td class="num real-rate"><strong>0.43</strong></td>
-                <td class="num dir-good">2.00</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-good">▼ -1.28</td>
-                <td class="num chg dir-good">▲ +0.42</td>
-            </tr>
-<tr>
                 <td class="country"><strong>UK</strong></td>
                 <td class="num dir-flat">3.75</td>
                 <td class="num dir-good">3.27</td>
-                <td class="num real-rate"><strong>0.48</strong></td>
+                <td class="num"><strong>0.48</strong></td>
                 <td class="num dir-good">1.08</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -3.52</td>
@@ -1265,17 +975,27 @@
                 <td class="country"><strong>France</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-good">2.00</td>
-                <td class="num real-rate"><strong>0.50</strong></td>
+                <td class="num"><strong>0.50</strong></td>
                 <td class="num dir-bad">1.19</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -2.88</td>
                 <td class="num chg dir-bad">▼ -0.25</td>
             </tr>
 <tr>
+                <td class="country"><strong>South Korea</strong></td>
+                <td class="num dir-flat">3.00</td>
+                <td class="num dir-good">2.32</td>
+                <td class="num"><strong>0.68</strong></td>
+                <td class="num dir-good">2.00</td>
+                <td class="num chg dir-flat">● 0.00</td>
+                <td class="num chg dir-good">▼ -1.28</td>
+                <td class="num chg dir-good">▲ +0.42</td>
+            </tr>
+<tr>
                 <td class="country"><strong>USA</strong></td>
                 <td class="num dir-bad">3.88</td>
                 <td class="num dir-good">2.95</td>
-                <td class="num real-rate"><strong>0.93</strong></td>
+                <td class="num"><strong>0.93</strong></td>
                 <td class="num dir-bad">2.79</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -1.17</td>
@@ -1283,11 +1003,11 @@
             </tr>
 <tr>
                 <td class="country"><strong>Australia</strong></td>
-                <td class="num dir-flat">4.35</td>
+                <td class="num dir-bad">4.60</td>
                 <td class="num dir-good">3.17</td>
-                <td class="num real-rate"><strong>1.18</strong></td>
+                <td class="num"><strong>1.43</strong></td>
                 <td class="num dir-bad">1.37</td>
-                <td class="num chg dir-flat">● 0.00</td>
+                <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -2.43</td>
                 <td class="num chg dir-bad">▼ -2.21</td>
             </tr>
@@ -1295,7 +1015,7 @@
                 <td class="country"><strong>Italy</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-good">0.98</td>
-                <td class="num real-rate"><strong>1.52</strong></td>
+                <td class="num"><strong>1.52</strong></td>
                 <td class="num dir-bad">0.78</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -4.64</td>
@@ -1305,7 +1025,7 @@
                 <td class="country"><strong>Mexico</strong></td>
                 <td class="num dir-flat">6.50</td>
                 <td class="num dir-good">4.72</td>
-                <td class="num real-rate"><strong>1.78</strong></td>
+                <td class="num"><strong>1.78</strong></td>
                 <td class="num dir-bad">1.35</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -0.81</td>
@@ -1315,7 +1035,7 @@
                 <td class="country"><strong>China</strong></td>
                 <td class="num dir-flat">3.00</td>
                 <td class="num dir-good">0.22</td>
-                <td class="num real-rate"><strong>2.78</strong></td>
+                <td class="num"><strong>2.78</strong></td>
                 <td class="num dir-bad">4.96</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -0.02</td>
@@ -1325,7 +1045,7 @@
                 <td class="country"><strong>South Africa</strong></td>
                 <td class="num dir-bad">7.25</td>
                 <td class="num dir-good">4.36</td>
-                <td class="num real-rate"><strong>2.89</strong></td>
+                <td class="num"><strong>2.89</strong></td>
                 <td class="num dir-bad">0.53</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -1.71</td>
@@ -1335,7 +1055,7 @@
                 <td class="country"><strong>Saudi Arabia</strong></td>
                 <td class="num dir-bad">4.50</td>
                 <td class="num dir-good">1.50</td>
-                <td class="num real-rate"><strong>3.00</strong></td>
+                <td class="num"><strong>3.00</strong></td>
                 <td class="num dir-good">2.65</td>
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -0.97</td>
@@ -1345,7 +1065,7 @@
                 <td class="country"><strong>Indonesia</strong></td>
                 <td class="num dir-flat">5.75</td>
                 <td class="num dir-good">2.18</td>
-                <td class="num real-rate"><strong>3.57</strong></td>
+                <td class="num"><strong>3.57</strong></td>
                 <td class="num dir-bad">5.03</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -1.49</td>
@@ -1355,7 +1075,7 @@
                 <td class="country"><strong>Russia</strong></td>
                 <td class="num dir-flat">14.00</td>
                 <td class="num dir-bad">8.43</td>
-                <td class="num real-rate"><strong>5.57</strong></td>
+                <td class="num"><strong>5.57</strong></td>
                 <td class="num dir-good">4.92</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +2.57</td>
@@ -1365,7 +1085,7 @@
                 <td class="country"><strong>Brazil</strong></td>
                 <td class="num dir-good">13.75</td>
                 <td class="num dir-good">4.37</td>
-                <td class="num real-rate"><strong>9.38</strong></td>
+                <td class="num"><strong>9.38</strong></td>
                 <td class="num dir-good">3.42</td>
                 <td class="num chg dir-good">▼ -0.25</td>
                 <td class="num chg dir-good">▼ -0.23</td>
@@ -1375,7 +1095,7 @@
                 <td class="country"><strong>Iran</strong></td>
                 <td class="num ">—</td>
                 <td class="num dir-good">32.46</td>
-                <td class="num real-rate"><strong>—</strong></td>
+                <td class="num"><strong>—</strong></td>
                 <td class="num dir-bad">3.66</td>
                 <td class="num chg ">—</td>
                 <td class="num chg dir-good">▼ -12.12</td>
@@ -1385,7 +1105,7 @@
                 <td class="country"><strong>Ukraine</strong></td>
                 <td class="num ">—</td>
                 <td class="num dir-good">6.50</td>
-                <td class="num real-rate"><strong>—</strong></td>
+                <td class="num"><strong>—</strong></td>
                 <td class="num dir-bad">3.25</td>
                 <td class="num chg ">—</td>
                 <td class="num chg dir-good">▼ -6.35</td>
@@ -1397,7 +1117,7 @@
             </div>
         </div>
         
-        <div class="top-toolbar">
+        <div class="top-toolbar" style="margin-top: 1.5rem; margin-bottom: 0;">
             <div class="legend">
                 <span><span class="swatch good"></span> Favourable (GDP ↑ · CPI/CB ↓)</span>
                 <span><span class="swatch bad"></span> Unfavourable (GDP ↓ · CPI/CB ↑)</span>
