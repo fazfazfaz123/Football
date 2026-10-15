@@ -28,8 +28,7 @@ button { background: none; border: 0; }
 h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(2.3rem, 5vw, 3.2rem); line-height: 0.98; letter-spacing: -0.03em; margin: 0; color: var(--ink); }
 .eyebrow, .kicker { margin: 0 0 8px; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .dek { max-width: 40rem; color: var(--muted); margin: 12px 0 0; }
-.insight { margin: 14px 0 0; max-width: 40rem; color: var(--ink); }
-.records { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.records { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 36px; }
 .record, .panel, .block { background: var(--card); border: 1px solid var(--rule); }
 .record { text-align: left; padding: 12px 14px; min-height: 104px; transition: border-color 0.2s; }
 .record:hover { border-color: var(--muted); }
@@ -51,15 +50,15 @@ h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(2.3rem, 5vw, 
 .count, .caption, .note { color: var(--muted); font-size: 0.88rem; margin: 0; }
 .layout { display: grid; gap: 18px; margin-top: 8px; }
 .row {
-  width: 100%; display: grid; grid-template-columns: 2rem minmax(8rem, 14rem) minmax(0, 1fr) minmax(7rem, 10rem);
+  width: 100%; display: grid; grid-template-columns: 2rem minmax(18rem, 19rem) minmax(0, 1fr) minmax(7rem, 10rem);
   gap: 8px 10px; align-items: center; text-align: left; border-bottom: 1px solid var(--rule);
-  padding: 8px 4px; min-height: 52px; background: transparent; transition: background 0.15s;
+  padding: 4px 4px; min-height: 40px; background: transparent; transition: background 0.15s;
 }
 .row:hover { background: rgba(255, 255, 255, 0.02); }
 .row[aria-pressed="true"] { background: #2d2822; box-shadow: inset 3px 0 0 var(--wax); }
 .rank { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 0.82rem; }
-.name { display: flex; gap: 8px; align-items: baseline; font-weight: 600; color: var(--ink); }
-.meta { display: block; color: var(--muted); font-size: 0.78rem; }
+.name { display: flex; gap: 8px; align-items: baseline; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.meta { display: inline; color: var(--muted); font-size: 0.78rem; font-weight: normal; margin-left: 6px; white-space: nowrap; }
 .dur { text-align: right; font-variant-numeric: tabular-nums; font-size: 0.86rem; color: var(--ink); }
 .track { display: block; height: 12px; background: var(--track); position: relative; overflow: hidden; border-radius: 2px;
   background-image: linear-gradient(var(--grid), var(--grid)), linear-gradient(var(--grid), var(--grid)), linear-gradient(var(--grid), var(--grid)), linear-gradient(var(--grid), var(--grid));
@@ -110,7 +109,7 @@ h2 { font-family: var(--serif); font-weight: 700; font-size: 1.7rem; margin: 0 0
 .footnote a { color: var(--ink); }
 .empty { padding: 18px 0; color: var(--muted); }
 @media (min-width: 980px) {
-  .hero { grid-template-columns: 1.15fr 0.85fr; align-items: end; }
+  .hero { display: block; }
   .layout { grid-template-columns: minmax(0, 1fr) 320px; align-items: start; }
   .insights { grid-template-columns: 1.15fr 0.85fr; }
   #detail, #detail.open { display: block; position: sticky; top: 16px; }
@@ -136,10 +135,7 @@ h2 { font-family: var(--serif); font-weight: 700; font-size: 1.7rem; margin: 0 0
     <div>
       <p class="eyebrow" id="eyebrow">Prime ministers of the United Kingdom</p>
       <h1>Time as prime minister</h1>
-      <p class="dek">One bar is one continuous term. A new election, or a renamed ministry, does not restart the clock. Leaving office and coming back does.</p>
-      <p class="insight" id="insight"></p>
     </div>
-    <div class="records" id="records"></div>
   </header>
 
  <section class="section block" style="padding:16px">
@@ -199,6 +195,8 @@ h2 { font-family: var(--serif); font-weight: 700; font-size: 1.7rem; margin: 0 0
       <div id="hist"></div>
     </section>
   </div>
+
+  <div class="records" id="records"></div>
   
   <p class="footnote" id="footnote"></p>
 </div>
@@ -261,8 +259,8 @@ function rowsFrom(terms) {
     return terms.map((term) => ({
       key: "t:" + term.id, kind: "term", ref: term, days: term.days, start: term.start,
       name: term.name, surname: term.surname, color: term.color,
-      meta: term.year_span + " · " + term.party_label + (term.term_count > 1 ? " · " + term.term_index + " of " + term.term_count : ""),
-      duration: term.incumbent ? term.duration + " so far" : term.duration
+      meta: term.year_span + (term.term_count > 1 ? " · " + term.term_index + " of " + term.term_count : ""),
+      duration: term.incumbent ? term.duration + " " : term.duration
     }));
   }
   const grouped = new Map();
@@ -277,7 +275,7 @@ function rowsFrom(terms) {
       key: "p:" + personId, kind: "person", ref: person, spells, days,
       start: spells.map((term) => term.start).sort()[0],
       name: person.name, surname: person.surname, color: person.color,
-      meta: spells.length + (spells.length === 1 ? " term · " : " terms · ") + person.party_label,
+      meta: spells.length + (spells.length === 1 ? " term" : " terms"),
       duration: formatDays(days)
     };
   });
@@ -324,7 +322,7 @@ function renderRecords() {
     ["Median term", null, nf.format(DATA.records.median_days) + " days", "Half of all terms were shorter"]
   ];
   const incumbent = DATA.records.incumbent_term_id ? termById[DATA.records.incumbent_term_id] : null;
-  if (incumbent) cards.push(["In office now", incumbent, incumbent.duration + " so far", incumbent.party_label]);
+  if (incumbent) cards.push(["In office now", incumbent, incumbent.duration + " ", incumbent.party_label]);
   else cards.push(["People", null, String(DATA.people.length), DATA.terms.length + " terms"]);
   cards.forEach(([kicker, term, line, extra]) => {
     const button = el("button", "record");
@@ -345,20 +343,6 @@ function renderRecords() {
   const years = DATA.terms.map((term) => term.start.slice(0, 4));
   document.getElementById("eyebrow").textContent =
     DATA.terms.length + " terms · " + DATA.people.length + " people · " + years[0] + "–" + (DATA.terms.at(-1).incumbent ? "present" : DATA.terms.at(-1).end.slice(0, 4));
-}
-function renderInsight() {
-  const terms = DATA.terms.slice().sort((a, b) => b.days - a.days);
-  const people = DATA.people.slice().sort((a, b) => b.days - a.days);
-  const top = people[0];
-  const next = people[1];
-  const longest = terms[0];
-  const host = document.getElementById("insight");
-  if (top.id === longest.person_id) {
-    host.textContent = top.name + (top.term_ids.length === 1 ? "'s single term is still the record. " : " also has the longest career. ")
-      + "Next is " + next.name + ", " + nf.format(next.days) + " days across " + next.term_ids.length + (next.term_ids.length === 1 ? " term." : " terms.");
-  } else {
-    host.textContent = longest.name + " holds the longest single term. " + top.name + " holds the longest career, " + nf.format(top.days) + " days over " + top.term_ids.length + " terms.";
-  }
 }
 function renderIncumbentMilestone() {
   const host = document.getElementById("incumbent-milestone");
@@ -385,10 +369,8 @@ function renderIncumbentMilestone() {
 
   const wrap = el("div");
   wrap.append(el("p", "insight", 
-    incumbentTerm.name + " " + incumbentTerm.duration + " in office so far. Ranked #" + (index + 1) + 
-    ". To surpass the next longest-serving term held by " + 
-    nextTerm.name + " (" + nextTerm.duration + ", " + nextTerm.year_span + "), they need to serve for another " + 
-    formatDays(daysNeeded) + " (" + nf.format(daysNeeded) + " days)."
+    incumbentTerm.name + " " + incumbentTerm.duration + " in office. Ranked #" + (index + 1) + 
+    ". " + formatDays(daysNeeded) + " to surpass " + nextTerm.name + "."
   ));
   host.append(wrap);
 }
@@ -398,9 +380,7 @@ function renderList(rows, maxDays) {
     ? "Showing " + rows.length + " of " + DATA.terms.length + " terms"
     : "Showing " + rows.length + " of " + DATA.people.length + " people";
   const longest = termById[DATA.records.longest_term_id];
-  document.getElementById("caption").textContent = "Bars are days in office, scaled to the longest "
-    + (state.mode === "term" ? "term (" + longest.name + ", " + longest.duration + ")." : "career.")
-    + " Faint lines mark five-year steps.";
+  
   if (!rows.length) {
     list.append(el("li", "empty", "Nothing matches. Clear the search or the party filter."));
     return;
@@ -415,8 +395,10 @@ function renderList(rows, maxDays) {
     const name = el("span", "name");
     const dot = el("span", "dot " + classOf(row.color));
     dot.setAttribute("aria-hidden", "true");
-    name.append(dot, el("span", "name-text", row.name));
-    who.append(name, el("span", "meta", row.meta));
+    const nameText = el("span", "name-text", row.name);
+    const meta = el("span", "meta", row.meta);
+    name.append(dot, nameText, meta);
+    who.append(name);
     const track = el("span", "track");
     const bar = el("span", "bar " + classOf(row.color) + ((row.kind === "term" && row.ref.incumbent) ? " incumbent" : ""));
     bar.style.width = (row.days / maxDays * 100) + "%";
@@ -669,7 +651,6 @@ function init() {
   const last = DATA.terms.filter((term) => term.incumbent).length ? "the incumbent" : DATA.terms.at(-1).end.slice(0, 4);
   document.getElementById("footnote").innerHTML = DATA.source_rows + " list rows were joined into " + DATA.terms.length
   renderRecords();
-  renderInsight();
   renderParties();
   renderHist();
   renderIncumbentMilestone();
