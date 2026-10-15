@@ -18,7 +18,7 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--paper); color: var(--ink); }
-body { font-family: var(--sans); font-size: 16px; line-height: 1.45; border-top: 6px solid var(--wax); }
+body { font-family: var(--sans); font-size: 16px; line-height: 1.45; }
 button, input, select { font: inherit; color: inherit; }
 button, select { cursor: pointer; }
 button { background: none; border: 0; }
@@ -165,7 +165,6 @@ h2 { font-family: var(--serif); font-weight: 700; font-size: 1.7rem; margin: 0 0
   
     </div>
     <div class="chips" id="chips"></div>
-    <p class="count" id="count"></p>
   </div>
 
  
@@ -377,9 +376,6 @@ function renderIncumbentMilestone() {
 }
 function renderList(rows, maxDays) {
   list.replaceChildren();
-  document.getElementById("count").textContent = state.mode === "term"
-    ? "Showing " + rows.length + " of " + DATA.terms.length + " terms"
-    : "Showing " + rows.length + " of " + DATA.people.length + " people";
   const longest = termById[DATA.records.longest_term_id];
   
   if (!rows.length) {
