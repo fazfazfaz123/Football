@@ -144,18 +144,6 @@
         .swatch.bad { background: var(--bad); box-shadow: 0 0 8px var(--bad); }
         .swatch.flat { background: var(--flat); }
 
-        .badge-pill {
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            padding: 0.25rem 0.65rem;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
         .dashboard-grid {
             display: grid;
             grid-template-columns: 360px 1fr;
@@ -230,58 +218,137 @@
             color: var(--text-muted);
         }
 
-        /* Scrollable Bar Chart Styles */
+        /* CPI Panel Side-by-Side Body Layout */
+        .cpi-panel-body {
+            display: flex;
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        @media (max-width: 1100px) {
+            .cpi-panel-body {
+                flex-direction: column;
+            }
+        }
+
+        .cpi-metric-side-card {
+            flex: 0 0 240px;
+            margin-bottom: 0 !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: left;
+            padding: 1.25rem;
+        }
+
+        @media (max-width: 1100px) {
+            .cpi-metric-side-card {
+                flex: none;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Full-Width CPI Bar Chart Styles with Axis & Dense Bars */
         .cpi-chart-container {
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 1rem 0.75rem 0.5rem 0.75rem;
+            padding: 1.25rem 1rem 2.8rem 1rem;
+            flex: 1;
             overflow-x: auto;
         }
 
-        .scrollable-chart {
-            min-width: 950px;
+        .cpi-chart-wrapper-inner {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+            min-width: 700px;
+        }
+
+        .cpi-yaxis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            padding-right: 12px;
+            text-align: right;
+            user-select: none;
+            min-width: 50px;
+        }
+
+        .cpi-chart-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .cpi-bar-chart {
             display: flex;
             align-items: flex-end;
-            justify-content: space-between;
-            height: 165px;
-            gap: 3px;
-            padding-top: 1.5rem;
+            justify-content: flex-start;
+            height: 180px;
+            gap: 2px;
+            position: relative;
+            border-bottom: 1px solid var(--border-bright);
         }
 
         .chart-bar-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex: 1;
+            width: 6px;
+            flex: 0 0 6px;
             height: 100%;
             position: relative;
             cursor: pointer;
-            padding: 2px;
-            border-radius: 4px;
+            padding: 0px;
+            border-radius: 2px;
+            transition: background 0.15s;
         }
 
-        /* Highlight style for the most recent 12 months window */
         .chart-bar-wrap.recent-window {
-            background: rgba(59, 130, 246, 0.06);
-            border-bottom: 2px solid rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 0.08);
+            border-bottom: 2px solid rgba(59, 130, 246, 0.5);
         }
 
-        .chart-bar-wrap:hover .chart-bar {
-            opacity: 0.85;
-            filter: brightness(1.2);
+        .chart-bar-wrap:hover {
+            background: rgba(255, 255, 255, 0.06);
         }
 
-        .chart-bar-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.5rem;
-            color: var(--text-muted);
+        /* Custom Hover Tooltip Styling supporting multi-line text */
+        .chart-bar-wrap::after {
+            content: attr(data-tooltip);
             position: absolute;
-            top: 0;
-            white-space: nowrap;
+            bottom: 60%;
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            background: #1e1e24;
+            color: #ededef;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            white-space: pre; /* Supports stacked lines via 
+ */
+            width: max-content;
+            text-align: center;
+            line-height: 1.3;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-bright);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.15s ease;
+            z-index: 100;
+        }
+
+        .chart-bar-wrap:hover::after {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
 
         .chart-bar-track {
@@ -290,22 +357,45 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            margin-bottom: 0.5rem;
         }
 
         .chart-bar {
             width: 100%;
-            max-width: 8px;
-            border-radius: 3px 3px 0 0;
+            max-width: 5px;
+            border-radius: 2px 2px 0 0;
             transition: all 0.2s;
             background: #3b82f6;
-            box-shadow: 0 0 4px rgba(59, 130, 246, 0.25);
+            box-shadow: 0 0 4px rgba(59, 130, 246, 0.2);
         }
 
-        .chart-bar-label {
+        .chart-bar-wrap:hover .chart-bar {
+            filter: brightness(1.25);
+        }
+
+        .cpi-xaxis {
+            display: flex;
+            justify-content: flex-start;
+            gap: 2px;
+            margin-top: 6px;
+            padding-top: 2px;
+        }
+
+        .cpi-xaxis-item {
+            width: 6px;
+            flex: 0 0 6px;
+            position: relative;
+            height: 25px;
+        }
+
+        .cpi-xaxis-item span {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.58rem;
+            font-size: 0.55rem;
             color: var(--text-muted);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            line-height: 1.2;
             white-space: nowrap;
         }
 
@@ -436,11 +526,11 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-15 21:27:57</div>
+            <div class="timestamp">SYNCED: 2026-10-16 18:14:41</div>
         </header>
 
         <div class="dashboard-grid">
-            <!-- Left Column: NFP Panel, US CPI MoM Chart, & Central Bank Calendar -->
+            <!-- Left Column: NFP Panel & Central Bank Calendar -->
             <div>
                 
         <div class="panel nfp-panel">
@@ -520,179 +610,6 @@
                 </table>
             </div>
         </div>
-    
-                
-        <div class="panel cpi-mom-panel" style="margin-top: 1.5rem;">
-            <div class="panel-header">
-                <div>
-                    <h2>US CPI (Month-on-Month) - Monthly History</h2>
-                    <p class="subtext">Seasonally adjusted · % change (Actual) · Source: us_cpi_mom_cleaned.json</p>
-                </div>
-            </div>
-            
-            <div class="nfp-metric-card">
-                <div class="nfp-label">Latest MoM (Oct 14, 2026 (Sep))</div>
-                <div class="nfp-value dir-bad">+0.60%</div>
-            </div>
-
-            <div class="cpi-chart-container" id="cpiChartContainer">
-                <div class="cpi-bar-chart scrollable-chart">
-                    <div class="chart-bar-wrap " title="August 2024: +0.20%">
-                <div class="chart-bar-value">+0.20%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 15%;"></div>
-                </div>
-                <div class="chart-bar-label">Aug</div>
-            </div><div class="chart-bar-wrap " title="September 2024: +0.20%">
-                <div class="chart-bar-value">+0.20%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 15%;"></div>
-                </div>
-                <div class="chart-bar-label">Sep</div>
-            </div><div class="chart-bar-wrap " title="October 2024: +0.20%">
-                <div class="chart-bar-value">+0.20%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 15%;"></div>
-                </div>
-                <div class="chart-bar-label">Oct</div>
-            </div><div class="chart-bar-wrap " title="November 2024: +0.30%">
-                <div class="chart-bar-value">+0.30%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 23%;"></div>
-                </div>
-                <div class="chart-bar-label">Nov</div>
-            </div><div class="chart-bar-wrap " title="December 2024: +0.40%">
-                <div class="chart-bar-value">+0.40%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 31%;"></div>
-                </div>
-                <div class="chart-bar-label">Dec</div>
-            </div><div class="chart-bar-wrap " title="January 2025: +0.50%">
-                <div class="chart-bar-value">+0.50%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 38%;"></div>
-                </div>
-                <div class="chart-bar-label">Jan '25</div>
-            </div><div class="chart-bar-wrap " title="February 2025: +0.20%">
-                <div class="chart-bar-value">+0.20%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 15%;"></div>
-                </div>
-                <div class="chart-bar-label">Feb</div>
-            </div><div class="chart-bar-wrap " title="March 2025: -0.10%">
-                <div class="chart-bar-value">-0.10%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 8%;"></div>
-                </div>
-                <div class="chart-bar-label">Mar</div>
-            </div><div class="chart-bar-wrap " title="April 2025: +0.20%">
-                <div class="chart-bar-value">+0.20%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 15%;"></div>
-                </div>
-                <div class="chart-bar-label">Apr</div>
-            </div><div class="chart-bar-wrap " title="May 2025: +0.10%">
-                <div class="chart-bar-value">+0.10%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 8%;"></div>
-                </div>
-                <div class="chart-bar-label">May</div>
-            </div><div class="chart-bar-wrap " title="June 2025: +0.30%">
-                <div class="chart-bar-value">+0.30%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 23%;"></div>
-                </div>
-                <div class="chart-bar-label">Jun</div>
-            </div><div class="chart-bar-wrap " title="July 2025: +0.20%">
-                <div class="chart-bar-value">+0.20%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 15%;"></div>
-                </div>
-                <div class="chart-bar-label">Jul</div>
-            </div><div class="chart-bar-wrap recent-window" title="August 2025: +0.40%">
-                <div class="chart-bar-value">+0.40%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 31%;"></div>
-                </div>
-                <div class="chart-bar-label">Aug</div>
-            </div><div class="chart-bar-wrap recent-window" title="September 2025: +0.30%">
-                <div class="chart-bar-value">+0.30%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 23%;"></div>
-                </div>
-                <div class="chart-bar-label">Sep</div>
-            </div><div class="chart-bar-wrap recent-window" title="December 2025: +0.30%">
-                <div class="chart-bar-value">+0.30%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 23%;"></div>
-                </div>
-                <div class="chart-bar-label">Dec</div>
-            </div><div class="chart-bar-wrap recent-window" title="January 2026: +0.20%">
-                <div class="chart-bar-value">+0.20%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 15%;"></div>
-                </div>
-                <div class="chart-bar-label">Jan '26</div>
-            </div><div class="chart-bar-wrap recent-window" title="February 2026: +0.30%">
-                <div class="chart-bar-value">+0.30%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 23%;"></div>
-                </div>
-                <div class="chart-bar-label">Feb</div>
-            </div><div class="chart-bar-wrap recent-window" title="March 2026: +0.90%">
-                <div class="chart-bar-value">+0.90%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 70%;"></div>
-                </div>
-                <div class="chart-bar-label">Mar</div>
-            </div><div class="chart-bar-wrap recent-window" title="April 2026: +0.60%">
-                <div class="chart-bar-value">+0.60%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 46%;"></div>
-                </div>
-                <div class="chart-bar-label">Apr</div>
-            </div><div class="chart-bar-wrap recent-window" title="May 2026: +0.50%">
-                <div class="chart-bar-value">+0.50%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 38%;"></div>
-                </div>
-                <div class="chart-bar-label">May</div>
-            </div><div class="chart-bar-wrap recent-window" title="June 2026: -0.40%">
-                <div class="chart-bar-value">-0.40%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 31%;"></div>
-                </div>
-                <div class="chart-bar-label">Jun</div>
-            </div><div class="chart-bar-wrap recent-window" title="July 2026: +0.10%">
-                <div class="chart-bar-value">+0.10%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 8%;"></div>
-                </div>
-                <div class="chart-bar-label">Jul</div>
-            </div><div class="chart-bar-wrap recent-window" title="August 2026: +0.40%">
-                <div class="chart-bar-value">+0.40%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 31%;"></div>
-                </div>
-                <div class="chart-bar-label">Aug</div>
-            </div><div class="chart-bar-wrap recent-window" title="September 2026: +0.60%">
-                <div class="chart-bar-value">+0.60%</div>
-                <div class="chart-bar-track">
-                    <div class="chart-bar" style="height: 46%;"></div>
-                </div>
-                <div class="chart-bar-label">Sep</div>
-            </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            window.addEventListener('DOMContentLoaded', (event) => {
-                const container = document.getElementById('cpiChartContainer');
-                if (container) {
-                    container.scrollLeft = container.scrollWidth;
-                }
-            });
-        </script>
     
                 
         <div class="panel cb-calendar-panel" style="margin-top: 1.5rem;">
@@ -1116,6 +1033,686 @@
                 </div>
             </div>
         </div>
+
+        <!-- Full Width US CPI MoM Bar Chart Section -->
+        
+        <div class="panel cpi-mom-panel" style="margin-top: 1.5rem; width: 100%;">
+            <div class="panel-header">
+                <div>
+                    <h2>US CPI (Month-on-Month) - Monthly History</h2>
+                    <p class="subtext">Seasonally adjusted · % change (Actual) · Source: us_cpi_mom_cleaned.json</p>
+                </div>
+            </div>
+            
+            <div class="cpi-panel-body">
+                <div class="cpi-chart-container" id="cpiChartContainer">
+                    <div class="cpi-chart-wrapper-inner">
+                        <div class="cpi-yaxis">
+                            <span>+1.3%</span>
+                            <span>0.0%</span>
+                            <span>-1.3%</span>
+                        </div>
+                        <div class="cpi-chart-main">
+                            <div class="cpi-bar-chart">
+                                <div class="chart-bar-wrap " data-tooltip="August 2021
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="September 2021
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="October 2021
++0.90%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 55%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="November 2021
++0.80%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 49%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="December 2021
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 30%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
++0.60%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 36%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="February 2022
++0.80%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 49%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="March 2022
++1.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 73%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="April 2022
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="May 2022
++1.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 61%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="June 2022
++1.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 80%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="July 2022
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="August 2022
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="September 2022
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="October 2022
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="November 2022
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="December 2022
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2023
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 30%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="February 2023
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="March 2023
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="April 2023
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="May 2023
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="June 2023
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="July 2023
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="August 2023
++0.60%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 36%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="September 2023
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="October 2023
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="November 2023
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="December 2023
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2024
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="February 2024
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="March 2024
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="April 2024
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="May 2024
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="June 2024
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="July 2024
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="August 2024
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="September 2024
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="October 2024
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="November 2024
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="December 2024
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2025
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 30%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="February 2025
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="March 2025
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="April 2025
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="May 2025
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="June 2025
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="July 2025
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="August 2025
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="September 2025
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="December 2025
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="January 2026
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="February 2026
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="March 2026
++0.90%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 55%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="April 2026
++0.60%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 36%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="May 2026
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 30%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="June 2026
+-0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="July 2026
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="August 2026
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="September 2026
++0.60%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 36%;"></div>
+                </div>
+            </div>
+                            </div>
+                            <div class="cpi-xaxis">
+                                <div class="cpi-xaxis-item" title="August 2021"><span></span></div><div class="cpi-xaxis-item" title="September 2021"><span></span></div><div class="cpi-xaxis-item" title="October 2021"><span>Q4<br>'21</span></div><div class="cpi-xaxis-item" title="November 2021"><span></span></div><div class="cpi-xaxis-item" title="December 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="February 2022"><span></span></div><div class="cpi-xaxis-item" title="March 2022"><span></span></div><div class="cpi-xaxis-item" title="April 2022"><span>Q2<br>'22</span></div><div class="cpi-xaxis-item" title="May 2022"><span></span></div><div class="cpi-xaxis-item" title="June 2022"><span></span></div><div class="cpi-xaxis-item" title="July 2022"><span>Q3<br>'22</span></div><div class="cpi-xaxis-item" title="August 2022"><span></span></div><div class="cpi-xaxis-item" title="September 2022"><span></span></div><div class="cpi-xaxis-item" title="October 2022"><span>Q4<br>'22</span></div><div class="cpi-xaxis-item" title="November 2022"><span></span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span>Q1<br>'23</span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span>Q2<br>'23</span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span>Q3<br>'23</span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span>Q4<br>'23</span></div><div class="cpi-xaxis-item" title="November 2023"><span></span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span>Q1<br>'24</span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span>Q2<br>'24</span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span>Q3<br>'24</span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span>Q4<br>'24</span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span>Q1<br>'25</span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span>Q2<br>'25</span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span>Q3<br>'25</span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span>Q1<br>'26</span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span>Q2<br>'26</span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span>Q3<br>'26</span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="September 2026"><span></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nfp-metric-card cpi-metric-side-card">
+                    <div>
+                        <div class="nfp-label">Latest MoM (Oct 14, 2026 (Sep))</div>
+                        <div class="nfp-level" style="margin-top: 0.2rem;">Recent 12 months highlighted</div>
+                    </div>
+                    <div class="nfp-value dir-bad" style="font-size: 2rem; margin: 0.5rem 0 0 0;">+0.60%</div>
+                </div>
+            </div>
+        </div>
+    
+
+        <!-- Full Width UK GDP MoM Bar Chart Section -->
+        
+        <div class="panel cpi-mom-panel" style="margin-top: 1.5rem; width: 100%;">
+            <div class="panel-header">
+                <div>
+                    <h2>UK GDP (Month-on-Month) - Monthly History</h2>
+                    <p class="subtext">Seasonally adjusted · % change (Actual) · Source: uk_gdp_mom_cleaned.json</p>
+                </div>
+            </div>
+            
+            <div class="cpi-panel-body">
+                <div class="cpi-chart-container">
+                    <div class="cpi-chart-wrapper-inner">
+                        <div class="cpi-yaxis">
+                            <span>+2.6%</span>
+                            <span>0.0%</span>
+                            <span>-2.6%</span>
+                        </div>
+                        <div class="cpi-chart-main">
+                            <div class="cpi-bar-chart">
+                                <div class="chart-bar-wrap " data-tooltip="January 2021
++1.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 36%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2021
+-2.60%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 80%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 15%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+-0.60%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+-0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+-0.60%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 18%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 15%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+-0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
++0.80%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 24%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+-0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2022
++0.90%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 27%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="December 2022
+-0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 15%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2023
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2023
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="February 2023
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="March 2023
+-0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="April 2023
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="May 2023
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="June 2023
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 15%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="July 2023
+-0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 15%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="August 2023
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="September 2023
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="October 2023
+-0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="December 2023
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2024
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="February 2024
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="March 2024
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="April 2024
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="May 2024
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="June 2024
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="July 2024
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="August 2024
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="September 2024
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="October 2024
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="November 2024
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="December 2024
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="January 2025
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="February 2025
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 15%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="March 2025
++0.20%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 6%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="April 2025
+-0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="May 2025
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="June 2025
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="July 2025
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="August 2025
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap " data-tooltip="September 2025
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="October 2025
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="November 2025
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="December 2025
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="January 2026
++0.00%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="February 2026
++0.50%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 15%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="March 2026
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="April 2026
+-0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="May 2026
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="June 2026
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="July 2026
++0.40%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 12%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="August 2026
++0.10%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 4%;"></div>
+                </div>
+            </div><div class="chart-bar-wrap recent-window" data-tooltip="November 2026
++0.30%">
+                <div class="chart-bar-track">
+                    <div class="chart-bar" style="height: 9%;"></div>
+                </div>
+            </div>
+                            </div>
+                            <div class="cpi-xaxis">
+                                <div class="cpi-xaxis-item" title="January 2021"><span>Q1<br>'21</span></div><div class="cpi-xaxis-item" title="January 2021"><span>Q1<br>'21</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span>Q1<br>'23</span></div><div class="cpi-xaxis-item" title="January 2023"><span>Q1<br>'23</span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span>Q2<br>'23</span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span>Q3<br>'23</span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span>Q4<br>'23</span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span>Q1<br>'24</span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span>Q2<br>'24</span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span>Q3<br>'24</span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span>Q4<br>'24</span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span>Q1<br>'25</span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span>Q2<br>'25</span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span>Q3<br>'25</span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="October 2025"><span>Q4<br>'25</span></div><div class="cpi-xaxis-item" title="November 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span>Q1<br>'26</span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span>Q2<br>'26</span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span>Q3<br>'26</span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="November 2026"><span></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nfp-metric-card cpi-metric-side-card">
+                    <div>
+                        <div class="nfp-label">Latest MoM (Jan 15, 2026 (Nov))</div>
+                        <div class="nfp-level" style="margin-top: 0.2rem;">Recent 12 months highlighted</div>
+                    </div>
+                    <div class="nfp-value dir-good" style="font-size: 2rem; margin: 0.5rem 0 0 0;">+0.30%</div>
+                </div>
+            </div>
+        </div>
+    
         
         <div class="top-toolbar" style="margin-top: 1.5rem; margin-bottom: 0;">
             <div class="legend">
