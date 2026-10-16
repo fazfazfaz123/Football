@@ -112,13 +112,13 @@ h2 { font-family: var(--serif); font-weight: 700; font-size: 1.7rem; margin: 0 0
   .hero { display: block; }
   .layout { grid-template-columns: 1fr; align-items: start; }
   .insights { grid-template-columns: 1.15fr 0.85fr; }
-  #detail, #detail.open { display: block; position: static; }
+  #detail { display: block; position: static; }
   .panel { max-height: none; overflow: visible; }
   .close-detail { display: none; }
 }
 @media (max-width: 979px) {
   #detail { display: none; }
-  #detail.open { display: block; position: fixed; inset: 0; z-index: 20; background: rgba(12,11,10,.8); padding: 18px 12px 12px; backdrop-filter: blur(4px); }
+  #detail.open { display: block; position: fixed; inset: 0; z-index: 20; background: rgba(12,11,10,.92); padding: 18px 12px 12px; backdrop-filter: blur(4px); }
   #detail.open .panel { max-height: 92dvh; overflow: auto; }
   .close-detail { display: inline-block; min-height: 44px; }
 }
@@ -469,7 +469,13 @@ function renderDetail() {
   else if (key.startsWith("p:")) renderPersonDetail(panel, personById[key.slice(2)]);
   else panel.append(el("p", null, "Select a term."));
   detail.append(panel);
-  if (window.matchMedia("(max-width: 979px)").matches && scrollNow) detail.classList.add("open");
+
+  // Ensure mobile view opens the modal popup when an item is selected/clicked
+  if (window.matchMedia("(max-width: 979px)").matches) {
+    if (state.selected) {
+      detail.classList.add("open");
+    }
+  }
 }
 function renderTermDetail(panel, term) {
   if (!term) return;
