@@ -286,6 +286,15 @@
         .cpi-yaxis span:nth-child(2) { top: 80%; }
         .cpi-yaxis span:nth-child(3) { top: 100%; }
 
+        .cpi-yaxis-right span {
+            position: absolute;
+            left: 12px;
+            transform: translateY(-50%);
+        }
+        .cpi-yaxis-right span:nth-child(1) { top: 0%; }
+        .cpi-yaxis-right span:nth-child(2) { top: 80%; }
+        .cpi-yaxis-right span:nth-child(3) { top: 100%; }
+
         .cpi-chart-main {
             flex: 1;
             display: flex;
@@ -531,14 +540,14 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-18 17:44:43</div>
+            <div class="timestamp">SYNCED: 2026-10-18 18:02:05</div>
         </header>
 
         
         <div class="panel cpi-mom-panel" style="margin-bottom: 1.5rem; width: 100%;">
             <div class="panel-header">
                 <div>
-                    <h2>US CPI (Month-on-Month) - Monthly History</h2>
+                    <h2>US CPI (Month-on-Month Bars &amp; Year-on-Year Line) - Monthly History</h2>
                 </div>
             </div>
             
@@ -551,73 +560,144 @@
                             <span>-1.6%</span>
                         </div>
                         <div class="cpi-chart-main">
-                            <div class="cpi-bar-chart">
+                            <div class="cpi-bar-chart" style="overflow: hidden; position: relative;">
                                 <div class="contiguous-window-box" style="left: 384px; width: 94px;"></div>
                                 <div class="chart-bar-wrap" data-tooltip="August 2021
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2021
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2021
-+0.90%"><div class="chart-bar" style="bottom: 20%; height: 44%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2021
-+0.80%"><div class="chart-bar" style="bottom: 20%; height: 39%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2021
-+0.50%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2022
-+0.60%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2022
-+0.80%"><div class="chart-bar" style="bottom: 20%; height: 39%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2022
-+1.20%"><div class="chart-bar" style="bottom: 20%; height: 59%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2022
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2022
-+1.00%"><div class="chart-bar" style="bottom: 20%; height: 49%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2022
-+1.30%"><div class="chart-bar" style="bottom: 20%; height: 64%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2022
-+0.00%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2022
-+0.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2022
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2022
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2022
-+0.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2022
--0.10%"><div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2023
-+0.50%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2023
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2023
-+0.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2023
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2023
-+0.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2023
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2023
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2023
-+0.60%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2023
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2023
-+0.00%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2023
-+0.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2023
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2024
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2024
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2024
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2024
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2024
-+0.00%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2024
--0.10%"><div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2024
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2024
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2024
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2024
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2024
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2024
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2025
-+0.50%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2025
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2025
--0.10%"><div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2025
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2025
-+0.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2025
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2025
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2025
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2025
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2025
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2026
-+0.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2026
-+0.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2026
-+0.90%"><div class="chart-bar" style="bottom: 20%; height: 44%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2026
-+0.60%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2026
-+0.50%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2026
--0.40%"><div class="chart-bar" style="top: 80%; height: 19%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2026
-+0.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2026
-+0.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2026
-+0.60%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div>
+MoM: +0.30%
+YoY: +5.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2021
+MoM: +0.40%
+YoY: +5.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2021
+MoM: +0.90%
+YoY: +6.20%"><div class="chart-bar" style="bottom: 20%; height: 44%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2021
+MoM: +0.80%
+YoY: +6.80%"><div class="chart-bar" style="bottom: 20%; height: 39%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2021
+MoM: +0.50%
+YoY: +7.00%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2022
+MoM: +0.60%
+YoY: +7.50%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2022
+MoM: +0.80%
+YoY: +7.90%"><div class="chart-bar" style="bottom: 20%; height: 39%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2022
+MoM: +1.20%
+YoY: +8.50%"><div class="chart-bar" style="bottom: 20%; height: 59%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2022
+MoM: +0.30%
+YoY: +8.30%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2022
+MoM: +1.00%
+YoY: +8.60%"><div class="chart-bar" style="bottom: 20%; height: 49%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2022
+MoM: +1.30%
+YoY: +9.10%"><div class="chart-bar" style="bottom: 20%; height: 64%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2022
+MoM: +0.00%
+YoY: +8.50%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2022
+MoM: +0.10%
+YoY: +8.30%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2022
+MoM: +0.40%
+YoY: +8.20%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2022
+MoM: +0.40%
+YoY: +7.70%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2022
+MoM: +0.10%
+YoY: +7.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2022
+MoM: -0.10%
+YoY: +6.50%"><div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2023
+MoM: +0.50%
+YoY: +6.40%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2023
+MoM: +0.40%
+YoY: +6.00%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2023
+MoM: +0.10%
+YoY: +5.00%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2023
+MoM: +0.40%
+YoY: +4.90%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2023
+MoM: +0.10%
+YoY: +4.00%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2023
+MoM: +0.20%
+YoY: +3.00%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2023
+MoM: +0.20%
+YoY: +3.20%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2023
+MoM: +0.60%
+YoY: +3.70%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2023
+MoM: +0.40%
+YoY: +3.70%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2023
+MoM: +0.00%
+YoY: +3.20%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2023
+MoM: +0.10%
+YoY: +3.10%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2023
+MoM: +0.30%
+YoY: +3.40%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2024
+MoM: +0.30%
+YoY: +3.10%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2024
+MoM: +0.40%
+YoY: +3.20%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2024
+MoM: +0.40%
+YoY: +3.50%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2024
+MoM: +0.30%
+YoY: +3.40%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2024
+MoM: +0.00%
+YoY: +3.30%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2024
+MoM: -0.10%
+YoY: +3.00%"><div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2024
+MoM: +0.20%
+YoY: +2.90%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2024
+MoM: +0.20%
+YoY: +2.50%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2024
+MoM: +0.20%
+YoY: +2.40%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="October 2024
+MoM: +0.20%
+YoY: +2.60%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="November 2024
+MoM: +0.30%
+YoY: +2.70%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2024
+MoM: +0.40%
+YoY: +2.90%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2025
+MoM: +0.50%
+YoY: +3.00%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2025
+MoM: +0.20%
+YoY: +2.80%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2025
+MoM: -0.10%
+YoY: +2.40%"><div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2025
+MoM: +0.20%
+YoY: +2.30%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2025
+MoM: +0.10%
+YoY: +2.40%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2025
+MoM: +0.30%
+YoY: +2.70%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2025
+MoM: +0.20%
+YoY: +2.70%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2025
+MoM: +0.40%
+YoY: +2.90%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2025
+MoM: +0.30%
+YoY: +3.00%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="December 2025
+MoM: +0.30%
+YoY: +2.70%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="January 2026
+MoM: +0.20%
+YoY: +2.40%"><div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="February 2026
+MoM: +0.30%
+YoY: +2.40%"><div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="March 2026
+MoM: +0.90%
+YoY: +3.30%"><div class="chart-bar" style="bottom: 20%; height: 44%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="April 2026
+MoM: +0.60%
+YoY: +3.80%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="May 2026
+MoM: +0.50%
+YoY: +4.20%"><div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="June 2026
+MoM: -0.40%
+YoY: +3.50%"><div class="chart-bar" style="top: 80%; height: 19%; border-radius: 0 0 2px 2px;"></div></div><div class="chart-bar-wrap" data-tooltip="July 2026
+MoM: +0.10%
+YoY: +3.40%"><div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="August 2026
+MoM: +0.40%
+YoY: +3.40%"><div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div></div><div class="chart-bar-wrap" data-tooltip="September 2026
+MoM: +0.60%
+YoY: +3.70%"><div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div></div>
+                                
+        <svg style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4;" overflow="hidden">
+            <polyline fill="none" stroke="#f59e0b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="3,85.45054945054945 11,84.04395604395604 19,72.79120879120879 27,64.35164835164835 35,61.53846153846153 43,54.50549450549451 51,48.87912087912086 59,40.43956043956044 67,43.25274725274724 75,39.032967032967036 83,32.000000000000014 91,40.43956043956044 99,43.25274725274724 107,44.65934065934066 115,51.69230769230768 123,60.13186813186813 131,68.57142857142858 139,69.97802197802199 147,75.6043956043956 155,89.67032967032966 163,91.07692307692307 171,103.73626373626374 179,117.80219780219781 187,114.98901098901099 195,107.95604395604396 203,107.95604395604396 211,114.98901098901099 219,116.3956043956044 227,112.17582417582418 235,116.3956043956044 243,114.98901098901099 251,110.76923076923077 259,112.17582417582418 267,113.58241758241759 275,117.80219780219781 283,119.20879120879121 291,124.83516483516483 299,126.24175824175825 307,123.42857142857142 315,122.02197802197801 323,119.20879120879121 331,117.80219780219781 339,120.61538461538461 347,126.24175824175825 355,127.64835164835165 363,126.24175824175825 371,122.02197802197801 379,122.02197802197801 387,119.20879120879121 395,117.80219780219781 403,122.02197802197801 411,126.24175824175825 419,126.24175824175825 427,113.58241758241759 435,106.54945054945055 443,100.92307692307692 451,110.76923076923077 459,112.17582417582418 467,112.17582417582418 475,107.95604395604396"/>
+            <circle cx="3" cy="85.45054945054945" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="11" cy="84.04395604395604" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="19" cy="72.79120879120879" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="27" cy="64.35164835164835" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="35" cy="61.53846153846153" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="43" cy="54.50549450549451" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="51" cy="48.87912087912086" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="59" cy="40.43956043956044" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="67" cy="43.25274725274724" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="75" cy="39.032967032967036" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="83" cy="32.000000000000014" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="91" cy="40.43956043956044" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="99" cy="43.25274725274724" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="107" cy="44.65934065934066" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="115" cy="51.69230769230768" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="123" cy="60.13186813186813" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="131" cy="68.57142857142858" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="139" cy="69.97802197802199" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="147" cy="75.6043956043956" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="155" cy="89.67032967032966" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="163" cy="91.07692307692307" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="171" cy="103.73626373626374" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="179" cy="117.80219780219781" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="187" cy="114.98901098901099" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="195" cy="107.95604395604396" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="203" cy="107.95604395604396" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="211" cy="114.98901098901099" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="219" cy="116.3956043956044" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="227" cy="112.17582417582418" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="235" cy="116.3956043956044" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="243" cy="114.98901098901099" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="251" cy="110.76923076923077" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="259" cy="112.17582417582418" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="267" cy="113.58241758241759" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="275" cy="117.80219780219781" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="283" cy="119.20879120879121" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="291" cy="124.83516483516483" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="299" cy="126.24175824175825" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="307" cy="123.42857142857142" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="315" cy="122.02197802197801" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="323" cy="119.20879120879121" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="331" cy="117.80219780219781" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="339" cy="120.61538461538461" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="347" cy="126.24175824175825" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="355" cy="127.64835164835165" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="363" cy="126.24175824175825" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="371" cy="122.02197802197801" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="379" cy="122.02197802197801" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="387" cy="119.20879120879121" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="395" cy="117.80219780219781" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="403" cy="122.02197802197801" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="411" cy="126.24175824175825" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="419" cy="126.24175824175825" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="427" cy="113.58241758241759" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="435" cy="106.54945054945055" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="443" cy="100.92307692307692" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="451" cy="110.76923076923077" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="459" cy="112.17582417582418" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="467" cy="112.17582417582418" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/><circle cx="475" cy="107.95604395604396" r="2.5" fill="#f59e0b" stroke="#101014" stroke-width="1.5"/>
+        </svg>
+    
                             </div>
                             <div class="cpi-xaxis">
                                 <div class="cpi-xaxis-item" title="August 2021"><span></span></div><div class="cpi-xaxis-item" title="September 2021"><span></span></div><div class="cpi-xaxis-item" title="October 2021"><span></span></div><div class="cpi-xaxis-item" title="November 2021"><span></span></div><div class="cpi-xaxis-item" title="December 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="February 2022"><span></span></div><div class="cpi-xaxis-item" title="March 2022"><span></span></div><div class="cpi-xaxis-item" title="April 2022"><span></span></div><div class="cpi-xaxis-item" title="May 2022"><span></span></div><div class="cpi-xaxis-item" title="June 2022"><span></span></div><div class="cpi-xaxis-item" title="July 2022"><span></span></div><div class="cpi-xaxis-item" title="August 2022"><span></span></div><div class="cpi-xaxis-item" title="September 2022"><span></span></div><div class="cpi-xaxis-item" title="October 2022"><span></span></div><div class="cpi-xaxis-item" title="November 2022"><span></span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span></span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span></span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span></span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span></span></div><div class="cpi-xaxis-item" title="November 2023"><span></span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span></span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span></span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span></span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span></span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span></span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span></span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span></span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span></span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span></span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span></span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="September 2026"><span></span></div>
                             </div>
+                        </div>
+                        <div class="cpi-yaxis cpi-yaxis-right" style="padding-right: 0; padding-left: 12px; text-align: left;">
+                            <span>+11.4%</span>
+                            <span>0.0%</span>
+                            <span>-11.4%</span>
                         </div>
                     </div>
                 </div>
@@ -625,9 +705,11 @@
                 <div class="nfp-metric-card cpi-metric-side-card">
                     <div>
                         <div class="nfp-label">Latest MoM (Oct 14, 2026 (Sep))</div>
-                        <div class="nfp-level" style="margin-top: 0.2rem;">Recent 12 months highlighted</div>
+                        <div class="nfp-value dir-bad" style="font-size: 1.7rem; margin: 0.2rem 0;">+0.60%</div>
+                        <div class="nfp-label" style="margin-top: 0.4rem;">Latest YoY</div>
+                        <div class="nfp-value" style="font-size: 1.7rem; margin: 0.2rem 0; color: #f59e0b;">+3.70%</div>
                     </div>
-                    <div class="nfp-value dir-bad" style="font-size: 2rem; margin: 0.5rem 0 0 0;">+0.60%</div>
+                    <div class="nfp-level" style="margin-top: 0.4rem;">Recent 12 months highlighted</div>
                 </div>
             </div>
         </div>
