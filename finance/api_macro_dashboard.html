@@ -254,7 +254,7 @@
             background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 1.25rem 1rem 2.8rem 1rem;
+            padding: 1.25rem 1rem 1.5rem 1rem;
             flex: 1;
             overflow-x: auto;
         }
@@ -267,17 +267,26 @@
         }
 
         .cpi-yaxis {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: relative;
+            min-width: 50px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.68rem;
             color: var(--text-muted);
             padding-right: 12px;
             text-align: right;
             user-select: none;
-            min-width: 50px;
+            height: 200px;
         }
+
+        .cpi-yaxis span {
+            position: absolute;
+            right: 12px;
+            transform: translateY(-50%);
+        }
+
+        .cpi-yaxis span:nth-child(1) { top: 0%; }
+        .cpi-yaxis span:nth-child(2) { top: 80%; }
+        .cpi-yaxis span:nth-child(3) { top: 100%; }
 
         .cpi-chart-main {
             flex: 1;
@@ -294,13 +303,24 @@
             position: relative;
         }
 
-        /* Center zero-line axis */
+        /* Single contiguous box for the last 12 months window positioned precisely over the final 12 columns */
+        .contiguous-window-box {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            background: rgba(59, 130, 246, 0.08);
+            border-bottom: 2px solid rgba(59, 130, 246, 0.5);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Absolute positioning for the lowered zero-line axis at 80% */
         .cpi-bar-chart::after {
             content: '';
             position: absolute;
             left: 0;
             right: 0;
-            top: 50%;
+            top: 80%;
             height: 1px;
             background: var(--border-bright);
             z-index: 2;
@@ -318,11 +338,7 @@
             padding: 0px;
             border-radius: 2px;
             transition: background 0.15s;
-        }
-
-        .chart-bar-wrap.recent-window {
-            background: rgba(59, 130, 246, 0.08);
-            border-bottom: 2px solid rgba(59, 130, 246, 0.5);
+            z-index: 3;
         }
 
         .chart-bar-wrap:hover {
@@ -382,27 +398,15 @@
             display: flex;
             justify-content: flex-start;
             gap: 2px;
-            margin-top: 6px;
-            padding-top: 2px;
+            margin-top: 4px;
+            padding-top: 0;
         }
 
         .cpi-xaxis-item {
             width: 6px;
             flex: 0 0 6px;
             position: relative;
-            height: 25px;
-        }
-
-        .cpi-xaxis-item span {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.55rem;
-            color: var(--text-muted);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            line-height: 1.2;
-            white-space: nowrap;
+            height: 10px;
         }
 
         .table-container {
@@ -532,7 +536,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics overview</p>
             </div>
-            <div class="timestamp">SYNCED: 2026-10-16 18:44:33</div>
+            <div class="timestamp">SYNCED: 2026-10-18 17:16:13</div>
         </header>
 
         <div class="dashboard-grid">
@@ -1058,190 +1062,191 @@
                         </div>
                         <div class="cpi-chart-main">
                             <div class="cpi-bar-chart">
-                                <div class="chart-bar-wrap " data-tooltip="August 2021
+                                <div class="contiguous-window-box" style="left: 384px; width: 94px;"></div>
+                                <div class="chart-bar-wrap" data-tooltip="August 2021
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2021
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2021
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2021
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2021
 +0.90%">
-                <div class="chart-bar" style="bottom: 50%; height: 44%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2021
+                <div class="chart-bar" style="bottom: 20%; height: 44%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2021
 +0.80%">
-                <div class="chart-bar" style="bottom: 50%; height: 39%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2021
+                <div class="chart-bar" style="bottom: 20%; height: 39%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2021
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +0.60%">
-                <div class="chart-bar" style="bottom: 50%; height: 29%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2022
+                <div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2022
 +0.80%">
-                <div class="chart-bar" style="bottom: 50%; height: 39%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2022
+                <div class="chart-bar" style="bottom: 20%; height: 39%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2022
 +1.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 59%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2022
+                <div class="chart-bar" style="bottom: 20%; height: 59%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2022
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2022
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2022
 +1.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 49%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2022
+                <div class="chart-bar" style="bottom: 20%; height: 49%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2022
 +1.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 64%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2022
+                <div class="chart-bar" style="bottom: 20%; height: 64%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2022
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2022
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2022
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2022
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2022
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2022
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2022
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2022
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2022
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2022
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2022
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2023
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2023
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2023
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2023
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2023
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2023
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2023
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2023
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2023
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2023
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2023
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2023
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2023
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2023
 +0.60%">
-                <div class="chart-bar" style="bottom: 50%; height: 29%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2023
+                <div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2023
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2023
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2023
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2023
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2023
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2024
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2024
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2024
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2024
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2024
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2024
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2024
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2024
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2024
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2024
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2024
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2024
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2024
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2024
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2024
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2024
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2024
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2024
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2024
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2024
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2024
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2024
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2024
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2025
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2025
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2025
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2025
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2025
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2025
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2025
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2025
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2025
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2025
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2025
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2025
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2025
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2025
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="August 2025
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2025
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="September 2025
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2025
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="December 2025
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2025
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="January 2026
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2026
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="February 2026
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2026
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="March 2026
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2026
 +0.90%">
-                <div class="chart-bar" style="bottom: 50%; height: 44%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="April 2026
+                <div class="chart-bar" style="bottom: 20%; height: 44%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2026
 +0.60%">
-                <div class="chart-bar" style="bottom: 50%; height: 29%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="May 2026
+                <div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2026
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="June 2026
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2026
 -0.40%">
-                <div class="chart-bar" style="top: 50%; height: 19%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="July 2026
+                <div class="chart-bar" style="top: 80%; height: 19%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2026
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="August 2026
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2026
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="September 2026
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2026
 +0.60%">
-                <div class="chart-bar" style="bottom: 50%; height: 29%; border-radius: 2px 2px 0 0;"></div>
+                <div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div>
             </div>
                             </div>
                             <div class="cpi-xaxis">
-                                <div class="cpi-xaxis-item" title="August 2021"><span></span></div><div class="cpi-xaxis-item" title="September 2021"><span></span></div><div class="cpi-xaxis-item" title="October 2021"><span>Q4<br>'21</span></div><div class="cpi-xaxis-item" title="November 2021"><span></span></div><div class="cpi-xaxis-item" title="December 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="February 2022"><span></span></div><div class="cpi-xaxis-item" title="March 2022"><span></span></div><div class="cpi-xaxis-item" title="April 2022"><span>Q2<br>'22</span></div><div class="cpi-xaxis-item" title="May 2022"><span></span></div><div class="cpi-xaxis-item" title="June 2022"><span></span></div><div class="cpi-xaxis-item" title="July 2022"><span>Q3<br>'22</span></div><div class="cpi-xaxis-item" title="August 2022"><span></span></div><div class="cpi-xaxis-item" title="September 2022"><span></span></div><div class="cpi-xaxis-item" title="October 2022"><span>Q4<br>'22</span></div><div class="cpi-xaxis-item" title="November 2022"><span></span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span>Q1<br>'23</span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span>Q2<br>'23</span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span>Q3<br>'23</span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span>Q4<br>'23</span></div><div class="cpi-xaxis-item" title="November 2023"><span></span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span>Q1<br>'24</span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span>Q2<br>'24</span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span>Q3<br>'24</span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span>Q4<br>'24</span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span>Q1<br>'25</span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span>Q2<br>'25</span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span>Q3<br>'25</span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span>Q1<br>'26</span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span>Q2<br>'26</span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span>Q3<br>'26</span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="September 2026"><span></span></div>
+                                <div class="cpi-xaxis-item" title="August 2021"><span></span></div><div class="cpi-xaxis-item" title="September 2021"><span></span></div><div class="cpi-xaxis-item" title="October 2021"><span></span></div><div class="cpi-xaxis-item" title="November 2021"><span></span></div><div class="cpi-xaxis-item" title="December 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="February 2022"><span></span></div><div class="cpi-xaxis-item" title="March 2022"><span></span></div><div class="cpi-xaxis-item" title="April 2022"><span></span></div><div class="cpi-xaxis-item" title="May 2022"><span></span></div><div class="cpi-xaxis-item" title="June 2022"><span></span></div><div class="cpi-xaxis-item" title="July 2022"><span></span></div><div class="cpi-xaxis-item" title="August 2022"><span></span></div><div class="cpi-xaxis-item" title="September 2022"><span></span></div><div class="cpi-xaxis-item" title="October 2022"><span></span></div><div class="cpi-xaxis-item" title="November 2022"><span></span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span></span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span></span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span></span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span></span></div><div class="cpi-xaxis-item" title="November 2023"><span></span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span></span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span></span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span></span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span></span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span></span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span></span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span></span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span></span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span></span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span></span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="September 2026"><span></span></div>
                             </div>
                         </div>
                     </div>
@@ -1277,190 +1282,191 @@
                         </div>
                         <div class="cpi-chart-main">
                             <div class="cpi-bar-chart">
-                                <div class="chart-bar-wrap " data-tooltip="October 2021
+                                <div class="contiguous-window-box" style="left: 384px; width: 94px;"></div>
+                                <div class="chart-bar-wrap" data-tooltip="October 2021
 +531K">
-                <div class="chart-bar" style="bottom: 50%; height: 50%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2021
+                <div class="chart-bar" style="bottom: 20%; height: 50%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2021
 +210K">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2021
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2021
 +199K">
-                <div class="chart-bar" style="bottom: 50%; height: 18%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="bottom: 20%; height: 18%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +467K">
-                <div class="chart-bar" style="bottom: 50%; height: 44%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2022
+                <div class="chart-bar" style="bottom: 20%; height: 44%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2022
 +678K">
-                <div class="chart-bar" style="bottom: 50%; height: 64%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2022
+                <div class="chart-bar" style="bottom: 20%; height: 64%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2022
 +431K">
-                <div class="chart-bar" style="bottom: 50%; height: 40%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2022
+                <div class="chart-bar" style="bottom: 20%; height: 40%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2022
 +428K">
-                <div class="chart-bar" style="bottom: 50%; height: 40%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2022
+                <div class="chart-bar" style="bottom: 20%; height: 40%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2022
 +390K">
-                <div class="chart-bar" style="bottom: 50%; height: 36%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2022
+                <div class="chart-bar" style="bottom: 20%; height: 36%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2022
 +372K">
-                <div class="chart-bar" style="bottom: 50%; height: 35%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2022
+                <div class="chart-bar" style="bottom: 20%; height: 35%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2022
 +528K">
-                <div class="chart-bar" style="bottom: 50%; height: 49%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2022
+                <div class="chart-bar" style="bottom: 20%; height: 49%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2022
 +315K">
-                <div class="chart-bar" style="bottom: 50%; height: 29%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2022
+                <div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2022
 +263K">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2022
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2022
 +261K">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2022
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2022
 +263K">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2022
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2022
 +223K">
-                <div class="chart-bar" style="bottom: 50%; height: 21%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2023
+                <div class="chart-bar" style="bottom: 20%; height: 21%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2023
 +517K">
-                <div class="chart-bar" style="bottom: 50%; height: 48%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2023
+                <div class="chart-bar" style="bottom: 20%; height: 48%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2023
 +311K">
-                <div class="chart-bar" style="bottom: 50%; height: 29%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2023
+                <div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2023
 +236K">
-                <div class="chart-bar" style="bottom: 50%; height: 22%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2023
+                <div class="chart-bar" style="bottom: 20%; height: 22%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2023
 +253K">
-                <div class="chart-bar" style="bottom: 50%; height: 23%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2023
+                <div class="chart-bar" style="bottom: 20%; height: 23%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2023
 +339K">
-                <div class="chart-bar" style="bottom: 50%; height: 32%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2023
+                <div class="chart-bar" style="bottom: 20%; height: 32%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2023
 +209K">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2023
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2023
 +187K">
-                <div class="chart-bar" style="bottom: 50%; height: 17%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2023
+                <div class="chart-bar" style="bottom: 20%; height: 17%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2023
 +187K">
-                <div class="chart-bar" style="bottom: 50%; height: 17%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2023
+                <div class="chart-bar" style="bottom: 20%; height: 17%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2023
 +336K">
-                <div class="chart-bar" style="bottom: 50%; height: 31%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2023
+                <div class="chart-bar" style="bottom: 20%; height: 31%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2023
 +150K">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2023
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2023
 +199K">
-                <div class="chart-bar" style="bottom: 50%; height: 18%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2023
+                <div class="chart-bar" style="bottom: 20%; height: 18%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2023
 +216K">
-                <div class="chart-bar" style="bottom: 50%; height: 20%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2024
+                <div class="chart-bar" style="bottom: 20%; height: 20%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2024
 +353K">
-                <div class="chart-bar" style="bottom: 50%; height: 33%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2024
+                <div class="chart-bar" style="bottom: 20%; height: 33%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2024
 +275K">
-                <div class="chart-bar" style="bottom: 50%; height: 25%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2024
+                <div class="chart-bar" style="bottom: 20%; height: 25%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2024
 +303K">
-                <div class="chart-bar" style="bottom: 50%; height: 28%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2024
+                <div class="chart-bar" style="bottom: 20%; height: 28%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2024
 +175K">
-                <div class="chart-bar" style="bottom: 50%; height: 16%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2024
+                <div class="chart-bar" style="bottom: 20%; height: 16%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2024
 +272K">
-                <div class="chart-bar" style="bottom: 50%; height: 25%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2024
+                <div class="chart-bar" style="bottom: 20%; height: 25%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2024
 +206K">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2024
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2024
 +114K">
-                <div class="chart-bar" style="bottom: 50%; height: 10%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2024
+                <div class="chart-bar" style="bottom: 20%; height: 10%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2024
 +142K">
-                <div class="chart-bar" style="bottom: 50%; height: 13%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2024
+                <div class="chart-bar" style="bottom: 20%; height: 13%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2024
 +254K">
-                <div class="chart-bar" style="bottom: 50%; height: 23%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2024
+                <div class="chart-bar" style="bottom: 20%; height: 23%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2024
 +12K">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2024
 +227K">
-                <div class="chart-bar" style="bottom: 50%; height: 21%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2024
+                <div class="chart-bar" style="bottom: 20%; height: 21%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2024
 +256K">
-                <div class="chart-bar" style="bottom: 50%; height: 24%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2025
+                <div class="chart-bar" style="bottom: 20%; height: 24%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2025
 +143K">
-                <div class="chart-bar" style="bottom: 50%; height: 13%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2025
+                <div class="chart-bar" style="bottom: 20%; height: 13%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2025
 +151K">
-                <div class="chart-bar" style="bottom: 50%; height: 14%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2025
+                <div class="chart-bar" style="bottom: 20%; height: 14%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2025
 +228K">
-                <div class="chart-bar" style="bottom: 50%; height: 21%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2025
+                <div class="chart-bar" style="bottom: 20%; height: 21%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2025
 +177K">
-                <div class="chart-bar" style="bottom: 50%; height: 16%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2025
+                <div class="chart-bar" style="bottom: 20%; height: 16%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2025
 +139K">
-                <div class="chart-bar" style="bottom: 50%; height: 13%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2025
+                <div class="chart-bar" style="bottom: 20%; height: 13%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2025
 +147K">
-                <div class="chart-bar" style="bottom: 50%; height: 13%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2025
+                <div class="chart-bar" style="bottom: 20%; height: 13%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2025
 +73K">
-                <div class="chart-bar" style="bottom: 50%; height: 6%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2025
+                <div class="chart-bar" style="bottom: 20%; height: 6%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2025
 +22K">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2025
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2025
 +119K">
-                <div class="chart-bar" style="bottom: 50%; height: 11%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="October 2025
+                <div class="chart-bar" style="bottom: 20%; height: 11%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2025
 -105K">
-                <div class="chart-bar" style="top: 50%; height: 9%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="November 2025
+                <div class="chart-bar" style="top: 80%; height: 9%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2025
 +64K">
-                <div class="chart-bar" style="bottom: 50%; height: 6%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="December 2025
+                <div class="chart-bar" style="bottom: 20%; height: 6%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2025
 +50K">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="January 2026
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2026
 +130K">
-                <div class="chart-bar" style="bottom: 50%; height: 12%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="February 2026
+                <div class="chart-bar" style="bottom: 20%; height: 12%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2026
 -92K">
-                <div class="chart-bar" style="top: 50%; height: 8%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="March 2026
+                <div class="chart-bar" style="top: 80%; height: 8%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2026
 +178K">
-                <div class="chart-bar" style="bottom: 50%; height: 16%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="April 2026
+                <div class="chart-bar" style="bottom: 20%; height: 16%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2026
 +115K">
-                <div class="chart-bar" style="bottom: 50%; height: 10%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="May 2026
+                <div class="chart-bar" style="bottom: 20%; height: 10%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2026
 +172K">
-                <div class="chart-bar" style="bottom: 50%; height: 16%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="June 2026
+                <div class="chart-bar" style="bottom: 20%; height: 16%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2026
 +57K">
-                <div class="chart-bar" style="bottom: 50%; height: 5%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="July 2026
+                <div class="chart-bar" style="bottom: 20%; height: 5%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2026
 -23K">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="August 2026
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2026
 +162K">
-                <div class="chart-bar" style="bottom: 50%; height: 15%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="September 2026
+                <div class="chart-bar" style="bottom: 20%; height: 15%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2026
 +29K">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
             </div>
                             </div>
                             <div class="cpi-xaxis">
-                                <div class="cpi-xaxis-item" title="October 2021"><span>Q4<br>'21</span></div><div class="cpi-xaxis-item" title="November 2021"><span></span></div><div class="cpi-xaxis-item" title="December 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="February 2022"><span></span></div><div class="cpi-xaxis-item" title="March 2022"><span></span></div><div class="cpi-xaxis-item" title="April 2022"><span>Q2<br>'22</span></div><div class="cpi-xaxis-item" title="May 2022"><span></span></div><div class="cpi-xaxis-item" title="June 2022"><span></span></div><div class="cpi-xaxis-item" title="July 2022"><span>Q3<br>'22</span></div><div class="cpi-xaxis-item" title="August 2022"><span></span></div><div class="cpi-xaxis-item" title="September 2022"><span></span></div><div class="cpi-xaxis-item" title="October 2022"><span>Q4<br>'22</span></div><div class="cpi-xaxis-item" title="November 2022"><span></span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span>Q1<br>'23</span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span>Q2<br>'23</span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span>Q3<br>'23</span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span>Q4<br>'23</span></div><div class="cpi-xaxis-item" title="November 2023"><span></span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span>Q1<br>'24</span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span>Q2<br>'24</span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span>Q3<br>'24</span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span>Q4<br>'24</span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span>Q1<br>'25</span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span>Q2<br>'25</span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span>Q3<br>'25</span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="October 2025"><span>Q4<br>'25</span></div><div class="cpi-xaxis-item" title="November 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span>Q1<br>'26</span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span>Q2<br>'26</span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span>Q3<br>'26</span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="September 2026"><span></span></div>
+                                <div class="cpi-xaxis-item" title="October 2021"><span></span></div><div class="cpi-xaxis-item" title="November 2021"><span></span></div><div class="cpi-xaxis-item" title="December 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="February 2022"><span></span></div><div class="cpi-xaxis-item" title="March 2022"><span></span></div><div class="cpi-xaxis-item" title="April 2022"><span></span></div><div class="cpi-xaxis-item" title="May 2022"><span></span></div><div class="cpi-xaxis-item" title="June 2022"><span></span></div><div class="cpi-xaxis-item" title="July 2022"><span></span></div><div class="cpi-xaxis-item" title="August 2022"><span></span></div><div class="cpi-xaxis-item" title="September 2022"><span></span></div><div class="cpi-xaxis-item" title="October 2022"><span></span></div><div class="cpi-xaxis-item" title="November 2022"><span></span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span></span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span></span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span></span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span></span></div><div class="cpi-xaxis-item" title="November 2023"><span></span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span></span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span></span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span></span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span></span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span></span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span></span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span></span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="October 2025"><span></span></div><div class="cpi-xaxis-item" title="November 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span></span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span></span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span></span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="September 2026"><span></span></div>
                             </div>
                         </div>
                     </div>
@@ -1496,190 +1502,191 @@
                         </div>
                         <div class="cpi-chart-main">
                             <div class="cpi-bar-chart">
-                                <div class="chart-bar-wrap " data-tooltip="January 2021
+                                <div class="contiguous-window-box" style="left: 384px; width: 94px;"></div>
+                                <div class="chart-bar-wrap" data-tooltip="January 2021
 +1.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 29%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2021
+                <div class="chart-bar" style="bottom: 20%; height: 29%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2021
 -2.60%">
-                <div class="chart-bar" style="top: 50%; height: 64%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="top: 80%; height: 64%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 12%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="bottom: 20%; height: 12%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 -0.60%">
-                <div class="chart-bar" style="top: 50%; height: 14%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="top: 80%; height: 14%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 -0.30%">
-                <div class="chart-bar" style="top: 50%; height: 7%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="top: 80%; height: 7%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 -0.60%">
-                <div class="chart-bar" style="top: 50%; height: 14%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="top: 80%; height: 14%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 12%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="bottom: 20%; height: 12%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 -0.30%">
-                <div class="chart-bar" style="top: 50%; height: 7%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="top: 80%; height: 7%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +0.80%">
-                <div class="chart-bar" style="bottom: 50%; height: 19%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="bottom: 20%; height: 19%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 -0.20%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2022
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2022
 +0.90%">
-                <div class="chart-bar" style="bottom: 50%; height: 22%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2022
+                <div class="chart-bar" style="bottom: 20%; height: 22%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2022
 -0.50%">
-                <div class="chart-bar" style="top: 50%; height: 12%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2023
+                <div class="chart-bar" style="top: 80%; height: 12%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2023
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 7%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2023
+                <div class="chart-bar" style="bottom: 20%; height: 7%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2023
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2023
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2023
 -0.30%">
-                <div class="chart-bar" style="top: 50%; height: 7%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2023
+                <div class="chart-bar" style="top: 80%; height: 7%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2023
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2023
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2023
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2023
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 12%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2023
+                <div class="chart-bar" style="bottom: 20%; height: 12%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2023
 -0.50%">
-                <div class="chart-bar" style="top: 50%; height: 12%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2023
+                <div class="chart-bar" style="top: 80%; height: 12%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2023
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2023
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2023
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2023
 -0.30%">
-                <div class="chart-bar" style="top: 50%; height: 7%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2023
+                <div class="chart-bar" style="top: 80%; height: 7%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2023
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2024
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2024
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2024
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2024
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2024
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2024
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2024
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2024
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2024
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2024
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2024
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2024
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2024
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="October 2024
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2024
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="November 2024
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2024
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 7%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="December 2024
+                <div class="chart-bar" style="bottom: 20%; height: 7%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2024
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="January 2025
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2025
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="February 2025
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2025
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 12%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="March 2025
+                <div class="chart-bar" style="bottom: 20%; height: 12%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2025
 +0.20%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="April 2025
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2025
 -0.30%">
-                <div class="chart-bar" style="top: 50%; height: 7%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="May 2025
+                <div class="chart-bar" style="top: 80%; height: 7%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2025
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="June 2025
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2025
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="July 2025
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2025
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="August 2025
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2025
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap " data-tooltip="September 2025
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="September 2025
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="October 2025
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="October 2025
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="November 2025
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2025
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="December 2025
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="December 2025
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="January 2026
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="January 2026
 +0.00%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="February 2026
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="February 2026
 +0.50%">
-                <div class="chart-bar" style="bottom: 50%; height: 12%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="March 2026
+                <div class="chart-bar" style="bottom: 20%; height: 12%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="March 2026
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 7%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="April 2026
+                <div class="chart-bar" style="bottom: 20%; height: 7%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="April 2026
 -0.10%">
-                <div class="chart-bar" style="top: 50%; height: 4%; border-radius: 0 0 2px 2px;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="May 2026
+                <div class="chart-bar" style="top: 80%; height: 4%; border-radius: 0 0 2px 2px;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="May 2026
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="June 2026
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="June 2026
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 7%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="July 2026
+                <div class="chart-bar" style="bottom: 20%; height: 7%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="July 2026
 +0.40%">
-                <div class="chart-bar" style="bottom: 50%; height: 9%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="August 2026
+                <div class="chart-bar" style="bottom: 20%; height: 9%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="August 2026
 +0.10%">
-                <div class="chart-bar" style="bottom: 50%; height: 4%; border-radius: 2px 2px 0 0;"></div>
-            </div><div class="chart-bar-wrap recent-window" data-tooltip="November 2026
+                <div class="chart-bar" style="bottom: 20%; height: 4%; border-radius: 2px 2px 0 0;"></div>
+            </div><div class="chart-bar-wrap" data-tooltip="November 2026
 +0.30%">
-                <div class="chart-bar" style="bottom: 50%; height: 7%; border-radius: 2px 2px 0 0;"></div>
+                <div class="chart-bar" style="bottom: 20%; height: 7%; border-radius: 2px 2px 0 0;"></div>
             </div>
                             </div>
                             <div class="cpi-xaxis">
-                                <div class="cpi-xaxis-item" title="January 2021"><span>Q1<br>'21</span></div><div class="cpi-xaxis-item" title="January 2021"><span>Q1<br>'21</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="January 2022"><span>Q1<br>'22</span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span>Q1<br>'23</span></div><div class="cpi-xaxis-item" title="January 2023"><span>Q1<br>'23</span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span>Q2<br>'23</span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span>Q3<br>'23</span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span>Q4<br>'23</span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span>Q1<br>'24</span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span>Q2<br>'24</span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span>Q3<br>'24</span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span>Q4<br>'24</span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span>Q1<br>'25</span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span>Q2<br>'25</span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span>Q3<br>'25</span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="October 2025"><span>Q4<br>'25</span></div><div class="cpi-xaxis-item" title="November 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span>Q1<br>'26</span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span>Q2<br>'26</span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span>Q3<br>'26</span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="November 2026"><span></span></div>
+                                <div class="cpi-xaxis-item" title="January 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2021"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2022"><span></span></div><div class="cpi-xaxis-item" title="December 2022"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2023"><span></span></div><div class="cpi-xaxis-item" title="February 2023"><span></span></div><div class="cpi-xaxis-item" title="March 2023"><span></span></div><div class="cpi-xaxis-item" title="April 2023"><span></span></div><div class="cpi-xaxis-item" title="May 2023"><span></span></div><div class="cpi-xaxis-item" title="June 2023"><span></span></div><div class="cpi-xaxis-item" title="July 2023"><span></span></div><div class="cpi-xaxis-item" title="August 2023"><span></span></div><div class="cpi-xaxis-item" title="September 2023"><span></span></div><div class="cpi-xaxis-item" title="October 2023"><span></span></div><div class="cpi-xaxis-item" title="December 2023"><span></span></div><div class="cpi-xaxis-item" title="January 2024"><span></span></div><div class="cpi-xaxis-item" title="February 2024"><span></span></div><div class="cpi-xaxis-item" title="March 2024"><span></span></div><div class="cpi-xaxis-item" title="April 2024"><span></span></div><div class="cpi-xaxis-item" title="May 2024"><span></span></div><div class="cpi-xaxis-item" title="June 2024"><span></span></div><div class="cpi-xaxis-item" title="July 2024"><span></span></div><div class="cpi-xaxis-item" title="August 2024"><span></span></div><div class="cpi-xaxis-item" title="September 2024"><span></span></div><div class="cpi-xaxis-item" title="October 2024"><span></span></div><div class="cpi-xaxis-item" title="November 2024"><span></span></div><div class="cpi-xaxis-item" title="December 2024"><span></span></div><div class="cpi-xaxis-item" title="January 2025"><span></span></div><div class="cpi-xaxis-item" title="February 2025"><span></span></div><div class="cpi-xaxis-item" title="March 2025"><span></span></div><div class="cpi-xaxis-item" title="April 2025"><span></span></div><div class="cpi-xaxis-item" title="May 2025"><span></span></div><div class="cpi-xaxis-item" title="June 2025"><span></span></div><div class="cpi-xaxis-item" title="July 2025"><span></span></div><div class="cpi-xaxis-item" title="August 2025"><span></span></div><div class="cpi-xaxis-item" title="September 2025"><span></span></div><div class="cpi-xaxis-item" title="October 2025"><span></span></div><div class="cpi-xaxis-item" title="November 2025"><span></span></div><div class="cpi-xaxis-item" title="December 2025"><span></span></div><div class="cpi-xaxis-item" title="January 2026"><span></span></div><div class="cpi-xaxis-item" title="February 2026"><span></span></div><div class="cpi-xaxis-item" title="March 2026"><span></span></div><div class="cpi-xaxis-item" title="April 2026"><span></span></div><div class="cpi-xaxis-item" title="May 2026"><span></span></div><div class="cpi-xaxis-item" title="June 2026"><span></span></div><div class="cpi-xaxis-item" title="July 2026"><span></span></div><div class="cpi-xaxis-item" title="August 2026"><span></span></div><div class="cpi-xaxis-item" title="November 2026"><span></span></div>
                             </div>
                         </div>
                     </div>
@@ -1704,5 +1711,13 @@
             </div>
         </div>
     </div>
+    <script>
+        // Automatically scroll bar charts to the right-hand side on load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.cpi-chart-container').forEach(container => {
+                container.scrollLeft = container.scrollWidth;
+            });
+        });
+    </script>
 </body>
 </html>
