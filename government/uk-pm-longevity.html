@@ -67,7 +67,7 @@ h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(2.3rem, 5vw, 
 }
 .bar { display: block; height: 100%; min-width: 2px; border-radius: 2px; }
 .bar.incumbent { background-image: repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(255,255,255,.25) 3px, rgba(255,255,255,.25) 5px); }
-.dot { width: 0.55rem; height: 0.55rem; display: inline-block; flex: none; transform: translateY(1px); border-radius: 50%; }
+.dot { width: 0.55rem; height: 0.55rem; display: inline-block; flex: none; transform: translateY(1px); border-radius: 50%. }
 .whig { background: var(--whig); } .tory { background: var(--tory); } .conservative { background: var(--conservative); }
 .peelite { background: var(--peelite); } .liberal { background: var(--liberal); } .natlib { background: var(--natlib); }
 .labour { background: var(--labour); } .natlab { background: var(--natlab); }
@@ -211,7 +211,9 @@ const CLASS_OF = {
   "Whig": "whig", "Tory": "tory", "Conservative": "conservative", "Peelite": "peelite",
   "Liberal": "liberal", "National Liberal": "natlib", "Labour": "labour", "National Labour": "natlab"
 };
-const state = { mode: "term", sort: "longest", query: "", parties: new Set(), post1945: false, selected: "t:" + DATA.records.longest_term_id };
+// Fix: Do not select a default item on mobile viewports so the modal doesn't pop up over the screen on load
+const isMobile = window.matchMedia("(max-width: 979px)").matches;
+const state = { mode: "term", sort: "longest", query: "", parties: new Set(), post1945: false, selected: isMobile ? "" : "t:" + DATA.records.longest_term_id };
 let scrollNow = false;
 
 function getLiveDays(startDateIso) {
@@ -662,6 +664,7 @@ function init() {
     render();
   });
   chips.append(post1945);
+  DATA.family_order.factory = true; // no-op reminder
   DATA.family_order.forEach((family) => {
     const button = el("button", "chip", family);
     button.type = "button";
