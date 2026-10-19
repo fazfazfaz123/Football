@@ -432,6 +432,18 @@
             top: 0;
             z-index: 10;
             border-bottom: 1px solid var(--border-bright);
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s, color 0.15s;
+        }
+        table.macro-table th:hover {
+            background: #1a1a24;
+            color: var(--text);
+        }
+        table.macro-table th::after {
+            content: ' ↕';
+            font-size: 0.6rem;
+            color: var(--text-dim);
         }
         table.macro-table td.num {
             font-family: 'JetBrains Mono', monospace;
@@ -527,7 +539,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics</p>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-19 21:02:09</div>
+            <div class="timestamp">SYNCED · 2026-10-19 21:04:48</div>
         </header>
 
         
@@ -1099,11 +1111,11 @@
                 <div class="panel-header">
                     <div>
                         <h2>Global Rates, Inflation &amp; Growth Matrix</h2>
-                        <p class="subtext">Sorted by real interest rate (ascending)</p>
+                        <p class="subtext">Click any column header to sort table</p>
                     </div>
                 </div>
                 <div class="table-container">
-                    <table class="macro-table">
+                    <table class="macro-table" id="macroMatrixTable">
                         <thead>
                             <tr>
                                 <th>Country</th>
@@ -1414,6 +1426,45 @@
             document.querySelectorAll('.cpi-chart-container').forEach(c => {
                 c.scrollLeft = c.scrollWidth;
             });
+
+            // Table Sorting Logic
+            const table = document.getElementById('macroMatrixTable');
+            if (table) {
+                table.querySelectorAll('th').forEach((th, index) => {
+                    th.addEventListener('click', () => {
+                        const tbody = table.querySelector('tbody');
+                        const rows = Array.from(tbody.querySelectorAll('tr'));
+                        const isNumeric = index > 0; // Column 0 is country (text), rest are numeric
+                        
+                        const currentDir = th.getAttribute('data-dir') === 'asc' ? 'desc' : 'asc';
+                        
+                        // Reset indicators
+                        table.querySelectorAll('th').forEach(h => {
+                            h.removeAttribute('data-dir');
+                        });
+                        th.setAttribute('data-dir', currentDir);
+
+                        rows.sort((a, b) => {
+                            let aText = a.cells[index].textContent.trim();
+                            let bText = b.cells[index].textContent.trim();
+
+                            if (isNumeric) {
+                                let aVal = parseFloat(aText.replace(/[^0-9.-]+/g, ""));
+                                let bVal = parseFloat(bText.replace(/[^0-9.-]+/g, ""));
+                                
+                                if (isNaN(aVal)) aVal = -999999;
+                                if (isNaN(bVal)) bVal = -999999;
+                                
+                                return currentDir === 'asc' ? aVal - bVal : bVal - aVal;
+                            } else {
+                                return currentDir === 'asc' ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                            }
+                        });
+
+                        rows.forEach(row => tbody.appendChild(row));
+                    });
+                });
+            }
         });
     </script>
 </body>
