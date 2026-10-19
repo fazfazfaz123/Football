@@ -436,6 +436,25 @@
             user-select: none;
             transition: background 0.15s, color 0.15s;
         }
+        /* Sticky Country Column (First Column) */
+        table.macro-table th:first-child {
+            left: 0;
+            z-index: 20; /* Higher than regular table header and row sticky cells */
+        }
+        table.macro-table td.sticky-col {
+            position: sticky;
+            left: 0;
+            z-index: 5;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+        }
+        table.macro-table tbody tr:nth-child(even) td.sticky-col {
+            background: #111117; /* Matches alternate row tint nicely */
+        }
+        table.macro-table tr:hover td.sticky-col {
+            background: var(--surface-hover) !important;
+        }
+
         table.macro-table th:hover {
             background: #1a1a24;
             color: var(--text);
@@ -539,7 +558,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics</p>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-19 22:16:34</div>
+            <div class="timestamp">SYNCED · 2026-10-19 22:23:54</div>
         </header>
 
         
@@ -1130,7 +1149,7 @@
                         </thead>
                         <tbody>
 <tr>
-                <td class="country"><strong>Iran</strong></td>
+                <td class="country sticky-col"><strong>Iran</strong></td>
                 <td class="num dir-flat">23.00</td>
                 <td class="num dir-good">87.90</td>
                 <td class="num"><strong>-64.90</strong></td>
@@ -1140,7 +1159,7 @@
                 <td class="num chg dir-bad">▼ -1.53</td>
             </tr>
 <tr>
-                <td class="country"><strong>Argentina</strong></td>
+                <td class="country sticky-col"><strong>Argentina</strong></td>
                 <td class="num dir-flat">29.00</td>
                 <td class="num dir-good">33.40</td>
                 <td class="num"><strong>-4.40</strong></td>
@@ -1150,7 +1169,7 @@
                 <td class="num chg dir-bad">▼ -1.30</td>
             </tr>
 <tr>
-                <td class="country"><strong>Spain</strong></td>
+                <td class="country sticky-col"><strong>Spain</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-bad">4.90</td>
                 <td class="num"><strong>-2.40</strong></td>
@@ -1160,7 +1179,7 @@
                 <td class="num chg dir-flat">● 0.00</td>
             </tr>
 <tr>
-                <td class="country"><strong>Italy</strong></td>
+                <td class="country sticky-col"><strong>Italy</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-bad">4.20</td>
                 <td class="num"><strong>-1.70</strong></td>
@@ -1170,7 +1189,7 @@
                 <td class="num chg dir-good">▲ +0.20</td>
             </tr>
 <tr>
-                <td class="country"><strong>Greece</strong></td>
+                <td class="country sticky-col"><strong>Greece</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-bad">3.80</td>
                 <td class="num"><strong>-1.30</strong></td>
@@ -1180,7 +1199,7 @@
                 <td class="num chg dir-bad">▼ -0.10</td>
             </tr>
 <tr>
-                <td class="country"><strong>Eurozone</strong></td>
+                <td class="country sticky-col"><strong>Eurozone</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-bad">3.80</td>
                 <td class="num"><strong>-1.30</strong></td>
@@ -1190,7 +1209,7 @@
                 <td class="num chg dir-good">▲ +0.20</td>
             </tr>
 <tr>
-                <td class="country"><strong>Switzerland</strong></td>
+                <td class="country sticky-col"><strong>Switzerland</strong></td>
                 <td class="num dir-flat">0.00</td>
                 <td class="num dir-bad">1.00</td>
                 <td class="num"><strong>-1.00</strong></td>
@@ -1200,7 +1219,7 @@
                 <td class="num chg dir-good">▲ +2.30</td>
             </tr>
 <tr>
-                <td class="country"><strong>Netherlands</strong></td>
+                <td class="country sticky-col"><strong>Netherlands</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-bad">3.40</td>
                 <td class="num"><strong>-0.90</strong></td>
@@ -1210,7 +1229,7 @@
                 <td class="num chg dir-good">▲ +0.20</td>
             </tr>
 <tr>
-                <td class="country"><strong>Germany</strong></td>
+                <td class="country sticky-col"><strong>Germany</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-bad">3.30</td>
                 <td class="num"><strong>-0.80</strong></td>
@@ -1220,7 +1239,7 @@
                 <td class="num chg dir-good">▲ +0.30</td>
             </tr>
 <tr>
-                <td class="country"><strong>Canada</strong></td>
+                <td class="country sticky-col"><strong>Canada</strong></td>
                 <td class="num dir-flat">2.25</td>
                 <td class="num dir-flat">3.00</td>
                 <td class="num"><strong>-0.75</strong></td>
@@ -1230,7 +1249,7 @@
                 <td class="num chg dir-good">▲ +1.07</td>
             </tr>
 <tr>
-                <td class="country"><strong>Japan</strong></td>
+                <td class="country sticky-col"><strong>Japan</strong></td>
                 <td class="num dir-bad">1.25</td>
                 <td class="num dir-flat">1.90</td>
                 <td class="num"><strong>-0.65</strong></td>
@@ -1240,7 +1259,7 @@
                 <td class="num chg dir-bad">▼ -0.80</td>
             </tr>
 <tr>
-                <td class="country"><strong>France</strong></td>
+                <td class="country sticky-col"><strong>France</strong></td>
                 <td class="num dir-bad">2.50</td>
                 <td class="num dir-bad">3.10</td>
                 <td class="num"><strong>-0.60</strong></td>
@@ -1250,7 +1269,7 @@
                 <td class="num chg dir-bad">▼ -0.40</td>
             </tr>
 <tr>
-                <td class="country"><strong>Poland</strong></td>
+                <td class="country sticky-col"><strong>Poland</strong></td>
                 <td class="num dir-flat">3.75</td>
                 <td class="num dir-bad">4.10</td>
                 <td class="num"><strong>-0.35</strong></td>
@@ -1260,7 +1279,7 @@
                 <td class="num chg dir-good">▲ +0.40</td>
             </tr>
 <tr>
-                <td class="country"><strong>India</strong></td>
+                <td class="country sticky-col"><strong>India</strong></td>
                 <td class="num dir-flat">5.25</td>
                 <td class="num dir-bad">5.54</td>
                 <td class="num"><strong>-0.29</strong></td>
@@ -1270,7 +1289,7 @@
                 <td class="num chg dir-good">▲ +1.20</td>
             </tr>
 <tr>
-                <td class="country"><strong>South Korea</strong></td>
+                <td class="country sticky-col"><strong>South Korea</strong></td>
                 <td class="num dir-flat">3.00</td>
                 <td class="num dir-good">2.90</td>
                 <td class="num"><strong>0.10</strong></td>
@@ -1280,7 +1299,7 @@
                 <td class="num chg dir-good">▲ +0.10</td>
             </tr>
 <tr>
-                <td class="country"><strong>USA</strong></td>
+                <td class="country sticky-col"><strong>USA</strong></td>
                 <td class="num dir-bad">3.88</td>
                 <td class="num dir-bad">3.70</td>
                 <td class="num"><strong>0.18</strong></td>
@@ -1290,7 +1309,7 @@
                 <td class="num chg dir-good">▲ +0.10</td>
             </tr>
 <tr>
-                <td class="country"><strong>UK</strong></td>
+                <td class="country sticky-col"><strong>UK</strong></td>
                 <td class="num dir-flat">3.75</td>
                 <td class="num dir-bad">3.10</td>
                 <td class="num"><strong>0.65</strong></td>
@@ -1300,7 +1319,7 @@
                 <td class="num chg dir-good">▲ +0.50</td>
             </tr>
 <tr>
-                <td class="country"><strong>Australia</strong></td>
+                <td class="country sticky-col"><strong>Australia</strong></td>
                 <td class="num dir-bad">4.60</td>
                 <td class="num dir-good">3.90</td>
                 <td class="num"><strong>0.70</strong></td>
@@ -1310,7 +1329,7 @@
                 <td class="num chg dir-bad">▼ -0.40</td>
             </tr>
 <tr>
-                <td class="country"><strong>Israel</strong></td>
+                <td class="country sticky-col"><strong>Israel</strong></td>
                 <td class="num dir-good">3.25</td>
                 <td class="num dir-bad">1.60</td>
                 <td class="num"><strong>1.65</strong></td>
@@ -1320,7 +1339,7 @@
                 <td class="num chg dir-good">▲ +3.90</td>
             </tr>
 <tr>
-                <td class="country"><strong>China</strong></td>
+                <td class="country sticky-col"><strong>China</strong></td>
                 <td class="num dir-flat">3.00</td>
                 <td class="num dir-bad">0.90</td>
                 <td class="num"><strong>2.10</strong></td>
@@ -1330,7 +1349,7 @@
                 <td class="num chg dir-bad">▼ -0.70</td>
             </tr>
 <tr>
-                <td class="country"><strong>Indonesia</strong></td>
+                <td class="country sticky-col"><strong>Indonesia</strong></td>
                 <td class="num dir-flat">5.75</td>
                 <td class="num dir-bad">3.28</td>
                 <td class="num"><strong>2.47</strong></td>
@@ -1340,7 +1359,7 @@
                 <td class="num chg dir-good">▲ +4.50</td>
             </tr>
 <tr>
-                <td class="country"><strong>Saudi Arabia</strong></td>
+                <td class="country sticky-col"><strong>Saudi Arabia</strong></td>
                 <td class="num dir-bad">4.50</td>
                 <td class="num dir-bad">1.90</td>
                 <td class="num"><strong>2.60</strong></td>
@@ -1350,7 +1369,7 @@
                 <td class="num chg dir-bad">▼ -3.40</td>
             </tr>
 <tr>
-                <td class="country"><strong>South Africa</strong></td>
+                <td class="country sticky-col"><strong>South Africa</strong></td>
                 <td class="num dir-bad">7.25</td>
                 <td class="num dir-bad">4.40</td>
                 <td class="num"><strong>2.85</strong></td>
@@ -1360,7 +1379,7 @@
                 <td class="num chg dir-bad">▼ -1.00</td>
             </tr>
 <tr>
-                <td class="country"><strong>Mexico</strong></td>
+                <td class="country sticky-col"><strong>Mexico</strong></td>
                 <td class="num dir-flat">6.50</td>
                 <td class="num dir-bad">3.45</td>
                 <td class="num"><strong>3.05</strong></td>
@@ -1370,7 +1389,7 @@
                 <td class="num chg dir-bad">▼ -0.10</td>
             </tr>
 <tr>
-                <td class="country"><strong>Ukraine</strong></td>
+                <td class="country sticky-col"><strong>Ukraine</strong></td>
                 <td class="num dir-bad">16.00</td>
                 <td class="num dir-bad">10.00</td>
                 <td class="num"><strong>6.00</strong></td>
@@ -1380,7 +1399,7 @@
                 <td class="num chg dir-good">▲ +1.00</td>
             </tr>
 <tr>
-                <td class="country"><strong>Turkey</strong></td>
+                <td class="country sticky-col"><strong>Turkey</strong></td>
                 <td class="num dir-flat">37.00</td>
                 <td class="num dir-good">29.73</td>
                 <td class="num"><strong>7.27</strong></td>
@@ -1390,7 +1409,7 @@
                 <td class="num chg dir-bad">▼ -0.30</td>
             </tr>
 <tr>
-                <td class="country"><strong>Russia</strong></td>
+                <td class="country sticky-col"><strong>Russia</strong></td>
                 <td class="num dir-flat">14.00</td>
                 <td class="num dir-flat">6.30</td>
                 <td class="num"><strong>7.70</strong></td>
@@ -1400,7 +1419,7 @@
                 <td class="num chg dir-good">▲ +1.50</td>
             </tr>
 <tr>
-                <td class="country"><strong>Brazil</strong></td>
+                <td class="country sticky-col"><strong>Brazil</strong></td>
                 <td class="num dir-good">13.75</td>
                 <td class="num dir-bad">4.58</td>
                 <td class="num"><strong>9.17</strong></td>
