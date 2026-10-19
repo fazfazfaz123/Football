@@ -539,6 +539,162 @@
             color: var(--text);
         }
 
+        /* —— Real Rate Bars —— */
+        .viz-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+        @media (max-width: 1100px) {
+            .viz-row { grid-template-columns: 1fr; }
+        }
+        .rr-bars-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.28rem;
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+        .rr-bar-row {
+            display: grid;
+            grid-template-columns: 110px 1fr 58px;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.72rem;
+        }
+        .rr-country {
+            font-weight: 500;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .rr-track {
+            height: 10px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .rr-bar {
+            height: 100%;
+            border-radius: 3px;
+            min-width: 2px;
+            transition: width 0.2s;
+        }
+        .rr-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* —— Country Heatmap Grid —— */
+        .hm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+            gap: 0.45rem;
+        }
+        .hm-tile {
+            background: rgba(0,0,0,0.28);
+            border: 1px solid var(--border);
+            border-left-width: 3px;
+            border-radius: var(--radius-sm);
+            padding: 0.55rem 0.45rem;
+            text-align: center;
+            cursor: default;
+            transition: background 0.15s, transform 0.15s;
+        }
+        .hm-tile:hover {
+            background: var(--surface-hover);
+            transform: translateY(-1px);
+        }
+        .hm-name {
+            font-size: 0.68rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0.2rem;
+        }
+        .hm-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        /* —— Rate vs CPI Comparison —— */
+        .cmp-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+        .cmp-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 52px;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.72rem;
+        }
+        .cmp-country {
+            font-weight: 500;
+            color: var(--text);
+            white-space: nowrap;
+        }
+        .cmp-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .cmp-bar-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            height: 11px;
+        }
+        .cmp-bar {
+            height: 8px;
+            border-radius: 2px;
+            min-width: 2px;
+        }
+        .cb-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+        .cpi-bar { background: linear-gradient(90deg, #d97706, #f59e0b); }
+        .cmp-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--text-dim);
+            min-width: 36px;
+        }
+        .cmp-real {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        /* —— Spark / Trend indicators in table —— */
+        .spark-cell {
+            text-align: center !important;
+            padding: 0.4rem 0.5rem !important;
+        }
+        .spark {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 1.5px;
+            height: 16px;
+        }
+        .spark i {
+            display: block;
+            width: 3px;
+            border-radius: 1px;
+            background: currentColor;
+        }
+        .spark-up { color: var(--bad); }
+        .spark-down { color: var(--good); }
+        .spark-flat { color: var(--flat); font-size: 0.7rem; }
+
         @media (max-width: 768px) {
             body { padding: 0.5rem 0.25rem 1.5rem; }
             .wrapper {
@@ -548,6 +704,8 @@
             .panel { padding: 0.85rem; }
             .nfp-value { font-size: 1.45rem; }
             .title-group h1 { font-size: 1.15rem; }
+            .rr-bar-row { grid-template-columns: 80px 1fr 48px; }
+            .cmp-row { grid-template-columns: 80px 1fr 44px; }
         }
     </style>
 </head>
@@ -558,7 +716,7 @@
                 <h1>Global Macroeconomic &amp; Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics</p>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-19 22:23:54</div>
+            <div class="timestamp">SYNCED · 2026-10-19 22:44:47</div>
         </header>
 
         
@@ -1130,7 +1288,7 @@
                 <div class="panel-header">
                     <div>
                         <h2>Global Rates, Inflation &amp; Growth Matrix</h2>
-                        <p class="subtext">Click any column header to sort table</p>
+                        <p class="subtext">Click any column header to sort · sparklines show latest CPI / GDP Δ magnitude</p>
                     </div>
                 </div>
                 <div class="table-container">
@@ -1145,6 +1303,8 @@
                                 <th class="num-header">CB Δ</th>
                                 <th class="num-header">CPI Δ</th>
                                 <th class="num-header">GDP Δ</th>
+                                <th class="num-header">CPI Trend</th>
+                                <th class="num-header">GDP Trend</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1157,6 +1317,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -0.70</td>
                 <td class="num chg dir-bad">▼ -1.53</td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Argentina</strong></td>
@@ -1167,6 +1329,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -0.10</td>
                 <td class="num chg dir-bad">▼ -1.30</td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Spain</strong></td>
@@ -1177,6 +1341,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.60</td>
                 <td class="num chg dir-flat">● 0.00</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-flat"><i style="height:20%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Italy</strong></td>
@@ -1187,6 +1353,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.90</td>
                 <td class="num chg dir-good">▲ +0.20</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Greece</strong></td>
@@ -1197,6 +1365,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.40</td>
                 <td class="num chg dir-bad">▼ -0.10</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Eurozone</strong></td>
@@ -1207,6 +1377,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.60</td>
                 <td class="num chg dir-good">▲ +0.20</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Switzerland</strong></td>
@@ -1217,6 +1389,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +0.20</td>
                 <td class="num chg dir-good">▲ +2.30</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Netherlands</strong></td>
@@ -1227,6 +1401,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.10</td>
                 <td class="num chg dir-good">▲ +0.20</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Germany</strong></td>
@@ -1237,6 +1413,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.40</td>
                 <td class="num chg dir-good">▲ +0.30</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Canada</strong></td>
@@ -1247,6 +1425,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▲ +1.07</td>
+                <td class="num spark-cell"><span class="spark spark-flat"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Japan</strong></td>
@@ -1257,6 +1437,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▼ -0.80</td>
+                <td class="num spark-cell"><span class="spark spark-flat"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>France</strong></td>
@@ -1267,6 +1449,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.70</td>
                 <td class="num chg dir-bad">▼ -0.40</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Poland</strong></td>
@@ -1277,6 +1461,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +0.70</td>
                 <td class="num chg dir-good">▲ +0.40</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>India</strong></td>
@@ -1287,6 +1473,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +0.71</td>
                 <td class="num chg dir-good">▲ +1.20</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>South Korea</strong></td>
@@ -1297,6 +1485,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -0.20</td>
                 <td class="num chg dir-good">▲ +0.10</td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>USA</strong></td>
@@ -1307,6 +1497,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.30</td>
                 <td class="num chg dir-good">▲ +0.10</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>UK</strong></td>
@@ -1317,6 +1509,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +0.20</td>
                 <td class="num chg dir-good">▲ +0.50</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Australia</strong></td>
@@ -1327,6 +1521,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-good">▼ -0.20</td>
                 <td class="num chg dir-bad">▼ -0.40</td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Israel</strong></td>
@@ -1337,6 +1533,8 @@
                 <td class="num chg dir-good">▼ -0.25</td>
                 <td class="num chg dir-bad">▲ +0.10</td>
                 <td class="num chg dir-good">▲ +3.90</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>China</strong></td>
@@ -1347,6 +1545,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +0.10</td>
                 <td class="num chg dir-bad">▼ -0.70</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Indonesia</strong></td>
@@ -1357,6 +1557,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +0.09</td>
                 <td class="num chg dir-good">▲ +4.50</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Saudi Arabia</strong></td>
@@ -1367,6 +1569,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.10</td>
                 <td class="num chg dir-bad">▼ -3.40</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>South Africa</strong></td>
@@ -1377,6 +1581,8 @@
                 <td class="num chg dir-bad">▲ +0.25</td>
                 <td class="num chg dir-bad">▲ +0.10</td>
                 <td class="num chg dir-bad">▼ -1.00</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Mexico</strong></td>
@@ -1387,6 +1593,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-bad">▲ +0.19</td>
                 <td class="num chg dir-bad">▼ -0.10</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Ukraine</strong></td>
@@ -1397,6 +1605,8 @@
                 <td class="num chg dir-bad">▲ +0.50</td>
                 <td class="num chg dir-bad">▲ +1.90</td>
                 <td class="num chg dir-good">▲ +1.00</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Turkey</strong></td>
@@ -1407,6 +1617,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▼ -1.78</td>
                 <td class="num chg dir-bad">▼ -0.30</td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-down"><i style="height:20%"></i><i style="height:38%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Russia</strong></td>
@@ -1417,6 +1629,8 @@
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-flat">● 0.00</td>
                 <td class="num chg dir-good">▲ +1.50</td>
+                <td class="num spark-cell"><span class="spark spark-flat"><i style="height:20%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i><i style="height:56%"></i><i style="height:74%"></i></span></td>
             </tr>
 <tr>
                 <td class="country sticky-col"><strong>Brazil</strong></td>
@@ -1427,10 +1641,629 @@
                 <td class="num chg dir-good">▼ -0.25</td>
                 <td class="num chg dir-bad">▲ +0.36</td>
                 <td class="num chg dir-good">▲ +0.20</td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
+                <td class="num spark-cell"><span class="spark spark-up"><i style="height:20%"></i><i style="height:38%"></i></span></td>
             </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+
+        <div class="viz-row">
+            
+        <div class="panel chart-panel" id="real-rate-bars-panel">
+            <div class="panel-header">
+                <div>
+                    <h2>Real Policy Rate Ranking</h2>
+                    <p class="subtext">CB rate − CPI YoY · sorted most accommodative → most restrictive</p>
+                </div>
+            </div>
+            <div class="rr-bars-container">
+                
+            <div class="rr-bar-row" title="Iran: CB 23.00% − CPI 87.90% = -64.90%">
+                <div class="rr-country">Iran</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:100.0%; background:rgb(244,63,94);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(244,63,94);">-64.90%</div>
+            </div>
+            <div class="rr-bar-row" title="Argentina: CB 29.00% − CPI 33.40% = -4.40%">
+                <div class="rr-country">Argentina</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:6.8%; background:rgb(196,97,121);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(196,97,121);">-4.40%</div>
+            </div>
+            <div class="rr-bar-row" title="Spain: CB 2.50% − CPI 4.90% = -2.40%">
+                <div class="rr-country">Spain</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:3.7%; background:rgb(170,116,136);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(170,116,136);">-2.40%</div>
+            </div>
+            <div class="rr-bar-row" title="Italy: CB 2.50% − CPI 4.20% = -1.70%">
+                <div class="rr-country">Italy</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:2.6%; background:rgb(161,122,141);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(161,122,141);">-1.70%</div>
+            </div>
+            <div class="rr-bar-row" title="Greece: CB 2.50% − CPI 3.80% = -1.30%">
+                <div class="rr-country">Greece</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:2.0%; background:rgb(156,126,144);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(156,126,144);">-1.30%</div>
+            </div>
+            <div class="rr-bar-row" title="Eurozone: CB 2.50% − CPI 3.80% = -1.30%">
+                <div class="rr-country">Eurozone</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:2.0%; background:rgb(156,126,144);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(156,126,144);">-1.30%</div>
+            </div>
+            <div class="rr-bar-row" title="Switzerland: CB 0.00% − CPI 1.00% = -1.00%">
+                <div class="rr-country">Switzerland</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:1.5%; background:rgb(152,129,146);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(152,129,146);">-1.00%</div>
+            </div>
+            <div class="rr-bar-row" title="Netherlands: CB 2.50% − CPI 3.40% = -0.90%">
+                <div class="rr-country">Netherlands</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:1.4%; background:rgb(150,130,147);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(150,130,147);">-0.90%</div>
+            </div>
+            <div class="rr-bar-row" title="Germany: CB 2.50% − CPI 3.30% = -0.80%">
+                <div class="rr-country">Germany</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:1.2%; background:rgb(149,131,148);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(149,131,148);">-0.80%</div>
+            </div>
+            <div class="rr-bar-row" title="Canada: CB 2.25% − CPI 3.00% = -0.75%">
+                <div class="rr-country">Canada</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:1.2%; background:rgb(148,131,148);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(148,131,148);">-0.75%</div>
+            </div>
+            <div class="rr-bar-row" title="Japan: CB 1.25% − CPI 1.90% = -0.65%">
+                <div class="rr-country">Japan</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:1.0%; background:rgb(147,132,149);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(147,132,149);">-0.65%</div>
+            </div>
+            <div class="rr-bar-row" title="France: CB 2.50% − CPI 3.10% = -0.60%">
+                <div class="rr-country">France</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:0.9%; background:rgb(146,133,149);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(146,133,149);">-0.60%</div>
+            </div>
+            <div class="rr-bar-row" title="Poland: CB 3.75% − CPI 4.10% = -0.35%">
+                <div class="rr-country">Poland</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:0.5%; background:rgb(143,135,151);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(143,135,151);">-0.35%</div>
+            </div>
+            <div class="rr-bar-row" title="India: CB 5.25% − CPI 5.54% = -0.29%">
+                <div class="rr-country">India</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:0.4%; background:rgb(142,136,151);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(142,136,151);">-0.29%</div>
+            </div>
+            <div class="rr-bar-row" title="South Korea: CB 3.00% − CPI 2.90% = +0.10%">
+                <div class="rr-country">South Korea</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:0.2%; background:rgb(137,139,153);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(137,139,153);">+0.10%</div>
+            </div>
+            <div class="rr-bar-row" title="USA: CB 3.88% − CPI 3.70% = +0.18%">
+                <div class="rr-country">USA</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:0.3%; background:rgb(136,140,153);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(136,140,153);">+0.18%</div>
+            </div>
+            <div class="rr-bar-row" title="UK: CB 3.75% − CPI 3.10% = +0.65%">
+                <div class="rr-country">UK</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:1.0%; background:rgb(129,142,151);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(129,142,151);">+0.65%</div>
+            </div>
+            <div class="rr-bar-row" title="Australia: CB 4.60% − CPI 3.90% = +0.70%">
+                <div class="rr-country">Australia</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:1.1%; background:rgb(128,143,151);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(128,143,151);">+0.70%</div>
+            </div>
+            <div class="rr-bar-row" title="Israel: CB 3.25% − CPI 1.60% = +1.65%">
+                <div class="rr-country">Israel</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:2.5%; background:rgb(113,148,148);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(113,148,148);">+1.65%</div>
+            </div>
+            <div class="rr-bar-row" title="China: CB 3.00% − CPI 0.90% = +2.10%">
+                <div class="rr-country">China</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:3.2%; background:rgb(106,151,147);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(106,151,147);">+2.10%</div>
+            </div>
+            <div class="rr-bar-row" title="Indonesia: CB 5.75% − CPI 3.28% = +2.47%">
+                <div class="rr-country">Indonesia</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:3.8%; background:rgb(101,153,146);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(101,153,146);">+2.47%</div>
+            </div>
+            <div class="rr-bar-row" title="Saudi Arabia: CB 4.50% − CPI 1.90% = +2.60%">
+                <div class="rr-country">Saudi Arabia</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:4.0%; background:rgb(99,153,145);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(99,153,145);">+2.60%</div>
+            </div>
+            <div class="rr-bar-row" title="South Africa: CB 7.25% − CPI 4.40% = +2.85%">
+                <div class="rr-country">South Africa</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:4.4%; background:rgb(95,155,145);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(95,155,145);">+2.85%</div>
+            </div>
+            <div class="rr-bar-row" title="Mexico: CB 6.50% − CPI 3.45% = +3.05%">
+                <div class="rr-country">Mexico</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:4.7%; background:rgb(92,156,144);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(92,156,144);">+3.05%</div>
+            </div>
+            <div class="rr-bar-row" title="Ukraine: CB 16.00% − CPI 10.00% = +6.00%">
+                <div class="rr-country">Ukraine</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:9.2%; background:rgb(46,173,135);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(46,173,135);">+6.00%</div>
+            </div>
+            <div class="rr-bar-row" title="Turkey: CB 37.00% − CPI 29.73% = +7.27%">
+                <div class="rr-country">Turkey</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:11.2%; background:rgb(27,180,131);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(27,180,131);">+7.27%</div>
+            </div>
+            <div class="rr-bar-row" title="Russia: CB 14.00% − CPI 6.30% = +7.70%">
+                <div class="rr-country">Russia</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:11.9%; background:rgb(20,183,129);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(20,183,129);">+7.70%</div>
+            </div>
+            <div class="rr-bar-row" title="Brazil: CB 13.75% − CPI 4.58% = +9.17%">
+                <div class="rr-country">Brazil</div>
+                <div class="rr-track">
+                    <div class="rr-bar" style="width:14.1%; background:rgb(16,185,129);"></div>
+                </div>
+                <div class="rr-value" style="color:rgb(16,185,129);">+9.17%</div>
+            </div>
+            </div>
+        </div>
+            
+        <div class="panel chart-panel" id="country-heatmap-panel">
+            <div class="panel-header">
+                <div>
+                    <h2>Real Rate Heatmap</h2>
+                    <p class="subtext">Country tiles coloured by real policy rate (red = accommodative, green = restrictive)</p>
+                </div>
+            </div>
+            <div class="hm-grid">
+                
+            <div class="hm-tile" style="border-color:rgb(244,63,94);" title="Iran
+Real rate: -64.90%
+CB: 23.00% · CPI: 87.90% · GDP: 1.59%">
+                <div class="hm-name">Iran</div>
+                <div class="hm-val" style="color:rgb(244,63,94);">-64.9%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(196,97,121);" title="Argentina
+Real rate: -4.40%
+CB: 29.00% · CPI: 33.40% · GDP: -0.60%">
+                <div class="hm-name">Argentina</div>
+                <div class="hm-val" style="color:rgb(196,97,121);">-4.4%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(170,116,136);" title="Spain
+Real rate: -2.40%
+CB: 2.50% · CPI: 4.90% · GDP: 2.70%">
+                <div class="hm-name">Spain</div>
+                <div class="hm-val" style="color:rgb(170,116,136);">-2.4%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(161,122,141);" title="Italy
+Real rate: -1.70%
+CB: 2.50% · CPI: 4.20% · GDP: 1.00%">
+                <div class="hm-name">Italy</div>
+                <div class="hm-val" style="color:rgb(161,122,141);">-1.7%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(156,126,144);" title="Greece
+Real rate: -1.30%
+CB: 2.50% · CPI: 3.80% · GDP: 1.90%">
+                <div class="hm-name">Greece</div>
+                <div class="hm-val" style="color:rgb(156,126,144);">-1.3%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(156,126,144);" title="Eurozone
+Real rate: -1.30%
+CB: 2.50% · CPI: 3.80% · GDP: 0.50%">
+                <div class="hm-name">Eurozone</div>
+                <div class="hm-val" style="color:rgb(156,126,144);">-1.3%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(152,129,146);" title="Switzerland
+Real rate: -1.00%
+CB: 0.00% · CPI: 1.00% · GDP: 2.80%">
+                <div class="hm-name">Switzerland</div>
+                <div class="hm-val" style="color:rgb(152,129,146);">-1.0%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(150,130,147);" title="Netherlands
+Real rate: -0.90%
+CB: 2.50% · CPI: 3.40% · GDP: 1.60%">
+                <div class="hm-name">Netherlands</div>
+                <div class="hm-val" style="color:rgb(150,130,147);">-0.9%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(149,131,148);" title="Germany
+Real rate: -0.80%
+CB: 2.50% · CPI: 3.30% · GDP: 1.00%">
+                <div class="hm-name">Germany</div>
+                <div class="hm-val" style="color:rgb(149,131,148);">-0.8%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(148,131,148);" title="Canada
+Real rate: -0.75%
+CB: 2.25% · CPI: 3.00% · GDP: 1.13%">
+                <div class="hm-name">Canada</div>
+                <div class="hm-val" style="color:rgb(148,131,148);">-0.8%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(147,132,149);" title="Japan
+Real rate: -0.65%
+CB: 1.25% · CPI: 1.90% · GDP: 1.10%">
+                <div class="hm-name">Japan</div>
+                <div class="hm-val" style="color:rgb(147,132,149);">-0.6%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(146,133,149);" title="France
+Real rate: -0.60%
+CB: 2.50% · CPI: 3.10% · GDP: 0.50%">
+                <div class="hm-name">France</div>
+                <div class="hm-val" style="color:rgb(146,133,149);">-0.6%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(143,135,151);" title="Poland
+Real rate: -0.35%
+CB: 3.75% · CPI: 4.10% · GDP: 3.90%">
+                <div class="hm-name">Poland</div>
+                <div class="hm-val" style="color:rgb(143,135,151);">-0.3%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(142,136,151);" title="India
+Real rate: -0.29%
+CB: 5.25% · CPI: 5.54% · GDP: 7.70%">
+                <div class="hm-name">India</div>
+                <div class="hm-val" style="color:rgb(142,136,151);">-0.3%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(137,139,153);" title="South Korea
+Real rate: +0.10%
+CB: 3.00% · CPI: 2.90% · GDP: 3.70%">
+                <div class="hm-name">South Korea</div>
+                <div class="hm-val" style="color:rgb(137,139,153);">+0.1%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(136,140,153);" title="USA
+Real rate: +0.18%
+CB: 3.88% · CPI: 3.70% · GDP: 2.20%">
+                <div class="hm-name">USA</div>
+                <div class="hm-val" style="color:rgb(136,140,153);">+0.2%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(129,142,151);" title="UK
+Real rate: +0.65%
+CB: 3.75% · CPI: 3.10% · GDP: 1.40%">
+                <div class="hm-name">UK</div>
+                <div class="hm-val" style="color:rgb(129,142,151);">+0.6%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(128,143,151);" title="Australia
+Real rate: +0.70%
+CB: 4.60% · CPI: 3.90% · GDP: 2.10%">
+                <div class="hm-name">Australia</div>
+                <div class="hm-val" style="color:rgb(128,143,151);">+0.7%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(113,148,148);" title="Israel
+Real rate: +1.65%
+CB: 3.25% · CPI: 1.60% · GDP: 3.50%">
+                <div class="hm-name">Israel</div>
+                <div class="hm-val" style="color:rgb(113,148,148);">+1.6%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(106,151,147);" title="China
+Real rate: +2.10%
+CB: 3.00% · CPI: 0.90% · GDP: 4.30%">
+                <div class="hm-name">China</div>
+                <div class="hm-val" style="color:rgb(106,151,147);">+2.1%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(101,153,146);" title="Indonesia
+Real rate: +2.47%
+CB: 5.75% · CPI: 3.28% · GDP: 3.73%">
+                <div class="hm-name">Indonesia</div>
+                <div class="hm-val" style="color:rgb(101,153,146);">+2.5%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(99,153,145);" title="Saudi Arabia
+Real rate: +2.60%
+CB: 4.50% · CPI: 1.90% · GDP: -4.80%">
+                <div class="hm-name">Saudi Arabia</div>
+                <div class="hm-val" style="color:rgb(99,153,145);">+2.6%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(95,155,145);" title="South Africa
+Real rate: +2.85%
+CB: 7.25% · CPI: 4.40% · GDP: 0.90%">
+                <div class="hm-name">South Africa</div>
+                <div class="hm-val" style="color:rgb(95,155,145);">+2.8%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(92,156,144);" title="Mexico
+Real rate: +3.05%
+CB: 6.50% · CPI: 3.45% · GDP: 2.10%">
+                <div class="hm-name">Mexico</div>
+                <div class="hm-val" style="color:rgb(92,156,144);">+3.0%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(46,173,135);" title="Ukraine
+Real rate: +6.00%
+CB: 16.00% · CPI: 10.00% · GDP: 0.40%">
+                <div class="hm-name">Ukraine</div>
+                <div class="hm-val" style="color:rgb(46,173,135);">+6.0%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(27,180,131);" title="Turkey
+Real rate: +7.27%
+CB: 37.00% · CPI: 29.73% · GDP: 2.30%">
+                <div class="hm-name">Turkey</div>
+                <div class="hm-val" style="color:rgb(27,180,131);">+7.3%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(20,183,129);" title="Russia
+Real rate: +7.70%
+CB: 14.00% · CPI: 6.30% · GDP: 1.30%">
+                <div class="hm-name">Russia</div>
+                <div class="hm-val" style="color:rgb(20,183,129);">+7.7%</div>
+            </div>
+            <div class="hm-tile" style="border-color:rgb(16,185,129);" title="Brazil
+Real rate: +9.17%
+CB: 13.75% · CPI: 4.58% · GDP: 2.00%">
+                <div class="hm-name">Brazil</div>
+                <div class="hm-val" style="color:rgb(16,185,129);">+9.2%</div>
+            </div>
+            </div>
+        </div>
+        </div>
+        
+        <div class="panel chart-panel" id="rate-vs-cpi-panel">
+            <div class="panel-header">
+                <div>
+                    <h2>Policy Rate vs Inflation</h2>
+                    <p class="subtext">CB rate (blue) · CPI YoY (amber) · real rate on the right</p>
+                </div>
+                <div class="chart-legend-inline">
+                    <span class="legend-chip"><span class="chip-bar"></span> CB Rate</span>
+                    <span class="legend-chip"><span class="chip-line" style="background:var(--amber);"></span> CPI YoY</span>
+                </div>
+            </div>
+            <div class="cmp-container">
+                
+            <div class="cmp-row">
+                <div class="cmp-country">USA</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.88%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:95.4%;"></div>
+                        <span class="cmp-label">3.70%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(136,140,153);">+0.18</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Eurozone</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:65.8%;"></div>
+                        <span class="cmp-label">2.50%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.80%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(156,126,144);">-1.30</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">UK</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.75%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:82.7%;"></div>
+                        <span class="cmp-label">3.10%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(129,142,151);">+0.65</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Japan</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:65.8%;"></div>
+                        <span class="cmp-label">1.25%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">1.90%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(147,132,149);">-0.65</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Germany</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:75.8%;"></div>
+                        <span class="cmp-label">2.50%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.30%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(149,131,148);">-0.80</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">France</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:80.6%;"></div>
+                        <span class="cmp-label">2.50%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.10%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(146,133,149);">-0.60</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Italy</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:59.5%;"></div>
+                        <span class="cmp-label">2.50%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">4.20%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(161,122,141);">-1.70</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Spain</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:51.0%;"></div>
+                        <span class="cmp-label">2.50%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">4.90%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(170,116,136);">-2.40</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Canada</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:75.0%;"></div>
+                        <span class="cmp-label">2.25%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.00%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(148,131,148);">-0.75</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Australia</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">4.60%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:84.8%;"></div>
+                        <span class="cmp-label">3.90%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(128,143,151);">+0.70</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">China</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.00%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:30.0%;"></div>
+                        <span class="cmp-label">0.90%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(106,151,147);">+2.10</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">India</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:94.8%;"></div>
+                        <span class="cmp-label">5.25%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">5.54%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(142,136,151);">-0.29</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Brazil</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">13.75%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:33.3%;"></div>
+                        <span class="cmp-label">4.58%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(16,185,129);">+9.17</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">Switzerland</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:0.0%;"></div>
+                        <span class="cmp-label">0.00%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">1.00%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(152,129,146);">-1.00</div>
+            </div>
+            <div class="cmp-row">
+                <div class="cmp-country">South Korea</div>
+                <div class="cmp-bars">
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cb-bar" style="width:100.0%;"></div>
+                        <span class="cmp-label">3.00%</span>
+                    </div>
+                    <div class="cmp-bar-wrap">
+                        <div class="cmp-bar cpi-bar" style="width:96.7%;"></div>
+                        <span class="cmp-label">2.90%</span>
+                    </div>
+                </div>
+                <div class="cmp-real" style="color:rgb(137,139,153);">+0.10</div>
+            </div>
             </div>
         </div>
 
