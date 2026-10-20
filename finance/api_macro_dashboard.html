@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Global Macroeconomic Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -40,8 +40,7 @@
         .nfp-level { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.35rem; }
         .metric-divider { height: 1px; background: var(--border); margin: 0.4rem 0; }
         .cpi-panel-body { display: flex; gap: 1rem; align-items: stretch; }
-        @media (max-width: 1100px) { .cpi-panel-body { flex-direction: column; } .cpi-metric-side-card { width: 100%; border-left: none; border-top: 3px solid var(--accent); } }
-        
+
         .cpi-chart-container {
             background: rgba(0, 0, 0, 0.22);
             border: 1px solid var(--border);
@@ -49,6 +48,7 @@
             padding: 1.15rem 0.9rem;
             flex: 1;
             overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
             scrollbar-color: var(--border-bright) #000000;
             scrollbar-width: thin;
         }
@@ -74,15 +74,15 @@
         .cpi-bar-chart { display: flex; align-items: stretch; height: 160px; position: relative; }
         .cpi-bar-chart::after { content: ''; position: absolute; left: 0; right: 0; top: 80%; height: 1px; background: var(--border-bright); z-index: 3; }
         .chart-bar-wrap { display: flex; flex-direction: column; align-items: center; height: 100%; position: relative; cursor: pointer; z-index: 4; }
-        .chart-bar { position: absolute; width: 100%; max-width: 5px; background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%); }
+        .chart-bar { position: absolute; width: 100%; max-width: 6px; background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%); }
         .chart-bar.bar-neg { background: linear-gradient(0deg, #60a5fa 0%, #3b82f6 100%); }
-        
+
         .table-container { width: 100%; overflow-x: auto; max-height: 540px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); }
         table.macro-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; text-align: left; }
         table.macro-table th, table.macro-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
         table.macro-table th { background: #121218; color: var(--text-dim); position: sticky; top: 0; z-index: 10; cursor: pointer; }
         table.macro-table td.num { font-family: 'JetBrains Mono', monospace; text-align: right; }
-        
+
         /* Table economic color logic */
         td.dir-good { color: var(--good); background: rgba(16, 185, 129, 0.1); }
         td.dir-bad  { color: var(--bad);  background: rgba(244, 63, 94, 0.1); }
@@ -94,7 +94,7 @@
         .tab-btn { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.7rem; padding: 0.32rem 0.6rem; border-radius: 6px; cursor: pointer; }
         .tab-btn.active { background: var(--accent-soft); border-color: rgba(59, 130, 246, 0.4); color: var(--text); }
         .viz-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
-        @media (max-width: 1100px) { .viz-row { grid-template-columns: 1fr; } }
+
         .rr-bars-container { display: flex; flex-direction: column; gap: 0.28rem; max-height: 420px; overflow-y: auto; }
         .rr-bar-row { display: grid; grid-template-columns: 110px 1fr 58px; align-items: center; gap: 0.5rem; font-size: 0.72rem; }
         .rr-track { height: 10px; background: rgba(255,255,255,0.04); border-radius: 3px; overflow: hidden; }
@@ -110,6 +110,22 @@
         .cpi-bar { background: linear-gradient(90deg, #d97706, #f59e0b); height: 8px; border-radius: 2px; }
         .cmp-label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); min-width: 36px; }
         .cmp-real { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; text-align: right; }
+
+        /* Mobile specific layout enhancements */
+        @media (max-width: 768px) {
+            body { padding: 0.75rem 0.5rem 2rem; }
+            .wrapper { padding: 0.85rem; border-radius: 10px; }
+            .cpi-panel-body { flex-direction: column; }
+            .cpi-metric-side-card { width: 100%; border-left: none; border-top: 3px solid var(--accent); }
+            .viz-row { grid-template-columns: 1fr; }
+            .cpi-chart-container {
+                padding: 1rem 0.5rem;
+                width: 100%;
+            }
+            .chart-bar {
+                max-width: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -119,7 +135,7 @@
                 <h1>Global Macroeconomic & Central Bank Intelligence</h1>
                 <p>Cross-country monetary policy, inflation prints, and growth metrics</p>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-20 21:27:50</div>
+            <div class="timestamp">SYNCED · 2026-10-20 21:37:55</div>
         </header>
 
         
@@ -291,60 +307,23 @@
         </div>
     
 
-        <div style="display: grid; grid-template-columns: 340px 1fr; gap: 1.25rem; align-items: start; margin-top: 0.5rem; margin-bottom: 1.25rem;">
-            <div>
-        <div class="panel cb-calendar-panel">
-            <div class="panel-header"><div><h2>Upcoming Rate Decisions</h2></div></div>
-            <div class="cb-tabs"><button class="tab-btn active" onclick="switchCbTab(event, 'cb-tab-0')">Bank of England (BoE)</button><button class="tab-btn " onclick="switchCbTab(event, 'cb-tab-1')">European Central Bank (ECB)</button><button class="tab-btn " onclick="switchCbTab(event, 'cb-tab-2')">US Federal Reserve (FOMC)</button></div>
-            <div class="cb-content-wrap" style="margin-top: 0.75rem;">
-            <div id="cb-tab-0" class="cb-tab-content" style="display: block;">
-                <div class="table-container">
-                    <table class="macro-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
-                        <tbody><tr><td class="country">2026-11-05</td><td>MPC Meeting (with MPR)</td></tr><tr><td class="country">2026-12-17</td><td>MPC Meeting</td></tr><tr><td class="country">2027-02-04</td><td>MPC Meeting (with MPR)</td></tr><tr><td class="country">2027-03-18</td><td>MPC Meeting</td></tr><tr><td class="country">2027-04-29</td><td>MPC Meeting (with MPR)</td></tr></tbody>
-                    </table>
+        <!-- Main Global Matrix Table -->
+        <div class="panel" style="margin-top: 1.5rem;">
+            <div class="panel-header">
+                <div>
+                    <h2>Global Rates, Inflation & Growth Matrix</h2>
+                    <p class="subtext">Click headers to sort matrix</p>
                 </div>
             </div>
-        
-            <div id="cb-tab-1" class="cb-tab-content" style="display: none;">
-                <div class="table-container">
-                    <table class="macro-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
-                        <tbody><tr><td class="country">2026-10-29</td><td>Governing Council Meeting</td></tr><tr><td class="country">2026-12-17</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-02-04</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-03-18</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-04-29</td><td>Governing Council Meeting</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
-        
-            <div id="cb-tab-2" class="cb-tab-content" style="display: none;">
-                <div class="table-container">
-                    <table class="macro-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
-                        <tbody><tr><td class="country">2026-10-28</td><td>FOMC Rate Decision</td></tr><tr><td class="country">2026-12-09</td><td>FOMC Rate Decision & Projections</td></tr><tr><td class="country">2027-01-27</td><td>FOMC Rate Decision</td></tr><tr><td class="country">2027-03-17</td><td>FOMC Rate Decision & Projections</td></tr><tr><td class="country">2027-04-28</td><td>FOMC Rate Decision</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        </div>
-        <script>
-            function switchCbTab(evt, tabId) {
-                document.querySelectorAll('.cb-tab-content').forEach(c => c.style.display = 'none');
-                document.querySelectorAll('.cb-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-                document.getElementById(tabId).style.display = 'block';
-                evt.currentTarget.classList.add('active');
-            }
-        </script>
-    </div>
-            <div class="panel">
-                <div class="panel-header"><div><h2>Global Rates, Inflation & Growth Matrix</h2><p class="subtext">Click headers to sort</p></div></div>
-                <div class="table-container">
-                    <table class="macro-table" id="macroMatrixTable">
-                        <thead>
-                            <tr>
-                                <th>Country</th><th>CB Rate (%)</th><th>CPI YoY (%)</th><th>Real Rate (%)</th>
-                                <th>GDP YoY (%)</th><th>CB Δ</th><th>CPI Δ</th><th>GDP Δ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <div class="table-container">
+                <table class="macro-table" id="macroMatrixTable">
+                    <thead>
+                        <tr>
+                            <th>Country</th><th>CB Rate (%)</th><th>CPI YoY (%)</th><th>Real Rate (%)</th>
+                            <th>GDP YoY (%)</th><th>CB Δ</th><th>CPI Δ</th><th>GDP Δ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
             <tr>
                 <td class="country sticky-col"><strong>Iran</strong></td>
                 <td class="num dir-flat">23.00</td>
@@ -653,12 +632,55 @@
                 <td class="num chg dir-good">▲ +0.20</td>
             </tr>
         </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Central Bank Rate Decisions Calendar (Placed Directly Under Matrix Table) -->
+        
+        <div class="panel cb-calendar-panel" style="margin-top: 1.25rem;">
+            <div class="panel-header"><div><h2>Upcoming Rate Decisions</h2><p class="subtext">Central bank policy meetings and monetary statements</p></div></div>
+            <div class="cb-tabs"><button class="tab-btn active" onclick="switchCbTab(event, 'cb-tab-0')">Bank of England (BoE)</button><button class="tab-btn " onclick="switchCbTab(event, 'cb-tab-1')">European Central Bank (ECB)</button><button class="tab-btn " onclick="switchCbTab(event, 'cb-tab-2')">US Federal Reserve (FOMC)</button></div>
+            <div class="cb-content-wrap" style="margin-top: 0.75rem;">
+            <div id="cb-tab-0" class="cb-tab-content" style="display: block;">
+                <div class="table-container">
+                    <table class="macro-table">
+                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
+                        <tbody><tr><td class="country">2026-11-05</td><td>MPC Meeting (with MPR)</td></tr><tr><td class="country">2026-12-17</td><td>MPC Meeting</td></tr><tr><td class="country">2027-02-04</td><td>MPC Meeting (with MPR)</td></tr><tr><td class="country">2027-03-18</td><td>MPC Meeting</td></tr><tr><td class="country">2027-04-29</td><td>MPC Meeting (with MPR)</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        
+            <div id="cb-tab-1" class="cb-tab-content" style="display: none;">
+                <div class="table-container">
+                    <table class="macro-table">
+                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
+                        <tbody><tr><td class="country">2026-10-29</td><td>Governing Council Meeting</td></tr><tr><td class="country">2026-12-17</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-02-04</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-03-18</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-04-29</td><td>Governing Council Meeting</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        
+            <div id="cb-tab-2" class="cb-tab-content" style="display: none;">
+                <div class="table-container">
+                    <table class="macro-table">
+                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
+                        <tbody><tr><td class="country">2026-10-28</td><td>FOMC Rate Decision</td></tr><tr><td class="country">2026-12-09</td><td>FOMC Rate Decision & Projections</td></tr><tr><td class="country">2027-01-27</td><td>FOMC Rate Decision</td></tr><tr><td class="country">2027-03-17</td><td>FOMC Rate Decision & Projections</td></tr><tr><td class="country">2027-04-28</td><td>FOMC Rate Decision</td></tr></tbody>
                     </table>
                 </div>
             </div>
         </div>
+        </div>
+        <script>
+            function switchCbTab(evt, tabId) {
+                document.querySelectorAll('.cb-tab-content').forEach(c => c.style.display = 'none');
+                document.querySelectorAll('.cb-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+                document.getElementById(tabId).style.display = 'block';
+                evt.currentTarget.classList.add('active');
+            }
+        </script>
+    
 
-        <div class="viz-row">
+        <div class="viz-row" style="margin-top: 1.25rem;">
             
         <div class="panel chart-panel">
             <div class="panel-header"><div><h2>Real Policy Rate Ranking</h2><p class="subtext">CB rate − CPI YoY · sorted most accommodative → most restrictive</p></div></div>
@@ -1249,7 +1271,13 @@
             const container = document.getElementById(secId + '-container');
             const history = (range === '5y') ? cfg.history.slice(-60) : cfg.history;
             const total = history.length;
-            const widthPx = total * 8;
+
+            // Responsive bar pitch: 11px on mobile for better touch targets, 8px on desktop
+            const isMobile = window.innerWidth <= 768;
+            const barPitch = isMobile ? 11 : 8;
+            const barWidth = isMobile ? 8 : 6;
+            const widthPx = total * barPitch;
+
             const vals = history.map(h => h.mom || 0);
             const peakAbs = cfg.max_cap || (Math.max(...vals.map(Math.abs), 1.0) * (range === '5y' ? 1.15 : 1.25));
             const yoyVals = history.map(h => h.sec).filter(v => v !== null && v !== undefined);
@@ -1259,9 +1287,10 @@
             let lastYr = null;
 
             history.forEach((h, idx) => {
+                const xPos = idx * barPitch;
                 if (h.year !== lastYr) {
-                    linesHtml += `<div style="position: absolute; top:0; bottom:0; width:1px; background: rgba(255,255,255,0.06); left:${idx * 8}px;"></div>`;
-                    labelsHtml += `<div style="position: absolute; top:2px; font-family:'JetBrains Mono'; font-size:0.65rem; color:var(--text-dim); left:${idx * 8 + 4}px;">${h.year}</div>`;
+                    linesHtml += `<div style="position: absolute; top:0; bottom:0; width:1px; background: rgba(255,255,255,0.06); left:${xPos}px;"></div>`;
+                    labelsHtml += `<div style="position: absolute; top:2px; font-family:'JetBrains Mono'; font-size:0.65rem; color:var(--text-dim); left:${xPos + 4}px;">${h.year}</div>`;
                     lastYr = h.year;
                 }
                 const val = h.mom || 0;
@@ -1271,25 +1300,25 @@
                 const secStr = h.sec !== null && h.sec !== undefined ? `${cfg.is_uk_gdp ? 'Rolling 12M' : 'YoY'}: ${h.sec > 0 ? '+' : ''}${h.sec.toFixed(2)}%` : '';
                 const momStr = `${val > 0 ? '+' : ''}${cfg.is_nfp ? val.toFixed(0) + 'K' : val.toFixed(2) + '%'}`;
 
-                barsHtml += `<div class="chart-bar-wrap" style="width:6px; flex:0 0 6px;" data-label="${h.label}" data-mom="${momStr}" data-sec="${secStr}">
+                barsHtml += `<div class="chart-bar-wrap" style="width:${barWidth}px; flex:0 0 ${barWidth}px; margin-right:${barPitch - barWidth}px;" data-label="${h.label}" data-mom="${momStr}" data-sec="${secStr}">
                     <div class="chart-bar ${barCls}" style="${barStyle}"></div>
                 </div>`;
 
                 if (h.sec !== null && h.sec !== undefined) {
-                    const cx = idx * 8 + 3;
+                    const cx = xPos + (barWidth / 2);
                     const cy = Math.max(0, Math.min(160, 128 - (h.sec / peakSec) * 128));
                     svgPts.push(`${cx},${cy}`);
                 }
             });
 
             const svgOverlay = svgPts.length ? `<svg style="position:absolute; inset:0; width:100%; height:160px; pointer-events:none; z-index:4;" overflow="hidden"><polyline fill="none" stroke="#f59e0b" stroke-width="2.25" stroke-linecap="round" points="${svgPts.join(' ')}"/></svg>` : '';
-            const highlightBox = (!cfg.is_nfp && total >= 12) ? `<div style="position:absolute; top:0; bottom:0; background:rgba(59,130,246,0.07); left:${(total - 12) * 8}px; width:${12 * 8}px; pointer-events:none; z-index:2;"></div>` : '';
+            const highlightBox = (!cfg.is_nfp && total >= 12) ? `<div style="position:absolute; top:0; bottom:0; background:rgba(59,130,246,0.07); left:${(total - 12) * barPitch}px; width:${12 * barPitch}px; pointer-events:none; z-index:2;"></div>` : '';
 
             container.innerHTML = `
-                <div class="cpi-chart-wrapper-inner" style="width:${widthPx}px;">
+                <div class="cpi-chart-wrapper-inner" style="width:${widthPx + 100}px;">
                     <div class="cpi-yaxis"><span style="position:absolute; top:0; right:10px;">+${peakAbs.toFixed(1)}${cfg.is_nfp ? 'K' : '%'}</span><span style="position:absolute; top:80%; right:10px;">0${cfg.is_nfp ? 'K' : '%'}</span></div>
                     <div style="display:flex; flex-direction:column; width:${widthPx}px;">
-                        <div class="cpi-bar-chart" style="width:${widthPx}px; gap:2px; position:relative;">
+                        <div class="cpi-bar-chart" style="width:${widthPx}px; position:relative;">
                             ${linesHtml}${highlightBox}${barsHtml}${svgOverlay}
                         </div>
                         <div style="position:relative; height:18px; margin-top:4px; width:${widthPx}px;">${labelsHtml}</div>
@@ -1318,6 +1347,13 @@
             document.getElementById(secId + '-btn-max').classList.toggle('active', range === 'max');
             renderChart(secId, range);
         }
+
+        window.addEventListener('resize', () => {
+            Object.keys(CHART_CONFIGS).forEach(secId => {
+                const is5y = document.getElementById(secId + '-btn-5y').classList.contains('active');
+                renderChart(secId, is5y ? '5y' : 'max');
+            });
+        });
 
         window.addEventListener('DOMContentLoaded', () => {
             Object.keys(CHART_CONFIGS).forEach(secId => renderChart(secId, '5y'));
