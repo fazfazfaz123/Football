@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Tenure Analysis: Premiership vs. Prime Minister (Post-1945)</title>
     <style>
         :root {
@@ -17,79 +17,94 @@
             --accent-convergence: #f59e0b;
             --accent-live: #34d399;
         }
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
             color: var(--text-primary);
             margin: 0;
-            padding: 2.5rem 1.5rem;
+            padding: 1.5rem 1rem;
             line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
         }
         .container {
             max-width: 1200px;
             margin: 0 auto;
         }
         header {
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 1.5rem;
+            padding-bottom: 1.25rem;
         }
         h1 {
-            font-size: 2rem;
+            font-size: 1.75rem;
             margin: 0 0 0.5rem 0;
             font-weight: 700;
+            line-height: 1.25;
         }
         p.subtitle {
             color: var(--text-muted);
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 0.75rem;
-            padding: 1.5rem;
+            padding: 1.25rem;
         }
         .card-header {
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
             font-weight: 600;
         }
         .stat-value {
-            font-size: 2.25rem;
+            font-size: 1.9rem;
             font-weight: 700;
         }
         .pm-stat { color: var(--accent-pm); }
         .mgr-stat { color: var(--accent-mgr); }
         .conv-stat { color: var(--accent-convergence); }
         .stat-sub {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            margin-top: 0.35rem;
+            margin-top: 0.25rem;
+        }
+        
+        /* Table Scroll Containers */
+        .table-scroll-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 0.5rem;
         }
         table {
             width: 100%;
+            min-width: 520px;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         th, td {
-            padding: 0.75rem 1rem;
+            padding: 0.7rem 0.85rem;
             border-bottom: 1px solid var(--border);
+            white-space: nowrap;
         }
         th {
             color: var(--text-muted);
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
         }
         tr:hover td {
@@ -106,26 +121,27 @@
         .badge-mgr { background: rgba(168, 85, 247, 0.15); color: var(--accent-mgr); }
         .tables-section {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
         }
         .callout {
             border-left: 4px solid var(--accent-convergence);
-            padding: 1.25rem 1.5rem;
+            padding: 1.1rem 1.25rem;
             background: rgba(30, 41, 59, 0.7);
-            margin: 1.5rem 0 1rem 0;
+            margin: 1.25rem 0 0.5rem 0;
             border-radius: 0 0.5rem 0.5rem 0;
         }
         .callout h3 {
             margin: 0 0 0.5rem 0;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             color: var(--accent-convergence);
         }
         .callout p {
             margin: 0 0 0.75rem 0;
             color: var(--text-primary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            line-height: 1.55;
         }
         .callout p:last-child {
             margin-bottom: 0;
@@ -135,7 +151,7 @@
             align-items: center;
             gap: 0.35rem;
             color: var(--accent-live);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -156,34 +172,52 @@
             50% { opacity: 0.4; transform: scale(0.85); }
             100% { opacity: 1; transform: scale(1); }
         }
-        /* Chart Styles */
+        
+        /* Mobile-Friendly Extra Wide Chart Wrapper */
+        .chart-scroll-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 0.5rem;
+        }
         .chart-container {
             position: relative;
+            min-width: 760px; /* Guarantees the graph remains wide and legible on mobile */
             width: 100%;
-            height: 480px;
-            margin-top: 1.5rem;
+            height: 440px;
+            margin-top: 0.75rem;
+        }
+        .chart-hint {
+            display: none;
+            font-size: 0.75rem;
+            color: var(--accent-pm);
+            margin-bottom: 0.25rem;
+            align-items: center;
+            gap: 0.35rem;
         }
         .chart-legend {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem 1.25rem;
             justify-content: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin-top: 1rem;
             flex-wrap: wrap;
         }
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.45rem;
         }
         .legend-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
         .legend-line {
-            width: 20px;
+            width: 18px;
             height: 2px;
+            flex-shrink: 0;
         }
         #chart-tooltip {
             position: absolute;
@@ -194,8 +228,26 @@
             padding: 0.5rem 0.75rem;
             font-size: 0.8rem;
             pointer-events: none;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
             z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.75rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            .card {
+                padding: 1rem;
+            }
+            .chart-hint {
+                display: flex;
+            }
+            .chart-container {
+                height: 380px;
+            }
         }
     </style>
 </head>
@@ -209,12 +261,12 @@
         <section class="grid">
             <div class="card">
                 <div class="card-header">Post-1945 Prime Ministers</div>
-                <div class="stat-value pm-stat">1561.3 <span style="font-size: 1.1rem; font-weight: normal;">days avg</span></div>
+                <div class="stat-value pm-stat">1561.3 <span style="font-size: 1.05rem; font-weight: normal;">days avg</span></div>
                 <div class="stat-sub">Median: 1140 days (~3.1 yrs) &bull; Total: 19 leaders</div>
             </div>
             <div class="card">
                 <div class="card-header">Premier League Managers</div>
-                <div class="stat-value mgr-stat">667.3 <span style="font-size: 1.1rem; font-weight: normal;">days avg</span></div>
+                <div class="stat-value mgr-stat">667.3 <span style="font-size: 1.05rem; font-weight: normal;">days avg</span></div>
                 <div class="stat-sub">Median: 354 days (~1.0 yrs) &bull; Total: 519 stints</div>
             </div>
             <div class="card">
@@ -224,16 +276,21 @@
             </div>
         </section>
 
-        <!-- Scatter Plot & Regression Graph Section -->
+        <!-- Wide Mobile-Scrollable Scatter Plot Section -->
         <section class="card" style="margin-bottom: 2rem;">
             <div class="card-header" style="color: var(--accent-pm);">Historical Era Scatter Plot & Convergence Trend</div>
-            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem;">
-                Plotting all individual appointments from 1990 to the present with linear trendlines showing the trajectory of both roles.
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">
+                Plotting individual appointments from 1990 to the present with linear trendlines.
             </p>
+            <div class="chart-hint">
+                <span>&#8596; Scroll horizontally to view the wide timeline</span>
+            </div>
 
-            <div class="chart-container">
-                <canvas id="historicalChart"></canvas>
-                <div id="chart-tooltip"></div>
+            <div class="chart-scroll-wrapper" id="scrollContainer">
+                <div class="chart-container">
+                    <canvas id="historicalChart"></canvas>
+                    <div id="chart-tooltip"></div>
+                </div>
             </div>
 
             <div class="chart-legend">
@@ -263,53 +320,55 @@
         <!-- Trend Section -->
         <section class="card" style="margin-bottom: 2rem;">
             <div class="card-header" style="color: var(--accent-pm);">Historical Era Summary Table</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Decade Started</th>
-                        <th>PM Appointments</th>
-                        <th>Avg PM Tenure</th>
-                        <th>Manager Appointments</th>
-                        <th>Avg Manager Tenure</th>
-                        <th>PM vs Manager Ratio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr>
-                        <td><strong>1990–1999</strong></td>
-                        <td>2</td>
-                        <td><strong style="color: var(--accent-pm);">3,026.5 days</strong> (~8.3 yrs)</td>
-                        <td>104</td>
-                        <td><strong style="color: var(--accent-mgr);">929.7 days</strong> (~2.5 yrs)</td>
-                        <td><strong>3.26x</strong></td>
-                    </tr>
-                    <tr>
-                        <td><strong>2000–2009</strong></td>
-                        <td>1</td>
-                        <td><strong style="color: var(--accent-pm);">1,049 days</strong> (~2.9 yrs)</td>
-                        <td>131</td>
-                        <td><strong style="color: var(--accent-mgr);">639.4 days</strong> (~1.8 yrs)</td>
-                        <td><strong>1.64x</strong></td>
-                    </tr>
-                    <tr>
-                        <td><strong>2010–2019</strong></td>
-                        <td>3</td>
-                        <td><strong style="color: var(--accent-pm);">1,500.3 days</strong> (~4.1 yrs)</td>
-                        <td>168</td>
-                        <td><strong style="color: var(--accent-mgr);">570.8 days</strong> (~1.6 yrs)</td>
-                        <td><strong>2.63x</strong></td>
-                    </tr>
-                    <tr>
-                        <td><strong>2020–Present</strong></td>
-                        <td>4</td>
-                        <td><strong style="color: var(--accent-pm);">375.8 days</strong> (~1.0 yrs)</td>
-                        <td>109</td>
-                        <td><strong style="color: var(--accent-mgr);">338.0 days</strong> (~0.9 yrs)</td>
-                        <td><strong>1.11x</strong></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-scroll-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Decade Started</th>
+                            <th>PM Appointments</th>
+                            <th>Avg PM Tenure</th>
+                            <th>Manager Appointments</th>
+                            <th>Avg Manager Tenure</th>
+                            <th>PM vs Manager Ratio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+                            <td><strong>1990–1999</strong></td>
+                            <td>2</td>
+                            <td><strong style="color: var(--accent-pm);">3,026.5 days</strong> (~8.3 yrs)</td>
+                            <td>104</td>
+                            <td><strong style="color: var(--accent-mgr);">929.7 days</strong> (~2.5 yrs)</td>
+                            <td><strong>3.26x</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2000–2009</strong></td>
+                            <td>1</td>
+                            <td><strong style="color: var(--accent-pm);">1,049 days</strong> (~2.9 yrs)</td>
+                            <td>131</td>
+                            <td><strong style="color: var(--accent-mgr);">639.4 days</strong> (~1.8 yrs)</td>
+                            <td><strong>1.64x</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2010–2019</strong></td>
+                            <td>3</td>
+                            <td><strong style="color: var(--accent-pm);">1,500.3 days</strong> (~4.1 yrs)</td>
+                            <td>168</td>
+                            <td><strong style="color: var(--accent-mgr);">570.8 days</strong> (~1.6 yrs)</td>
+                            <td><strong>2.63x</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2020–Present</strong></td>
+                            <td>4</td>
+                            <td><strong style="color: var(--accent-pm);">375.8 days</strong> (~1.0 yrs)</td>
+                            <td>109</td>
+                            <td><strong style="color: var(--accent-mgr);">338.0 days</strong> (~0.9 yrs)</td>
+                            <td><strong>1.11x</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="callout">
                 <h3>Key Takeaway: Convergence Date & Parity Analysis</h3>
@@ -324,11 +383,11 @@
                     In practical terms, the rapid turnover of the 2020s brought prime ministerial job security into parity with Premier League managerial shelf-life.
                 </p>
                 <div style="color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.85rem; margin-top: 0.5rem;">
-                    <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
-                        <strong style="font-size: 1rem; color: #fff;">What Does the Current PM Need to Reverse the Trend?</strong>
+                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem;">
+                        <strong style="font-size: 0.95rem; color: #fff;">What Does the Current PM Need to Reverse the Trend?</strong>
                         <span class="live-tag"><span class="live-dot"></span> <span id="live-today-date">today</span></span>
                     </div>
-                    <div id="incumbent-live-comment">
+                    <div id="incumbent-live-comment" style="font-size: 0.9rem; line-height: 1.6;">
                         Calculating live tenure targets...
                     </div>
                 </div>
@@ -337,287 +396,293 @@
 
         <section class="card" style="margin-bottom: 2rem;">
             <div class="card-header">All-Time Distribution Summary</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>UK Prime Ministers (Post-1945)</th>
-                        <th>Premier League Club Managers</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Sample Size</strong></td>
-                        <td>19 individuals</td>
-                        <td>519 management stints</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Mean Duration</strong></td>
-                        <td>1561.3 days (4.27 years)</td>
-                        <td>667.3 days (1.83 years)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Median Duration</strong></td>
-                        <td>1140 days (3.12 years)</td>
-                        <td>354 days (0.97 years)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Standard Deviation</strong></td>
-                        <td>1178.9 days</td>
-                        <td>937.9 days</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Record Longest</strong></td>
-                        <td>Margaret Thatcher (4,224 days)</td>
-                        <td>Alex Ferguson (9,704 days)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Record Shortest</strong></td>
-                        <td>Liz Truss (50 days)</td>
-                        <td>Paddy McCarthy / Clive Allen (0–1 day caretaker)</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-scroll-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>UK Prime Ministers (Post-1945)</th>
+                            <th>Premier League Club Managers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sample Size</strong></td>
+                            <td>19 individuals</td>
+                            <td>519 management stints</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mean Duration</strong></td>
+                            <td>1561.3 days (4.27 years)</td>
+                            <td>667.3 days (1.83 years)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Median Duration</strong></td>
+                            <td>1140 days (3.12 years)</td>
+                            <td>354 days (0.97 years)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Standard Deviation</strong></td>
+                            <td>1178.9 days</td>
+                            <td>937.9 days</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Record Longest</strong></td>
+                            <td>Margaret Thatcher (4,224 days)</td>
+                            <td>Alex Ferguson (9,704 days)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Record Shortest</strong></td>
+                            <td>Liz Truss (50 days)</td>
+                            <td>Paddy McCarthy / Clive Allen (0–1 day caretaker)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
 
         <div class="tables-section">
             <div class="card">
                 <div class="card-header" style="color: var(--accent-pm);">Post-1945 UK Prime Ministers (Ranked by Total Days)</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Prime Minister</th>
-                            <th>Party</th>
-                            <th>Days</th>
-                            <th>Years</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr>
-                            <td>1</td>
-                            <td><strong>Margaret Thatcher</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>4,224</td>
-                            <td>11.56</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><strong>Tony Blair</strong></td>
-                            <td><span class="badge badge-pm">Labour</span></td>
-                            <td>3,707</td>
-                            <td>10.15</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><strong>Harold Wilson</strong></td>
-                            <td><span class="badge badge-pm">Labour</span></td>
-                            <td>2,835</td>
-                            <td>7.76</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><strong>Harold Macmillan</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>2,472</td>
-                            <td>6.77</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td><strong>John Major</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>2,346</td>
-                            <td>6.42</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td><strong>Clement Attlee</strong></td>
-                            <td><span class="badge badge-pm">Labour</span></td>
-                            <td>2,283</td>
-                            <td>6.25</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td><strong>David Cameron</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>2,254</td>
-                            <td>6.17</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td><strong>Edward Heath</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>1,354</td>
-                            <td>3.71</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td><strong>Winston Churchill</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>1,257</td>
-                            <td>3.44</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td><strong>Boris Johnson</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>1,140</td>
-                            <td>3.12</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td><strong>James Callaghan</strong></td>
-                            <td><span class="badge badge-pm">Labour</span></td>
-                            <td>1,125</td>
-                            <td>3.08</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td><strong>Theresa May</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>1,107</td>
-                            <td>3.03</td>
-                        </tr>
-                        <tr>
-                            <td>13</td>
-                            <td><strong>Gordon Brown</strong></td>
-                            <td><span class="badge badge-pm">Labour</span></td>
-                            <td>1,049</td>
-                            <td>2.87</td>
-                        </tr>
-                        <tr>
-                            <td>14</td>
-                            <td><strong>Keir Starmer</strong></td>
-                            <td><span class="badge badge-pm">Labour</span></td>
-                            <td>746</td>
-                            <td>2.04</td>
-                        </tr>
-                        <tr>
-                            <td>15</td>
-                            <td><strong>Anthony Eden</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>644</td>
-                            <td>1.76</td>
-                        </tr>
-                        <tr>
-                            <td>16</td>
-                            <td><strong>Rishi Sunak</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>620</td>
-                            <td>1.7</td>
-                        </tr>
-                        <tr>
-                            <td>17</td>
-                            <td><strong>Alec Douglas-Home14th</strong></td>
-                            <td><span class="badge badge-pm">Conservative(Scot.U.)</span></td>
-                            <td>364</td>
-                            <td>1.0</td>
-                        </tr>
-                        <tr>
-                            <td>18</td>
-                            <td><strong>Andy Burnham</strong></td>
-                            <td><span class="badge badge-pm">Labour(Lab Co-op)</span></td>
-                            <td>87</td>
-                            <td>0.24</td>
-                        </tr>
-                        <tr>
-                            <td>19</td>
-                            <td><strong>Liz Truss</strong></td>
-                            <td><span class="badge badge-pm">Conservative</span></td>
-                            <td>50</td>
-                            <td>0.14</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-scroll-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Prime Minister</th>
+                                <th>Party</th>
+                                <th>Days</th>
+                                <th>Years</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>1</td>
+                                <td><strong>Margaret Thatcher</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>4,224</td>
+                                <td>11.56</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>Tony Blair</strong></td>
+                                <td><span class="badge badge-pm">Labour</span></td>
+                                <td>3,707</td>
+                                <td>10.15</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>Harold Wilson</strong></td>
+                                <td><span class="badge badge-pm">Labour</span></td>
+                                <td>2,835</td>
+                                <td>7.76</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>Harold Macmillan</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>2,472</td>
+                                <td>6.77</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong>John Major</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>2,346</td>
+                                <td>6.42</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>Clement Attlee</strong></td>
+                                <td><span class="badge badge-pm">Labour</span></td>
+                                <td>2,283</td>
+                                <td>6.25</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><strong>David Cameron</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>2,254</td>
+                                <td>6.17</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><strong>Edward Heath</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>1,354</td>
+                                <td>3.71</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><strong>Winston Churchill</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>1,257</td>
+                                <td>3.44</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td><strong>Boris Johnson</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>1,140</td>
+                                <td>3.12</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td><strong>James Callaghan</strong></td>
+                                <td><span class="badge badge-pm">Labour</span></td>
+                                <td>1,125</td>
+                                <td>3.08</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td><strong>Theresa May</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>1,107</td>
+                                <td>3.03</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td><strong>Gordon Brown</strong></td>
+                                <td><span class="badge badge-pm">Labour</span></td>
+                                <td>1,049</td>
+                                <td>2.87</td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td><strong>Keir Starmer</strong></td>
+                                <td><span class="badge badge-pm">Labour</span></td>
+                                <td>746</td>
+                                <td>2.04</td>
+                            </tr>
+                            <tr>
+                                <td>15</td>
+                                <td><strong>Anthony Eden</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>644</td>
+                                <td>1.76</td>
+                            </tr>
+                            <tr>
+                                <td>16</td>
+                                <td><strong>Rishi Sunak</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>620</td>
+                                <td>1.7</td>
+                            </tr>
+                            <tr>
+                                <td>17</td>
+                                <td><strong>Alec Douglas-Home14th</strong></td>
+                                <td><span class="badge badge-pm">Conservative(Scot.U.)</span></td>
+                                <td>364</td>
+                                <td>1.0</td>
+                            </tr>
+                            <tr>
+                                <td>18</td>
+                                <td><strong>Andy Burnham</strong></td>
+                                <td><span class="badge badge-pm">Labour(Lab Co-op)</span></td>
+                                <td>87</td>
+                                <td>0.24</td>
+                            </tr>
+                            <tr>
+                                <td>19</td>
+                                <td><strong>Liz Truss</strong></td>
+                                <td><span class="badge badge-pm">Conservative</span></td>
+                                <td>50</td>
+                                <td>0.14</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="card">
                 <div class="card-header" style="color: var(--accent-mgr);">Top 10 Longest Serving Premier League Managers</div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Manager</th>
-                            <th>Club</th>
-                            <th>Days</th>
-                            <th>Years</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr>
-                            <td>1</td>
-                            <td><strong>Alex Ferguson</strong></td>
-                            <td><span class="badge badge-mgr">Manchester United</span></td>
-                            <td>9,704</td>
-                            <td>26.57</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><strong>Arsène Wenger</strong></td>
-                            <td><span class="badge badge-mgr">Arsenal</span></td>
-                            <td>7,894</td>
-                            <td>21.61</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><strong>Brian Clough</strong></td>
-                            <td><span class="badge badge-mgr">Nottingham Forest</span></td>
-                            <td>6,697</td>
-                            <td>18.34</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><strong>Alan Curbishley</strong></td>
-                            <td><span class="badge badge-mgr">Charlton Athletic</span></td>
-                            <td>5,402</td>
-                            <td>14.79</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td><strong>Joe Royle</strong></td>
-                            <td><span class="badge badge-mgr">Oldham Athletic</span></td>
-                            <td>4,502</td>
-                            <td>12.33</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td><strong>David Moyes</strong></td>
-                            <td><span class="badge badge-mgr">Everton</span></td>
-                            <td>4,096</td>
-                            <td>11.21</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td><strong>Pep Guardiola</strong></td>
-                            <td><span class="badge badge-mgr">Manchester City</span></td>
-                            <td>3,614</td>
-                            <td>9.89</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td><strong>Sean Dyche</strong></td>
-                            <td><span class="badge badge-mgr">Burnley</span></td>
-                            <td>3,454</td>
-                            <td>9.46</td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td><strong>Steve Coppell</strong></td>
-                            <td><span class="badge badge-mgr">Crystal Palace</span></td>
-                            <td>3,270</td>
-                            <td>8.95</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td><strong>George Graham</strong></td>
-                            <td><span class="badge badge-mgr">Arsenal</span></td>
-                            <td>3,205</td>
-                            <td>8.77</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-scroll-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Manager</th>
+                                <th>Club</th>
+                                <th>Days</th>
+                                <th>Years</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>1</td>
+                                <td><strong>Alex Ferguson</strong></td>
+                                <td><span class="badge badge-mgr">Manchester United</span></td>
+                                <td>9,704</td>
+                                <td>26.57</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong>Arsène Wenger</strong></td>
+                                <td><span class="badge badge-mgr">Arsenal</span></td>
+                                <td>7,894</td>
+                                <td>21.61</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong>Brian Clough</strong></td>
+                                <td><span class="badge badge-mgr">Nottingham Forest</span></td>
+                                <td>6,697</td>
+                                <td>18.34</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong>Alan Curbishley</strong></td>
+                                <td><span class="badge badge-mgr">Charlton Athletic</span></td>
+                                <td>5,402</td>
+                                <td>14.79</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong>Joe Royle</strong></td>
+                                <td><span class="badge badge-mgr">Oldham Athletic</span></td>
+                                <td>4,502</td>
+                                <td>12.33</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong>David Moyes</strong></td>
+                                <td><span class="badge badge-mgr">Everton</span></td>
+                                <td>4,096</td>
+                                <td>11.21</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><strong>Pep Guardiola</strong></td>
+                                <td><span class="badge badge-mgr">Manchester City</span></td>
+                                <td>3,614</td>
+                                <td>9.89</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td><strong>Sean Dyche</strong></td>
+                                <td><span class="badge badge-mgr">Burnley</span></td>
+                                <td>3,454</td>
+                                <td>9.46</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><strong>Steve Coppell</strong></td>
+                                <td><span class="badge badge-mgr">Crystal Palace</span></td>
+                                <td>3,270</td>
+                                <td>8.95</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td><strong>George Graham</strong></td>
+                                <td><span class="badge badge-mgr">Arsenal</span></td>
+                                <td>3,205</td>
+                                <td>8.77</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -634,17 +699,13 @@
             const now = new Date();
             const startDate = new Date(liveCalc.incumbent_start_iso);
             
-            // Difference in calendar days
             const diffTime = now.getTime() - startDate.getTime();
             const servedDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
             
             const mgrAvg = liveCalc.all_time_mgr_avg;
             const daysToSurpassIndiv = Math.round(mgrAvg - servedDays);
-            
-            // Date when individual tenure surpasses all-time manager average
             const dateIndivSurpass = new Date(startDate.getTime() + mgrAvg * 24 * 60 * 60 * 1000);
             
-            // Days needed to bring the entire 2020s cohort average above manager average
             const targetTotalForCohort = Math.round(liveCalc.num_2020s_total * mgrAvg - liveCalc.completed_2020s_sum);
             const daysToSurpassCohort = targetTotalForCohort - servedDays;
             const dateCohortSurpass = new Date(startDate.getTime() + targetTotalForCohort * 24 * 60 * 60 * 1000);
@@ -672,24 +733,27 @@
 
         updateLiveIncumbentStats();
 
-        // 2. Canvas Rendering for Historical Scatter & Regression Graph
+        // 2. Wide Canvas Rendering with High DPI support
         const canvas = document.getElementById("historicalChart");
         const ctx = canvas.getContext("2d");
         const tooltip = document.getElementById("chart-tooltip");
 
         function drawChart() {
             const dpr = window.devicePixelRatio || 1;
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            canvas.style.width = rect.width + "px";
-            canvas.style.height = rect.height + "px";
-            ctx.scale(dpr, dpr);
-
+            const container = canvas.parentElement;
+            const rect = container.getBoundingClientRect();
+            
+            // Width is determined by the wide container width (at least 760px on mobile)
             const width = rect.width;
             const height = rect.height;
-            const padding = { top: 30, right: 40, bottom: 50, left: 65 };
 
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            canvas.style.width = width + "px";
+            canvas.style.height = height + "px";
+            ctx.scale(dpr, dpr);
+
+            const padding = { top: 30, right: 35, bottom: 45, left: 60 };
             const minX = 1990;
             const maxX = 2028;
             const minY = 0;
@@ -718,7 +782,7 @@
                 ctx.moveTo(padding.left, y);
                 ctx.lineTo(width - padding.right, y);
                 ctx.stroke();
-                ctx.fillText(yVal.toLocaleString() + " d", padding.left - 10, y + 4);
+                ctx.fillText(yVal.toLocaleString() + " d", padding.left - 8, y + 4);
             });
 
             // X-Axis
@@ -729,7 +793,7 @@
                 ctx.moveTo(x, height - padding.bottom);
                 ctx.lineTo(x, height - padding.bottom + 6);
                 ctx.stroke();
-                ctx.fillText(yr.toString(), x, height - padding.bottom + 20);
+                ctx.fillText(yr.toString(), x, height - padding.bottom + 18);
             }
 
             // Manager Points (Purple Circles)
@@ -793,12 +857,12 @@
             canvas.chartInfo = { getX, getY, minX, maxX, minY, maxY, padding, width, height };
         }
 
-        // Tooltip Hover
-        canvas.addEventListener("mousemove", e => {
+        // Tooltip interaction handling (Mouse + Mobile Touch)
+        function handlePointer(clientX, clientY) {
             if (!canvas.chartInfo) return;
             const rect = canvas.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
+            const mouseX = clientX - rect.left;
+            const mouseY = clientY - rect.top;
 
             const allPoints = [
                 ...pmPoints.map(p => ({ ...p, type: "Prime Minister", color: "#38bdf8", radius: 7 })),
@@ -806,7 +870,7 @@
             ];
 
             let hovered = null;
-            let minDist = 12;
+            let minDist = 18; // slightly larger hit area for mobile touch
 
             allPoints.forEach(p => {
                 const px = canvas.chartInfo.getX(p.x);
@@ -820,8 +884,17 @@
 
             if (hovered) {
                 tooltip.style.display = "block";
-                tooltip.style.left = (hovered.px + 12) + "px";
-                tooltip.style.top = (hovered.py - 25) + "px";
+                
+                // Keep tooltip inside canvas boundaries
+                let left = hovered.px + 12;
+                if (left + 160 > canvas.chartInfo.width) {
+                    left = hovered.px - 165;
+                }
+                let top = hovered.py - 30;
+                if (top < 10) top = hovered.py + 15;
+
+                tooltip.style.left = left + "px";
+                tooltip.style.top = top + "px";
                 tooltip.innerHTML = `
                     <div style="font-weight: bold; color: ${hovered.color};">${hovered.name}</div>
                     <div style="color: #94a3b8; font-size: 0.75rem;">${hovered.type} &bull; Started: ${hovered.x}</div>
@@ -830,11 +903,23 @@
             } else {
                 tooltip.style.display = "none";
             }
-        });
+        }
 
-        canvas.addEventListener("mouseleave", () => {
-            tooltip.style.display = "none";
-        });
+        canvas.addEventListener("mousemove", e => handlePointer(e.clientX, e.clientY));
+        canvas.addEventListener("mouseleave", () => { tooltip.style.display = "none"; });
+
+        // Touch Support for mobile screens
+        canvas.addEventListener("touchstart", e => {
+            if (e.touches.length > 0) {
+                handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
+
+        canvas.addEventListener("touchmove", e => {
+            if (e.touches.length > 0) {
+                handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
 
         window.addEventListener("resize", drawChart);
         drawChart();
