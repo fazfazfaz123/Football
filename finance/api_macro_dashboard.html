@@ -134,7 +134,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-21 11:48:15</div>
+            <div class="timestamp">SYNCED · 2026-10-21 11:51:59</div>
         </header>
 
         
@@ -1287,8 +1287,8 @@
                 const hPct = Math.min(100, Math.max(4, Math.round((Math.abs(val) / peakAbs) * 80)));
                 const barCls = val >= 0 ? 'bar-pos' : 'bar-neg';
                 const barStyle = val >= 0 ? `bottom:20%; height:${hPct}%; border-radius:3px 3px 0 0;` : `top:80%; height:${hPct}%; border-radius:0 0 3px 3px;`;
-                const secStr = h.sec !== null && h.sec !== undefined ? `${cfg.is_uk_gdp ? 'Rolling 12M' : 'YoY'}: ${h.sec > 0 ? '+' : ''}${h.sec.toFixed(2)}%` : '';
-                const momStr = `${val > 0 ? '+' : ''}${cfg.is_nfp ? val.toFixed(0) + 'K' : val.toFixed(2) + '%'}`;
+                const secStr = h.sec !== null && h.sec !== undefined ? `${cfg.is_uk_gdp ? 'Rolling 12M' : 'YoY'}: ${h.sec > 0 ? '+' : ''}${h.sec.toFixed(1)}%` : '';
+                const momStr = `${val > 0 ? '+' : ''}${cfg.is_nfp ? val.toFixed(0) + 'K' : val.toFixed(1) + '%'}`;
 
                 barsHtml += `<div class="chart-bar-wrap" style="width:${barWidth}px; flex:0 0 ${barWidth}px; margin-right:${barPitch - barWidth}px;" data-label="${h.label}" data-mom="${momStr}" data-sec="${secStr}">
                     <div class="chart-bar ${barCls}" style="${barStyle}"></div>
