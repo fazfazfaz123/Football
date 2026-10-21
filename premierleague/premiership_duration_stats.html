@@ -3,250 +3,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Tenure Analysis: Premiership vs. Prime Minister (Post-1945)</title>
+    <meta name="color-scheme" content="dark">
+    <title>Tenure Analysis: Premiership vs. Prime Minister</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --surface-hover: #334155;
-            --border: #334155;
-            --text-primary: #f8fafc;
+            --bg: #0b1120;
+            --bg-elevated: #111827;
+            --surface: #1a2332;
+            --surface-2: #243044;
+            --surface-hover: #2d3a4f;
+            --border: rgba(148, 163, 184, 0.12);
+            --border-strong: rgba(148, 163, 184, 0.22);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
             --text-muted: #94a3b8;
+            --text-faint: #64748b;
             --accent-pm: #38bdf8;
-            --accent-mgr: #a855f7;
-            --accent-convergence: #f59e0b;
+            --accent-pm-dim: rgba(56, 189, 248, 0.12);
+            --accent-pm-glow: rgba(56, 189, 248, 0.25);
+            --accent-mgr: #c084fc;
+            --accent-mgr-dim: rgba(192, 132, 252, 0.12);
+            --accent-mgr-glow: rgba(192, 132, 252, 0.25);
+            --accent-conv: #fbbf24;
+            --accent-conv-dim: rgba(251, 191, 36, 0.12);
             --accent-live: #34d399;
+            --accent-live-dim: rgba(52, 211, 153, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.45);
         }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
+            font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(56, 189, 248, 0.08), transparent),
+                radial-gradient(ellipse 60% 40% at 90% 10%, rgba(192, 132, 252, 0.06), transparent),
+                radial-gradient(ellipse 50% 30% at 50% 100%, rgba(251, 191, 36, 0.04), transparent);
             color: var(--text-primary);
-            margin: 0;
-            padding: 1.5rem 1rem;
-            line-height: 1.5;
+            line-height: 1.6;
             -webkit-text-size-adjust: 100%;
+            min-height: 100vh;
+            padding: 0;
         }
+
         .container {
-            max-width: 1200px;
+            max-width: 1120px;
             margin: 0 auto;
+            padding: 2rem 1.25rem 4rem;
         }
+
+        /* ── Header ── */
         header {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 1.25rem;
+            position: relative;
         }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-pm);
+            background: var(--accent-pm-dim);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+
+        .header-badge svg {
+            width: 12px;
+            height: 12px;
+            opacity: 0.9;
+        }
+
         h1 {
-            font-size: 1.75rem;
-            margin: 0 0 0.5rem 0;
-            font-weight: 700;
-            line-height: 1.25;
+            font-size: clamp(1.5rem, 4vw, 2.1rem);
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.65rem;
+            background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        p.subtitle {
+
+        .subtitle {
             color: var(--text-muted);
-            margin: 0;
             font-size: 0.95rem;
+            max-width: 540px;
+            line-height: 1.55;
         }
-        .grid {
+
+        /* ── Stat Cards ── */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             margin-bottom: 2rem;
         }
-        .card {
+
+        .stat-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.25rem;
+            border-radius: var(--radius);
+            padding: 1.35rem 1.4rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
         }
-        .card-header {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 0.4rem;
+
+        .stat-card:hover {
+            border-color: var(--border-strong);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+
+        .stat-card.pm::before { background: linear-gradient(90deg, var(--accent-pm), transparent); }
+        .stat-card.mgr::before { background: linear-gradient(90deg, var(--accent-mgr), transparent); }
+        .stat-card.conv::before { background: linear-gradient(90deg, var(--accent-conv), transparent); }
+
+        .stat-label {
+            font-size: 0.72rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-faint);
+            margin-bottom: 0.5rem;
         }
+
         .stat-value {
-            font-size: 1.9rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
         }
-        .pm-stat { color: var(--accent-pm); }
-        .mgr-stat { color: var(--accent-mgr); }
-        .conv-stat { color: var(--accent-convergence); }
-        .stat-sub {
-            font-size: 0.8rem;
+
+        .stat-card.pm .stat-value { color: var(--accent-pm); }
+        .stat-card.mgr .stat-value { color: var(--accent-mgr); }
+        .stat-card.conv .stat-value { color: var(--accent-conv); }
+
+        .stat-unit {
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+
+        .stat-meta {
+            font-size: 0.78rem;
             color: var(--text-muted);
-            margin-top: 0.25rem;
+            margin-top: 0.45rem;
+            line-height: 1.4;
         }
-        
-        /* Table Scroll Containers */
-        .table-scroll-wrapper {
+
+        /* ── Section Cards ── */
+        .section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem 1.5rem 1.6rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-secondary);
+            margin-bottom: 0.35rem;
+        }
+
+        .section-title .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* ── Chart ── */
+        .chart-hint {
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            color: var(--accent-pm);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .chart-scroll {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            margin-top: 0.5rem;
+            margin: 0 -0.25rem;
+            padding: 0 0.25rem 0.5rem;
         }
+
+        .chart-container {
+            position: relative;
+            min-width: 720px;
+            width: 100%;
+            height: 420px;
+            background: var(--bg-elevated);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem 1.5rem;
+            justify-content: center;
+            margin-top: 1.15rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-line {
+            width: 16px;
+            height: 2.5px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        #chart-tooltip {
+            position: absolute;
+            display: none;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid var(--border-strong);
+            border-radius: 8px;
+            padding: 0.55rem 0.8rem;
+            font-size: 0.8rem;
+            pointer-events: none;
+            box-shadow: var(--shadow-lg);
+            z-index: 20;
+            backdrop-filter: blur(8px);
+        }
+
+        /* ── Tables ── */
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 0.25rem;
+            border-radius: var(--radius-sm);
+        }
+
         table {
             width: 100%;
-            min-width: 520px;
+            min-width: 540px;
             border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
         }
-        th, td {
-            padding: 0.7rem 0.85rem;
+
+        th {
+            text-align: left;
+            padding: 0.65rem 0.9rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-faint);
             border-bottom: 1px solid var(--border);
             white-space: nowrap;
+            background: var(--bg-elevated);
         }
-        th {
-            color: var(--text-muted);
+
+        td {
+            padding: 0.7rem 0.9rem;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+            color: var(--text-secondary);
+            transition: background 0.15s;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover td {
+            background: var(--surface-hover);
+        }
+
+        td strong {
+            color: var(--text-primary);
             font-weight: 600;
-            font-size: 0.8rem;
-            text-transform: uppercase;
         }
-        tr:hover td {
-            background-color: var(--surface-hover);
-        }
+
         .badge {
             display: inline-block;
-            padding: 0.2rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
+            padding: 0.18rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
             font-weight: 600;
+            letter-spacing: 0.01em;
         }
-        .badge-pm { background: rgba(56, 189, 248, 0.15); color: var(--accent-pm); }
-        .badge-mgr { background: rgba(168, 85, 247, 0.15); color: var(--accent-mgr); }
-        .tables-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+
+        .badge-pm {
+            background: var(--accent-pm-dim);
+            color: var(--accent-pm);
         }
+
+        .badge-mgr {
+            background: var(--accent-mgr-dim);
+            color: var(--accent-mgr);
+        }
+
+        /* ── Callout ── */
         .callout {
-            border-left: 4px solid var(--accent-convergence);
-            padding: 1.1rem 1.25rem;
-            background: rgba(30, 41, 59, 0.7);
-            margin: 1.25rem 0 0.5rem 0;
-            border-radius: 0 0.5rem 0.5rem 0;
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.06), rgba(251, 191, 36, 0.02));
+            border: 1px solid rgba(251, 191, 36, 0.18);
+            border-radius: var(--radius-sm);
+            padding: 1.35rem 1.4rem;
         }
+
         .callout h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.05rem;
-            color: var(--accent-convergence);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--accent-conv);
+            margin-bottom: 0.65rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
         }
+
         .callout p {
-            margin: 0 0 0.75rem 0;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-            line-height: 1.55;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 0.75rem;
         }
-        .callout p:last-child {
+
+        .callout p:last-of-type {
             margin-bottom: 0;
         }
+
+        .callout strong {
+            color: var(--text-primary);
+        }
+
+        .live-block {
+            margin-top: 1.1rem;
+            padding-top: 1.1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .live-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .live-header strong {
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
         .live-tag {
             display: inline-flex;
             align-items: center;
             gap: 0.35rem;
-            color: var(--accent-live);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            background: rgba(52, 211, 153, 0.12);
-            padding: 0.15rem 0.45rem;
-            border-radius: 0.25rem;
-            margin-left: 0.5rem;
+            letter-spacing: 0.06em;
+            color: var(--accent-live);
+            background: var(--accent-live-dim);
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            padding: 0.2rem 0.5rem;
+            border-radius: 999px;
         }
+
         .live-dot {
             width: 6px;
             height: 6px;
             background: var(--accent-live);
             border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
-        /* Mobile-Friendly Extra Wide Chart Wrapper */
-        .chart-scroll-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 0.5rem;
-        }
-        .chart-container {
-            position: relative;
-            min-width: 760px; /* Guarantees the graph remains wide and legible on mobile */
-            width: 100%;
-            height: 440px;
-            margin-top: 0.75rem;
-        }
-        .chart-hint {
-            display: none;
-            font-size: 0.75rem;
-            color: var(--accent-pm);
-            margin-bottom: 0.25rem;
-            align-items: center;
-            gap: 0.35rem;
-        }
-        .chart-legend {
-            display: flex;
-            gap: 1rem 1.25rem;
-            justify-content: center;
-            font-size: 0.8rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
-        }
-        .legend-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        .legend-line {
-            width: 18px;
-            height: 2px;
-            flex-shrink: 0;
-        }
-        #chart-tooltip {
-            position: absolute;
-            display: none;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid var(--border);
-            border-radius: 0.4rem;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.8rem;
-            pointer-events: none;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
-            z-index: 10;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem 0.75rem;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        #incumbent-live-comment {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ── Rankings side-by-side ── */
+        .rankings {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .rank-num {
+            color: var(--text-faint);
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            width: 1.5rem;
+        }
+
+        /* ── Footer note ── */
+        .footer-note {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-faint);
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 800px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
             }
-            h1 {
-                font-size: 1.4rem;
+            .rankings {
+                grid-template-columns: 1fr;
             }
-            .card {
-                padding: 1rem;
+            .container {
+                padding: 1.25rem 0.9rem 3rem;
+            }
+            .section {
+                padding: 1.2rem 1.1rem 1.3rem;
+            }
+            .stat-value {
+                font-size: 1.75rem;
             }
             .chart-hint {
                 display: flex;
             }
             .chart-container {
-                height: 380px;
+                height: 360px;
+            }
+        }
+
+        @media (min-width: 801px) and (max-width: 960px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
@@ -254,73 +512,77 @@
 <body>
     <div class="container">
         <header>
-            <h1>Duration of Premiership: Football Managers vs. Prime Ministers</h1>
+            <h1>Duration of Premiership:<br>Football Managers vs. Prime Ministers</h1>
             <p class="subtitle">Comparing historical and era-by-era role longevity between post-1945 UK Prime Ministers and Premier League managers.</p>
         </header>
 
-        <section class="grid">
-            <div class="card">
-                <div class="card-header">Post-1945 Prime Ministers</div>
-                <div class="stat-value pm-stat">1561.3 <span style="font-size: 1.05rem; font-weight: normal;">days avg</span></div>
-                <div class="stat-sub">Median: 1140 days (~3.1 yrs) &bull; Total: 19 leaders</div>
+        <!-- KPI Stats -->
+        <div class="stats-grid">
+            <div class="stat-card pm">
+                <div class="stat-label">Post-1945 Prime Ministers</div>
+                <div class="stat-value">1561.3 <span class="stat-unit">days avg</span></div>
+                <div class="stat-meta">Median 1140 days (~3.1 yrs) · 19 leaders</div>
             </div>
-            <div class="card">
-                <div class="card-header">Premier League Managers</div>
-                <div class="stat-value mgr-stat">667.3 <span style="font-size: 1.05rem; font-weight: normal;">days avg</span></div>
-                <div class="stat-sub">Median: 354 days (~1.0 yrs) &bull; Total: 519 stints</div>
+            <div class="stat-card mgr">
+                <div class="stat-label">Premier League Managers</div>
+                <div class="stat-value">667.3 <span class="stat-unit">days avg</span></div>
+                <div class="stat-meta">Median 354 days (~1.0 yrs) · 519 stints</div>
             </div>
-            <div class="card">
-                <div class="card-header">Estimated Convergence Point</div>
-                <div class="stat-value conv-stat">~2023</div>
-                <div class="stat-sub">Linear trendline intersection between PM and Manager tenures</div>
+            <div class="stat-card conv">
+                <div class="stat-label">Estimated Convergence</div>
+                <div class="stat-value">~2023</div>
+                <div class="stat-meta">Linear trendline intersection of PM &amp; manager tenures</div>
             </div>
-        </section>
+        </div>
 
-        <!-- Wide Mobile-Scrollable Scatter Plot Section -->
-        <section class="card" style="margin-bottom: 2rem;">
-            <div class="card-header" style="color: var(--accent-pm);">Historical Era Scatter Plot & Convergence Trend</div>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">
-                Plotting individual appointments from 1990 to the present with linear trendlines.
-            </p>
+        <!-- Scatter Chart -->
+        <section class="section">
+            <div class="section-title">
+                <span class="dot" style="background: var(--accent-pm);"></span>
+                Historical Era Scatter &amp; Convergence Trend
+            </div>
+            <p class="section-desc">Individual appointments from 1990 to present with linear trendlines showing the path toward tenure parity.</p>
             <div class="chart-hint">
-                <span>&#8596; Scroll horizontally to view the wide timeline</span>
+                <span>↔</span> Scroll horizontally to explore the full timeline
             </div>
-
-            <div class="chart-scroll-wrapper" id="scrollContainer">
+            <div class="chart-scroll" id="scrollContainer">
                 <div class="chart-container">
                     <canvas id="historicalChart"></canvas>
                     <div id="chart-tooltip"></div>
                 </div>
             </div>
-
             <div class="chart-legend">
                 <div class="legend-item">
                     <span class="legend-dot" style="background: #38bdf8;"></span>
-                    <span>Prime Minister Tenures</span>
+                    Prime Minister Tenures
                 </div>
                 <div class="legend-item">
                     <span class="legend-line" style="background: #38bdf8;"></span>
-                    <span>PM Trendline</span>
+                    PM Trendline
                 </div>
                 <div class="legend-item">
                     <span class="legend-dot" style="background: #c084fc;"></span>
-                    <span>Manager Tenures</span>
+                    Manager Tenures
                 </div>
                 <div class="legend-item">
                     <span class="legend-line" style="background: #c084fc;"></span>
-                    <span>Manager Trendline</span>
+                    Manager Trendline
                 </div>
                 <div class="legend-item">
-                    <span class="legend-dot" style="background: #f59e0b; border: 2px solid #fff;"></span>
-                    <span>Convergence Intersection (~2023.9)</span>
+                    <span class="legend-dot" style="background: #fbbf24; box-shadow: 0 0 0 2px rgba(255,255,255,0.4);"></span>
+                    Convergence (~2023.9)
                 </div>
             </div>
         </section>
 
-        <!-- Trend Section -->
-        <section class="card" style="margin-bottom: 2rem;">
-            <div class="card-header" style="color: var(--accent-pm);">Historical Era Summary Table</div>
-            <div class="table-scroll-wrapper">
+        <!-- Era Summary Table -->
+        <section class="section">
+            <div class="section-title">
+                <span class="dot" style="background: var(--accent-pm);"></span>
+                Historical Era Summary
+            </div>
+            <p class="section-desc">Average tenure length by decade of appointment start.</p>
+            <div class="table-scroll">
                 <table>
                     <thead>
                         <tr>
@@ -329,7 +591,7 @@
                             <th>Avg PM Tenure</th>
                             <th>Manager Appointments</th>
                             <th>Avg Manager Tenure</th>
-                            <th>PM vs Manager Ratio</th>
+                            <th>PM : Manager</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -337,72 +599,75 @@
                         <tr>
                             <td><strong>1990–1999</strong></td>
                             <td>2</td>
-                            <td><strong style="color: var(--accent-pm);">3,026.5 days</strong> (~8.3 yrs)</td>
+                            <td><strong style="color: var(--accent-pm);">3,026.5 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~8.3 yrs)</span></td>
                             <td>104</td>
-                            <td><strong style="color: var(--accent-mgr);">929.7 days</strong> (~2.5 yrs)</td>
-                            <td><strong>3.26x</strong></td>
+                            <td><strong style="color: var(--accent-mgr);">929.7 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~2.5 yrs)</span></td>
+                            <td><strong>3.26×</strong></td>
                         </tr>
                         <tr>
                             <td><strong>2000–2009</strong></td>
                             <td>1</td>
-                            <td><strong style="color: var(--accent-pm);">1,049 days</strong> (~2.9 yrs)</td>
+                            <td><strong style="color: var(--accent-pm);">1,049 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~2.9 yrs)</span></td>
                             <td>131</td>
-                            <td><strong style="color: var(--accent-mgr);">639.4 days</strong> (~1.8 yrs)</td>
-                            <td><strong>1.64x</strong></td>
+                            <td><strong style="color: var(--accent-mgr);">639.4 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~1.8 yrs)</span></td>
+                            <td><strong>1.64×</strong></td>
                         </tr>
                         <tr>
                             <td><strong>2010–2019</strong></td>
                             <td>3</td>
-                            <td><strong style="color: var(--accent-pm);">1,500.3 days</strong> (~4.1 yrs)</td>
+                            <td><strong style="color: var(--accent-pm);">1,500.3 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~4.1 yrs)</span></td>
                             <td>168</td>
-                            <td><strong style="color: var(--accent-mgr);">570.8 days</strong> (~1.6 yrs)</td>
-                            <td><strong>2.63x</strong></td>
+                            <td><strong style="color: var(--accent-mgr);">570.8 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~1.6 yrs)</span></td>
+                            <td><strong>2.63×</strong></td>
                         </tr>
                         <tr>
                             <td><strong>2020–Present</strong></td>
                             <td>4</td>
-                            <td><strong style="color: var(--accent-pm);">375.8 days</strong> (~1.0 yrs)</td>
+                            <td><strong style="color: var(--accent-pm);">375.8 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~1.0 yrs)</span></td>
                             <td>109</td>
-                            <td><strong style="color: var(--accent-mgr);">338.0 days</strong> (~0.9 yrs)</td>
-                            <td><strong>1.11x</strong></td>
+                            <td><strong style="color: var(--accent-mgr);">338.0 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~0.9 yrs)</span></td>
+                            <td><strong>1.11×</strong></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="callout">
-                <h3>Key Takeaway: Convergence Date & Parity Analysis</h3>
+                <h3>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="flex-shrink:0"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.5h1.5v5h-1.5v-5zm0 6.5h1.5V13h-1.5v-2z"/></svg>
+                    Key Takeaway: Convergence &amp; Parity
+                </h3>
                 <p>
-                    <strong>Prime Minister tenures have shortened at a much faster rate than Premier League managerial tenures.</strong> 
-                    While Premier League managerial tenures have contracted by <strong>63.6%</strong> since the 1990s (from ~930 days down to ~338 days), 
-                    Prime Minister tenures have experienced a steeper decline of <strong>87.6%</strong> (tumbling from ~3,027 days down to ~376 days for tenures starting in the 2020s).
+                    <strong>Prime Minister tenures have shortened far faster than Premier League managerial stints.</strong>
+                    Manager tenures contracted by <strong>63.6%</strong> since the 1990s (~930 → ~338 days), while PM tenures fell by <strong>87.6%</strong> (~3,027 → ~376 days for 2020s starts).
                 </p>
                 <p>
-                    <strong>Projected Convergence Date:</strong> Based on the linear regression trendlines of both roles since 1992 (with PM tenures dropping by ~80 days/year compared to ~20 days/year for football managers), 
-                    the two trendlines intersected in <strong>late 2023 / early 2024 (~2023.9)</strong>. 
-                    In practical terms, the rapid turnover of the 2020s brought prime ministerial job security into parity with Premier League managerial shelf-life.
+                    <strong>Projected convergence:</strong> Linear regression puts the intersection in <strong>late 2023 / early 2024 (~2023.9)</strong>.
+                    The rapid turnover of the 2020s brought prime ministerial job security into parity with Premier League managerial shelf-life.
                 </p>
-                <div style="color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.85rem; margin-top: 0.5rem;">
-                    <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.5rem;">
-                        <strong style="font-size: 0.95rem; color: #fff;">What Does the Current PM Need to Reverse the Trend?</strong>
+                <div class="live-block">
+                    <div class="live-header">
+                        <strong>What does the current PM need to reverse the trend?</strong>
                         <span class="live-tag"><span class="live-dot"></span> <span id="live-today-date">today</span></span>
                     </div>
-                    <div id="incumbent-live-comment" style="font-size: 0.9rem; line-height: 1.6;">
-                        Calculating live tenure targets...
-                    </div>
+                    <div id="incumbent-live-comment">Calculating live tenure targets…</div>
                 </div>
             </div>
         </section>
 
-        <section class="card" style="margin-bottom: 2rem;">
-            <div class="card-header">All-Time Distribution Summary</div>
-            <div class="table-scroll-wrapper">
+        <!-- Distribution Summary -->
+        <section class="section">
+            <div class="section-title">
+                <span class="dot" style="background: var(--text-faint);"></span>
+                All-Time Distribution Summary
+            </div>
+            <div class="table-scroll">
                 <table>
                     <thead>
                         <tr>
                             <th>Metric</th>
                             <th>UK Prime Ministers (Post-1945)</th>
-                            <th>Premier League Club Managers</th>
+                            <th>Premier League Managers</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -413,13 +678,13 @@
                         </tr>
                         <tr>
                             <td><strong>Mean Duration</strong></td>
-                            <td>1561.3 days (4.27 years)</td>
-                            <td>667.3 days (1.83 years)</td>
+                            <td>1561.3 days (4.27 yrs)</td>
+                            <td>667.3 days (1.83 yrs)</td>
                         </tr>
                         <tr>
                             <td><strong>Median Duration</strong></td>
-                            <td>1140 days (3.12 years)</td>
-                            <td>354 days (0.97 years)</td>
+                            <td>1140 days (3.12 yrs)</td>
+                            <td>354 days (0.97 yrs)</td>
                         </tr>
                         <tr>
                             <td><strong>Standard Deviation</strong></td>
@@ -441,14 +706,18 @@
             </div>
         </section>
 
-        <div class="tables-section">
-            <div class="card">
-                <div class="card-header" style="color: var(--accent-pm);">Post-1945 UK Prime Ministers (Ranked by Total Days)</div>
-                <div class="table-scroll-wrapper">
+        <!-- Rankings -->
+        <div class="rankings">
+            <section class="section" style="margin-bottom: 0;">
+                <div class="section-title">
+                    <span class="dot" style="background: var(--accent-pm);"></span>
+                    Post-1945 PMs by Total Days
+                </div>
+                <div class="table-scroll">
                     <table>
                         <thead>
                             <tr>
-                                <th>Rank</th>
+                                <th>#</th>
                                 <th>Prime Minister</th>
                                 <th>Party</th>
                                 <th>Days</th>
@@ -458,133 +727,133 @@
                         <tbody>
                             
                             <tr>
-                                <td>1</td>
+                                <td class="rank-num">1</td>
                                 <td><strong>Margaret Thatcher</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>4,224</td>
                                 <td>11.56</td>
                             </tr>
                             <tr>
-                                <td>2</td>
+                                <td class="rank-num">2</td>
                                 <td><strong>Tony Blair</strong></td>
                                 <td><span class="badge badge-pm">Labour</span></td>
                                 <td>3,707</td>
                                 <td>10.15</td>
                             </tr>
                             <tr>
-                                <td>3</td>
+                                <td class="rank-num">3</td>
                                 <td><strong>Harold Wilson</strong></td>
                                 <td><span class="badge badge-pm">Labour</span></td>
                                 <td>2,835</td>
                                 <td>7.76</td>
                             </tr>
                             <tr>
-                                <td>4</td>
+                                <td class="rank-num">4</td>
                                 <td><strong>Harold Macmillan</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>2,472</td>
                                 <td>6.77</td>
                             </tr>
                             <tr>
-                                <td>5</td>
+                                <td class="rank-num">5</td>
                                 <td><strong>John Major</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>2,346</td>
                                 <td>6.42</td>
                             </tr>
                             <tr>
-                                <td>6</td>
+                                <td class="rank-num">6</td>
                                 <td><strong>Clement Attlee</strong></td>
                                 <td><span class="badge badge-pm">Labour</span></td>
                                 <td>2,283</td>
                                 <td>6.25</td>
                             </tr>
                             <tr>
-                                <td>7</td>
+                                <td class="rank-num">7</td>
                                 <td><strong>David Cameron</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>2,254</td>
                                 <td>6.17</td>
                             </tr>
                             <tr>
-                                <td>8</td>
+                                <td class="rank-num">8</td>
                                 <td><strong>Edward Heath</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>1,354</td>
                                 <td>3.71</td>
                             </tr>
                             <tr>
-                                <td>9</td>
+                                <td class="rank-num">9</td>
                                 <td><strong>Winston Churchill</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>1,257</td>
                                 <td>3.44</td>
                             </tr>
                             <tr>
-                                <td>10</td>
+                                <td class="rank-num">10</td>
                                 <td><strong>Boris Johnson</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>1,140</td>
                                 <td>3.12</td>
                             </tr>
                             <tr>
-                                <td>11</td>
+                                <td class="rank-num">11</td>
                                 <td><strong>James Callaghan</strong></td>
                                 <td><span class="badge badge-pm">Labour</span></td>
                                 <td>1,125</td>
                                 <td>3.08</td>
                             </tr>
                             <tr>
-                                <td>12</td>
+                                <td class="rank-num">12</td>
                                 <td><strong>Theresa May</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>1,107</td>
                                 <td>3.03</td>
                             </tr>
                             <tr>
-                                <td>13</td>
+                                <td class="rank-num">13</td>
                                 <td><strong>Gordon Brown</strong></td>
                                 <td><span class="badge badge-pm">Labour</span></td>
                                 <td>1,049</td>
                                 <td>2.87</td>
                             </tr>
                             <tr>
-                                <td>14</td>
+                                <td class="rank-num">14</td>
                                 <td><strong>Keir Starmer</strong></td>
                                 <td><span class="badge badge-pm">Labour</span></td>
                                 <td>746</td>
                                 <td>2.04</td>
                             </tr>
                             <tr>
-                                <td>15</td>
+                                <td class="rank-num">15</td>
                                 <td><strong>Anthony Eden</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>644</td>
                                 <td>1.76</td>
                             </tr>
                             <tr>
-                                <td>16</td>
+                                <td class="rank-num">16</td>
                                 <td><strong>Rishi Sunak</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>620</td>
                                 <td>1.7</td>
                             </tr>
                             <tr>
-                                <td>17</td>
+                                <td class="rank-num">17</td>
                                 <td><strong>Alec Douglas-Home14th</strong></td>
                                 <td><span class="badge badge-pm">Conservative(Scot.U.)</span></td>
                                 <td>364</td>
                                 <td>1.0</td>
                             </tr>
                             <tr>
-                                <td>18</td>
+                                <td class="rank-num">18</td>
                                 <td><strong>Andy Burnham</strong></td>
                                 <td><span class="badge badge-pm">Labour(Lab Co-op)</span></td>
                                 <td>87</td>
                                 <td>0.24</td>
                             </tr>
                             <tr>
-                                <td>19</td>
+                                <td class="rank-num">19</td>
                                 <td><strong>Liz Truss</strong></td>
                                 <td><span class="badge badge-pm">Conservative</span></td>
                                 <td>50</td>
@@ -593,15 +862,18 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
 
-            <div class="card">
-                <div class="card-header" style="color: var(--accent-mgr);">Top 10 Longest Serving Premier League Managers</div>
-                <div class="table-scroll-wrapper">
+            <section class="section" style="margin-bottom: 0;">
+                <div class="section-title">
+                    <span class="dot" style="background: var(--accent-mgr);"></span>
+                    Top 10 Longest PL Managers
+                </div>
+                <div class="table-scroll">
                     <table>
                         <thead>
                             <tr>
-                                <th>Rank</th>
+                                <th>#</th>
                                 <th>Manager</th>
                                 <th>Club</th>
                                 <th>Days</th>
@@ -611,70 +883,70 @@
                         <tbody>
                             
                             <tr>
-                                <td>1</td>
+                                <td class="rank-num">1</td>
                                 <td><strong>Alex Ferguson</strong></td>
                                 <td><span class="badge badge-mgr">Manchester United</span></td>
                                 <td>9,704</td>
                                 <td>26.57</td>
                             </tr>
                             <tr>
-                                <td>2</td>
+                                <td class="rank-num">2</td>
                                 <td><strong>Arsène Wenger</strong></td>
                                 <td><span class="badge badge-mgr">Arsenal</span></td>
                                 <td>7,894</td>
                                 <td>21.61</td>
                             </tr>
                             <tr>
-                                <td>3</td>
+                                <td class="rank-num">3</td>
                                 <td><strong>Brian Clough</strong></td>
                                 <td><span class="badge badge-mgr">Nottingham Forest</span></td>
                                 <td>6,697</td>
                                 <td>18.34</td>
                             </tr>
                             <tr>
-                                <td>4</td>
+                                <td class="rank-num">4</td>
                                 <td><strong>Alan Curbishley</strong></td>
                                 <td><span class="badge badge-mgr">Charlton Athletic</span></td>
                                 <td>5,402</td>
                                 <td>14.79</td>
                             </tr>
                             <tr>
-                                <td>5</td>
+                                <td class="rank-num">5</td>
                                 <td><strong>Joe Royle</strong></td>
                                 <td><span class="badge badge-mgr">Oldham Athletic</span></td>
                                 <td>4,502</td>
                                 <td>12.33</td>
                             </tr>
                             <tr>
-                                <td>6</td>
+                                <td class="rank-num">6</td>
                                 <td><strong>David Moyes</strong></td>
                                 <td><span class="badge badge-mgr">Everton</span></td>
                                 <td>4,096</td>
                                 <td>11.21</td>
                             </tr>
                             <tr>
-                                <td>7</td>
+                                <td class="rank-num">7</td>
                                 <td><strong>Pep Guardiola</strong></td>
                                 <td><span class="badge badge-mgr">Manchester City</span></td>
                                 <td>3,614</td>
                                 <td>9.89</td>
                             </tr>
                             <tr>
-                                <td>8</td>
+                                <td class="rank-num">8</td>
                                 <td><strong>Sean Dyche</strong></td>
                                 <td><span class="badge badge-mgr">Burnley</span></td>
                                 <td>3,454</td>
                                 <td>9.46</td>
                             </tr>
                             <tr>
-                                <td>9</td>
+                                <td class="rank-num">9</td>
                                 <td><strong>Steve Coppell</strong></td>
                                 <td><span class="badge badge-mgr">Crystal Palace</span></td>
                                 <td>3,270</td>
                                 <td>8.95</td>
                             </tr>
                             <tr>
-                                <td>10</td>
+                                <td class="rank-num">10</td>
                                 <td><strong>George Graham</strong></td>
                                 <td><span class="badge badge-mgr">Arsenal</span></td>
                                 <td>3,205</td>
@@ -683,37 +955,33 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
         </div>
+
+        <p class="footer-note">Post-1945 UK Prime Ministers · Premier League managerial stints · Live incumbent calculation updates on page load</p>
     </div>
 
-    <!-- Client-side Calculation & Rendering Scripts -->
     <script>
         const pmPoints = [{"x": 1990, "y": 2346, "name": "John Major"}, {"x": 1997, "y": 3707, "name": "Tony Blair"}, {"x": 2007, "y": 1049, "name": "Gordon Brown"}, {"x": 2010, "y": 2254, "name": "David Cameron"}, {"x": 2016, "y": 1107, "name": "Theresa May"}, {"x": 2019, "y": 1140, "name": "Boris Johnson"}, {"x": 2022, "y": 50, "name": "Liz Truss"}, {"x": 2022, "y": 620, "name": "Rishi Sunak"}, {"x": 2024, "y": 746, "name": "Keir Starmer"}, {"x": 2026, "y": 87, "name": "Andy Burnham"}];
         const mgrPoints = [{"x": 1995, "y": 106, "name": "Stewart Houston (Arsenal)"}, {"x": 1995, "y": 431, "name": "Bruce Rioch (Arsenal)"}, {"x": 1996, "y": 32, "name": "Stewart Houston (Arsenal)"}, {"x": 1996, "y": 17, "name": "Pat Rice (Arsenal)"}, {"x": 1996, "y": 7894, "name": "Ars\u00e8ne Wenger (Arsenal)"}, {"x": 2018, "y": 555, "name": "Unai Emery (Arsenal)"}, {"x": 2019, "y": 22, "name": "Freddie Ljungberg (Arsenal)"}, {"x": 2019, "y": 2492, "name": "Mikel Arteta (Arsenal)"}, {"x": 1991, "y": 1252, "name": "Ron Atkinson (Aston Villa)"}, {"x": 1994, "y": 14, "name": "Jim Barron (Aston Villa)"}, {"x": 1994, "y": 1187, "name": "Brian Little (Aston Villa)"}, {"x": 1998, "y": 1429, "name": "John Gregory (Aston Villa)"}, {"x": 2002, "y": 12, "name": "John Deehan (Aston Villa)"}, {"x": 2002, "y": 12, "name": "Stuart Gray (Aston Villa)"}, {"x": 2002, "y": 463, "name": "Graham Taylor (Aston Villa)"}, {"x": 2003, "y": 1156, "name": "David O'Leary (Aston Villa)"}, {"x": 2006, "y": 1465, "name": "Martin O'Neill (Aston Villa)"}, {"x": 2010, "y": 30, "name": "Kevin MacDonald (Aston Villa)"}, {"x": 2010, "y": 266, "name": "G\u00e9rard Houllier (Aston Villa)"}, {"x": 2011, "y": 29, "name": "Gary McAllister (Aston Villa)"}, {"x": 2011, "y": 332, "name": "Alex McLeish (Aston Villa)"}, {"x": 2012, "y": 985, "name": "Paul Lambert (Aston Villa)"}, {"x": 2015, "y": 3, "name": "Scott Marshall (Aston Villa)"}, {"x": 2015, "y": 253, "name": "Tim Sherwood (Aston Villa)"}, {"x": 2015, "y": 8, "name": "Kevin MacDonald (Aston Villa)"}, {"x": 2015, "y": 148, "name": "R\u00e9mi Garde (Aston Villa)"}, {"x": 2016, "y": 65, "name": "Eric Black (Aston Villa)"}, {"x": 2018, "y": 1124, "name": "Dean Smith (Aston Villa)"}, {"x": 2021, "y": 343, "name": "Steven Gerrard (Aston Villa)"}, {"x": 2022, "y": 10, "name": "Aaron Danks (Aston Villa)"}, {"x": 2022, "y": 1455, "name": "Unai Emery (Aston Villa)"}, {"x": 1994, "y": 1496, "name": "Danny Wilson (Barnsley)"}, {"x": 2001, "y": 2172, "name": "Steve Bruce (Birmingham City)"}, {"x": 2007, "y": 4, "name": "Eric Black (Birmingham City)"}, {"x": 2007, "y": 1496, "name": "Alex McLeish (Birmingham City)"}, {"x": 1991, "y": 1348, "name": "Kenny Dalglish (Blackburn Rovers)"}, {"x": 1995, "y": 488, "name": "Ray Harford (Blackburn Rovers)"}, {"x": 1996, "y": 219, "name": "Tony Parkes (Blackburn Rovers)"}, {"x": 1997, "y": 538, "name": "Roy Hodgson (Blackburn Rovers)"}, {"x": 1998, "y": 334, "name": "Brian Kidd (Blackburn Rovers)"}, {"x": 2000, "y": 1637, "name": "Graeme Souness (Blackburn Rovers)"}, {"x": 2004, "y": 1357, "name": "Mark Hughes (Blackburn Rovers)"}, {"x": 2008, "y": 177, "name": "Paul Ince (Blackburn Rovers)"}, {"x": 2008, "y": 726, "name": "Sam Allardyce (Blackburn Rovers)"}, {"x": 2010, "y": 655, "name": "Steve Kean (Blackburn Rovers)"}, {"x": 2009, "y": 1262, "name": "Ian Holloway (Blackpool)"}, {"x": 1995, "y": 227, "name": "Roy McFarland (Bolton Wanderers)"}, {"x": 1996, "y": 1328, "name": "Colin Todd (Bolton Wanderers)"}, {"x": 1999, "y": 2749, "name": "Sam Allardyce (Bolton Wanderers)"}, {"x": 2007, "y": 160, "name": "Sammy Lee (Bolton Wanderers)"}, {"x": 2007, "y": 8, "name": "Archie Knox (Bolton Wanderers)"}, {"x": 2007, "y": 797, "name": "Gary Megson (Bolton Wanderers)"}, {"x": 2010, "y": 1005, "name": "Owen Coyle (Bolton Wanderers)"}, {"x": 2012, "y": 2850, "name": "Eddie Howe (Bournemouth)"}, {"x": 2021, "y": 428, "name": "Scott Parker (Bournemouth)"}, {"x": 2022, "y": 293, "name": "Gary O'Neil (Bournemouth)"}, {"x": 2023, "y": 1070, "name": "Andoni Iraola (Bournemouth)"}, {"x": 2026, "y": 139, "name": "Marco Rose (Bournemouth)"}, {"x": 1998, "y": 894, "name": "Paul Jewell (Bradford City)"}, {"x": 2000, "y": 141, "name": "Chris Hutchings (Bradford City)"}, {"x": 2000, "y": 14, "name": "Stuart McCall (Bradford City)"}, {"x": 2000, "y": 399, "name": "Jim Jefferies (Bradford City)"}, {"x": 2018, "y": 2431, "name": "Thomas Frank (Brentford)"}, {"x": 2025, "y": 478, "name": "Keith Andrews (Brentford)"}, {"x": 2014, "y": 1594, "name": "Chris Hughton (Brighton & Hove Albion)"}, {"x": 2019, "y": 1207, "name": "Graham Potter (Brighton & Hove Albion)"}, {"x": 2022, "y": 1491, "name": "Roberto De Zerbi (Brighton & Hove Albion)"}, {"x": 2024, "y": 838, "name": "Fabian H\u00fcrzeler (Brighton & Hove Albion)"}, {"x": 2007, "y": 770, "name": "Owen Coyle (Burnley)"}, {"x": 2010, "y": 350, "name": "Brian Laws (Burnley)"}, {"x": 2012, "y": 3454, "name": "Sean Dyche (Burnley)"}, {"x": 2022, "y": 37, "name": "Mike Jackson (Burnley)"}, {"x": 2022, "y": 715, "name": "Vincent Kompany (Burnley)"}, {"x": 2024, "y": 664, "name": "Scott Parker (Burnley)"}, {"x": 2026, "y": 24, "name": "Mike Jackson (Burnley)"}, {"x": 2011, "y": 924, "name": "Malky Mackay (Cardiff City)"}, {"x": 2013, "y": 6, "name": "David Kerslake (Cardiff City)"}, {"x": 2014, "y": 259, "name": "Ole Gunnar Solskj\u00e6r (Cardiff City)"}, {"x": 2016, "y": 1132, "name": "Neil Warnock (Cardiff City)"}, {"x": 1991, "y": 5402, "name": "Alan Curbishley (Charlton Athletic)"}, {"x": 2006, "y": 167, "name": "Iain Dowie (Charlton Athletic)"}, {"x": 2006, "y": 40, "name": "Les Reed (Charlton Athletic)"}, {"x": 2006, "y": 699, "name": "Alan Pardew (Charlton Athletic)"}, {"x": 1991, "y": 615, "name": "Ian Porterfield (Chelsea)"}, {"x": 1993, "y": 85, "name": "David Webb (Chelsea)"}, {"x": 1993, "y": 1071, "name": "Glenn Hoddle (Chelsea)"}, {"x": 1996, "y": 643, "name": "Ruud Gullit (Chelsea)"}, {"x": 1998, "y": 943, "name": "Gianluca Vialli (Chelsea)"}, {"x": 2000, "y": 4, "name": "Graham Rix (Chelsea)"}, {"x": 2000, "y": 4, "name": "Ray Wilkins (Chelsea)"}, {"x": 2000, "y": 1351, "name": "Claudio Ranieri (Chelsea)"}, {"x": 2004, "y": 1205, "name": "Jos\u00e9 Mourinho (Chelsea)"}, {"x": 2007, "y": 238, "name": "Avram Grant (Chelsea)"}, {"x": 2008, "y": 223, "name": "Luiz Felipe Scolari (Chelsea)"}, {"x": 2009, "y": 7, "name": "Ray Wilkins (Chelsea)"}, {"x": 2009, "y": 104, "name": "Guus Hiddink (Chelsea)"}, {"x": 2009, "y": 720, "name": "Carlo Ancelotti (Chelsea)"}, {"x": 2011, "y": 256, "name": "Andr\u00e9 Villas-Boas (Chelsea)"}, {"x": 2012, "y": 262, "name": "Roberto Di Matteo (Chelsea)"}, {"x": 2012, "y": 187, "name": "Rafael Ben\u00edtez (Chelsea)"}, {"x": 2013, "y": 927, "name": "Jos\u00e9 Mourinho (Chelsea)"}, {"x": 2015, "y": 2, "name": "Steve Holland (Chelsea)"}, {"x": 2015, "y": 148, "name": "Guus Hiddink (Chelsea)"}, {"x": 2016, "y": 740, "name": "Antonio Conte (Chelsea)"}, {"x": 2018, "y": 337, "name": "Maurizio Sarri (Chelsea)"}, {"x": 2019, "y": 571, "name": "Frank Lampard (Chelsea)"}, {"x": 2021, "y": 588, "name": "Thomas Tuchel (Chelsea)"}, {"x": 2022, "y": 206, "name": "Graham Potter (Chelsea)"}, {"x": 2023, "y": 4, "name": "Bruno Saltor (Chelsea)"}, {"x": 2023, "y": 52, "name": "Frank Lampard (Chelsea)"}, {"x": 2023, "y": 325, "name": "Mauricio Pochettino (Chelsea)"}, {"x": 2024, "y": 549, "name": "Enzo Maresca (Chelsea)"}, {"x": 2026, "y": 7, "name": "Calum McFarlane (Chelsea)"}, {"x": 2026, "y": 104, "name": "Liam Rosenior (Chelsea)"}, {"x": 2026, "y": 40, "name": "Calum McFarlane (Chelsea)"}, {"x": 2026, "y": 109, "name": "Xabi Alonso (Chelsea)"}, {"x": 1992, "y": 486, "name": "Bobby Gould (Coventry City)"}, {"x": 1993, "y": 479, "name": "Phil Neal (Coventry City)"}, {"x": 1995, "y": 629, "name": "Ron Atkinson (Coventry City)"}, {"x": 1996, "y": 1770, "name": "Gordon Strachan (Coventry City)"}, {"x": 2024, "y": 689, "name": "Frank Lampard (Coventry City)"}, {"x": 1993, "y": 711, "name": "Alan Smith (Crystal Palace)"}, {"x": 1997, "y": 379, "name": "Steve Coppell (Crystal Palace)"}, {"x": 1998, "y": 47, "name": "Attilio Lombardo (Crystal Palace)"}, {"x": 1998, "y": 47, "name": "Tomas Brolin (Crystal Palace)"}, {"x": 1998, "y": 11, "name": "Ron Noades (Crystal Palace)"}, {"x": 1998, "y": 11, "name": "Ray Lewington (Crystal Palace)"}, {"x": 2003, "y": 882, "name": "Iain Dowie (Crystal Palace)"}, {"x": 2012, "y": 354, "name": "Ian Holloway (Crystal Palace)"}, {"x": 2013, "y": 31, "name": "Keith Millen (Crystal Palace)"}, {"x": 2013, "y": 264, "name": "Tony Pulis (Crystal Palace)"}, {"x": 2014, "y": 13, "name": "Keith Millen (Crystal Palace)"}, {"x": 2014, "y": 122, "name": "Neil Warnock (Crystal Palace)"}, {"x": 2014, "y": 5, "name": "Keith Millen (Crystal Palace)"}, {"x": 2015, "y": 720, "name": "Alan Pardew (Crystal Palace)"}, {"x": 2016, "y": 151, "name": "Sam Allardyce (Crystal Palace)"}, {"x": 2017, "y": 77, "name": "Frank de Boer (Crystal Palace)"}, {"x": 2017, "y": 1350, "name": "Roy Hodgson (Crystal Palace)"}, {"x": 2021, "y": 621, "name": "Patrick Vieira (Crystal Palace)"}, {"x": 2023, "y": 4, "name": "Paddy McCarthy (Crystal Palace)"}, {"x": 2023, "y": 335, "name": "Roy Hodgson (Crystal Palace)"}, {"x": 2024, "y": 0, "name": "Paddy McCarthy (Crystal Palace)"}, {"x": 2024, "y": 829, "name": "Oliver Glasner (Crystal Palace)"}, {"x": 2026, "y": 125, "name": "Pierre Sage (Crystal Palace)"}, {"x": 1995, "y": 2306, "name": "Jim Smith (Derby County)"}, {"x": 2001, "y": 98, "name": "Colin Todd (Derby County)"}, {"x": 2002, "y": 16, "name": "Billy McEwan (Derby County)"}, {"x": 2002, "y": 415, "name": "John Gregory (Derby County)"}, {"x": 2006, "y": 542, "name": "Billy Davies (Derby County)"}, {"x": 2007, "y": 397, "name": "Paul Jewell (Derby County)"}, {"x": 1990, "y": 1125, "name": "Howard Kendall (Everton)"}, {"x": 1993, "y": 35, "name": "Jimmy Gabriel (Everton)"}, {"x": 1994, "y": 305, "name": "Mike Walker (Everton)"}, {"x": 1994, "y": 868, "name": "Joe Royle (Everton)"}, {"x": 1997, "y": 60, "name": "Dave Watson (Everton)"}, {"x": 1997, "y": 363, "name": "Howard Kendall (Everton)"}, {"x": 1998, "y": 1351, "name": "Walter Smith (Everton)"}, {"x": 2002, "y": 4096, "name": "David Moyes (Everton)"}, {"x": 2013, "y": 1072, "name": "Roberto Mart\u00ednez (Everton)"}, {"x": 2016, "y": 33, "name": "David Unsworth (Everton)"}, {"x": 2016, "y": 496, "name": "Ronald Koeman (Everton)"}, {"x": 2017, "y": 38, "name": "David Unsworth (Everton)"}, {"x": 2017, "y": 167, "name": "Sam Allardyce (Everton)"}, {"x": 2018, "y": 553, "name": "Marco Silva (Everton)"}, {"x": 2019, "y": 16, "name": "Duncan Ferguson (Everton)"}, {"x": 2019, "y": 527, "name": "Carlo Ancelotti (Everton)"}, {"x": 2021, "y": 200, "name": "Rafael Ben\u00edtez (Everton)"}, {"x": 2022, "y": 13, "name": "Duncan Ferguson (Everton)"}, {"x": 2022, "y": 357, "name": "Frank Lampard (Everton)"}, {"x": 2023, "y": 710, "name": "Sean Dyche (Everton)"}, {"x": 2025, "y": 2, "name": "Leighton Baines (Everton)"}, {"x": 2025, "y": 645, "name": "David Moyes (Everton)"}, {"x": 2000, "y": 1020, "name": "Jean Tigana (Fulham)"}, {"x": 2003, "y": 1455, "name": "Chris Coleman (Fulham)"}, {"x": 2007, "y": 254, "name": "Lawrie Sanchez (Fulham)"}, {"x": 2007, "y": 9, "name": "Ray Lewington (Fulham)"}, {"x": 2007, "y": 913, "name": "Roy Hodgson (Fulham)"}, {"x": 2010, "y": 28, "name": "Ray Lewington (Fulham)"}, {"x": 2010, "y": 307, "name": "Mark Hughes (Fulham)"}, {"x": 2011, "y": 908, "name": "Martin Jol (Fulham)"}, {"x": 2013, "y": 75, "name": "Ren\u00e9 Meulensteen (Fulham)"}, {"x": 2014, "y": 216, "name": "Felix Magath (Fulham)"}, {"x": 2015, "y": 1052, "name": "Slavi\u0161a Jokanovi\u0107 (Fulham)"}, {"x": 2018, "y": 106, "name": "Claudio Ranieri (Fulham)"}, {"x": 2019, "y": 851, "name": "Scott Parker (Fulham)"}, {"x": 2021, "y": 1797, "name": "Marco Silva (Fulham)"}, {"x": 2026, "y": 103, "name": "\u00c1lvaro Arbeloa (Fulham)"}, {"x": 2015, "y": 1162, "name": "David Wagner (Huddersfield Town)"}, {"x": 2019, "y": 7, "name": "Mark Hudson (Huddersfield Town)"}, {"x": 2019, "y": 207, "name": "Jan Siewert (Huddersfield Town)"}, {"x": 2006, "y": 1197, "name": "Phil Brown (Hull City)"}, {"x": 2010, "y": 53, "name": "Iain Dowie (Hull City)"}, {"x": 2012, "y": 1505, "name": "Steve Bruce (Hull City)"}, {"x": 2016, "y": 165, "name": "Mike Phelan (Hull City)"}, {"x": 2017, "y": 140, "name": "Marco Silva (Hull City)"}, {"x": 2025, "y": 494, "name": "Sergej Jakirovi\u0107 (Hull City)"}, {"x": 1990, "y": 1669, "name": "John Lyall (Ipswich Town)"}, {"x": 1994, "y": 21, "name": "Paul Goddard (Ipswich Town)"}, {"x": 1994, "y": 21, "name": "John Wark (Ipswich Town)"}, {"x": 1994, "y": 2844, "name": "George Burley (Ipswich Town)"}, {"x": 2021, "y": 1637, "name": "Kieran McKenna (Ipswich Town)"}, {"x": 2026, "y": 117, "name": "Gary O'Neil (Ipswich Town)"}, {"x": 1996, "y": 751, "name": "George Graham (Leeds United)"}, {"x": 1998, "y": 1365, "name": "David O'Leary (Leeds United)"}, {"x": 2002, "y": 256, "name": "Terry Venables (Leeds United)"}, {"x": 2003, "y": 234, "name": "Peter Reid (Leeds United)"}, {"x": 2003, "y": 193, "name": "Eddie Gray (Leeds United)"}, {"x": 2018, "y": 1353, "name": "Marcelo Bielsa (Leeds United)"}, {"x": 2022, "y": 343, "name": "Jesse Marsch (Leeds United)"}, {"x": 2023, "y": 15, "name": "Michael Skubala (Leeds United)"}, {"x": 2023, "y": 71, "name": "Javi Gracia (Leeds United)"}, {"x": 2023, "y": 30, "name": "Sam Allardyce (Leeds United)"}, {"x": 2023, "y": 1202, "name": "Daniel Farke (Leeds United)"}, {"x": 1991, "y": 1272, "name": "Brian Little (Leicester City)"}, {"x": 1994, "y": 22, "name": "Kevin MacDonald (Leicester City)"}, {"x": 1994, "y": 358, "name": "Mark McGhee (Leicester City)"}, {"x": 1995, "y": 1624, "name": "Martin O'Neill (Leicester City)"}, {"x": 2000, "y": 475, "name": "Peter Taylor (Leicester City)"}, {"x": 2001, "y": 178, "name": "Dave Bassett (Leicester City)"}, {"x": 2002, "y": 918, "name": "Micky Adams (Leicester City)"}, {"x": 2011, "y": 1323, "name": "Nigel Pearson (Leicester City)"}, {"x": 2015, "y": 591, "name": "Claudio Ranieri (Leicester City)"}, {"x": 2017, "y": 236, "name": "Craig Shakespeare (Leicester City)"}, {"x": 2017, "y": 8, "name": "Michael Appleton (Leicester City)"}, {"x": 2017, "y": 487, "name": "Claude Puel (Leicester City)"}, {"x": 2019, "y": 2, "name": "Adam Sadler (Leicester City)"}, {"x": 2019, "y": 2, "name": "Mike Stowell (Leicester City)"}, {"x": 2019, "y": 1495, "name": "Brendan Rodgers (Leicester City)"}, {"x": 2023, "y": 8, "name": "Adam Sadler (Leicester City)"}, {"x": 2023, "y": 8, "name": "Mike Stowell (Leicester City)"}, {"x": 2023, "y": 67, "name": "Dean Smith (Leicester City)"}, {"x": 2024, "y": 157, "name": "Steve Cooper (Leicester City)"}, {"x": 2024, "y": 7, "name": "Ben Dawson (Leicester City)"}, {"x": 2024, "y": 208, "name": "Ruud van Nistelrooy (Leicester City)"}, {"x": 1991, "y": 1018, "name": "Graeme Souness (Liverpool)"}, {"x": 1994, "y": 1749, "name": "Roy Evans (Liverpool)"}, {"x": 1998, "y": 1201, "name": "G\u00e9rard Houllier (Liverpool)"}, {"x": 2001, "y": 153, "name": "Phil Thompson (Liverpool)"}, {"x": 2002, "y": 799, "name": "G\u00e9rard Houllier (Liverpool)"}, {"x": 2004, "y": 2178, "name": "Rafael Ben\u00edtez (Liverpool)"}, {"x": 2010, "y": 191, "name": "Roy Hodgson (Liverpool)"}, {"x": 2011, "y": 494, "name": "Kenny Dalglish (Liverpool)"}, {"x": 2012, "y": 1220, "name": "Brendan Rodgers (Liverpool)"}, {"x": 2015, "y": 3146, "name": "J\u00fcrgen Klopp (Liverpool)"}, {"x": 2024, "y": 728, "name": "Arne Slot (Liverpool)"}, {"x": 2026, "y": 136, "name": "Andoni Iraola (Liverpool)"}, {"x": 2022, "y": 784, "name": "Rob Edwards (Luton Town)"}, {"x": 1990, "y": 1019, "name": "Peter Reid (Manchester City)"}, {"x": 1993, "y": 2, "name": "Tony Book (Manchester City)"}, {"x": 1993, "y": 626, "name": "Brian Horton (Manchester City)"}, {"x": 1995, "y": 423, "name": "Alan Ball (Manchester City)"}, {"x": 1998, "y": 1188, "name": "Joe Royle (Manchester City)"}, {"x": 2001, "y": 1387, "name": "Kevin Keegan (Manchester City)"}, {"x": 2005, "y": 784, "name": "Stuart Pearce (Manchester City)"}, {"x": 2007, "y": 332, "name": "Sven-G\u00f6ran Eriksson (Manchester City)"}, {"x": 2008, "y": 563, "name": "Mark Hughes (Manchester City)"}, {"x": 2009, "y": 1241, "name": "Roberto Mancini (Manchester City)"}, {"x": 2013, "y": 32, "name": "Brian Kidd (Manchester City)"}, {"x": 2013, "y": 1112, "name": "Manuel Pellegrini (Manchester City)"}, {"x": 2016, "y": 3614, "name": "Pep Guardiola (Manchester City)"}, {"x": 2026, "y": 111, "name": "Enzo Maresca (Manchester City)"}, {"x": 2013, "y": 325, "name": "David Moyes (Manchester United)"}, {"x": 2014, "y": 19, "name": "Ryan Giggs (Manchester United)"}, {"x": 2014, "y": 679, "name": "Louis van Gaal (Manchester United)"}, {"x": 2016, "y": 935, "name": "Jos\u00e9 Mourinho (Manchester United)"}, {"x": 2018, "y": 1068, "name": "Ole Gunnar Solskj\u00e6r (Manchester United)"}, {"x": 2021, "y": 11, "name": "Michael Carrick (Manchester United)"}, {"x": 2021, "y": 170, "name": "Ralf Rangnick (Manchester United)"}, {"x": 2022, "y": 880, "name": "Erik ten Hag (Manchester United)"}, {"x": 2024, "y": 14, "name": "Ruud van Nistelrooy (Manchester United)"}, {"x": 2024, "y": 420, "name": "Ruben Amorim (Manchester United)"}, {"x": 2026, "y": 8, "name": "Darren Fletcher (Manchester United)"}, {"x": 2026, "y": 278, "name": "Michael Carrick (Manchester United)"}, {"x": 1991, "y": 1044, "name": "Lennie Lawrence (Middlesbrough)"}, {"x": 1994, "y": 2381, "name": "Bryan Robson (Middlesbrough)"}, {"x": 2000, "y": 188, "name": "Terry Venables (Middlesbrough)"}, {"x": 2001, "y": 1794, "name": "Steve McClaren (Middlesbrough)"}, {"x": 2006, "y": 1231, "name": "Gareth Southgate (Middlesbrough)"}, {"x": 2013, "y": 1219, "name": "Aitor Karanka (Middlesbrough)"}, {"x": 2017, "y": 85, "name": "Steve Agnew (Middlesbrough)"}, {"x": 1992, "y": 1799, "name": "Kevin Keegan (Newcastle United)"}, {"x": 1997, "y": 6, "name": "Terry McDermott (Newcastle United)"}, {"x": 1997, "y": 590, "name": "Kenny Dalglish (Newcastle United)"}, {"x": 1998, "y": 365, "name": "Ruud Gullit (Newcastle United)"}, {"x": 1999, "y": 5, "name": "Steve Clarke (Newcastle United)"}, {"x": 1999, "y": 1824, "name": "Bobby Robson (Newcastle United)"}, {"x": 2004, "y": 2, "name": "John Carver (Newcastle United)"}, {"x": 2004, "y": 507, "name": "Graeme Souness (Newcastle United)"}, {"x": 2006, "y": 458, "name": "Glenn Roeder (Newcastle United)"}, {"x": 2007, "y": 9, "name": "Nigel Pearson (Newcastle United)"}, {"x": 2007, "y": 239, "name": "Sam Allardyce (Newcastle United)"}, {"x": 2008, "y": 7, "name": "Nigel Pearson (Newcastle United)"}, {"x": 2008, "y": 232, "name": "Kevin Keegan (Newcastle United)"}, {"x": 2008, "y": 20, "name": "Chris Hughton (Newcastle United)"}, {"x": 2008, "y": 184, "name": "Joe Kinnear (Newcastle United)"}, {"x": 2009, "y": 53, "name": "Alan Shearer (Newcastle United)"}, {"x": 2009, "y": 553, "name": "Chris Hughton (Newcastle United)"}, {"x": 2010, "y": 1484, "name": "Alan Pardew (Newcastle United)"}, {"x": 2015, "y": 159, "name": "John Carver (Newcastle United)"}, {"x": 2015, "y": 275, "name": "Steve McClaren (Newcastle United)"}, {"x": 2016, "y": 1206, "name": "Rafael Ben\u00edtez (Newcastle United)"}, {"x": 2019, "y": 826, "name": "Steve Bruce (Newcastle United)"}, {"x": 2021, "y": 19, "name": "Graeme Jones (Newcastle United)"}, {"x": 2021, "y": 1725, "name": "Eddie Howe (Newcastle United)"}, {"x": 2026, "y": 74, "name": "Matthias Jaissle (Newcastle United)"}, {"x": 1992, "y": 584, "name": "Mike Walker (Norwich City)"}, {"x": 1994, "y": 565, "name": "John Deehan (Norwich City)"}, {"x": 2000, "y": 2128, "name": "Nigel Worthington (Norwich City)"}, {"x": 2009, "y": 1019, "name": "Paul Lambert (Norwich City)"}, {"x": 2012, "y": 668, "name": "Chris Hughton (Norwich City)"}, {"x": 2014, "y": 213, "name": "Neil Adams (Norwich City)"}, {"x": 2015, "y": 791, "name": "Alex Neil (Norwich City)"}, {"x": 2017, "y": 1626, "name": "Daniel Farke (Norwich City)"}, {"x": 2021, "y": 407, "name": "Dean Smith (Norwich City)"}, {"x": 1993, "y": 1317, "name": "Frank Clark (Nottingham Forest)"}, {"x": 1996, "y": 139, "name": "Stuart Pearce (Nottingham Forest)"}, {"x": 1997, "y": 607, "name": "Dave Bassett (Nottingham Forest)"}, {"x": 1999, "y": 6, "name": "Micky Adams (Nottingham Forest)"}, {"x": 1999, "y": 125, "name": "Ron Atkinson (Nottingham Forest)"}, {"x": 2021, "y": 819, "name": "Steve Cooper (Nottingham Forest)"}, {"x": 2023, "y": 629, "name": "Nuno Esp\u00edrito Santo (Nottingham Forest)"}, {"x": 2025, "y": 39, "name": "Ange Postecoglou (Nottingham Forest)"}, {"x": 2025, "y": 114, "name": "Sean Dyche (Nottingham Forest)"}, {"x": 2026, "y": 137, "name": "V\u00edtor Pereira (Nottingham Forest)"}, {"x": 2026, "y": 104, "name": "Oliver Glasner (Nottingham Forest)"}, {"x": 2002, "y": 975, "name": "Harry Redknapp (Portsmouth)"}, {"x": 2004, "y": 104, "name": "Velimir Zajec (Portsmouth)"}, {"x": 2005, "y": 231, "name": "Alain Perrin (Portsmouth)"}, {"x": 2005, "y": 13, "name": "Joe Jordan (Portsmouth)"}, {"x": 2005, "y": 1053, "name": "Harry Redknapp (Portsmouth)"}, {"x": 2008, "y": 3, "name": "Joe Jordan (Portsmouth)"}, {"x": 2008, "y": 107, "name": "Tony Adams (Portsmouth)"}, {"x": 2009, "y": 288, "name": "Paul Hart (Portsmouth)"}, {"x": 2009, "y": 176, "name": "Avram Grant (Portsmouth)"}, {"x": 1991, "y": 1259, "name": "Gerry Francis (Queens Park Rangers)"}, {"x": 1994, "y": 659, "name": "Ray Wilkins (Queens Park Rangers)"}, {"x": 2010, "y": 678, "name": "Neil Warnock (Queens Park Rangers)"}, {"x": 2012, "y": 318, "name": "Mark Hughes (Queens Park Rangers)"}, {"x": 2012, "y": 1, "name": "Mark Bowen (Queens Park Rangers)"}, {"x": 2012, "y": 802, "name": "Harry Redknapp (Queens Park Rangers)"}, {"x": 2015, "y": 9, "name": "Kevin Bond (Queens Park Rangers)"}, {"x": 2015, "y": 274, "name": "Chris Ramsey (Queens Park Rangers)"}, {"x": 2003, "y": 2042, "name": "Steve Coppell (Reading)"}, {"x": 2009, "y": 1180, "name": "Brian McDermott (Reading)"}, {"x": 2013, "y": 629, "name": "Nigel Adkins (Reading)"}, {"x": 1999, "y": 2722, "name": "Neil Warnock (Sheffield United)"}, {"x": 2016, "y": 1766, "name": "Chris Wilder (Sheffield United)"}, {"x": 2021, "y": 75, "name": "Paul Heckingbottom (Sheffield United)"}, {"x": 2021, "y": 740, "name": "Paul Heckingbottom (Sheffield United)"}, {"x": 2023, "y": 561, "name": "Chris Wilder (Sheffield United)"}, {"x": 1991, "y": 1443, "name": "Trevor Francis (Sheffield Wednesday)"}, {"x": 1995, "y": 873, "name": "David Pleat (Sheffield Wednesday)"}, {"x": 1997, "y": 11, "name": "Peter Shreeves (Sheffield Wednesday)"}, {"x": 1997, "y": 184, "name": "Ron Atkinson (Sheffield Wednesday)"}, {"x": 1998, "y": 624, "name": "Danny Wilson (Sheffield Wednesday)"}, {"x": 2000, "y": 92, "name": "Peter Shreeves (Sheffield Wednesday)"}, {"x": 1991, "y": 944, "name": "Ian Branfoot (Southampton)"}, {"x": 1994, "y": 528, "name": "Alan Ball (Southampton)"}, {"x": 1995, "y": 336, "name": "Dave Merrington (Southampton)"}, {"x": 1996, "y": 333, "name": "Graeme Souness (Southampton)"}, {"x": 1997, "y": 948, "name": "Dave Jones (Southampton)"}, {"x": 2000, "y": 425, "name": "Glenn Hoddle (Southampton)"}, {"x": 2001, "y": 205, "name": "Stuart Gray (Southampton)"}, {"x": 2001, "y": 844, "name": "Gordon Strachan (Southampton)"}, {"x": 2004, "y": 20, "name": "Steve Wigley (Southampton)"}, {"x": 2004, "y": 172, "name": "Paul Sturrock (Southampton)"}, {"x": 2004, "y": 109, "name": "Steve Wigley (Southampton)"}, {"x": 2004, "y": 359, "name": "Harry Redknapp (Southampton)"}, {"x": 2010, "y": 859, "name": "Nigel Adkins (Southampton)"}, {"x": 2013, "y": 494, "name": "Mauricio Pochettino (Southampton)"}, {"x": 2014, "y": 729, "name": "Ronald Koeman (Southampton)"}, {"x": 2016, "y": 349, "name": "Claude Puel (Southampton)"}, {"x": 2017, "y": 262, "name": "Mauricio Pellegrino (Southampton)"}, {"x": 2018, "y": 264, "name": "Mark Hughes (Southampton)"}, {"x": 2018, "y": 2, "name": "Kelvin Davis (Southampton)"}, {"x": 2018, "y": 1432, "name": "Ralph Hasenh\u00fcttl (Southampton)"}, {"x": 2022, "y": 3, "name": "Rub\u00e9n Sell\u00e9s (Southampton)"}, {"x": 2022, "y": 94, "name": "Nathan Jones (Southampton)"}, {"x": 2023, "y": 105, "name": "Rub\u00e9n Sell\u00e9s (Southampton)"}, {"x": 2023, "y": 543, "name": "Russell Martin (Southampton)"}, {"x": 2024, "y": 8, "name": "Simon Rusk (Southampton)"}, {"x": 2024, "y": 105, "name": "Ivan Juri\u0107 (Southampton)"}, {"x": 2025, "y": 48, "name": "Simon Rusk (Southampton)"}, {"x": 2006, "y": 2532, "name": "Tony Pulis (Stoke City)"}, {"x": 2013, "y": 1682, "name": "Mark Hughes (Stoke City)"}, {"x": 2018, "y": 7, "name": "Eddie Niedzwiecki (Stoke City)"}, {"x": 2018, "y": 123, "name": "Paul Lambert (Stoke City)"}, {"x": 1995, "y": 2749, "name": "Peter Reid (Sunderland)"}, {"x": 2002, "y": 151, "name": "Howard Wilkinson (Sunderland)"}, {"x": 2003, "y": 1090, "name": "Mick McCarthy (Sunderland)"}, {"x": 2006, "y": 85, "name": "Kevin Ball (Sunderland)"}, {"x": 2006, "y": 827, "name": "Roy Keane (Sunderland)"}, {"x": 2008, "y": 171, "name": "Ricky Sbragia (Sunderland)"}, {"x": 2009, "y": 910, "name": "Steve Bruce (Sunderland)"}, {"x": 2011, "y": 483, "name": "Martin O'Neill (Sunderland)"}, {"x": 2013, "y": 175, "name": "Paolo Di Canio (Sunderland)"}, {"x": 2013, "y": 16, "name": "Kevin Ball (Sunderland)"}, {"x": 2013, "y": 524, "name": "Gus Poyet (Sunderland)"}, {"x": 2015, "y": 201, "name": "Dick Advocaat (Sunderland)"}, {"x": 2015, "y": 287, "name": "Sam Allardyce (Sunderland)"}, {"x": 2016, "y": 303, "name": "David Moyes (Sunderland)"}, {"x": 2024, "y": 839, "name": "R\u00e9gis Le Bris (Sunderland)"}, {"x": 2010, "y": 686, "name": "Brendan Rodgers (Swansea City)"}, {"x": 2012, "y": 599, "name": "Michael Laudrup (Swansea City)"}, {"x": 2014, "y": 673, "name": "Garry Monk (Swansea City)"}, {"x": 2015, "y": 40, "name": "Alan Curtis (Swansea City)"}, {"x": 2016, "y": 259, "name": "Francesco Guidolin (Swansea City)"}, {"x": 2016, "y": 85, "name": "Bob Bradley (Swansea City)"}, {"x": 2016, "y": 7, "name": "Alan Curtis (Swansea City)"}, {"x": 2017, "y": 351, "name": "Paul Clement (Swansea City)"}, {"x": 2017, "y": 8, "name": "Leon Britton (Swansea City)"}, {"x": 2017, "y": 141, "name": "Carlos Carvalhal (Swansea City)"}, {"x": 1993, "y": 535, "name": "John Gorman (Swindon Town)"}, {"x": 1992, "y": 388, "name": "Doug Livermore (Tottenham Hotspur)"}, {"x": 1993, "y": 500, "name": "Ossie Ardiles (Tottenham Hotspur)"}, {"x": 1994, "y": 14, "name": "Steve Perryman (Tottenham Hotspur)"}, {"x": 1994, "y": 1100, "name": "Gerry Francis (Tottenham Hotspur)"}, {"x": 1997, "y": 284, "name": "Christian Gross (Tottenham Hotspur)"}, {"x": 1998, "y": 24, "name": "David Pleat (Tottenham Hotspur)"}, {"x": 1998, "y": 34, "name": "Chris Hughton (Tottenham Hotspur)"}, {"x": 1998, "y": 893, "name": "George Graham (Tottenham Hotspur)"}, {"x": 2001, "y": 17, "name": "David Pleat (Tottenham Hotspur)"}, {"x": 2001, "y": 902, "name": "Glenn Hoddle (Tottenham Hotspur)"}, {"x": 2003, "y": 256, "name": "David Pleat (Tottenham Hotspur)"}, {"x": 2004, "y": 155, "name": "Jacques Santini (Tottenham Hotspur)"}, {"x": 2004, "y": 1084, "name": "Martin Jol (Tottenham Hotspur)"}, {"x": 2007, "y": 4, "name": "Clive Allen (Tottenham Hotspur)"}, {"x": 2007, "y": 4, "name": "Alex Inglethorpe (Tottenham Hotspur)"}, {"x": 2007, "y": 364, "name": "Juande Ramos (Tottenham Hotspur)"}, {"x": 2008, "y": 1, "name": "Clive Allen (Tottenham Hotspur)"}, {"x": 2008, "y": 1326, "name": "Harry Redknapp (Tottenham Hotspur)"}, {"x": 2012, "y": 528, "name": "Andr\u00e9 Villas-Boas (Tottenham Hotspur)"}, {"x": 2013, "y": 148, "name": "Tim Sherwood (Tottenham Hotspur)"}, {"x": 2014, "y": 2002, "name": "Mauricio Pochettino (Tottenham Hotspur)"}, {"x": 2019, "y": 516, "name": "Jos\u00e9 Mourinho (Tottenham Hotspur)"}, {"x": 2021, "y": 72, "name": "Ryan Mason (Tottenham Hotspur)"}, {"x": 2021, "y": 124, "name": "Nuno Esp\u00edrito Santo (Tottenham Hotspur)"}, {"x": 2021, "y": 509, "name": "Antonio Conte (Tottenham Hotspur)"}, {"x": 2023, "y": 29, "name": "Cristian Stellini (Tottenham Hotspur)"}, {"x": 2023, "y": 34, "name": "Ryan Mason (Tottenham Hotspur)"}, {"x": 2023, "y": 731, "name": "Ange Postecoglou (Tottenham Hotspur)"}, {"x": 2025, "y": 244, "name": "Thomas Frank (Tottenham Hotspur)"}, {"x": 2026, "y": 43, "name": "Igor Tudor (Tottenham Hotspur)"}, {"x": 2026, "y": 201, "name": "Roberto De Zerbi (Tottenham Hotspur)"}, {"x": 1996, "y": 1927, "name": "Graham Taylor (Watford)"}, {"x": 2005, "y": 1315, "name": "Aidy Boothroyd (Watford)"}, {"x": 2015, "y": 345, "name": "Quique S\u00e1nchez Flores (Watford)"}, {"x": 2016, "y": 324, "name": "Walter Mazzarri (Watford)"}, {"x": 2017, "y": 239, "name": "Marco Silva (Watford)"}, {"x": 2018, "y": 594, "name": "Javi Gracia (Watford)"}, {"x": 2019, "y": 85, "name": "Quique S\u00e1nchez Flores (Watford)"}, {"x": 2019, "y": 5, "name": "Hayden Mullins (Watford)"}, {"x": 2019, "y": 224, "name": "Nigel Pearson (Watford)"}, {"x": 2020, "y": 27, "name": "Hayden Mullins (Watford)"}, {"x": 2020, "y": 287, "name": "Xisco Mu\u00f1oz (Watford)"}, {"x": 2021, "y": 112, "name": "Claudio Ranieri (Watford)"}, {"x": 2022, "y": 117, "name": "Roy Hodgson (Watford)"}, {"x": 2000, "y": 1692, "name": "Gary Megson (West Bromwich Albion)"}, {"x": 2004, "y": 12, "name": "Frank Burrows (West Bromwich Albion)"}, {"x": 2004, "y": 678, "name": "Bryan Robson (West Bromwich Albion)"}, {"x": 2006, "y": 972, "name": "Tony Mowbray (West Bromwich Albion)"}, {"x": 2009, "y": 586, "name": "Roberto Di Matteo (West Bromwich Albion)"}, {"x": 2011, "y": 8, "name": "Michael Appleton (West Bromwich Albion)"}, {"x": 2011, "y": 454, "name": "Roy Hodgson (West Bromwich Albion)"}, {"x": 2012, "y": 554, "name": "Steve Clarke (West Bromwich Albion)"}, {"x": 2013, "y": 26, "name": "Keith Downing (West Bromwich Albion)"}, {"x": 2014, "y": 123, "name": "Pepe Mel (West Bromwich Albion)"}, {"x": 2014, "y": 199, "name": "Alan Irvine (West Bromwich Albion)"}, {"x": 2014, "y": 3, "name": "Rob Kelly (West Bromwich Albion)"}, {"x": 2015, "y": 1054, "name": "Tony Pulis (West Bromwich Albion)"}, {"x": 2017, "y": 9, "name": "Gary Megson (West Bromwich Albion)"}, {"x": 2017, "y": 124, "name": "Alan Pardew (West Bromwich Albion)"}, {"x": 2018, "y": 341, "name": "Darren Moore (West Bromwich Albion)"}, {"x": 2019, "y": 552, "name": "Slaven Bili\u0107 (West Bromwich Albion)"}, {"x": 2020, "y": 158, "name": "Sam Allardyce (West Bromwich Albion)"}, {"x": 1990, "y": 1629, "name": "Billy Bonds (West Ham United)"}, {"x": 1994, "y": 2464, "name": "Harry Redknapp (West Ham United)"}, {"x": 2001, "y": 715, "name": "Glenn Roeder (West Ham United)"}, {"x": 2003, "y": 18, "name": "Trevor Brooking (West Ham United)"}, {"x": 2003, "y": 1148, "name": "Alan Pardew (West Ham United)"}, {"x": 2006, "y": 630, "name": "Alan Curbishley (West Ham United)"}, {"x": 2008, "y": 12, "name": "Kevin Keen (West Ham United)"}, {"x": 2008, "y": 603, "name": "Gianfranco Zola (West Ham United)"}, {"x": 2010, "y": 346, "name": "Avram Grant (West Ham United)"}, {"x": 2011, "y": 17, "name": "Kevin Keen (West Ham United)"}, {"x": 2011, "y": 1453, "name": "Sam Allardyce (West Ham United)"}, {"x": 2015, "y": 881, "name": "Slaven Bili\u0107 (West Ham United)"}, {"x": 2017, "y": 190, "name": "David Moyes (West Ham United)"}, {"x": 2018, "y": 585, "name": "Manuel Pellegrini (West Ham United)"}, {"x": 2019, "y": 1603, "name": "David Moyes (West Ham United)"}, {"x": 2024, "y": 191, "name": "Julen Lopetegui (West Ham United)"}, {"x": 2025, "y": 261, "name": "Graham Potter (West Ham United)"}, {"x": 2025, "y": 386, "name": "Nuno Esp\u00edrito Santo \u00a7 (West Ham United)"}, {"x": 2001, "y": 2162, "name": "Paul Jewell (Wigan Athletic)"}, {"x": 2007, "y": 175, "name": "Chris Hutchings (Wigan Athletic)"}, {"x": 2007, "y": 21, "name": "Frank Barlow (Wigan Athletic)"}, {"x": 2007, "y": 555, "name": "Steve Bruce (Wigan Athletic)"}, {"x": 2009, "y": 1443, "name": "Roberto Mart\u00ednez (Wigan Athletic)"}, {"x": 1992, "y": 2698, "name": "Joe Kinnear (Wimbledon)"}, {"x": 1999, "y": 327, "name": "Egil Olsen (Wimbledon)"}, {"x": 2000, "y": 724, "name": "Terry Burton (Wimbledon)"}, {"x": 2001, "y": 1408, "name": "Dave Jones (Wolverhampton Wanderers)"}, {"x": 2006, "y": 2019, "name": "Mick McCarthy (Wolverhampton Wanderers)"}, {"x": 2012, "y": 127, "name": "Terry Connor (Wolverhampton Wanderers)"}, {"x": 2017, "y": 1453, "name": "Nuno Esp\u00edrito Santo (Wolverhampton Wanderers)"}, {"x": 2021, "y": 480, "name": "Bruno Lage (Wolverhampton Wanderers)"}, {"x": 2022, "y": 41, "name": "Steve Davis (Wolverhampton Wanderers)"}, {"x": 2022, "y": 267, "name": "Julen Lopetegui (Wolverhampton Wanderers)"}, {"x": 2023, "y": 494, "name": "Gary O'Neil (Wolverhampton Wanderers)"}, {"x": 2024, "y": 318, "name": "V\u00edtor Pereira (Wolverhampton Wanderers)"}, {"x": 2025, "y": 10, "name": "James Collins (Wolverhampton Wanderers)"}, {"x": 2025, "y": 211, "name": "Rob Edwards (Wolverhampton Wanderers)"}];
         const trend = {"pm_slope": -79.64, "pm_intercept": 161521.21, "mgr_slope": -19.54, "mgr_intercept": 39882.07, "converge_year": 2023.9};
         const liveCalc = {"incumbent_name": "Andy Burnham", "incumbent_start_iso": "2026-07-20", "all_time_mgr_avg": 667.3, "completed_2020s_sum": 1416, "num_2020s_total": 4};
 
-        // 1. Live Dynamic Incumbent Calculator (Auto-runs on refresh)
         function updateLiveIncumbentStats() {
             const now = new Date();
             const startDate = new Date(liveCalc.incumbent_start_iso);
-            
             const diffTime = now.getTime() - startDate.getTime();
             const servedDays = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24)));
-            
             const mgrAvg = liveCalc.all_time_mgr_avg;
             const daysToSurpassIndiv = Math.round(mgrAvg - servedDays);
             const dateIndivSurpass = new Date(startDate.getTime() + mgrAvg * 24 * 60 * 60 * 1000);
-            
             const targetTotalForCohort = Math.round(liveCalc.num_2020s_total * mgrAvg - liveCalc.completed_2020s_sum);
             const daysToSurpassCohort = targetTotalForCohort - servedDays;
             const dateCohortSurpass = new Date(startDate.getTime() + targetTotalForCohort * 24 * 60 * 60 * 1000);
-
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             document.getElementById("live-today-date").textContent = now.toLocaleDateString(undefined, options);
 
-            const indivStatusHtml = daysToSurpassIndiv > 0 
+            const indivStatusHtml = daysToSurpassIndiv > 0
                 ? `must remain in office for at least <strong>${daysToSurpassIndiv.toLocaleString()} more days</strong> (until <strong>${dateIndivSurpass.toLocaleDateString(undefined, options)}</strong>, reaching ~${Math.round(mgrAvg).toLocaleString()} total days / ~${(mgrAvg / 365.25).toFixed(1)} years).`
                 : `<strong style="color: var(--accent-live);">has already surpassed</strong> the all-time manager average of ${Math.round(mgrAvg).toLocaleString()} days!`;
 
@@ -722,18 +990,17 @@
                 : `<strong style="color: var(--accent-live);">has successfully elevated</strong> the 2020s PM cohort average above the all-time Premier League manager mark!`;
 
             document.getElementById("incumbent-live-comment").innerHTML = `
-                With incumbent Prime Minister <strong>${liveCalc.incumbent_name}</strong> having served 
+                With incumbent Prime Minister <strong>${liveCalc.incumbent_name}</strong> having served
                 <strong style="color: var(--accent-pm);">${servedDays.toLocaleString()} days</strong> in office as of today:
-                <br>&bull; <strong>To surpass an average Premier League manager's stint (${Math.round(mgrAvg).toLocaleString()} days / ~1.8 years):</strong> 
+                <br>• <strong>To surpass an average Premier League manager's stint (${Math.round(mgrAvg).toLocaleString()} days / ~1.8 years):</strong>
                 ${liveCalc.incumbent_name} ${indivStatusHtml}
-                <br>&bull; <strong>To pull the entire 2020s PM cohort average above the all-time manager average (${Math.round(mgrAvg).toLocaleString()} days):</strong> 
+                <br>• <strong>To pull the entire 2020s PM cohort average above the all-time manager average (${Math.round(mgrAvg).toLocaleString()} days):</strong>
                 To offset the short tenures of recent predecessors (such as Liz Truss at 50 days), ${liveCalc.incumbent_name} ${cohortStatusHtml}
             `;
         }
 
         updateLiveIncumbentStats();
 
-        // 2. Wide Canvas Rendering with High DPI support
         const canvas = document.getElementById("historicalChart");
         const ctx = canvas.getContext("2d");
         const tooltip = document.getElementById("chart-tooltip");
@@ -742,8 +1009,6 @@
             const dpr = window.devicePixelRatio || 1;
             const container = canvas.parentElement;
             const rect = container.getBoundingClientRect();
-            
-            // Width is determined by the wide container width (at least 760px on mobile)
             const width = rect.width;
             const height = rect.height;
 
@@ -751,13 +1016,11 @@
             canvas.height = height * dpr;
             canvas.style.width = width + "px";
             canvas.style.height = height + "px";
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(dpr, dpr);
 
-            const padding = { top: 30, right: 35, bottom: 45, left: 60 };
-            const minX = 1990;
-            const maxX = 2028;
-            const minY = 0;
-            const maxY = 8200;
+            const padding = { top: 28, right: 32, bottom: 42, left: 58 };
+            const minX = 1990, maxX = 2028, minY = 0, maxY = 8200;
 
             function getX(val) {
                 return padding.left + ((val - minX) / (maxX - minX)) * (width - padding.left - padding.right);
@@ -768,10 +1031,13 @@
 
             ctx.clearRect(0, 0, width, height);
 
-            // Gridlines & Y-Axis
-            ctx.strokeStyle = "#334155";
-            ctx.fillStyle = "#94a3b8";
-            ctx.font = "11px -apple-system, BlinkMacSystemFont, sans-serif";
+            // Subtle plot area fill
+            ctx.fillStyle = "rgba(15, 23, 42, 0.4)";
+            ctx.fillRect(padding.left, padding.top, width - padding.left - padding.right, height - padding.top - padding.bottom);
+
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.1)";
+            ctx.fillStyle = "#64748b";
+            ctx.font = "500 11px Inter, -apple-system, sans-serif";
             ctx.textAlign = "right";
             ctx.lineWidth = 1;
 
@@ -785,93 +1051,85 @@
                 ctx.fillText(yVal.toLocaleString() + " d", padding.left - 8, y + 4);
             });
 
-            // X-Axis
             ctx.textAlign = "center";
             for (let yr = 1990; yr <= maxX; yr += 5) {
                 const x = getX(yr);
                 ctx.beginPath();
                 ctx.moveTo(x, height - padding.bottom);
-                ctx.lineTo(x, height - padding.bottom + 6);
+                ctx.lineTo(x, height - padding.bottom + 5);
                 ctx.stroke();
                 ctx.fillText(yr.toString(), x, height - padding.bottom + 18);
             }
 
-            // Manager Points (Purple Circles)
+            // Manager points
             mgrPoints.forEach(p => {
-                const cx = getX(p.x);
-                const cy = getY(p.y);
-                ctx.fillStyle = "rgba(192, 132, 252, 0.4)";
+                const cx = getX(p.x), cy = getY(p.y);
+                ctx.fillStyle = "rgba(192, 132, 252, 0.35)";
                 ctx.beginPath();
                 ctx.arc(cx, cy, 4, 0, Math.PI * 2);
                 ctx.fill();
             });
 
-            // PM Points (Cyan Circles)
+            // PM points
             pmPoints.forEach(p => {
-                const cx = getX(p.x);
-                const cy = getY(p.y);
+                const cx = getX(p.x), cy = getY(p.y);
                 ctx.fillStyle = "#38bdf8";
                 ctx.beginPath();
-                ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+                ctx.arc(cx, cy, 6.5, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.lineWidth = 2;
-                ctx.strokeStyle = "#ffffff";
+                ctx.strokeStyle = "rgba(255,255,255,0.85)";
                 ctx.stroke();
             });
 
-            // Manager Trendline
+            // Manager trendline
             ctx.beginPath();
             ctx.strokeStyle = "#c084fc";
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = "round";
             ctx.moveTo(getX(1990), getY(trend.mgr_slope * 1990 + trend.mgr_intercept));
             ctx.lineTo(getX(2027), getY(trend.mgr_slope * 2027 + trend.mgr_intercept));
             ctx.stroke();
 
-            // PM Trendline
+            // PM trendline
             ctx.beginPath();
             ctx.strokeStyle = "#38bdf8";
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 2.5;
             ctx.moveTo(getX(1990), getY(trend.pm_slope * 1990 + trend.pm_intercept));
             ctx.lineTo(getX(2027), getY(trend.pm_slope * 2027 + trend.pm_intercept));
             ctx.stroke();
 
-            // Convergence Point
+            // Convergence
             if (trend.converge_year >= minX && trend.converge_year <= maxX) {
                 const cx = getX(trend.converge_year);
                 const cy = getY(trend.pm_slope * trend.converge_year + trend.pm_intercept);
-                
-                ctx.fillStyle = "#f59e0b";
+                ctx.fillStyle = "#fbbf24";
                 ctx.beginPath();
                 ctx.arc(cx, cy, 7, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.lineWidth = 2;
-                ctx.strokeStyle = "#ffffff";
+                ctx.strokeStyle = "#fff";
                 ctx.stroke();
-
-                ctx.fillStyle = "#f59e0b";
-                ctx.font = "bold 12px -apple-system, sans-serif";
+                ctx.fillStyle = "#fbbf24";
+                ctx.font = "600 12px Inter, sans-serif";
                 ctx.textAlign = "left";
-                ctx.fillText(`Convergence: ~${trend.converge_year}`, cx + 12, cy - 8);
+                ctx.fillText(`Convergence ~${trend.converge_year}`, cx + 12, cy - 8);
             }
 
             canvas.chartInfo = { getX, getY, minX, maxX, minY, maxY, padding, width, height };
         }
 
-        // Tooltip interaction handling (Mouse + Mobile Touch)
         function handlePointer(clientX, clientY) {
             if (!canvas.chartInfo) return;
             const rect = canvas.getBoundingClientRect();
             const mouseX = clientX - rect.left;
             const mouseY = clientY - rect.top;
-
             const allPoints = [
                 ...pmPoints.map(p => ({ ...p, type: "Prime Minister", color: "#38bdf8", radius: 7 })),
                 ...mgrPoints.map(p => ({ ...p, type: "PL Manager", color: "#c084fc", radius: 5 }))
             ];
-
             let hovered = null;
-            let minDist = 18; // slightly larger hit area for mobile touch
-
+            let minDist = 18;
             allPoints.forEach(p => {
                 const px = canvas.chartInfo.getX(p.x);
                 const py = canvas.chartInfo.getY(p.y);
@@ -881,24 +1139,18 @@
                     hovered = { ...p, px, py };
                 }
             });
-
             if (hovered) {
                 tooltip.style.display = "block";
-                
-                // Keep tooltip inside canvas boundaries
                 let left = hovered.px + 12;
-                if (left + 160 > canvas.chartInfo.width) {
-                    left = hovered.px - 165;
-                }
+                if (left + 160 > canvas.chartInfo.width) left = hovered.px - 165;
                 let top = hovered.py - 30;
                 if (top < 10) top = hovered.py + 15;
-
                 tooltip.style.left = left + "px";
                 tooltip.style.top = top + "px";
                 tooltip.innerHTML = `
-                    <div style="font-weight: bold; color: ${hovered.color};">${hovered.name}</div>
-                    <div style="color: #94a3b8; font-size: 0.75rem;">${hovered.type} &bull; Started: ${hovered.x}</div>
-                    <div style="margin-top: 2px;">${hovered.y.toLocaleString()} days (~${(hovered.y/365.25).toFixed(1)} yrs)</div>
+                    <div style="font-weight: 600; color: ${hovered.color};">${hovered.name}</div>
+                    <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 1px;">${hovered.type} · Started ${hovered.x}</div>
+                    <div style="margin-top: 3px; font-weight: 500;">${hovered.y.toLocaleString()} days (~${(hovered.y/365.25).toFixed(1)} yrs)</div>
                 `;
             } else {
                 tooltip.style.display = "none";
@@ -907,18 +1159,11 @@
 
         canvas.addEventListener("mousemove", e => handlePointer(e.clientX, e.clientY));
         canvas.addEventListener("mouseleave", () => { tooltip.style.display = "none"; });
-
-        // Touch Support for mobile screens
         canvas.addEventListener("touchstart", e => {
-            if (e.touches.length > 0) {
-                handlePointer(e.touches[0].clientX, e.touches[0].clientY);
-            }
+            if (e.touches.length > 0) handlePointer(e.touches[0].clientX, e.touches[0].clientY);
         }, { passive: true });
-
         canvas.addEventListener("touchmove", e => {
-            if (e.touches.length > 0) {
-                handlePointer(e.touches[0].clientX, e.touches[0].clientY);
-            }
+            if (e.touches.length > 0) handlePointer(e.touches[0].clientX, e.touches[0].clientY);
         }, { passive: true });
 
         window.addEventListener("resize", drawChart);
