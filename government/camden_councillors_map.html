@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Camden — Wards &amp; Councillors</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <style>
+        :root {
+            --header-bg: #002D62;
+            --header-fg: #fff;
+            --accent: #002D62;
+            --surface: #ffffff;
+            --muted: #667085;
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1a1a1a;
+        }
+        #header {
+            background: var(--header-bg);
+            color: var(--header-fg);
+            padding: 12px 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 20px;
+            position: relative;
+            z-index: 1000;
+        }
+        #header .titles { flex: 1 1 auto; min-width: 180px; }
+        #header h1 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+        #header p {
+            margin: 2px 0 0;
+            font-size: 0.8rem;
+            opacity: 0.85;
+        }
+        #search-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 0 1 280px;
+            position: relative;
+        }
+        #ward-search {
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a1a;
+            outline: none;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+        #ward-search:focus { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35); }
+        #ward-search::placeholder { color: #667085; }
+        #btn-reset {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        #btn-reset:hover { background: rgba(255, 255, 255, 0.25); }
+        #map {
+            height: calc(100vh - 64px);
+            width: 100%;
+            background: #e8ecf0;
+        }
+        #loading {
+            position: absolute;
+            inset: 64px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f4f6f8;
+            z-index: 900;
+            gap: 12px;
+            transition: opacity 0.25s ease;
+        }
+        #loading.hidden { opacity: 0; pointer-events: none; }
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid #d0d5dd;
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #loading p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+        .leaflet-tooltip.info-tooltip {
+            background: var(--surface);
+            border: none;
+            border-radius: 10px;
+            padding: 0;
+            box-shadow: var(--shadow);
+            font-size: 13px;
+            max-width: 300px;
+            line-height: 1.35;
+            white-space: normal;
+        }
+        .leaflet-tooltip.info-tooltip::before { border-top-color: var(--surface); }
+        .tooltip-inner { padding: 12px 14px; }
+        .tooltip-inner h4 {
+            margin: 0 0 8px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 4px;
+        }
+        .cllr-list { margin: 0; padding: 0; list-style: none; }
+        .cllr-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cllr-list li:last-child { margin-bottom: 0; }
+        .cllr-photo,
+        .cllr-photo-placeholder {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            object-fit: cover;
+            background: #e8ecf0;
+            border: 1px solid #d0d5dd;
+        }
+        .cllr-photo-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #98a2b3;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .cllr-text { min-width: 0; }
+        .cllr-text strong { display: block; font-size: 13px; }
+        .party {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 1px;
+        }
+        .party-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .leaflet-popup-content-wrapper {
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 0;
+        }
+        .leaflet-popup-content { margin: 0; min-width: 220px; }
+        .popup-inner { padding: 14px 16px; }
+        .popup-inner h3 {
+            margin: 0 0 10px;
+            font-size: 15px;
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 6px;
+        }
+        .popup-meta {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+        .legend {
+            background: var(--surface);
+            padding: 10px 14px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            font-size: 12px;
+            line-height: 1.65;
+            min-width: 140px;
+        }
+        .legend-title { font-weight: 600; margin-bottom: 4px; font-size: 12px; }
+        .legend i {
+            width: 14px;
+            height: 14px;
+            float: left;
+            margin-right: 8px;
+            margin-top: 2px;
+            opacity: 0.9;
+            border-radius: 3px;
+        }
+        .legend .hint {
+            margin-top: 6px;
+            font-size: 11px;
+            color: var(--muted);
+            clear: both;
+        }
+        #search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: var(--shadow);
+            max-height: 240px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1100;
+        }
+        #search-results button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 8px 12px;
+            border: none;
+            background: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: #1a1a1a;
+        }
+        #search-results button:hover,
+        #search-results button:focus { background: #f0f4f8; }
+        #search-results button .party-tag {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-left: 6px;
+        }
+        #error {
+            display: none;
+            position: absolute;
+            inset: 64px 0 0 0;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #f4f6f8;
+            z-index: 900;
+            padding: 24px;
+            text-align: center;
+        }
+        #error.visible { display: flex; }
+        #error h2 {
+            margin: 0 0 8px;
+            color: #b42318;
+            font-size: 1.1rem;
+        }
+        #error p {
+            margin: 0;
+            color: var(--muted);
+            max-width: 360px;
+        }
+        @media (max-width: 560px) {
+            #header { padding: 10px 12px; }
+            #header h1 { font-size: 1.1rem; }
+            #search-wrap { flex: 1 1 100%; }
+            #map { height: calc(100vh - 110px); }
+            #loading, #error { inset: 110px 0 0 0; }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="titles">
+            <h1>Camden — Ward Map</h1>
+            <p>Hover or tap a ward for councillors. Boundaries: ONS / OS (May 2025).</p>
+        </div>
+        <div id="search-wrap">
+            <input type="search" id="ward-search" placeholder="Find a ward…" autocomplete="off"
+                   aria-label="Search wards" aria-autocomplete="list" aria-controls="search-results">
+            <div id="search-results" role="listbox"></div>
+        </div>
+        <button type="button" id="btn-reset" title="Reset map view">Reset view</button>
+    </header>
+
+    <div id="loading" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Loading map…</p>
+    </div>
+
+    <div id="map" role="application" aria-label="Interactive map of Camden wards"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+(function () {
+    "use strict";
+
+    // Embedded data — single-file deploy (GitLab Pages, file://, etc.)
+    const WARD_GEO = {"type":"FeatureCollection","features":[{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.167725311436785,51.5524845224955],[-0.161722866282509,51.5486878851263],[-0.158963485930061,51.5470255186097],[-0.159414830325082,51.546349522976],[-0.161275021649227,51.5454636824802],[-0.162887329511883,51.54552410651],[-0.169353166548507,51.5446752162075],[-0.173911982488885,51.5440563071942],[-0.175116820451617,51.5436451471875],[-0.175715623580633,51.5445402479262],[-0.178315386619461,51.5457065520445],[-0.179516496939155,51.5469077430179],[-0.180228866772892,51.5476714796056],[-0.179608389686969,51.5478954724565],[-0.180161645415419,51.5484855709139],[-0.179687926920286,51.5500609161521],[-0.179837603549235,51.5518338771539],[-0.177174370727562,51.5526776892643],[-0.176445144971766,51.5521622719967],[-0.175905624720725,51.5523104795947],[-0.175882499934812,51.5517234466546],[-0.175071986675058,51.5516735937084],[-0.171625691690797,51.5528883377279],[-0.16917059943922,51.5532130162838],[-0.167725311436785,51.5524845224955]]]},"properties":{"WD25NM":"Belsize","WD25CD":"E05013652","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.121827419078189,51.5229690423],[-0.124987395429162,51.5221599478171],[-0.121020915209181,51.5189688870682],[-0.120406704112241,51.5176218590008],[-0.130326509997426,51.5164195906224],[-0.130782502682123,51.5170819805722],[-0.132516418534426,51.5166730885835],[-0.132406111775616,51.5171171634979],[-0.133531598252919,51.5176972858276],[-0.134006210429943,51.5175472512074],[-0.13520781378243,51.518929715323],[-0.135797668689083,51.5186853550004],[-0.136278097237986,51.5191571733866],[-0.136961309094795,51.5188866189792],[-0.142844961598762,51.5238676797066],[-0.143544818600121,51.5239659654064],[-0.141801884378783,51.5241121807716],[-0.135563140165512,51.5257357563027],[-0.130839840038014,51.5272982504121],[-0.126185728702863,51.5291166576183],[-0.124224633341206,51.5269792263129],[-0.121827419078189,51.5229690423]]]},"properties":{"WD25NM":"Bloomsbury","WD25CD":"E05013653","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.126357378664673,51.5450585963287],[-0.125064221994798,51.5411429771105],[-0.132031316513159,51.5411462959993],[-0.135828806144326,51.5414687298385],[-0.137559573057897,51.5408923951196],[-0.138377103629121,51.5418236853301],[-0.136942943825475,51.5432475527743],[-0.12910281703075,51.5488366021527],[-0.127079037829745,51.547530197181],[-0.126357378664673,51.5450585963287]]]},"properties":{"WD25NM":"Camden Square","WD25CD":"E05013654","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.138377103629121,51.5418236853301],[-0.137559573057897,51.5408923951196],[-0.137483843621674,51.5407936222192],[-0.139091528406554,51.5410439384949],[-0.139878407729634,51.5405135887238],[-0.139332063159206,51.5398767842911],[-0.141409418080943,51.5391226256822],[-0.139973445520306,51.5375709783673],[-0.143724628908609,51.536426243746],[-0.145442937975508,51.5364381308661],[-0.146226697268274,51.5367449332651],[-0.151467475456152,51.5414852382933],[-0.155071974924131,51.542908219196],[-0.154719065534502,51.5433495229281],[-0.15265767472956,51.5438602702079],[-0.14732152020891,51.5425135740163],[-0.146895722010047,51.5433211536583],[-0.145897007071677,51.5439125247858],[-0.146403716912526,51.545473008512],[-0.141552786562091,51.545174764832],[-0.138377103629121,51.5418236853301]]]},"properties":{"WD25NM":"Camden Town","WD25CD":"E05013655","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.188753725683197,51.5529497663609],[-0.192593378222871,51.5519344088968],[-0.192956685449468,51.552232271574],[-0.197591756732584,51.5519286001481],[-0.198659847287605,51.5516175089573],[-0.197445134326969,51.5492865315763],[-0.197794019541565,51.5480144760501],[-0.199865599009338,51.5479662676703],[-0.203700949695321,51.546962393829],[-0.213486677002519,51.5551909320072],[-0.210010591854248,51.5567513766401],[-0.208837483626681,51.5557255339253],[-0.205967497609692,51.5564303217547],[-0.205779562107332,51.5553185777453],[-0.199371628065116,51.5561900321567],[-0.199511261882767,51.5570754654092],[-0.198306945833702,51.5588578861973],[-0.197910579489715,51.5591298797885],[-0.197499322530845,51.5588659129735],[-0.196774850407015,51.5591546246789],[-0.194957104800365,51.5565399027441],[-0.188753725683197,51.5529497663609]]]},"properties":{"WD25NM":"Fortune Green","WD25CD":"E05013656","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.175905624720725,51.5523104795947],[-0.176445144971766,51.5521622719967],[-0.177174370727562,51.5526776892643],[-0.179837603549235,51.5518338771539],[-0.179687926920286,51.5500609161521],[-0.180161645415419,51.5484855709139],[-0.179608389686969,51.5478954724565],[-0.180228866772892,51.5476714796056],[-0.182039091754673,51.5498001975764],[-0.185747250104817,51.5521596577175],[-0.188753725683197,51.5529497663609],[-0.194957104800365,51.5565399027441],[-0.196774850407015,51.5591546246789],[-0.196725787066427,51.5606974770002],[-0.194826941676313,51.5604838788513],[-0.192289418180666,51.5615566869237],[-0.19112299287364,51.5616561051806],[-0.190346428902951,51.5628715392504],[-0.187744086514261,51.5623654891323],[-0.185013272895369,51.5623764457854],[-0.184415346233158,51.5620668397815],[-0.182222611215768,51.5595275763813],[-0.178568655229602,51.5566994000523],[-0.178575508270877,51.5555897862163],[-0.175974087862306,51.5531475305809],[-0.175905624720725,51.5523104795947]]]},"properties":{"WD25NM":"Frognal","WD25CD":"E05013657","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.148225593839508,51.5532407889399],[-0.147744622912969,51.5524591692854],[-0.147181635495409,51.5487945514759],[-0.149665714545626,51.5508371437793],[-0.153007018031385,51.5491693981061],[-0.154223998057714,51.5504136098963],[-0.156731270314568,51.5510105562111],[-0.159570170797365,51.5505402852266],[-0.15958496591105,51.5498701157806],[-0.160490614034293,51.5488375707758],[-0.161722866282509,51.5486878851263],[-0.167725311436785,51.5524845224955],[-0.167402342986262,51.5537449906564],[-0.164966603226632,51.5541863880179],[-0.166102004398913,51.555070180391],[-0.162962233723056,51.5557109022503],[-0.158558585505163,51.5561056471347],[-0.155350714314341,51.5562378283296],[-0.152547044837481,51.5557931157883],[-0.150009738341215,51.5547410400257],[-0.148225593839508,51.5532407889399]]]},"properties":{"WD25NM":"Gospel Oak","WD25CD":"E05013658","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.158558585505163,51.5561056471347],[-0.162962233723056,51.5557109022503],[-0.166102004398913,51.555070180391],[-0.164966603226632,51.5541863880179],[-0.167402342986262,51.5537449906564],[-0.167725311436785,51.5524845224955],[-0.16917059943922,51.5532130162838],[-0.171625691690797,51.5528883377279],[-0.175071986675058,51.5516735937084],[-0.175882499934812,51.5517234466546],[-0.175905624720725,51.5523104795947],[-0.175974087862306,51.5531475305809],[-0.178575508270877,51.5555897862163],[-0.178568655229602,51.5566994000523],[-0.182222611215768,51.5595275763813],[-0.184415346233158,51.5620668397815],[-0.185013272895369,51.5623764457854],[-0.187744086514261,51.5623654891323],[-0.190346428902951,51.5628715392504],[-0.189645232895486,51.5652165176056],[-0.187142764903119,51.5661555980591],[-0.18614246183503,51.5669234004508],[-0.183760636968241,51.5674682840095],[-0.183387915108403,51.5677676191287],[-0.183672475063841,51.5679568460881],[-0.182112167413734,51.5687260199578],[-0.180817586719776,51.569404503649],[-0.180986768865558,51.5696729187715],[-0.178303613645725,51.5700169140142],[-0.178121993180716,51.5705126675905],[-0.174381521111108,51.5692561535884],[-0.17371380158551,51.5699027883253],[-0.173376244818278,51.5710873088436],[-0.172468275374213,51.5703650567882],[-0.172491725445581,51.566831103888],[-0.168528207436192,51.5640958841276],[-0.166117946626421,51.5631841680997],[-0.164571294420156,51.562107011812],[-0.162242997326533,51.5589834597234],[-0.161375844842719,51.5588097713748],[-0.159085456988318,51.5562568631817],[-0.158558585505163,51.5561056471347]]]},"properties":{"WD25NM":"Hampstead Town","WD25CD":"E05013659","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.147181635495409,51.5487945514759],[-0.146403716912526,51.545473008512],[-0.145897007071677,51.5439125247858],[-0.146895722010047,51.5433211536583],[-0.14732152020891,51.5425135740163],[-0.15265767472956,51.5438602702079],[-0.154719065534502,51.5433495229281],[-0.155071974924131,51.542908219196],[-0.159544652279486,51.5431128385279],[-0.159565213238024,51.5441612891919],[-0.161275021649227,51.5454636824802],[-0.159414830325082,51.546349522976],[-0.158963485930061,51.5470255186097],[-0.161722866282509,51.5486878851263],[-0.160490614034293,51.5488375707758],[-0.15958496591105,51.5498701157806],[-0.159570170797365,51.5505402852266],[-0.156731270314568,51.5510105562111],[-0.154223998057714,51.5504136098963],[-0.153007018031385,51.5491693981061],[-0.149665714545626,51.5508371437793],[-0.147181635495409,51.5487945514759]]]},"properties":{"WD25NM":"Haverstock","WD25CD":"E05013660","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.14239561120072,51.5691060019668],[-0.140627152838409,51.5644594268705],[-0.141034701474325,51.5605000342293],[-0.139426987011815,51.5582422238847],[-0.141980513126703,51.5575385816066],[-0.141784533349094,51.5573025947454],[-0.145809106822034,51.5559133932213],[-0.148225593839508,51.5532407889399],[-0.150009738341215,51.5547410400257],[-0.152547044837481,51.5557931157883],[-0.155350714314341,51.5562378283296],[-0.158558585505163,51.5561056471347],[-0.159085456988318,51.5562568631817],[-0.161375844842719,51.5588097713748],[-0.162242997326533,51.5589834597234],[-0.164571294420156,51.562107011812],[-0.166117946626421,51.5631841680997],[-0.168528207436192,51.5640958841276],[-0.172491725445581,51.566831103888],[-0.172468275374213,51.5703650567882],[-0.173376244818278,51.5710873088436],[-0.17123183297214,51.5724182505535],[-0.167287288028304,51.5729628327758],[-0.164539988212205,51.5725005383324],[-0.160476747192304,51.572779358856],[-0.157735978505448,51.5720509798223],[-0.150146318151361,51.5715539250106],[-0.148682546469594,51.5709359166883],[-0.144381825926643,51.5700843782747],[-0.14239561120072,51.5691060019668]]]},"properties":{"WD25NM":"Highgate","WD25CD":"E05013661","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.105290341558648,51.5185548578323],[-0.10781920575416,51.5177660375894],[-0.113803703413632,51.5182579357095],[-0.111567824442113,51.5153350290831],[-0.113825664039223,51.5148236727585],[-0.114694811598885,51.5160264746857],[-0.119451253170614,51.5145022552862],[-0.121796317287431,51.5148688986258],[-0.12206608989202,51.514615206955],[-0.122853761042668,51.5151401988454],[-0.127169746226547,51.512705102455],[-0.127646380675082,51.5126789292831],[-0.128949099459364,51.5134147753338],[-0.129610815866559,51.5139988087359],[-0.130326509997426,51.5164195906224],[-0.120406704112241,51.5176218590008],[-0.121020915209181,51.5189688870682],[-0.124987395429162,51.5221599478171],[-0.121827419078189,51.5229690423],[-0.115781773916354,51.5243981828193],[-0.114229005936754,51.5254825584562],[-0.113627431450157,51.5245663896952],[-0.11236382231395,51.5237161188056],[-0.10896954375494,51.5230198929364],[-0.108238180531229,51.5220870237213],[-0.10700150504442,51.5221837513426],[-0.105290341558648,51.5185548578323]]]},"properties":{"WD25NM":"Holborn & Covent Garden","WD25CD":"E05013662","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.138419158853717,51.5568681617549],[-0.136987309045876,51.5552616232106],[-0.135303748671231,51.5546384450454],[-0.134082277774744,51.553389821638],[-0.130991514299285,51.5514832598498],[-0.13072064597366,51.5506724836091],[-0.140854618495148,51.5508636830317],[-0.143878219952379,51.5517666638179],[-0.147744622912969,51.5524591692854],[-0.148225593839508,51.5532407889399],[-0.145809106822034,51.5559133932213],[-0.141784533349094,51.5573025947454],[-0.141980513126703,51.5575385816066],[-0.139426987011815,51.5582422238847],[-0.138419158853717,51.5568681617549]]]},"properties":{"WD25NM":"Kentish Town North","WD25CD":"E05013663","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.13072064597366,51.5506724836091],[-0.130127780258333,51.5496117309969],[-0.12910281703075,51.5488366021527],[-0.136942943825475,51.5432475527743],[-0.138377103629121,51.5418236853301],[-0.141552786562091,51.545174764832],[-0.146403716912526,51.545473008512],[-0.147181635495409,51.5487945514759],[-0.147744622912969,51.5524591692854],[-0.143878219952379,51.5517666638179],[-0.140854618495148,51.5508636830317],[-0.13072064597366,51.5506724836091]]]},"properties":{"WD25NM":"Kentish Town South","WD25CD":"E05013664","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.192456287888016,51.5445328166113],[-0.193208074486617,51.5425034468716],[-0.192277505520291,51.5411303587104],[-0.190121150259022,51.5411411659215],[-0.188572411083338,51.5404694758064],[-0.188152036125004,51.5407946548278],[-0.185933994992656,51.5407068750405],[-0.185688036466875,51.5402286816828],[-0.187298110313581,51.539895990777],[-0.186914564261521,51.5394089692516],[-0.182540178834442,51.5406632295963],[-0.179250965278331,51.5412232388005],[-0.178343045457858,51.5398080687385],[-0.180114010393227,51.5395649957935],[-0.184160670423868,51.5382285733756],[-0.187821656046345,51.5349639435007],[-0.188722649361543,51.5345305083697],[-0.191467608561554,51.5362923581516],[-0.201918606288312,51.5452841744629],[-0.203432400717816,51.5467093065561],[-0.202976935310423,51.5466844982414],[-0.201627090168484,51.5453814947388],[-0.19811803267712,51.5462931588047],[-0.195846659509112,51.5463343453943],[-0.195895474795395,51.5457902368565],[-0.196271896043614,51.5458486661772],[-0.197019248688513,51.5449967642108],[-0.196965552015429,51.5444726161266],[-0.193817422838606,51.5441584544157],[-0.193197300126474,51.5442307157082],[-0.193153177379538,51.5445429788832],[-0.192456287888016,51.5445328166113]]]},"properties":{"WD25NM":"Kilburn","WD25CD":"E05013665","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.125064221994798,51.5411429771105],[-0.122399839076584,51.5370495791388],[-0.122563726204788,51.5307531134212],[-0.119838911111641,51.5309471835389],[-0.115925682086207,51.5298315597524],[-0.115451101817419,51.527757860393],[-0.11291918547122,51.5264088150684],[-0.114229005936754,51.5254825584562],[-0.115781773916354,51.5243981828193],[-0.121827419078189,51.5229690423],[-0.124224633341206,51.5269792263129],[-0.126185728702863,51.5291166576183],[-0.128622482612542,51.5334757915598],[-0.126536663775962,51.5341489528378],[-0.126333641155928,51.5346937898716],[-0.128761974434672,51.53696125923],[-0.132408843292803,51.5383220702977],[-0.136617650373953,51.5407940079657],[-0.137483843621674,51.5407936222192],[-0.137559573057897,51.5408923951196],[-0.135828806144326,51.5414687298385],[-0.132031316513159,51.5411462959993],[-0.125064221994798,51.5411429771105]]]},"properties":{"WD25NM":"King's Cross","WD25CD":"E05013666","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.161275021649227,51.5454636824802],[-0.159565213238024,51.5441612891919],[-0.159544652279486,51.5431128385279],[-0.155071974924131,51.542908219196],[-0.151467475456152,51.5414852382933],[-0.146226697268274,51.5367449332651],[-0.146797209200448,51.5361456825846],[-0.149961779581961,51.5373332304837],[-0.152701824938766,51.5375095403736],[-0.159351924771759,51.5363396423738],[-0.160396596135671,51.5372985101376],[-0.164898867211156,51.5357846395308],[-0.169447390913976,51.5385935575131],[-0.170876388503664,51.5377782480577],[-0.171934140702352,51.5384038512207],[-0.173476990559195,51.5376463903178],[-0.174128478544183,51.5382616885941],[-0.173911770601983,51.5394732192807],[-0.175765524440825,51.5396167232221],[-0.175116820451617,51.5436451471875],[-0.173911982488885,51.5440563071942],[-0.169353166548507,51.5446752162075],[-0.162887329511883,51.54552410651],[-0.161275021649227,51.5454636824802]]]},"properties":{"WD25NM":"Primrose Hill","WD25CD":"E05013667","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.130839840038014,51.5272982504121],[-0.135563140165512,51.5257357563027],[-0.141801884378783,51.5241121807716],[-0.143544818600121,51.5239659654064],[-0.143384543178008,51.5245483930348],[-0.143986909810925,51.5246782216528],[-0.14408751434632,51.5239975294581],[-0.145205616696418,51.5239889702526],[-0.145764043772245,51.5252668132184],[-0.147123640879697,51.5250347421722],[-0.152701824938766,51.5375095403736],[-0.149961779581961,51.5373332304837],[-0.146797209200448,51.5361456825846],[-0.146226697268274,51.5367449332651],[-0.145442937975508,51.5364381308661],[-0.143724628908609,51.536426243746],[-0.139973445520306,51.5375709783673],[-0.13735907361433,51.5347480462249],[-0.135459428692289,51.5352241989834],[-0.135472511188228,51.5344446918215],[-0.136155634234771,51.5336066054079],[-0.137788321237376,51.5327459220921],[-0.139276067811511,51.532505125512],[-0.139035891955107,51.5317135108963],[-0.136553181709119,51.5310050592945],[-0.135122544034685,51.5312251524358],[-0.130839840038014,51.5272982504121]]]},"properties":{"WD25NM":"Regent's Park","WD25CD":"E05013668","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.137483843621674,51.5407936222192],[-0.136617650373953,51.5407940079657],[-0.132408843292803,51.5383220702977],[-0.128761974434672,51.53696125923],[-0.126333641155928,51.5346937898716],[-0.126536663775962,51.5341489528378],[-0.128622482612542,51.5334757915598],[-0.126185728702863,51.5291166576183],[-0.130839840038014,51.5272982504121],[-0.135122544034685,51.5312251524358],[-0.136553181709119,51.5310050592945],[-0.139035891955107,51.5317135108963],[-0.139276067811511,51.532505125512],[-0.137788321237376,51.5327459220921],[-0.136155634234771,51.5336066054079],[-0.135472511188228,51.5344446918215],[-0.135459428692289,51.5352241989834],[-0.13735907361433,51.5347480462249],[-0.139973445520306,51.5375709783673],[-0.141409418080943,51.5391226256822],[-0.139332063159206,51.5398767842911],[-0.139878407729634,51.5405135887238],[-0.139091528406554,51.5410439384949],[-0.137483843621674,51.5407936222192]]]},"properties":{"WD25NM":"St Pancras & Somers Town","WD25CD":"E05013669","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.179516496939155,51.5469077430179],[-0.178315386619461,51.5457065520445],[-0.175715623580633,51.5445402479262],[-0.175116820451617,51.5436451471875],[-0.175765524440825,51.5396167232221],[-0.178343045457858,51.5398080687385],[-0.179250965278331,51.5412232388005],[-0.182540178834442,51.5406632295963],[-0.186914564261521,51.5394089692516],[-0.187298110313581,51.539895990777],[-0.185688036466875,51.5402286816828],[-0.185933994992656,51.5407068750405],[-0.188152036125004,51.5407946548278],[-0.188572411083338,51.5404694758064],[-0.190121150259022,51.5411411659215],[-0.192277505520291,51.5411303587104],[-0.193208074486617,51.5425034468716],[-0.192456287888016,51.5445328166113],[-0.191706375008874,51.5450325067908],[-0.191115679340636,51.5467548953632],[-0.18293122029213,51.5474651017286],[-0.181643810219137,51.5474073140687],[-0.180108706099622,51.5467152747386],[-0.179516496939155,51.5469077430179]]]},"properties":{"WD25NM":"South Hampstead","WD25CD":"E05013670","LAD25NM":"Camden"}},{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[-0.180228866772892,51.5476714796056],[-0.179516496939155,51.5469077430179],[-0.180108706099622,51.5467152747386],[-0.181643810219137,51.5474073140687],[-0.18293122029213,51.5474651017286],[-0.191115679340636,51.5467548953632],[-0.191706375008874,51.5450325067908],[-0.192456287888016,51.5445328166113],[-0.193153177379538,51.5445429788832],[-0.193197300126474,51.5442307157082],[-0.193817422838606,51.5441584544157],[-0.196965552015429,51.5444726161266],[-0.197019248688513,51.5449967642108],[-0.196271896043614,51.5458486661772],[-0.195895474795395,51.5457902368565],[-0.195846659509112,51.5463343453943],[-0.19811803267712,51.5462931588047],[-0.201627090168484,51.5453814947388],[-0.202976935310423,51.5466844982414],[-0.203432400717816,51.5467093065561],[-0.203502884364712,51.5467760309005],[-0.203700949695321,51.546962393829],[-0.199865599009338,51.5479662676703],[-0.197794019541565,51.5480144760501],[-0.197445134326969,51.5492865315763],[-0.198659847287605,51.5516175089573],[-0.197591756732584,51.5519286001481],[-0.192956685449468,51.552232271574],[-0.192593378222871,51.5519344088968],[-0.188753725683197,51.5529497663609],[-0.185747250104817,51.5521596577175],[-0.182039091754673,51.5498001975764],[-0.180228866772892,51.5476714796056]]]},"properties":{"WD25NM":"West Hampstead","WD25CD":"E05013671","LAD25NM":"Camden"}}]};
+    const COUNCILLORS_BY_WARD = {"Belsize":[["Judy Dixey","Liberal Democrats","https://camden.moderngov.co.uk/UserData/2/5/9/Info00005952/smallpic.png"],["Matthew Kirk","Liberal Democrats","https://camden.moderngov.co.uk/UserData/3/5/9/Info00005953/smallpic.jpg"],["Tom Simon","Liberal Democrats","https://camden.moderngov.co.uk/UserData/2/5/9/Info00003952/smallpic.jpg"]],"Bloomsbury":[["Lilac Carr","Green Party","https://camden.moderngov.co.uk/UserData/5/5/1/Info00007155/smallpic.jpg"],["Sabrina Francis","Labour Party","https://camden.moderngov.co.uk/UserData/7/4/8/Info00001847/smallpic.jpg"],["Adam Harrison","Labour Party","https://camden.moderngov.co.uk/UserData/4/6/1/Info00000164/smallpic.jpg"]],"Camden Square":[["Sagal Abdi-Wali","Labour Party","https://camden.moderngov.co.uk/UserData/6/5/9/Info00005956/smallpic.png"],["Patricia Leman","Labour Party","https://camden.moderngov.co.uk/UserData/6/8/4/Info00006486/smallpic.jpg"]],"Camden Town":[["Patricia Callaghan","Labour Party","https://camden.moderngov.co.uk/UserData/3/4/1/Info00000143/smallpic.png"],["Matt Cooper","Labour Party","https://camden.moderngov.co.uk/UserData/8/7/9/Info00005978/smallpic.png"]],"Fortune Green":[["William Coles","Liberal Democrats","https://camden.moderngov.co.uk/UserData/2/5/1/Info00007152/smallpic.jpg"],["Nancy Jirira","Liberal Democrats","https://camden.moderngov.co.uk/UserData/6/5/8/Info00005856/smallpic.jpg"],["Farrell Monk","Liberal Democrats","https://camden.moderngov.co.uk/UserData/7/5/1/Info00007157/smallpic.jpg"]],"Frognal":[["Steve Adams","Conservative","https://camden.moderngov.co.uk/UserData/0/5/9/Info00003950/smallpic.jpg"],["Juliette Graham","Conservative","https://camden.moderngov.co.uk/UserData/6/3/1/Info00007136/smallpic.jpg"]],"Gospel Oak":[["Richard Atkins","Green Party","https://camden.moderngov.co.uk/UserData/3/4/1/Info00007143/smallpic.jpg"],["Marcus Boyland","Labour Party","https://camden.moderngov.co.uk/UserData/3/4/7/Info00003743/smallpic.jpg"],["Larraine Revah","Labour Party","https://camden.moderngov.co.uk/UserData/2/1/2/Info00000212/smallpic.jpg"]],"Hampstead Town":[["Linda Chung","Liberal Democrats","https://camden.moderngov.co.uk/UserData/9/1/0/Info00006019/smallpic.jpg"],["Stephen Stark","Conservative","https://camden.moderngov.co.uk/UserData/7/7/4/Info00001477/smallpic.jpg"]],"Haverstock":[["Kemi Atolagbe","Labour Party","https://camden.moderngov.co.uk/UserData/9/5/9/Info00005959/smallpic.jpg"],["Nasrine Djemai","Labour Party","https://camden.moderngov.co.uk/UserData/1/6/9/Info00005961/smallpic.png"],["Rebecca Filer","Labour Party","https://camden.moderngov.co.uk/UserData/0/6/9/Info00005960/smallpic.jpg"]],"Highgate":[["Camron Aref-Adib","Labour Party","https://camden.moderngov.co.uk/UserData/2/6/9/Info00005962/smallpic.jpg"],["Lorna Jane Russell","Green Party","https://camden.moderngov.co.uk/UserData/1/2/3/Info00006321/smallpic.jpg"],["Anna Wright","Labour Party","https://camden.moderngov.co.uk/UserData/3/4/9/Info00003943/smallpic.png"]],"Holborn and Covent Garden":[["Hamza Chowdhury","Green Party","https://camden.moderngov.co.uk/UserData/9/3/1/Info00007139/smallpic.jpg"],["Jim Monahan","Green Party","https://camden.moderngov.co.uk/UserData/0/4/1/Info00007140/smallpic.jpg"],["James White","Green Party","https://camden.moderngov.co.uk/UserData/1/4/1/Info00007141/smallpic.jpg"]],"Kentish Town North":[["Sylvia McNamara","Labour Party","https://camden.moderngov.co.uk/UserData/3/6/9/Info00005963/smallpic.png"],["James Slater","Labour Party","https://camden.moderngov.co.uk/UserData/4/6/9/Info00005964/smallpic.jpg"]],"Kentish Town South":[["Meric Apak","Labour Party","https://camden.moderngov.co.uk/UserData/2/3/1/Info00000132/smallpic.jpg"],["Joseph Ball","Labour Party","https://camden.moderngov.co.uk/UserData/5/8/4/Info00006485/smallpic.jpg"],["Annabelle Williams","Labour Party","https://camden.moderngov.co.uk/UserData/2/4/1/Info00007142/smallpic.jpg"]],"Kilburn":[["Ash Atkinson","Green Party","https://camden.moderngov.co.uk/UserData/7/3/1/Info00007137/smallpic.jpg"],["Eddie Hanson","Labour Party","https://camden.moderngov.co.uk/UserData/5/6/9/Info00005965/smallpic.png"],["Andre Lopez-Turner","Green Party","https://camden.moderngov.co.uk/UserData/8/3/1/Info00007138/smallpic.jpg"]],"King's Cross":[["Lotis Bautista","Labour Party","https://camden.moderngov.co.uk/UserData/8/6/9/Info00005968/smallpic.png"],["Liam Martin-Lane","Labour Party","https://camden.moderngov.co.uk/UserData/9/6/9/Info00005969/smallpic.jpg"],["Jonathan Simpson MBE","Labour Party","https://camden.moderngov.co.uk/UserData/0/2/2/Info00000220/smallpic.jpg"]],"Primrose Hill":[["Dan Corby","Labour Party","https://camden.moderngov.co.uk/UserData/4/4/1/Info00007144/smallpic.jpg"],["Lauren Keiles","Labour Party","https://camden.moderngov.co.uk/UserData/5/4/1/Info00007145/smallpic.jpg"],["Suleiman Osman","Labour Party","https://camden.moderngov.co.uk/UserData/6/4/1/Info00007146/smallpic.jpg"]],"Regent's Park":[["Ruman Jaigirdar","Green Party","https://camden.moderngov.co.uk/UserData/7/4/1/Info00007147/smallpic.jpg"],["Victoria Mery","Green Party","https://camden.moderngov.co.uk/UserData/8/4/1/Info00007148/smallpic.jpg"],["Nanouche Umeadi","Labour Party","https://camden.moderngov.co.uk/UserData/7/6/9/Info00005967/smallpic.png"]],"South Hampstead":[["Arun Kumar","Labour Party","https://camden.moderngov.co.uk/UserData/3/5/1/Info00007153/smallpic.jpg"],["Izzy Lenga","Labour Party","https://camden.moderngov.co.uk/UserData/1/7/9/Info00005971/smallpic.png"],["Francesca Reynolds","Labour Party","https://camden.moderngov.co.uk/UserData/4/5/1/Info00007154/smallpic.jpg"]],"St Pancras and Somers Town":[["Shah Bakth","Camden People's Alliance","https://camden.moderngov.co.uk/UserData/6/5/1/Info00007156/smallpic.jpg"],["Samata Khatoon","Labour Party","https://camden.moderngov.co.uk/UserData/9/7/1/Info00000179/smallpic.jpg"],["Shah Miah","Labour Party","https://camden.moderngov.co.uk/UserData/4/7/9/Info00005974/smallpic.png"]],"West Hampstead":[["Janet Grauberg","Liberal Democrats","https://camden.moderngov.co.uk/UserData/9/4/7/Info00006749/smallpic.jpg"],["Patrick Stillman","Liberal Democrats","https://camden.moderngov.co.uk/UserData/0/5/1/Info00007150/smallpic.jpg"],["Aarti Wadhwani","Liberal Democrats","https://camden.moderngov.co.uk/UserData/1/5/1/Info00007151/smallpic.jpg"]]};
+
+    const PARTY_COLOURS = [
+        { match: /labour/i, colour: "#e81b23", label: "Labour" },
+        { match: /green/i, colour: "#6ab023", label: "Green" },
+        { match: /liberal democrat/i, colour: "#faa61a", label: "Liberal Democrats" },
+        { match: /conservative/i, colour: "#0087dc", label: "Conservative" },
+        { match: /reform/i, colour: "#12b6cf", label: "Reform" },
+        { match: /people'?s alliance|independent/i, colour: "#9b59b6", label: "Independent / CPA" },
+    ];
+    const MIXED_COLOUR = "#808080";
+
+    function partyColour(party) {
+        if (!party) return MIXED_COLOUR;
+        for (const p of PARTY_COLOURS) {
+            if (p.match.test(party)) return p.colour;
+        }
+        return MIXED_COLOUR;
+    }
+
+    function fillColour(councillors) {
+        const parties = new Set(
+            (councillors || [])
+                .map(c => (Array.isArray(c) ? c[1] : c.party) || "")
+                .filter(Boolean)
+        );
+        if (parties.size === 1) return partyColour([...parties][0]);
+        return MIXED_COLOUR;
+    }
+
+    function escapeHtml(str) {
+        return String(str ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+
+    function normaliseCouncillor(c) {
+        if (Array.isArray(c)) {
+            return { name: c[0] || "", party: c[1] || "", photo: c[2] || null };
+        }
+        return {
+            name: c.name || c.Name || "",
+            party: c.party || c.Party || "",
+            photo: c.photo || c.Photo || null,
+        };
+    }
+
+    function councillorListHtml(councillors) {
+        const list = (councillors || []).map(normaliseCouncillor);
+        if (!list.length) return "<li>No data</li>";
+        return list.map(c => {
+            const initial = c.name ? c.name.trim().charAt(0).toUpperCase() : "?";
+            const colour = partyColour(c.party);
+            let avatar;
+            if (c.photo) {
+                avatar =
+                    `<img class="cllr-photo" src="${escapeHtml(c.photo)}" alt="" loading="lazy" ` +
+                    `onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">` +
+                    `<div class="cllr-photo-placeholder" style="display:none">${escapeHtml(initial)}</div>`;
+            } else {
+                avatar = `<div class="cllr-photo-placeholder">${escapeHtml(initial)}</div>`;
+            }
+            return (
+                `<li>${avatar}<div class="cllr-text">` +
+                `<strong>${escapeHtml(c.name)}</strong>` +
+                `<span class="party"><span class="party-dot" style="background:${colour}"></span>${escapeHtml(c.party)}</span>` +
+                `</div></li>`
+            );
+        }).join("");
+    }
+
+    function controlLabel(councillors) {
+        const parties = new Set(
+            (councillors || [])
+                .map(c => normaliseCouncillor(c).party)
+                .filter(Boolean)
+        );
+        if (parties.size === 0) return "No data";
+        if (parties.size === 1) return [...parties][0];
+        return "Mixed";
+    }
+
+    function matchCouncillors(wardName, byWard) {
+        if (wardName in byWard) return byWard[wardName];
+        const alts = [
+            wardName.replace(" and ", " & "),
+            wardName.replace(" & ", " and "),
+        ];
+        for (const a of alts) {
+            if (a in byWard) return byWard[a];
+        }
+        const lower = wardName.toLowerCase();
+        for (const [k, v] of Object.entries(byWard)) {
+            if (k.toLowerCase() === lower) return v;
+        }
+        return [];
+    }
+
+    const map = L.map("map", {
+        zoomControl: true,
+        attributionControl: true,
+    }).setView([51.545, -0.155], 13);
+
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=cb1_4jfy_1_9fde7a09e3062db9638d58fd", {
+        maxZoom: 19,
+        attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
+            '&copy; <a href="https://carto.com/attributions">CARTO</a> | Boundaries &copy; ONS / OS',
+    }).addTo(map);
+
+    let geojsonLayer = null;
+    let wardIndex = {};
+    let selectedLayer = null;
+    let allWardNames = [];
+
+    function style(feature) {
+        return {
+            fillColor: feature.properties.fillColor || MIXED_COLOUR,
+            weight: 1.5,
+            opacity: 1,
+            color: "#ffffff",
+            fillOpacity: 0.55,
+        };
+    }
+
+    function highlightStyle() {
+        return { weight: 3, color: "#002D62", fillOpacity: 0.75 };
+    }
+
+    function buildTooltipHtml(props) {
+        return (
+            `<div class="tooltip-inner">` +
+            `<h4>${escapeHtml(props.ward)} Ward</h4>` +
+            `<ul class="cllr-list">${councillorListHtml(props.councillors)}</ul>` +
+            `</div>`
+        );
+    }
+
+    function buildPopupHtml(props) {
+        const n = (props.councillors || []).length;
+        return (
+            `<div class="popup-inner">` +
+            `<h3>${escapeHtml(props.ward)}</h3>` +
+            `<div class="popup-meta">${n} councillor${n === 1 ? "" : "s"} · ${escapeHtml(controlLabel(props.councillors))}</div>` +
+            `<ul class="cllr-list">${councillorListHtml(props.councillors)}</ul>` +
+            `</div>`
+        );
+    }
+
+    function highlightFeature(e) {
+        const layer = e.target;
+        if (layer === selectedLayer) return;
+        layer.setStyle(highlightStyle());
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) layer.bringToFront();
+        layer
+            .bindTooltip(buildTooltipHtml(layer.feature.properties), {
+                direction: "auto",
+                sticky: true,
+                opacity: 1,
+                className: "info-tooltip",
+            })
+            .openTooltip();
+    }
+
+    function resetHighlight(e) {
+        const layer = e.target;
+        if (layer === selectedLayer) return;
+        if (geojsonLayer) geojsonLayer.resetStyle(layer);
+        layer.closeTooltip();
+    }
+
+    function selectWard(layer) {
+        if (selectedLayer && selectedLayer !== layer) {
+            geojsonLayer.resetStyle(selectedLayer);
+            selectedLayer.closePopup();
+        }
+        selectedLayer = layer;
+        layer.setStyle(highlightStyle());
+        layer.bringToFront();
+        layer.closeTooltip();
+        layer
+            .bindPopup(buildPopupHtml(layer.feature.properties), {
+                maxWidth: 320,
+                className: "ward-popup",
+            })
+            .openPopup();
+        map.fitBounds(layer.getBounds(), { padding: [40, 40], maxZoom: 15 });
+    }
+
+    function onEachFeature(feature, layer) {
+        const name = feature.properties.ward;
+        if (name) wardIndex[name.toLowerCase()] = layer;
+        layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: function (e) {
+                L.DomEvent.stopPropagation(e);
+                selectWard(layer);
+            },
+        });
+    }
+
+    function buildLegend(features) {
+        const used = new Map();
+        used.set(MIXED_COLOUR, "Mixed / Other");
+        for (const f of features) {
+            const cols = f.properties.councillors || [];
+            const parties = new Set(cols.map(c => normaliseCouncillor(c).party).filter(Boolean));
+            if (parties.size === 1) {
+                const p = [...parties][0];
+                const colour = partyColour(p);
+                let label = p;
+                for (const def of PARTY_COLOURS) {
+                    if (def.match.test(p)) { label = def.label; break; }
+                }
+                used.set(colour, label);
+            }
+        }
+        const order = PARTY_COLOURS.map(p => p.colour).concat(MIXED_COLOUR);
+        const items = [];
+        for (const colour of order) {
+            if (used.has(colour)) {
+                items.push(`<i style="background:${colour}"></i> ${escapeHtml(used.get(colour))}<br>`);
+            }
+        }
+        const legend = L.control({ position: "bottomright" });
+        legend.onAdd = function () {
+            const div = L.DomUtil.create("div", "legend");
+            div.innerHTML =
+                `<div class="legend-title">Party control</div>` +
+                items.join("") +
+                `<div class="hint">Grey = seats shared by parties</div>`;
+            return div;
+        };
+        legend.addTo(map);
+    }
+
+    const searchInput = document.getElementById("ward-search");
+    const searchResults = document.getElementById("search-results");
+
+    function renderSearchResults(query) {
+        const q = query.trim().toLowerCase();
+        searchResults.innerHTML = "";
+        if (!q) { searchResults.style.display = "none"; return; }
+        const matches = allWardNames.filter(n => n.toLowerCase().includes(q)).slice(0, 8);
+        if (!matches.length) { searchResults.style.display = "none"; return; }
+        matches.forEach(name => {
+            const layer = wardIndex[name.toLowerCase()];
+            const props = layer ? layer.feature.properties : null;
+            const tag = props ? controlLabel(props.councillors) : "";
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.setAttribute("role", "option");
+            btn.innerHTML = `${escapeHtml(name)}<span class="party-tag">${escapeHtml(tag)}</span>`;
+            btn.addEventListener("click", () => {
+                searchInput.value = name;
+                searchResults.style.display = "none";
+                if (layer) selectWard(layer);
+            });
+            searchResults.appendChild(btn);
+        });
+        searchResults.style.display = "block";
+    }
+
+    searchInput.addEventListener("input", () => renderSearchResults(searchInput.value));
+    searchInput.addEventListener("focus", () => renderSearchResults(searchInput.value));
+    searchInput.addEventListener("keydown", e => {
+        if (e.key === "Escape") { searchResults.style.display = "none"; searchInput.blur(); }
+        if (e.key === "Enter") {
+            const first = searchResults.querySelector("button");
+            if (first) first.click();
+        }
+    });
+    document.addEventListener("click", e => {
+        if (!document.getElementById("search-wrap").contains(e.target)) {
+            searchResults.style.display = "none";
+        }
+    });
+
+    document.getElementById("btn-reset").addEventListener("click", () => {
+        if (selectedLayer) {
+            geojsonLayer.resetStyle(selectedLayer);
+            selectedLayer.closePopup();
+            selectedLayer = null;
+        }
+        if (geojsonLayer) map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+        searchInput.value = "";
+        searchResults.style.display = "none";
+    });
+
+    map.on("popupclose", () => {
+        if (selectedLayer) {
+            geojsonLayer.resetStyle(selectedLayer);
+            selectedLayer = null;
+        }
+    });
+
+    // Init from embedded data
+    const loadingEl = document.getElementById("loading");
+    const features = WARD_GEO.features || [];
+    for (const feat of features) {
+        const props = feat.properties || {};
+        const wardName = props.WD25NM || props.WD24NM || props.ward || "";
+        props.ward = wardName;
+        const raw = matchCouncillors(wardName, COUNCILLORS_BY_WARD);
+        props.councillors = raw.map(c => {
+            const n = normaliseCouncillor(c);
+            return [n.name, n.party, n.photo];
+        });
+        props.fillColor = fillColour(props.councillors);
+    }
+
+    allWardNames = features
+        .map(f => f.properties.ward)
+        .filter(Boolean)
+        .sort((a, b) => a.localeCompare(b));
+
+    geojsonLayer = L.geoJSON(WARD_GEO, {
+        style: style,
+        onEachFeature: onEachFeature,
+    }).addTo(map);
+
+    map.fitBounds(geojsonLayer.getBounds(), { padding: [20, 20] });
+    buildLegend(features);
+
+    loadingEl.classList.add("hidden");
+    setTimeout(() => loadingEl.remove(), 300);
+
+})();
+    </script>
+</body>
+</html>
