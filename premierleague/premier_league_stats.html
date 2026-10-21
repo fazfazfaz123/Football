@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Premier League Managers | Interactive Intelligence</title>
 
   <!-- Google Fonts & DataTables CSS -->
@@ -32,7 +32,8 @@
       background-color: var(--bg-base);
       color: var(--text-headline);
       font-family: 'Inter', sans-serif;
-      padding: 40px 20px;
+      padding: 30px 16px;
+      overflow-x: hidden;
     }
 
     .dash-container {
@@ -44,12 +45,12 @@
       background: var(--card-surface);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 24px;
+      padding: 18px 20px;
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
     }
 
     .kpi-title {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-sub);
@@ -57,30 +58,99 @@
     }
 
     .kpi-value {
-      font-size: 2.2rem;
+      font-size: 1.85rem;
       font-weight: 700;
       color: var(--brand-accent);
-      margin-top: 6px;
+      margin-top: 4px;
+      line-height: 1.2;
     }
 
-    /* DataTables Custom Theme */
+    /* Mobile Responsive Chart Wrappers */
+    .chart-scroll-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 6px;
+    }
+
+    .chart-scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    .chart-scroll-container::-webkit-scrollbar-thumb {
+      background: var(--card-border);
+      border-radius: 4px;
+    }
+
+    .chart-box {
+      position: relative;
+      height: 320px;
+      width: 100%;
+    }
+
+    .chart-box-wide {
+      position: relative;
+      height: 320px;
+      min-width: 100%;
+    }
+
+    .chart-box-doughnut {
+      position: relative;
+      height: 280px;
+      width: 100%;
+    }
+
+    .chart-hint {
+      display: none;
+      font-size: 0.72rem;
+      color: var(--text-sub);
+      margin-top: -6px;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 991.98px) {
+      body {
+        padding: 20px 10px;
+      }
+      .glass-card {
+        padding: 14px 16px;
+      }
+      .kpi-value {
+        font-size: 1.6rem;
+      }
+      .chart-scroll-container .chart-box-wide {
+        min-width: 650px; /* Preserve bar legibility on small screens */
+      }
+      .chart-hint {
+        display: block; /* Inform mobile users that chart can be swiped */
+      }
+      .chart-box-doughnut {
+        height: 240px;
+      }
+    }
+
+    /* DataTables Mobile Styling */
     .dataTables_wrapper {
       color: var(--text-headline);
+      font-size: 0.88rem;
     }
     .dataTables_wrapper .form-control,
     .dataTables_wrapper .form-select {
       background-color: #1e293b;
       border: 1px solid var(--card-border);
       color: #fff;
+      font-size: 0.85rem;
     }
     table.dataTable {
       border-color: var(--card-border) !important;
+      margin-top: 10px !important;
+      margin-bottom: 12px !important;
     }
     table.dataTable thead th {
       background-color: #0f172a;
       color: var(--text-sub);
       border-bottom: 2px solid var(--card-border);
       font-weight: 600;
+      white-space: nowrap;
     }
     table.dataTable tbody tr {
       background-color: var(--card-surface) !important;
@@ -88,6 +158,9 @@
     }
     table.dataTable tbody tr:hover {
       background-color: #1e293b !important;
+    }
+    table.dataTable tbody td {
+      white-space: nowrap;
     }
     .page-item.active .page-link {
       background-color: var(--brand-accent);
@@ -102,8 +175,8 @@
 
     .tag-badge {
       display: inline-block;
-      font-size: 0.7rem;
-      padding: 2px 7px;
+      font-size: 0.68rem;
+      padding: 1px 6px;
       border-radius: 9999px;
       font-weight: 600;
       margin-left: 6px;
@@ -124,83 +197,97 @@
 
 <div class="dash-container">
   <!-- Header -->
-  <header class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom border-secondary border-opacity-25">
+  <header class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 pb-3 border-bottom border-secondary border-opacity-25 gap-2">
     <div>
-      <h1 class="h2 fw-bold text-white mb-1">Premier League Management Analytics</h1>
-      <p class="text-secondary mb-0">Historical tenure analysis, club turnover rates, and demographic distributions.</p>
+      <h1 class="h3 fw-bold text-white mb-1">Premier League Management Analytics</h1>
+      <p class="text-secondary small mb-0">Historical tenure analysis, club turnover rates, and demographic distributions.</p>
     </div>
   </header>
 
   <!-- KPI Row -->
-  <div class="row g-3 mb-4">
-    <div class="col-md-2 col-sm-4 col-6">
+  <div class="row g-2 g-md-3 mb-4">
+    <div class="col-6 col-md-4 col-xl-2">
       <div class="glass-card">
         <div class="kpi-title">Appointments</div>
         <div class="kpi-value">519</div>
       </div>
     </div>
-    <div class="col-md-2 col-sm-4 col-6">
+    <div class="col-6 col-md-4 col-xl-2">
       <div class="glass-card">
         <div class="kpi-title">Individuals</div>
         <div class="kpi-value">305</div>
       </div>
     </div>
-    <div class="col-md-2 col-sm-4 col-6">
+    <div class="col-6 col-md-4 col-xl-2">
       <div class="glass-card">
         <div class="kpi-title">Clubs</div>
         <div class="kpi-value">51</div>
       </div>
     </div>
-    <div class="col-md-2 col-sm-4 col-6">
+    <div class="col-6 col-md-4 col-xl-2">
       <div class="glass-card">
         <div class="kpi-title">Nations</div>
         <div class="kpi-value">28</div>
       </div>
     </div>
-    <div class="col-md-4 col-sm-8 col-12">
+    <div class="col-12 col-md-8 col-xl-4">
       <div class="glass-card">
         <div class="kpi-title">Average Tenure</div>
-        <div class="kpi-value">667 <span style="font-size: 1rem; color: var(--text-sub);">days</span></div>
+        <div class="kpi-value">667 <span style="font-size: 0.9rem; color: var(--text-sub);">days</span></div>
       </div>
     </div>
   </div>
 
   <!-- Charts Row 1 -->
-  <div class="row g-4 mb-4">
+  <div class="row g-3 g-md-4 mb-3 mb-md-4">
     <div class="col-lg-8">
       <div class="glass-card h-100">
-        <h5 class="text-white mb-3">Longest Individual Stints (Ranked Days)</h5>
-        <canvas id="stintsChart" height="110"></canvas>
+        <h6 class="text-white fw-semibold mb-1">Longest Individual Stints</h6>
+        <div class="chart-hint">⇄ Swipe horizontally to inspect full chart</div>
+        <div class="chart-scroll-container">
+          <div class="chart-box-wide">
+            <canvas id="stintsChart"></canvas>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-lg-4">
       <div class="glass-card h-100">
-        <h5 class="text-white mb-3">Top Nationalities</h5>
-        <canvas id="natChart"></canvas>
+        <h6 class="text-white fw-semibold mb-2">Top Nationalities</h6>
+        <div class="chart-box-doughnut">
+          <canvas id="natChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Charts Row 2 -->
-  <div class="row g-4 mb-5">
+  <div class="row g-3 g-md-4 mb-4">
     <div class="col-lg-6">
       <div class="glass-card h-100">
-        <h5 class="text-white mb-3">Most Managerial Appointments by Club</h5>
-        <canvas id="clubChart" height="130"></canvas>
+        <h6 class="text-white fw-semibold mb-1">Most Appointments by Club</h6>
+        <div class="chart-hint">⇄ Swipe horizontally to inspect full chart</div>
+        <div class="chart-scroll-container">
+          <div class="chart-box-wide">
+            <canvas id="clubChart"></canvas>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-lg-6">
       <div class="glass-card h-100">
-        <h5 class="text-white mb-3">Cumulative Days in Charge (All Stints)</h5>
-        <canvas id="cumChart" height="130"></canvas>
+        <h6 class="text-white fw-semibold mb-2">Cumulative Days in Charge (All Stints)</h6>
+        <div class="chart-box">
+          <canvas id="cumChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Data Directory -->
   <div class="glass-card">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="text-white mb-0">Managerial Directory</h5>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6 class="text-white fw-semibold mb-0">Managerial Directory</h6>
     </div>
     <div class="table-responsive">
       <table id="managersDataTable" class="table align-middle w-100">
@@ -228,8 +315,9 @@
     $('#managersDataTable').DataTable({
       data: DATA_PAYLOAD.table_data,
       pageLength: 21,
-      lengthMenu: [10, 21, 50, 100],
+      lengthMenu: [10, 15, 25, 50],
       order: [[5, 'desc']],
+      scrollX: true,
       deferRender: true,
       columns: [
         {
@@ -253,9 +341,18 @@
       ]
     });
 
+    const isMobile = window.innerWidth < 768;
+
     Chart.defaults.color = '#9ca3af';
     Chart.defaults.borderColor = '#1f2937';
     Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.font.size = isMobile ? 11 : 12;
+
+    // Helper to truncate long labels on cramped viewports
+    function formatTickLabel(value) {
+      const str = String(value);
+      return str.length > 18 ? str.substring(0, 16) + '…' : str;
+    }
 
     new Chart(document.getElementById('stintsChart'), {
       type: 'bar',
@@ -269,8 +366,27 @@
       },
       options: {
         responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { grid: { color: '#1f2937' } } }
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { padding: 10, cornerRadius: 8 }
+        },
+        scales: {
+          x: {
+            ticks: {
+              autoSkip: false,
+              maxRotation: 45,
+              minRotation: 25,
+              callback: function(val) {
+                return formatTickLabel(this.getLabelForValue(val));
+              }
+            },
+            grid: { display: false }
+          },
+          y: {
+            grid: { color: '#1f2937' }
+          }
+        }
       }
     });
 
@@ -286,7 +402,17 @@
       },
       options: {
         responsive: true,
-        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } }
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 10,
+              padding: isMobile ? 8 : 12,
+              font: { size: isMobile ? 10 : 11 }
+            }
+          }
+        }
       }
     });
 
@@ -302,8 +428,28 @@
       },
       options: {
         responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } }
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { padding: 10, cornerRadius: 8 }
+        },
+        scales: {
+          x: {
+            ticks: {
+              autoSkip: false,
+              maxRotation: 45,
+              minRotation: 25,
+              callback: function(val) {
+                return formatTickLabel(this.getLabelForValue(val));
+              }
+            },
+            grid: { display: false }
+          },
+          y: {
+            beginAtZero: true,
+            grid: { color: '#1f2937' }
+          }
+        }
       }
     });
 
@@ -320,7 +466,24 @@
       options: {
         indexAxis: 'y',
         responsive: true,
-        plugins: { legend: { display: false } }
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { padding: 10, cornerRadius: 8 }
+        },
+        scales: {
+          x: {
+            grid: { color: '#1f2937' }
+          },
+          y: {
+            ticks: {
+              callback: function(val) {
+                return formatTickLabel(this.getLabelForValue(val));
+              }
+            },
+            grid: { display: false }
+          }
+        }
       }
     });
   });
