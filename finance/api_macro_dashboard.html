@@ -134,7 +134,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-21 11:51:59</div>
+            <div class="timestamp">SYNCED · 2026-10-21 11:57:37</div>
         </header>
 
         
@@ -171,7 +171,7 @@
                     </div>
                 </div>
             </div>
-        <div class="nfp-level">Recent 12 months highlighted</div>
+        <div class="nfp-level"></div>
                 </div>
             </div>
         </div>
@@ -238,7 +238,7 @@
                     </div>
                 </div>
             </div>
-        <div class="nfp-level">Recent 12 months highlighted</div>
+        <div class="nfp-level"></div>
                 </div>
             </div>
         </div>
@@ -292,7 +292,7 @@
                     </div>
                 </div>
             </div>
-        <div class="nfp-level">Recent 12 months highlighted</div>
+        <div class="nfp-level"></div>
                 </div>
             </div>
         </div>
@@ -1284,7 +1284,7 @@
                     lastYr = h.year;
                 }
                 const val = h.mom || 0;
-                const hPct = Math.min(100, Math.max(4, Math.round((Math.abs(val) / peakAbs) * 80)));
+                const hPct = Math.min(100, Math.max(0, Math.round((Math.abs(val) / peakAbs) * 80)));
                 const barCls = val >= 0 ? 'bar-pos' : 'bar-neg';
                 const barStyle = val >= 0 ? `bottom:20%; height:${hPct}%; border-radius:3px 3px 0 0;` : `top:80%; height:${hPct}%; border-radius:0 0 3px 3px;`;
                 const secStr = h.sec !== null && h.sec !== undefined ? `${cfg.is_uk_gdp ? 'Rolling 12M' : 'YoY'}: ${h.sec > 0 ? '+' : ''}${h.sec.toFixed(1)}%` : '';
