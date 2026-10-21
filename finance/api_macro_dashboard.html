@@ -69,7 +69,7 @@
 
         .cpi-chart-wrapper-inner { display: flex; align-items: stretch; height: 200px; position: relative; }
         .cpi-yaxis { position: relative; min-width: 52px; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; color: var(--text-dim); padding-right: 10px; text-align: right; }
-        .cpi-yaxis-right { padding-right: 0; padding-left: 10px; text-align: left; }
+        .cpi-yaxis-right { padding-right: 0; padding-left: 10px; text-align: left; min-width: 58px; }
         .axis-tag { position: absolute; top: -18px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; }
         .cpi-bar-chart { display: flex; align-items: stretch; height: 160px; position: relative; }
         .cpi-bar-chart::after { content: ''; position: absolute; left: 0; right: 0; top: 80%; height: 1px; background: var(--border-bright); z-index: 3; }
@@ -77,11 +77,79 @@
         .chart-bar { position: absolute; width: 100%; max-width: 6px; background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%); }
         .chart-bar.bar-neg { background: linear-gradient(0deg, #60a5fa 0%, #3b82f6 100%); }
 
-        .table-container { width: 100%; overflow-x: auto; max-height: 540px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); }
-        table.macro-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; text-align: left; }
-        table.macro-table th, table.macro-table td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--border); white-space: nowrap; }
-        table.macro-table th { background: #121218; color: var(--text-dim); position: sticky; top: 0; z-index: 10; cursor: pointer; }
-        table.macro-table td.num { font-family: 'JetBrains Mono', monospace; text-align: right; }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            max-height: 540px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            position: relative;
+        }
+        table.macro-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.84rem;
+            text-align: center;
+        }
+        table.macro-table th, table.macro-table td {
+            padding: 0.65rem 0.85rem;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+            text-align: center;
+        }
+        table.macro-table th {
+            background: #121218;
+            color: var(--text-dim);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        table.macro-table th:hover {
+            background: #191924;
+            color: var(--text);
+        }
+        .sort-icon {
+            font-size: 0.68rem;
+            margin-left: 0.25rem;
+            opacity: 0.45;
+        }
+        table.macro-table th.sorted-asc .sort-icon,
+        table.macro-table th.sorted-desc .sort-icon {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        /* Sticky Left Column Styling */
+        table.macro-table th.sticky-col {
+            position: sticky;
+            left: 0;
+            top: 0;
+            z-index: 25;
+            background: #121218;
+            box-shadow: 2px 0 6px rgba(0, 0, 0, 0.4);
+            border-right: 1px solid var(--border);
+        }
+        table.macro-table td.sticky-col {
+            position: sticky;
+            left: 0;
+            z-index: 15;
+            background: var(--surface-2);
+            box-shadow: 2px 0 6px rgba(0, 0, 0, 0.4);
+            border-right: 1px solid var(--border);
+        }
+        table.macro-table tr:hover td.sticky-col {
+            background: var(--surface-hover);
+        }
+
+        table.macro-table td.num {
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+        }
 
         /* Table economic color logic */
         td.dir-good { color: var(--good); background: rgba(16, 185, 129, 0.1); }
@@ -134,7 +202,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-21 12:54:53</div>
+            <div class="timestamp">SYNCED · 2026-10-21 13:10:58</div>
         </header>
 
         
@@ -319,317 +387,323 @@
                 <table class="macro-table" id="macroMatrixTable">
                     <thead>
                         <tr>
-                            <th>Country</th><th>CB Rate (%)</th><th>CPI YoY (%)</th><th>Real Rate (%)</th>
-                            <th>GDP YoY (%)</th><th>CB Δ</th><th>CPI Δ</th><th>GDP Δ</th>
+                            <th class="sticky-col" onclick="sortTable(0)">Country <span class="sort-icon">⇅</span></th>
+                            <th onclick="sortTable(1)">CB Rate (%) <span class="sort-icon">⇅</span></th>
+                            <th onclick="sortTable(2)">CPI YoY (%) <span class="sort-icon">⇅</span></th>
+                            <th onclick="sortTable(3)">Real Rate (%) <span class="sort-icon">⇅</span></th>
+                            <th onclick="sortTable(4)">GDP YoY (%) <span class="sort-icon">⇅</span></th>
+                            <th onclick="sortTable(5)">CB Δ <span class="sort-icon">⇅</span></th>
+                            <th onclick="sortTable(6)">CPI Δ <span class="sort-icon">⇅</span></th>
+                            <th onclick="sortTable(7)">GDP Δ <span class="sort-icon">⇅</span></th>
                         </tr>
                     </thead>
                     <tbody>
             <tr>
-                <td class="country sticky-col"><strong>Iran</strong></td>
-                <td class="num dir-flat">23.00</td>
-                <td class="num dir-good">87.90</td>
-                <td class="num"><strong>-64.90</strong></td>
-                <td class="num dir-bad">1.59</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-good">▼ -0.70</td>
-                <td class="num chg dir-bad">▼ -1.53</td>
+                <td class="country sticky-col" data-val="Iran"><strong>Iran</strong></td>
+                <td class="num dir-flat" data-val="23.0">● 23.00</td>
+                <td class="num dir-good" data-val="87.9">▼ 87.90</td>
+                <td class="num" data-val="-64.9"><strong>-64.90</strong></td>
+                <td class="num dir-bad" data-val="1.59">▼ 1.59</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-good" data-val="-0.7">-0.70</td>
+                <td class="num chg dir-bad" data-val="-1.53">-1.53</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Argentina</strong></td>
-                <td class="num dir-flat">29.00</td>
-                <td class="num dir-good">33.40</td>
-                <td class="num"><strong>-4.40</strong></td>
-                <td class="num dir-bad">-0.60</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-good">▼ -0.10</td>
-                <td class="num chg dir-bad">▼ -1.30</td>
+                <td class="country sticky-col" data-val="Argentina"><strong>Argentina</strong></td>
+                <td class="num dir-flat" data-val="29.0">● 29.00</td>
+                <td class="num dir-good" data-val="33.4">▼ 33.40</td>
+                <td class="num" data-val="-4.399999999999999"><strong>-4.40</strong></td>
+                <td class="num dir-bad" data-val="-0.6">▼ -0.60</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-good" data-val="-0.1">-0.10</td>
+                <td class="num chg dir-bad" data-val="-1.3">-1.30</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Greece</strong></td>
-                <td class="num dir-bad">2.50</td>
-                <td class="num dir-bad">5.00</td>
-                <td class="num"><strong>-2.50</strong></td>
-                <td class="num dir-bad">1.90</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +1.20</td>
-                <td class="num chg dir-bad">▼ -0.10</td>
+                <td class="country sticky-col" data-val="Greece"><strong>Greece</strong></td>
+                <td class="num dir-bad" data-val="2.5">▲ 2.50</td>
+                <td class="num dir-bad" data-val="5.0">▲ 5.00</td>
+                <td class="num" data-val="-2.5"><strong>-2.50</strong></td>
+                <td class="num dir-bad" data-val="1.9">▼ 1.90</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="1.2">+1.20</td>
+                <td class="num chg dir-bad" data-val="-0.1">-0.10</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Spain</strong></td>
-                <td class="num dir-bad">2.50</td>
-                <td class="num dir-bad">4.90</td>
-                <td class="num"><strong>-2.40</strong></td>
-                <td class="num dir-bad">2.60</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.60</td>
-                <td class="num chg dir-bad">▼ -0.10</td>
+                <td class="country sticky-col" data-val="Spain"><strong>Spain</strong></td>
+                <td class="num dir-bad" data-val="2.5">▲ 2.50</td>
+                <td class="num dir-bad" data-val="4.9">▲ 4.90</td>
+                <td class="num" data-val="-2.4000000000000004"><strong>-2.40</strong></td>
+                <td class="num dir-bad" data-val="2.6">▼ 2.60</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.6">+0.60</td>
+                <td class="num chg dir-bad" data-val="-0.1">-0.10</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Italy</strong></td>
-                <td class="num dir-bad">2.50</td>
-                <td class="num dir-bad">4.20</td>
-                <td class="num"><strong>-1.70</strong></td>
-                <td class="num dir-good">1.00</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.90</td>
-                <td class="num chg dir-good">▲ +0.20</td>
+                <td class="country sticky-col" data-val="Italy"><strong>Italy</strong></td>
+                <td class="num dir-bad" data-val="2.5">▲ 2.50</td>
+                <td class="num dir-bad" data-val="4.2">▲ 4.20</td>
+                <td class="num" data-val="-1.7000000000000002"><strong>-1.70</strong></td>
+                <td class="num dir-good" data-val="1.0">▲ 1.00</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.9">+0.90</td>
+                <td class="num chg dir-good" data-val="0.2">+0.20</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Eurozone</strong></td>
-                <td class="num dir-bad">2.50</td>
-                <td class="num dir-bad">3.80</td>
-                <td class="num"><strong>-1.30</strong></td>
-                <td class="num dir-good">0.50</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.60</td>
-                <td class="num chg dir-good">▲ +0.20</td>
+                <td class="country sticky-col" data-val="Eurozone"><strong>Eurozone</strong></td>
+                <td class="num dir-bad" data-val="2.5">▲ 2.50</td>
+                <td class="num dir-bad" data-val="3.8">▲ 3.80</td>
+                <td class="num" data-val="-1.2999999999999998"><strong>-1.30</strong></td>
+                <td class="num dir-good" data-val="0.5">▲ 0.50</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.6">+0.60</td>
+                <td class="num chg dir-good" data-val="0.2">+0.20</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Switzerland</strong></td>
-                <td class="num dir-flat">0.00</td>
-                <td class="num dir-bad">1.00</td>
-                <td class="num"><strong>-1.00</strong></td>
-                <td class="num dir-good">2.80</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.20</td>
-                <td class="num chg dir-good">▲ +2.30</td>
+                <td class="country sticky-col" data-val="Switzerland"><strong>Switzerland</strong></td>
+                <td class="num dir-flat" data-val="0.0">● 0.00</td>
+                <td class="num dir-bad" data-val="1.0">▲ 1.00</td>
+                <td class="num" data-val="-1.0"><strong>-1.00</strong></td>
+                <td class="num dir-good" data-val="2.8">▲ 2.80</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.2">+0.20</td>
+                <td class="num chg dir-good" data-val="2.3">+2.30</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Netherlands</strong></td>
-                <td class="num dir-bad">2.50</td>
-                <td class="num dir-bad">3.40</td>
-                <td class="num"><strong>-0.90</strong></td>
-                <td class="num dir-good">1.60</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.10</td>
-                <td class="num chg dir-good">▲ +0.20</td>
+                <td class="country sticky-col" data-val="Netherlands"><strong>Netherlands</strong></td>
+                <td class="num dir-bad" data-val="2.5">▲ 2.50</td>
+                <td class="num dir-bad" data-val="3.4">▲ 3.40</td>
+                <td class="num" data-val="-0.8999999999999999"><strong>-0.90</strong></td>
+                <td class="num dir-good" data-val="1.6">▲ 1.60</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.1">+0.10</td>
+                <td class="num chg dir-good" data-val="0.2">+0.20</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Canada</strong></td>
-                <td class="num dir-flat">2.25</td>
-                <td class="num dir-bad">3.10</td>
-                <td class="num"><strong>-0.85</strong></td>
-                <td class="num dir-good">1.13</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.10</td>
-                <td class="num chg dir-good">▲ +1.07</td>
+                <td class="country sticky-col" data-val="Canada"><strong>Canada</strong></td>
+                <td class="num dir-flat" data-val="2.25">● 2.25</td>
+                <td class="num dir-bad" data-val="3.1">▲ 3.10</td>
+                <td class="num" data-val="-0.8500000000000001"><strong>-0.85</strong></td>
+                <td class="num dir-good" data-val="1.13">▲ 1.13</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.1">+0.10</td>
+                <td class="num chg dir-good" data-val="1.07">+1.07</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Germany</strong></td>
-                <td class="num dir-bad">2.50</td>
-                <td class="num dir-bad">3.30</td>
-                <td class="num"><strong>-0.80</strong></td>
-                <td class="num dir-good">1.00</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.40</td>
-                <td class="num chg dir-good">▲ +0.30</td>
+                <td class="country sticky-col" data-val="Germany"><strong>Germany</strong></td>
+                <td class="num dir-bad" data-val="2.5">▲ 2.50</td>
+                <td class="num dir-bad" data-val="3.3">▲ 3.30</td>
+                <td class="num" data-val="-0.7999999999999998"><strong>-0.80</strong></td>
+                <td class="num dir-good" data-val="1.0">▲ 1.00</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.4">+0.40</td>
+                <td class="num chg dir-good" data-val="0.3">+0.30</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Japan</strong></td>
-                <td class="num dir-bad">1.25</td>
-                <td class="num dir-flat">1.90</td>
-                <td class="num"><strong>-0.65</strong></td>
-                <td class="num dir-bad">1.10</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▼ -0.80</td>
+                <td class="country sticky-col" data-val="Japan"><strong>Japan</strong></td>
+                <td class="num dir-bad" data-val="1.25">▲ 1.25</td>
+                <td class="num dir-flat" data-val="1.9">● 1.90</td>
+                <td class="num" data-val="-0.6499999999999999"><strong>-0.65</strong></td>
+                <td class="num dir-bad" data-val="1.1">▼ 1.10</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="-0.8">-0.80</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>France</strong></td>
-                <td class="num dir-bad">2.50</td>
-                <td class="num dir-bad">3.10</td>
-                <td class="num"><strong>-0.60</strong></td>
-                <td class="num dir-bad">0.50</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.70</td>
-                <td class="num chg dir-bad">▼ -0.40</td>
+                <td class="country sticky-col" data-val="France"><strong>France</strong></td>
+                <td class="num dir-bad" data-val="2.5">▲ 2.50</td>
+                <td class="num dir-bad" data-val="3.1">▲ 3.10</td>
+                <td class="num" data-val="-0.6000000000000001"><strong>-0.60</strong></td>
+                <td class="num dir-bad" data-val="0.5">▼ 0.50</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.7">+0.70</td>
+                <td class="num chg dir-bad" data-val="-0.4">-0.40</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Poland</strong></td>
-                <td class="num dir-flat">3.75</td>
-                <td class="num dir-bad">4.10</td>
-                <td class="num"><strong>-0.35</strong></td>
-                <td class="num dir-good">3.90</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.70</td>
-                <td class="num chg dir-good">▲ +0.40</td>
+                <td class="country sticky-col" data-val="Poland"><strong>Poland</strong></td>
+                <td class="num dir-flat" data-val="3.75">● 3.75</td>
+                <td class="num dir-bad" data-val="4.1">▲ 4.10</td>
+                <td class="num" data-val="-0.34999999999999964"><strong>-0.35</strong></td>
+                <td class="num dir-good" data-val="3.9">▲ 3.90</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.7">+0.70</td>
+                <td class="num chg dir-good" data-val="0.4">+0.40</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>India</strong></td>
-                <td class="num dir-flat">5.25</td>
-                <td class="num dir-bad">5.54</td>
-                <td class="num"><strong>-0.29</strong></td>
-                <td class="num dir-good">7.70</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.71</td>
-                <td class="num chg dir-good">▲ +1.20</td>
+                <td class="country sticky-col" data-val="India"><strong>India</strong></td>
+                <td class="num dir-flat" data-val="5.25">● 5.25</td>
+                <td class="num dir-bad" data-val="5.54">▲ 5.54</td>
+                <td class="num" data-val="-0.29000000000000004"><strong>-0.29</strong></td>
+                <td class="num dir-good" data-val="7.7">▲ 7.70</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.71">+0.71</td>
+                <td class="num chg dir-good" data-val="1.2">+1.20</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>South Korea</strong></td>
-                <td class="num dir-flat">3.00</td>
-                <td class="num dir-bad">3.10</td>
-                <td class="num"><strong>-0.10</strong></td>
-                <td class="num dir-good">3.70</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.30</td>
-                <td class="num chg dir-good">▲ +0.10</td>
+                <td class="country sticky-col" data-val="South Korea"><strong>South Korea</strong></td>
+                <td class="num dir-flat" data-val="3.0">● 3.00</td>
+                <td class="num dir-bad" data-val="3.1">▲ 3.10</td>
+                <td class="num" data-val="-0.10000000000000009"><strong>-0.10</strong></td>
+                <td class="num dir-good" data-val="3.7">▲ 3.70</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.3">+0.30</td>
+                <td class="num chg dir-good" data-val="0.1">+0.10</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>USA</strong></td>
-                <td class="num dir-bad">3.88</td>
-                <td class="num dir-bad">3.70</td>
-                <td class="num"><strong>0.18</strong></td>
-                <td class="num dir-good">2.20</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.30</td>
-                <td class="num chg dir-good">▲ +0.10</td>
+                <td class="country sticky-col" data-val="USA"><strong>USA</strong></td>
+                <td class="num dir-bad" data-val="3.88">▲ 3.88</td>
+                <td class="num dir-bad" data-val="3.7">▲ 3.70</td>
+                <td class="num" data-val="0.17999999999999972"><strong>0.18</strong></td>
+                <td class="num dir-good" data-val="2.2">▲ 2.20</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.3">+0.30</td>
+                <td class="num chg dir-good" data-val="0.1">+0.10</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>UK</strong></td>
-                <td class="num dir-flat">3.75</td>
-                <td class="num dir-bad">3.10</td>
-                <td class="num"><strong>0.65</strong></td>
-                <td class="num dir-good">1.40</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.20</td>
-                <td class="num chg dir-good">▲ +0.50</td>
+                <td class="country sticky-col" data-val="UK"><strong>UK</strong></td>
+                <td class="num dir-flat" data-val="3.75">● 3.75</td>
+                <td class="num dir-bad" data-val="3.1">▲ 3.10</td>
+                <td class="num" data-val="0.6499999999999999"><strong>0.65</strong></td>
+                <td class="num dir-good" data-val="1.4">▲ 1.40</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.2">+0.20</td>
+                <td class="num chg dir-good" data-val="0.5">+0.50</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Australia</strong></td>
-                <td class="num dir-bad">4.60</td>
-                <td class="num dir-good">3.90</td>
-                <td class="num"><strong>0.70</strong></td>
-                <td class="num dir-bad">2.10</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-good">▼ -0.20</td>
-                <td class="num chg dir-bad">▼ -0.40</td>
+                <td class="country sticky-col" data-val="Australia"><strong>Australia</strong></td>
+                <td class="num dir-bad" data-val="4.6">▲ 4.60</td>
+                <td class="num dir-good" data-val="3.9">▼ 3.90</td>
+                <td class="num" data-val="0.6999999999999997"><strong>0.70</strong></td>
+                <td class="num dir-bad" data-val="2.1">▼ 2.10</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-good" data-val="-0.2">-0.20</td>
+                <td class="num chg dir-bad" data-val="-0.4">-0.40</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Israel</strong></td>
-                <td class="num dir-good">3.25</td>
-                <td class="num dir-bad">1.60</td>
-                <td class="num"><strong>1.65</strong></td>
-                <td class="num dir-good">3.50</td>
-                <td class="num chg dir-good">▼ -0.25</td>
-                <td class="num chg dir-bad">▲ +0.10</td>
-                <td class="num chg dir-good">▲ +3.90</td>
+                <td class="country sticky-col" data-val="Israel"><strong>Israel</strong></td>
+                <td class="num dir-good" data-val="3.25">▼ 3.25</td>
+                <td class="num dir-bad" data-val="1.6">▲ 1.60</td>
+                <td class="num" data-val="1.65"><strong>1.65</strong></td>
+                <td class="num dir-good" data-val="3.5">▲ 3.50</td>
+                <td class="num chg dir-good" data-val="-0.25">-0.25</td>
+                <td class="num chg dir-bad" data-val="0.1">+0.10</td>
+                <td class="num chg dir-good" data-val="3.9">+3.90</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>China</strong></td>
-                <td class="num dir-flat">3.00</td>
-                <td class="num dir-bad">0.90</td>
-                <td class="num"><strong>2.10</strong></td>
-                <td class="num dir-good">4.50</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.10</td>
-                <td class="num chg dir-good">▲ +0.20</td>
+                <td class="country sticky-col" data-val="China"><strong>China</strong></td>
+                <td class="num dir-flat" data-val="3.0">● 3.00</td>
+                <td class="num dir-bad" data-val="0.9">▲ 0.90</td>
+                <td class="num" data-val="2.1"><strong>2.10</strong></td>
+                <td class="num dir-good" data-val="4.5">▲ 4.50</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.1">+0.10</td>
+                <td class="num chg dir-good" data-val="0.2">+0.20</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Indonesia</strong></td>
-                <td class="num dir-flat">5.75</td>
-                <td class="num dir-bad">3.28</td>
-                <td class="num"><strong>2.47</strong></td>
-                <td class="num dir-good">3.73</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.09</td>
-                <td class="num chg dir-good">▲ +4.50</td>
+                <td class="country sticky-col" data-val="Indonesia"><strong>Indonesia</strong></td>
+                <td class="num dir-flat" data-val="5.75">● 5.75</td>
+                <td class="num dir-bad" data-val="3.28">▲ 3.28</td>
+                <td class="num" data-val="2.47"><strong>2.47</strong></td>
+                <td class="num dir-good" data-val="3.73">▲ 3.73</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.09">+0.09</td>
+                <td class="num chg dir-good" data-val="4.5">+4.50</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Saudi Arabia</strong></td>
-                <td class="num dir-bad">4.50</td>
-                <td class="num dir-bad">1.90</td>
-                <td class="num"><strong>2.60</strong></td>
-                <td class="num dir-bad">-4.80</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.10</td>
-                <td class="num chg dir-bad">▼ -3.40</td>
+                <td class="country sticky-col" data-val="Saudi Arabia"><strong>Saudi Arabia</strong></td>
+                <td class="num dir-bad" data-val="4.5">▲ 4.50</td>
+                <td class="num dir-bad" data-val="1.9">▲ 1.90</td>
+                <td class="num" data-val="2.6"><strong>2.60</strong></td>
+                <td class="num dir-bad" data-val="-4.8">▼ -4.80</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.1">+0.10</td>
+                <td class="num chg dir-bad" data-val="-3.4">-3.40</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>South Africa</strong></td>
-                <td class="num dir-bad">7.25</td>
-                <td class="num dir-bad">4.40</td>
-                <td class="num"><strong>2.85</strong></td>
-                <td class="num dir-bad">0.90</td>
-                <td class="num chg dir-bad">▲ +0.25</td>
-                <td class="num chg dir-bad">▲ +0.10</td>
-                <td class="num chg dir-bad">▼ -1.00</td>
+                <td class="country sticky-col" data-val="South Africa"><strong>South Africa</strong></td>
+                <td class="num dir-bad" data-val="7.25">▲ 7.25</td>
+                <td class="num dir-bad" data-val="4.4">▲ 4.40</td>
+                <td class="num" data-val="2.8499999999999996"><strong>2.85</strong></td>
+                <td class="num dir-bad" data-val="0.9">▼ 0.90</td>
+                <td class="num chg dir-bad" data-val="0.25">+0.25</td>
+                <td class="num chg dir-bad" data-val="0.1">+0.10</td>
+                <td class="num chg dir-bad" data-val="-1.0">-1.00</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Mexico</strong></td>
-                <td class="num dir-flat">6.50</td>
-                <td class="num dir-bad">3.45</td>
-                <td class="num"><strong>3.05</strong></td>
-                <td class="num dir-bad">2.10</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-bad">▲ +0.19</td>
-                <td class="num chg dir-bad">▼ -0.10</td>
+                <td class="country sticky-col" data-val="Mexico"><strong>Mexico</strong></td>
+                <td class="num dir-flat" data-val="6.5">● 6.50</td>
+                <td class="num dir-bad" data-val="3.45">▲ 3.45</td>
+                <td class="num" data-val="3.05"><strong>3.05</strong></td>
+                <td class="num dir-bad" data-val="2.1">▼ 2.10</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-bad" data-val="0.19">+0.19</td>
+                <td class="num chg dir-bad" data-val="-0.1">-0.10</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Ukraine</strong></td>
-                <td class="num dir-bad">16.00</td>
-                <td class="num dir-bad">10.00</td>
-                <td class="num"><strong>6.00</strong></td>
-                <td class="num dir-good">0.40</td>
-                <td class="num chg dir-bad">▲ +0.50</td>
-                <td class="num chg dir-bad">▲ +1.90</td>
-                <td class="num chg dir-good">▲ +1.00</td>
+                <td class="country sticky-col" data-val="Ukraine"><strong>Ukraine</strong></td>
+                <td class="num dir-bad" data-val="16.0">▲ 16.00</td>
+                <td class="num dir-bad" data-val="10.0">▲ 10.00</td>
+                <td class="num" data-val="6.0"><strong>6.00</strong></td>
+                <td class="num dir-good" data-val="0.4">▲ 0.40</td>
+                <td class="num chg dir-bad" data-val="0.5">+0.50</td>
+                <td class="num chg dir-bad" data-val="1.9">+1.90</td>
+                <td class="num chg dir-good" data-val="1.0">+1.00</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Turkey</strong></td>
-                <td class="num dir-flat">37.00</td>
-                <td class="num dir-good">29.73</td>
-                <td class="num"><strong>7.27</strong></td>
-                <td class="num dir-bad">2.30</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-good">▼ -1.78</td>
-                <td class="num chg dir-bad">▼ -0.30</td>
+                <td class="country sticky-col" data-val="Turkey"><strong>Turkey</strong></td>
+                <td class="num dir-flat" data-val="37.0">● 37.00</td>
+                <td class="num dir-good" data-val="29.73">▼ 29.73</td>
+                <td class="num" data-val="7.27"><strong>7.27</strong></td>
+                <td class="num dir-bad" data-val="2.3">▼ 2.30</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-good" data-val="-1.78">-1.78</td>
+                <td class="num chg dir-bad" data-val="-0.3">-0.30</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Russia</strong></td>
-                <td class="num dir-flat">14.00</td>
-                <td class="num dir-flat">6.30</td>
-                <td class="num"><strong>7.70</strong></td>
-                <td class="num dir-good">1.30</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-flat">● 0.00</td>
-                <td class="num chg dir-good">▲ +1.50</td>
+                <td class="country sticky-col" data-val="Russia"><strong>Russia</strong></td>
+                <td class="num dir-flat" data-val="14.0">● 14.00</td>
+                <td class="num dir-flat" data-val="6.3">● 6.30</td>
+                <td class="num" data-val="7.7"><strong>7.70</strong></td>
+                <td class="num dir-good" data-val="1.3">▲ 1.30</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-flat" data-val="0.0">0.00</td>
+                <td class="num chg dir-good" data-val="1.5">+1.50</td>
             </tr>
         
             <tr>
-                <td class="country sticky-col"><strong>Brazil</strong></td>
-                <td class="num dir-good">13.75</td>
-                <td class="num dir-bad">4.58</td>
-                <td class="num"><strong>9.17</strong></td>
-                <td class="num dir-good">2.00</td>
-                <td class="num chg dir-good">▼ -0.25</td>
-                <td class="num chg dir-bad">▲ +0.36</td>
-                <td class="num chg dir-good">▲ +0.20</td>
+                <td class="country sticky-col" data-val="Brazil"><strong>Brazil</strong></td>
+                <td class="num dir-good" data-val="13.75">▼ 13.75</td>
+                <td class="num dir-bad" data-val="4.58">▲ 4.58</td>
+                <td class="num" data-val="9.17"><strong>9.17</strong></td>
+                <td class="num dir-good" data-val="2.0">▲ 2.00</td>
+                <td class="num chg dir-good" data-val="-0.25">-0.25</td>
+                <td class="num chg dir-bad" data-val="0.36">+0.36</td>
+                <td class="num chg dir-good" data-val="0.2">+0.20</td>
             </tr>
         </tbody>
                 </table>
@@ -645,7 +719,7 @@
             <div id="cb-tab-0" class="cb-tab-content" style="display: block;">
                 <div class="table-container">
                     <table class="macro-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
+                        <thead><tr><th style="text-align: center;">Date</th><th style="text-align: center;">Event / Meeting Type</th></tr></thead>
                         <tbody><tr><td class="country">2026-11-05</td><td>MPC Meeting (with MPR)</td></tr><tr><td class="country">2026-12-17</td><td>MPC Meeting</td></tr><tr><td class="country">2027-02-04</td><td>MPC Meeting (with MPR)</td></tr><tr><td class="country">2027-03-18</td><td>MPC Meeting</td></tr><tr><td class="country">2027-04-29</td><td>MPC Meeting (with MPR)</td></tr></tbody>
                     </table>
                 </div>
@@ -654,7 +728,7 @@
             <div id="cb-tab-1" class="cb-tab-content" style="display: none;">
                 <div class="table-container">
                     <table class="macro-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
+                        <thead><tr><th style="text-align: center;">Date</th><th style="text-align: center;">Event / Meeting Type</th></tr></thead>
                         <tbody><tr><td class="country">2026-10-29</td><td>Governing Council Meeting</td></tr><tr><td class="country">2026-12-17</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-02-04</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-03-18</td><td>Governing Council Meeting</td></tr><tr><td class="country">2027-04-29</td><td>Governing Council Meeting</td></tr></tbody>
                     </table>
                 </div>
@@ -663,7 +737,7 @@
             <div id="cb-tab-2" class="cb-tab-content" style="display: none;">
                 <div class="table-container">
                     <table class="macro-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
+                        <thead><tr><th style="text-align: center;">Date</th><th style="text-align: center;">Event / Meeting Type</th></tr></thead>
                         <tbody><tr><td class="country">2026-10-28</td><td>FOMC Rate Decision</td></tr><tr><td class="country">2026-12-09</td><td>FOMC Rate Decision & Projections</td></tr><tr><td class="country">2027-01-27</td><td>FOMC Rate Decision</td></tr><tr><td class="country">2027-03-17</td><td>FOMC Rate Decision & Projections</td></tr><tr><td class="country">2027-04-28</td><td>FOMC Rate Decision</td></tr></tbody>
                     </table>
                 </div>
@@ -1281,6 +1355,7 @@
             const vals = history.map(h => h.mom || 0);
             const peakAbs = cfg.max_cap || (Math.max(...vals.map(Math.abs), 1.0) * (range === '5y' ? 1.15 : 1.25));
             const yoyVals = history.map(h => h.sec).filter(v => v !== null && v !== undefined);
+            const hasSec = yoyVals.length > 0;
             const peakSec = Math.max(...yoyVals.map(Math.abs), 3.0) * 1.25;
 
             let barsHtml = '', linesHtml = '', labelsHtml = '', svgPts = [];
@@ -1314,16 +1389,64 @@
             const svgOverlay = svgPts.length ? `<svg style="position:absolute; inset:0; width:100%; height:160px; pointer-events:none; z-index:4;" overflow="hidden"><polyline fill="none" stroke="#f59e0b" stroke-width="2.25" stroke-linecap="round" points="${svgPts.join(' ')}"/></svg>` : '';
             const highlightBox = (!cfg.is_nfp && total >= 12) ? `<div style="position:absolute; top:0; bottom:0; background:rgba(59,130,246,0.07); left:${(total - 12) * barPitch}px; width:${12 * barPitch}px; pointer-events:none; z-index:2;"></div>` : '';
 
+            // Compute 1 or 2 clean, meaningful whole numbers for the right axis
+            let rightAxisTicks = '';
+            if (hasSec) {
+                let step = 2;
+                if (peakSec > 10) step = 5;
+                if (peakSec > 20) step = 10;
+
+                const ticks = [];
+                for (let v = step; v < peakSec * 0.92; v += step) {
+                    ticks.push(v);
+                }
+                const selectedTicks = (ticks.length > 2) ? [ticks[Math.floor(ticks.length / 2) - 1], ticks[ticks.length - 1]] : ticks.slice(-2);
+
+                selectedTicks.forEach(val => {
+                    const topPx = Math.round(128 - (val / peakSec) * 128);
+                    if (topPx >= 18 && topPx <= 118) {
+                        rightAxisTicks += `<span style="position:absolute; top:${topPx}px; left:10px; transform:translateY(-50%); color:var(--text-muted); font-size:0.62rem;">${val}%</span>`;
+                    }
+                });
+            } else {
+                // Fallback for single-metric charts (e.g., NFP)
+                const unit = cfg.is_nfp ? 'K' : '%';
+                let step = cfg.is_nfp ? 500 : 1;
+                if (cfg.is_nfp && peakAbs > 2500) step = 1000;
+                const candidate = Math.floor((peakAbs * 0.5) / step) * step;
+                if (candidate > 0) {
+                    const topPx = Math.round(128 - (candidate / peakAbs) * 128);
+                    rightAxisTicks += `<span style="position:absolute; top:${topPx}px; left:10px; transform:translateY(-50%); color:var(--text-muted); font-size:0.62rem;">${candidate}${unit}</span>`;
+                }
+            }
+
+            const rightAxisHtml = hasSec ? `
+                <div class="cpi-yaxis cpi-yaxis-right">
+                    <span class="axis-tag" style="left:10px; color:var(--amber);">${cfg.is_uk_gdp ? '12M Sum' : 'YoY'}</span>
+                    <span style="position:absolute; top:0; left:10px;">+${peakSec.toFixed(1)}%</span>
+                    ${rightAxisTicks}
+                    <span style="position:absolute; top:80%; left:10px;">0%</span>
+                </div>
+            ` : `
+                <div class="cpi-yaxis cpi-yaxis-right">
+                    ${rightAxisTicks}
+                    <span style="position:absolute; top:80%; left:10px;">0${cfg.is_nfp ? 'K' : '%'}</span>
+                </div>
+            `;
+
             container.innerHTML = `
-                <div class="cpi-chart-wrapper-inner" style="width:${widthPx + 100}px;">
-                    <div class="cpi-yaxis"><span style="position:absolute; top:0; right:10px;">+${peakAbs.toFixed(1)}${cfg.is_nfp ? 'K' : '%'}</span><span style="position:absolute; top:80%; right:10px;">0${cfg.is_nfp ? 'K' : '%'}</span></div>
+                <div class="cpi-chart-wrapper-inner" style="width:${widthPx + 115}px;">
+                    <div class="cpi-yaxis">
+                        <span style="position:absolute; top:0; right:10px;">+${peakAbs.toFixed(1)}${cfg.is_nfp ? 'K' : '%'}</span>
+                        <span style="position:absolute; top:80%; right:10px;">0${cfg.is_nfp ? 'K' : '%'}</span>
+                    </div>
                     <div style="display:flex; flex-direction:column; width:${widthPx}px;">
                         <div class="cpi-bar-chart" style="width:${widthPx}px; position:relative;">
                             ${linesHtml}${highlightBox}${barsHtml}${svgOverlay}
                         </div>
                         <div style="position:relative; height:18px; margin-top:4px; width:${widthPx}px;">${labelsHtml}</div>
                     </div>
-                    ${svgPts.length ? `<div class="cpi-yaxis cpi-yaxis-right"><span class="axis-tag" style="left:10px; color:var(--amber);">${cfg.is_uk_gdp ? '12M Sum' : 'YoY'}</span><span style="position:absolute; top:0; left:10px;">+${peakSec.toFixed(1)}%</span></div>` : ''}
+                    ${rightAxisHtml}
                 </div>
             `;
 
@@ -1358,6 +1481,52 @@
         window.addEventListener('DOMContentLoaded', () => {
             Object.keys(CHART_CONFIGS).forEach(secId => renderChart(secId, '5y'));
         });
+
+        let sortDirections = {};
+        function sortTable(columnIndex) {
+            const table = document.getElementById("macroMatrixTable");
+            const tbody = table.querySelector("tbody");
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const ths = table.querySelectorAll("thead th");
+
+            const currentDir = sortDirections[columnIndex] === 'asc' ? 'desc' : 'asc';
+            sortDirections[columnIndex] = currentDir;
+
+            ths.forEach((th, idx) => {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+                const icon = th.querySelector('.sort-icon');
+                if (icon) icon.textContent = '⇅';
+                if (idx === columnIndex) {
+                    th.classList.add(currentDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+                    if (icon) icon.textContent = currentDir === 'asc' ? '▲' : '▼';
+                }
+            });
+
+            rows.sort((rowA, rowB) => {
+                const cellA = rowA.children[columnIndex];
+                const cellB = rowB.children[columnIndex];
+                const rawValA = cellA.getAttribute("data-val");
+                const rawValB = cellB.getAttribute("data-val");
+
+                const numA = parseFloat(rawValA);
+                const numB = parseFloat(rawValB);
+
+                const aIsNum = !isNaN(numA);
+                const bIsNum = !isNaN(numB);
+
+                if (aIsNum && bIsNum) {
+                    return currentDir === 'asc' ? numA - numB : numB - numA;
+                }
+                if (aIsNum && !bIsNum) return -1;
+                if (!aIsNum && bIsNum) return 1;
+
+                const strA = (rawValA || "").toLowerCase();
+                const strB = (rawValB || "").toLowerCase();
+                return currentDir === 'asc' ? strA.localeCompare(strB) : strB.localeCompare(strA);
+            });
+
+            rows.forEach(row => tbody.appendChild(row));
+        }
     </script>
 </body>
 </html>
