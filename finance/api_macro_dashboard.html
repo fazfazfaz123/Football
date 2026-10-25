@@ -132,7 +132,7 @@
         /* Upcoming rate decision calendar */
         .cal-next-strip { margin-bottom: 1rem; }
         .cal-next-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-dim); margin-bottom: 0.45rem; }
-        .cal-next-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.55rem; }
+        .cal-next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.55rem; }
         .cal-next-card {
             background: rgba(0,0,0,0.28);
             border: 1px solid var(--border);
@@ -184,6 +184,17 @@
         tr.cal-row-next td { background: rgba(245, 158, 11, 0.06); }
         tr.cal-row-next .cal-date-main { color: var(--text); font-weight: 600; }
         .cal-empty { text-align: center; color: var(--text-dim); font-size: 0.8rem; padding: 1rem !important; }
+        .cal-bank-cell { white-space: nowrap; }
+        .cal-bank-pill {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            padding: 0.12rem 0.45rem;
+            border-radius: 4px;
+        }
 
         .hm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 0.45rem; }
         .hm-tile { background: rgba(0,0,0,0.28); border: 1px solid var(--border); border-left-width: 3px; border-radius: var(--radius-sm); padding: 0.55rem 0.45rem; text-align: center; }
@@ -203,12 +214,8 @@
             .cpi-metric-side-card { width: 100%; border-left: none; border-top: 3px solid var(--accent); }
             .cpi-chart-container { padding: 1rem 0.5rem; width: 100%; }
             .chart-bar { max-width: 8px; }
-            .cal-next-grid { grid-template-columns: 1fr 1fr; }
-            .cb-tabs { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-            .cal-date-cell { white-space: normal; }
-        }
-        @media (max-width: 420px) {
             .cal-next-grid { grid-template-columns: 1fr; }
+            .cal-date-cell { white-space: normal; }
         }
     </style>
 </head>
@@ -218,7 +225,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-25 18:08:47</div>
+            <div class="timestamp">SYNCED · 2026-10-25 18:24:16</div>
         </header>
 
         
@@ -741,7 +748,7 @@
             <div class="panel-header">
                 <div>
                     <h2>Upcoming Rate Decisions</h2>
-                    <p class="subtext">Central bank policy meetings · dates in local policy calendar</p>
+                    <p class="subtext">All central banks · chronological · dates in local policy calendar</p>
                 </div>
             </div>
             
@@ -774,63 +781,18 @@
                 <div class="cal-next-date">Thu, Nov 05, 2026</div>
                 <div class="cal-next-type">MPC Meeting (with MPR)<span class="cal-tag proj">Projections</span></div>
             </div>
-        
-            <div class="cal-next-card ">
-                <div class="cal-next-top">
-                    <span class="cal-bank">FOMC</span>
-                    <span class="cal-countdown">in 45d</span>
-                </div>
-                <div class="cal-next-date">Wed, Dec 09, 2026</div>
-                <div class="cal-next-type">FOMC Rate Decision & Projections<span class="cal-tag proj">Projections</span></div>
-            </div>
         </div>
             </div>
         
-            <div class="cb-tabs" role="tablist"><button class="tab-btn " onclick="switchCbTab(event, 'cb-tab-0')" data-tab="cb-tab-0">BoE <span class="cal-tab-hint">in 11d</span></button><button class="tab-btn " onclick="switchCbTab(event, 'cb-tab-1')" data-tab="cb-tab-1">ECB <span class="cal-tab-hint">in 4d</span></button><button class="tab-btn active" onclick="switchCbTab(event, 'cb-tab-2')" data-tab="cb-tab-2">FOMC <span class="cal-tab-hint">in 3d</span></button></div>
             <div class="cb-content-wrap" style="margin-top: 0.75rem;">
-            <div id="cb-tab-0" class="cb-tab-content" style="display: none;" role="tabpanel">
                 <div class="table-container">
                     <table class="macro-table cal-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
-                        <tbody><tr class="cal-row-next"><td class="cal-date-cell"><span class="cal-date-main">Thu, Nov 05, 2026</span><span class="cal-inline-count">in 11d</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 17, 2026</span><span class="cal-inline-count">in 53d</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Feb 04, 2027</span><span class="cal-inline-count">in 102d</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Mar 18, 2027</span><span class="cal-inline-count">in 144d</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Apr 29, 2027</span><span class="cal-inline-count">in 186d</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jun 17, 2027</span><span class="cal-inline-count">in 235d</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jul 29, 2027</span><span class="cal-inline-count">in 277d</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Sep 16, 2027</span><span class="cal-inline-count">in 326d</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Nov 04, 2027</span><span class="cal-inline-count">in 375d</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 16, 2027</span><span class="cal-inline-count">in 417d</span></td><td>MPC Meeting</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
-        
-            <div id="cb-tab-1" class="cb-tab-content" style="display: none;" role="tabpanel">
-                <div class="table-container">
-                    <table class="macro-table cal-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
-                        <tbody><tr class="cal-row-next"><td class="cal-date-cell"><span class="cal-date-main">Thu, Oct 29, 2026</span><span class="cal-inline-count">in 4d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 17, 2026</span><span class="cal-inline-count">in 53d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Feb 04, 2027</span><span class="cal-inline-count">in 102d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Mar 18, 2027</span><span class="cal-inline-count">in 144d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Apr 29, 2027</span><span class="cal-inline-count">in 186d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jun 10, 2027</span><span class="cal-inline-count">in 228d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jul 22, 2027</span><span class="cal-inline-count">in 270d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Sep 09, 2027</span><span class="cal-inline-count">in 319d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Oct 28, 2027</span><span class="cal-inline-count">in 368d</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 16, 2027</span><span class="cal-inline-count">in 417d</span></td><td>Governing Council Meeting</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
-        
-            <div id="cb-tab-2" class="cb-tab-content" style="display: block;" role="tabpanel">
-                <div class="table-container">
-                    <table class="macro-table cal-table">
-                        <thead><tr><th>Date</th><th>Event / Meeting Type</th></tr></thead>
-                        <tbody><tr class="cal-row-next"><td class="cal-date-cell"><span class="cal-date-main">Wed, Oct 28, 2026</span><span class="cal-inline-count">in 3d</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Dec 09, 2026</span><span class="cal-inline-count">in 45d</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Jan 27, 2027</span><span class="cal-inline-count">in 94d</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Mar 17, 2027</span><span class="cal-inline-count">in 143d</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Apr 28, 2027</span><span class="cal-inline-count">in 185d</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Jun 09, 2027</span><span class="cal-inline-count">in 227d</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Jul 28, 2027</span><span class="cal-inline-count">in 276d</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Sep 15, 2027</span><span class="cal-inline-count">in 325d</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Oct 27, 2027</span><span class="cal-inline-count">in 367d</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Dec 08, 2027</span><span class="cal-inline-count">in 409d</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr></tbody>
+                        <thead><tr><th>Date</th><th>Bank</th><th>Event / Meeting Type</th></tr></thead>
+                        <tbody><tr class="cal-row-next"><td class="cal-date-cell"><span class="cal-date-main">Wed, Oct 28, 2026</span><span class="cal-inline-count">in 3d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Oct 29, 2026</span><span class="cal-inline-count">in 4d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Nov 05, 2026</span><span class="cal-inline-count">in 11d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Dec 09, 2026</span><span class="cal-inline-count">in 45d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 17, 2026</span><span class="cal-inline-count">in 53d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 17, 2026</span><span class="cal-inline-count">in 53d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Jan 27, 2027</span><span class="cal-inline-count">in 94d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Feb 04, 2027</span><span class="cal-inline-count">in 102d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Feb 04, 2027</span><span class="cal-inline-count">in 102d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Mar 17, 2027</span><span class="cal-inline-count">in 143d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Mar 18, 2027</span><span class="cal-inline-count">in 144d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Mar 18, 2027</span><span class="cal-inline-count">in 144d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Apr 28, 2027</span><span class="cal-inline-count">in 185d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Apr 29, 2027</span><span class="cal-inline-count">in 186d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Apr 29, 2027</span><span class="cal-inline-count">in 186d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Jun 09, 2027</span><span class="cal-inline-count">in 227d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jun 10, 2027</span><span class="cal-inline-count">in 228d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jun 17, 2027</span><span class="cal-inline-count">in 235d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jul 22, 2027</span><span class="cal-inline-count">in 270d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Jul 28, 2027</span><span class="cal-inline-count">in 276d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Jul 29, 2027</span><span class="cal-inline-count">in 277d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Sep 09, 2027</span><span class="cal-inline-count">in 319d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Sep 15, 2027</span><span class="cal-inline-count">in 325d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Sep 16, 2027</span><span class="cal-inline-count">in 326d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Oct 27, 2027</span><span class="cal-inline-count">in 367d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Oct 28, 2027</span><span class="cal-inline-count">in 368d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Nov 04, 2027</span><span class="cal-inline-count">in 375d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting (with MPR) <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Wed, Dec 08, 2027</span><span class="cal-inline-count">in 409d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">FOMC</span></td><td>FOMC Rate Decision & Projections <span class="cal-tag proj">Projections</span></td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 16, 2027</span><span class="cal-inline-count">in 417d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">BoE</span></td><td>MPC Meeting</td></tr><tr class=""><td class="cal-date-cell"><span class="cal-date-main">Thu, Dec 16, 2027</span><span class="cal-inline-count">in 417d</span></td><td class="cal-bank-cell"><span class="cal-bank-pill">ECB</span></td><td>Governing Council Meeting</td></tr></tbody>
                     </table>
                 </div>
             </div>
         </div>
-        </div>
-        <script>
-            function switchCbTab(evt, tabId) {
-                document.querySelectorAll('.cb-tab-content').forEach(c => c.style.display = 'none');
-                document.querySelectorAll('.cb-tabs .tab-btn').forEach(b => {
-                    b.classList.remove('active');
-                    b.setAttribute('aria-selected', 'false');
-                });
-                const panel = document.getElementById(tabId);
-                if (panel) panel.style.display = 'block';
-                if (evt && evt.currentTarget) {
-                    evt.currentTarget.classList.add('active');
-                    evt.currentTarget.setAttribute('aria-selected', 'true');
-                }
-            }
-        </script>
     
 
         <div style="margin-top: 1.25rem;">
