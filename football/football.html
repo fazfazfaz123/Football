@@ -212,7 +212,10 @@ tr:hover td { background: rgba(255,255,255,0.02); }
   font-size: 0.72rem; padding: 2px 7px; border-radius: 4px;
   background: var(--surface2); color: var(--muted); border: 1px solid var(--border);
 }
-footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 32px; }
+footer {
+  display: flex; justify-content: center; align-items: center;
+  color: var(--muted); font-size: 0.8rem; margin-top: 36px; padding-top: 16px;
+}
 .legend-inline { display: flex; gap: 18px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 8px; }
 .legend-inline span::before {
   content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%;
@@ -274,9 +277,6 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
   <header>
     <div>
       <h1>⚽ Evil Plotters · Predictions</h1>
-    </div>
-    <div>
-      <button class="btn theme-toggle-btn" onclick="toggleTheme()">⚡ Default Theme</button>
     </div>
   </header>
 
@@ -444,7 +444,9 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     </div>
     <div class="heatmap-grid" id="heatmapContainer"></div>
   </div>
-  <footer></footer>
+  <footer>
+    <button class="btn theme-toggle-btn" onclick="toggleTheme()">⚡ Default Theme</button>
+  </footer>
 </div>
 
 <script>
