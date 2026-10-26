@@ -70,12 +70,10 @@
             background: var(--surface);
             position: relative;
         }
-        /* Rates / Inflation / Growth: vertical scroll so column headers stay sticky */
         .matrix-scroll {
             max-height: min(70vh, 520px);
             overflow: auto;
         }
-        /* Upcoming rate decisions: show ~5 rows, scroll for the rest */
         .cal-scroll {
             max-height: 15.5rem;
             overflow-y: auto;
@@ -123,7 +121,6 @@
         table.macro-table tr:hover td.sticky-col { background: var(--surface-hover); }
         table.macro-table td.num { font-family: 'JetBrains Mono', monospace; text-align: center; }
 
-        /* Left-align columns specifically for the Upcoming Rate Decisions calendar table */
         .cb-calendar-panel table.macro-table th,
         .cb-calendar-panel table.macro-table td {
             text-align: left;
@@ -213,13 +210,40 @@
         .hm-tile { background: rgba(0,0,0,0.28); border: 1px solid var(--border); border-left-width: 3px; border-radius: var(--radius-sm); padding: 0.55rem 0.45rem; text-align: center; }
         .hm-name { font-size: 0.68rem; color: var(--text-muted); }
         .hm-val { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; font-weight: 700; }
-        .cmp-row { display: grid; grid-template-columns: 100px 1fr 52px 88px; align-items: center; gap: 0.55rem; font-size: 0.72rem; margin-bottom: 0.35rem; }
+        
+        /* Rate vs Inflation Comparison */
+        .cmp-container {
+            width: 100%;
+        }
+        .cmp-row { 
+            display: grid; 
+            grid-template-columns: 100px 1fr 52px 88px; 
+            align-items: center; 
+            gap: 0.55rem; 
+            font-size: 0.72rem; 
+            margin-bottom: 0.4rem; 
+        }
         .cmp-header-row { margin-bottom: 0.5rem; opacity: 0.7; }
+        .cmp-country { font-weight: 600; }
         .cmp-col-label { font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-dim); text-align: right; }
-        .cmp-bar-wrap { display: flex; align-items: center; gap: 0.4rem; height: 11px; }
+        .cmp-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            width: 100%;
+            min-width: 0;
+        }
+        .cmp-bar-wrap { 
+            display: flex; 
+            align-items: center; 
+            gap: 0.4rem; 
+            height: 11px; 
+            width: 100%;
+            min-width: 0;
+        }
         .cb-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 8px; border-radius: 2px; }
         .cpi-bar { background: linear-gradient(90deg, #d97706, #f59e0b); height: 8px; border-radius: 2px; }
-        .cmp-label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); min-width: 36px; }
+        .cmp-label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); min-width: 38px; flex-shrink: 0; }
         .cmp-real { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; text-align: right; }
         .cmp-next { display: flex; flex-direction: column; gap: 0.12rem; align-items: flex-end; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); line-height: 1.25; }
         .cmp-next-line { white-space: nowrap; }
@@ -236,6 +260,49 @@
             .chart-bar { max-width: 8px; }
             .cal-next-grid { grid-template-columns: 1fr; }
             .cal-date-cell { white-space: normal; }
+
+            /* Re-architect comparison row for mobile screens so bars have full breathing room */
+            .cmp-header-row {
+                display: none;
+            }
+            .cmp-row {
+                grid-template-columns: 1fr auto;
+                grid-template-areas: 
+                    "country meta"
+                    "bars    bars";
+                gap: 0.25rem 0.5rem;
+                padding: 0.55rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            }
+            .cmp-country {
+                grid-area: country;
+                font-size: 0.82rem;
+            }
+            .cmp-row-meta {
+                grid-area: meta;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                justify-content: flex-end;
+            }
+            .cmp-bars {
+                grid-area: bars;
+                padding-top: 0.2rem;
+            }
+            .cmp-real {
+                font-size: 0.78rem;
+            }
+            .cmp-next {
+                flex-direction: row;
+                gap: 0.5rem;
+                align-items: center;
+            }
+            .cmp-bar-wrap {
+                height: 12px;
+            }
+            .cb-bar, .cpi-bar {
+                height: 7px;
+            }
         }
     </style>
 </head>
@@ -245,7 +312,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-26 15:41:33</div>
+            <div class="timestamp">SYNCED · 2026-10-26 15:44:50</div>
         </header>
 
         
@@ -1356,7 +1423,6 @@
         }
 
         function daysUntil(isoDate) {
-            // Compare calendar dates in local timezone (date-only, no time)
             const parts = (isoDate || '').split('-').map(Number);
             if (parts.length !== 3 || parts.some(isNaN)) return null;
             const target = new Date(parts[0], parts[1] - 1, parts[2]);
@@ -1379,7 +1445,6 @@
                         el.style.display = 'none';
                     }
                 }
-                // Update urgency styling on next-up cards
                 if (el.classList.contains('cal-next-card')) {
                     el.classList.remove('cal-soon', 'cal-mid');
                     if (days !== null && days <= 7) el.classList.add('cal-soon');
