@@ -699,7 +699,6 @@ function init() {
   });
   const first = DATA.terms[0].start.slice(0, 4);
   const last = DATA.terms.filter((term) => term.incumbent).length ? "the incumbent" : DATA.terms.at(-1).end.slice(0, 4);
-  document.getElementById("footnote").innerHTML = DATA.source_rows + " list rows were joined into " + DATA.terms.length;
   renderRecords();
   renderParties();
   renderHist();
