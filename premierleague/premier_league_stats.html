@@ -49,6 +49,11 @@
       box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
     }
 
+    .glass-card-directory {
+      background: #000000 !important;
+      border: 1px solid #222222 !important;
+    }
+
     .kpi-title {
       font-size: 0.72rem;
       text-transform: uppercase;
@@ -118,59 +123,81 @@
         font-size: 1.6rem;
       }
       .chart-scroll-container .chart-box-wide {
-        min-width: 650px; /* Preserve bar legibility on small screens */
+        min-width: 650px;
       }
       .chart-hint {
-        display: block; /* Inform mobile users that chart can be swiped */
+        display: block;
       }
       .chart-box-doughnut {
         height: 240px;
       }
     }
 
-    /* DataTables Mobile Styling */
+    /* DataTables Pure Black / White Text Styling */
     .dataTables_wrapper {
-      color: var(--text-headline);
+      color: #ffffff !important;
       font-size: 0.88rem;
+    }
+    .dataTables_wrapper .dataTables_length label,
+    .dataTables_wrapper .dataTables_filter label,
+    .dataTables_wrapper .dataTables_info {
+      color: #ffffff !important;
     }
     .dataTables_wrapper .form-control,
     .dataTables_wrapper .form-select {
-      background-color: #1e293b;
-      border: 1px solid var(--card-border);
-      color: #fff;
+      background-color: #000000 !important;
+      border: 1px solid #333333 !important;
+      color: #ffffff !important;
       font-size: 0.85rem;
     }
+    .dataTables_wrapper .form-control:focus,
+    .dataTables_wrapper .form-select:focus {
+      border-color: #ffffff !important;
+      box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.15);
+    }
     table.dataTable {
-      border-color: var(--card-border) !important;
+      background-color: #000000 !important;
+      border-color: #222222 !important;
+      color: #ffffff !important;
       margin-top: 10px !important;
       margin-bottom: 12px !important;
     }
     table.dataTable thead th {
-      background-color: #0f172a;
-      color: var(--text-sub);
-      border-bottom: 2px solid var(--card-border);
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      border-bottom: 2px solid #333333 !important;
       font-weight: 600;
       white-space: nowrap;
     }
     table.dataTable tbody tr {
-      background-color: var(--card-surface) !important;
-      color: #e2e8f0;
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      border-bottom: 1px solid #1a1a1a !important;
     }
     table.dataTable tbody tr:hover {
-      background-color: #1e293b !important;
+      background-color: #111111 !important;
+      color: #ffffff !important;
     }
     table.dataTable tbody td {
+      background-color: transparent !important;
+      color: #ffffff !important;
       white-space: nowrap;
+      border-color: #222222 !important;
     }
     .page-item.active .page-link {
-      background-color: var(--brand-accent);
-      border-color: var(--brand-accent);
-      color: #000;
+      background-color: #ffffff !important;
+      border-color: #ffffff !important;
+      color: #000000 !important;
+      font-weight: 600;
     }
     .page-link {
-      background-color: #1e293b;
-      border-color: var(--card-border);
-      color: var(--text-sub);
+      background-color: #000000 !important;
+      border-color: #333333 !important;
+      color: #ffffff !important;
+    }
+    .page-link:hover {
+      background-color: #222222 !important;
+      color: #ffffff !important;
     }
 
     .tag-badge {
@@ -199,8 +226,7 @@
   <!-- Header -->
   <header class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 pb-3 border-bottom border-secondary border-opacity-25 gap-2">
     <div>
-      <h1 class="h3 fw-bold text-white mb-1">Premier League Management Analytics</h1>
-      <p class="text-secondary small mb-0">Historical tenure analysis, club turnover rates, and demographic distributions.</p>
+      <h1 class="h3 fw-bold text-white mb-1">Premier League Managers</h1>
     </div>
   </header>
 
@@ -243,7 +269,6 @@
     <div class="col-lg-8">
       <div class="glass-card h-100">
         <h6 class="text-white fw-semibold mb-1">Longest Individual Stints</h6>
-        <div class="chart-hint">⇄ Swipe horizontally to inspect full chart</div>
         <div class="chart-scroll-container">
           <div class="chart-box-wide">
             <canvas id="stintsChart"></canvas>
@@ -266,7 +291,6 @@
     <div class="col-lg-6">
       <div class="glass-card h-100">
         <h6 class="text-white fw-semibold mb-1">Most Appointments by Club</h6>
-        <div class="chart-hint">⇄ Swipe horizontally to inspect full chart</div>
         <div class="chart-scroll-container">
           <div class="chart-box-wide">
             <canvas id="clubChart"></canvas>
@@ -285,7 +309,7 @@
   </div>
 
   <!-- Data Directory -->
-  <div class="glass-card">
+  <div class="glass-card glass-card-directory">
     <div class="d-flex justify-content-between align-items-center mb-2">
       <h6 class="text-white fw-semibold mb-0">Managerial Directory</h6>
     </div>
@@ -326,7 +350,7 @@
             let badges = '';
             if (row.is_caretaker) badges += '<span class="tag-badge badge-caretaker">Caretaker</span>';
             if (row.is_current) badges += '<span class="tag-badge badge-active">Current</span>';
-            return '<strong>' + data + '</strong>' + badges;
+            return '<strong class="text-white">' + data + '</strong>' + badges;
           }
         },
         { data: 'nationality' },
