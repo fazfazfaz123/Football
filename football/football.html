@@ -652,7 +652,7 @@ let compChart = new Chart(document.getElementById('compChart'), {
     indexAxis: 'y', responsive: true, maintainAspectRatio: false,
     plugins: { legend: { labels: { color: '#8b9bb8', boxWidth: 12 } } },
     scales: {
-      x: { beginAtZero: true, max: 100, grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', callback: v => v + '%' } },
+      x: { beginAtZero: true, max: 35, grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', callback: v => v + '%' } },
       y: { grid: { display: false }, ticks: { color: '#8b9bb8', font: { size: 11 } } }
     }
   }
