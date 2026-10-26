@@ -124,17 +124,23 @@ header .subtitle { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
 .card.faz .rank { background: var(--faz-dim); color: var(--faz); }
 .card.bill .rank { background: var(--bill-dim); color: var(--bill); }
 .card.lenn .rank { background: var(--lenn-dim); color: var(--lenn); }
-.card .name { font-size: 1rem; font-weight: 600; margin-bottom: 2px; }
+.card .name { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+.card .score-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
 .card .score {
-  font-size: 2.25rem; font-weight: 800; line-height: 1.1;
+  font-size: 2.25rem; font-weight: 800; line-height: 1;
   font-family: 'JetBrains Mono', monospace;
 }
 .card.faz .score { color: var(--faz); }
 .card.bill .score { color: var(--bill); }
 .card.lenn .score { color: var(--lenn); }
 .card .meta {
-  margin-top: 8px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
-  font-size: 0.78rem; color: var(--muted);
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  font-size: 0.78rem; color: var(--muted); margin-top: 0;
 }
 .card .meta span strong { color: var(--text); font-weight: 600; }
 .streak-badge {
@@ -278,31 +284,37 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top:
     <div class="card faz" onclick="openPlayerModal('Faz')">
       <span class="rank">1st</span>
       <div class="name">Faz</div>
-      <div class="score" id="score-faz">18</div>
-      <div class="meta">
-        <span><strong>176</strong> predicted</span>
-        <span><strong>10.2%</strong> accuracy</span>
-        <span class="streak-badge streak-cold">❄️ 1</span>
+      <div class="score-row">
+        <div class="score" id="score-faz">18</div>
+        <div class="meta">
+          <span><strong>176</strong> predicted</span>
+          <span><strong>10.2%</strong> accuracy</span>
+          <span class="streak-badge streak-cold">❄️ 1</span>
+        </div>
       </div>
     </div>
     <div class="card bill" onclick="openPlayerModal('Bill')">
       <span class="rank">=2</span>
       <div class="name">Bill</div>
-      <div class="score" id="score-bill">17</div>
-      <div class="meta">
-        <span><strong>180</strong> predicted</span>
-        <span><strong>9.4%</strong> accuracy</span>
-        <span class="streak-badge streak-cold">❄️ 6</span>
+      <div class="score-row">
+        <div class="score" id="score-bill">17</div>
+        <div class="meta">
+          <span><strong>180</strong> predicted</span>
+          <span><strong>9.4%</strong> accuracy</span>
+          <span class="streak-badge streak-cold">❄️ 6</span>
+        </div>
       </div>
     </div>
     <div class="card lenn" onclick="openPlayerModal('Lenn')">
       <span class="rank">=2</span>
       <div class="name">Lenn</div>
-      <div class="score" id="score-lenn">17</div>
-      <div class="meta">
-        <span><strong>181</strong> predicted</span>
-        <span><strong>9.4%</strong> accuracy</span>
-        <span class="streak-badge streak-cold">❄️ 2</span>
+      <div class="score-row">
+        <div class="score" id="score-lenn">17</div>
+        <div class="meta">
+          <span><strong>181</strong> predicted</span>
+          <span><strong>9.4%</strong> accuracy</span>
+          <span class="streak-badge streak-cold">❄️ 2</span>
+        </div>
       </div>
     </div>
   </div>
