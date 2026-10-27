@@ -663,16 +663,25 @@
             { match: /labour/i, colour: "#E4003B", label: "Labour" },
             { match: /conservative/i, colour: "#0087DC", label: "Conservative" },
             { match: /liberal democrat/i, colour: "#FAA61A", label: "Liberal Democrats" },
-            { match: /reform/i, colour: "#12B6CF", label: "Reform UK" },
+            { match: /\breform\b/i, colour: "#12B6CF", label: "Reform UK" },
             { match: /green/i, colour: "#6AB023", label: "Green Party" },
             { match: /scottish national party|\bsnp\b/i, colour: "#FDF357", label: "SNP" },
             { match: /plaid cymru/i, colour: "#005B54", label: "Plaid Cymru" },
             { match: /sinn f&eacute;in|sinn fein/i, colour: "#326760", label: "Sinn Féin" },
             { match: /democratic unionist party|\bdup\b/i, colour: "#D46A4C", label: "DUP" },
-            { match: /alliance/i, colour: "#F6CB2F", label: "Alliance Party" },
+            { match: /alliance party|\balliance\b/i, colour: "#F6CB2F", label: "Alliance Party" },
             { match: /social democratic and labour party|\bsdlp\b/i, colour: "#2AA82C", label: "SDLP" },
             { match: /ulster unionist party|\buup\b/i, colour: "#4F5D73", label: "UUP" },
-            { match: /independent|oldham group|cpa|people'?s alliance/i, colour: "#9B59B6", label: "Independent / Other" }
+            { match: /traditional unionist voice|\btuv\b/i, colour: "#0D5EAF", label: "TUV" },
+            { match: /\baspire\b/i, colour: "#7B2D8E", label: "Aspire" },
+            { match: /workers party/i, colour: "#7A0000", label: "Workers Party" },
+            { match: /mebyon kernow|\bmk\b/i, colour: "#D4A017", label: "Mebyon Kernow" },
+            { match: /restore britain/i, colour: "#1B4F72", label: "Restore Britain" },
+            { match: /your party/i, colour: "#E85D04", label: "Your Party" },
+            { match: /\bthe liberal party\b|\bliberal party\b/i, colour: "#FFA500", label: "Liberal Party" },
+            { match: /resident/i, colour: "#2E86AB", label: "Residents Association" },
+            { match: /independent|oldham group|cpa|people'?s alliance|community campaign|local alliance/i, colour: "#9B59B6", label: "Independent / Other" },
+            { match: /vacant/i, colour: "#B0B0B0", label: "Vacant" }
         ];
         const MIXED_COLOUR = "#808080";
 
