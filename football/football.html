@@ -688,8 +688,7 @@ comps.sort((a, b) => {
   });
   let accA = totA > 0 ? corA / totA : 0;
   let accB = totB > 0 ? corB / totB : 0;
-  // Sorting descending so the highest accuracy is rendered at the top
-  return accB - accA;
+  return accB - accA; // Descending order so highest accuracy is at the top
 });
 
 let compChart = new Chart(document.getElementById('compChart'), {
@@ -704,7 +703,26 @@ let compChart = new Chart(document.getElementById('compChart'), {
   },
   options: {
     indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: '#8b9bb8', boxWidth: 12 } } },
+    plugins: {
+      legend: {
+        labels: { color: '#8b9bb8', boxWidth: 12 },
+        onClick: (e, legendItem, legend) => {
+          const playerName = legendItem.text;
+          comps.sort((a, b) => {
+            const sa = COMP_STATS.find(x => x.competition === a && x.player === playerName);
+            const sb = COMP_STATS.find(x => x.competition === b && x.player === playerName);
+            const accA = sa ? sa.accuracy : 0;
+            const accB = sb ? sb.accuracy : 0;
+            return accB - accA;
+          });
+          compChart.data.labels = comps.map(c => c.replace('UEFA ', '').replace('EFL ', ''));
+          compChart.data.datasets[0].data = comps.map(c => (COMP_STATS.find(x => x.competition === c && x.player === 'Faz') || {accuracy:0}).accuracy);
+          compChart.data.datasets[1].data = comps.map(c => (COMP_STATS.find(x => x.competition === c && x.player === 'Bill') || {accuracy:0}).accuracy);
+          compChart.data.datasets[2].data = comps.map(c => (COMP_STATS.find(x => x.competition === c && x.player === 'Lenn') || {accuracy:0}).accuracy);
+          compChart.update();
+        }
+      }
+    },
     scales: {
       x: { beginAtZero: true, max: 30, grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', callback: v => v + '%' } },
       y: { grid: { display: false }, ticks: { color: '#8b9bb8', font: { size: 11 } } }
@@ -725,7 +743,6 @@ function renderBangers() {
     </div>`;
   }).join('');
 }
-
 
 function renderH2H() {
   const container = document.getElementById('h2hContainer');
