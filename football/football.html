@@ -646,7 +646,10 @@ comps.sort((a, b) => {
     const sb = COMP_STATS.find(x => x.competition === b && x.player === p);
     if (sb) { corB += sb.correct; totB += sb.total; }
   });
-  return (totA > 0 ? corA / totA : 0) - (totB > 0 ? corB / totB : 0);
+  let accA = totA > 0 ? corA / totA : 0;
+  let accB = totB > 0 ? corB / totB : 0;
+  // Sorting descending so the highest accuracy is rendered at the top
+  return accB - accA;
 });
 
 let compChart = new Chart(document.getElementById('compChart'), {
