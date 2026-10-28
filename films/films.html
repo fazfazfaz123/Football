@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="bg-[#222831] p-6 rounded-xl border border-[#2c3440] shadow-xl">
+            <div id="yearChartCard" class="bg-[#222831] p-6 rounded-xl border border-[#2c3440] shadow-xl">
                 <h2 class="text-lg font-semibold text-white mb-4">Watch History by Year <span id="lockStatus" class="text-xs text-[#00e054] font-normal ml-2"></span></h2>
                 <div class="relative h-64">
                     <canvas id="yearChart"></canvas>
@@ -4574,6 +4574,19 @@
                 countryStatus.textContent = '';
             }
         }
+
+        // Clear year selection when clicking anywhere outside of the Watch History by Year card
+        document.addEventListener('click', function(event) {
+            const yearCard = document.getElementById('yearChartCard');
+            if (yearCard && !yearCard.contains(event.target)) {
+                if (isYearLocked || document.getElementById('yearFilter').value !== 'all') {
+                    isYearLocked = false;
+                    document.getElementById('yearFilter').value = 'all';
+                    updateLockIndicator();
+                    filterPosters();
+                }
+            }
+        });
 
         const ratingsCtx = document.getElementById('ratingsChart').getContext('2d');
         const ratingsChartInstance = new Chart(ratingsCtx, {
