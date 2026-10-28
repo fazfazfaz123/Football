@@ -270,6 +270,36 @@ footer {
   font-family: inherit; font-size: 0.85rem;
 }
 .fandom-row { display: flex; justify-content: space-between; align-items: center; background: var(--surface2); padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 8px; font-size: 0.85rem; }
+.h2h-matchup {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  margin-top: 6px;
+}
+.h2h-player-left {
+  text-align: left;
+  font-weight: 600;
+}
+.h2h-player-right {
+  text-align: right;
+  font-weight: 600;
+}
+.h2h-scores-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  gap: 2px;
+}
+.h2h-draws {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
 </style>
 </head>
 <body class="starwars-theme">
@@ -690,12 +720,16 @@ function renderH2H() {
   const container = document.getElementById('h2hContainer');
   container.innerHTML = H2H.map(h => {
     return `<div class="h2h-card">
-      <div style="font-weight:600; margin-bottom:6px; display:flex; justify-content:space-between"><span>${h.p1} vs ${h.p2}</span><span style="color:var(--muted); font-size:0.75rem"></span></div>
-      <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-top:4px">
-        <span>${h.p1}: <strong style="color:var(--faz)">${h.p1_wins}</strong></span>
-        <span style="color:var(--muted)">Draws: ${h.draws}</span>
-        <span><strong style="color:var(--bill)">${h.p2_wins}</strong> : ${h.p2}</span>
+      <div style="font-weight:600; margin-bottom:2px; font-size:0.8rem; color:var(--muted); text-align:center;">${h.p1} vs ${h.p2}</div>
+      <div class="h2h-matchup">
+        <div class="h2h-player-left">${h.p1}</div>
+        <div class="h2h-scores-col">
+          <span style="color:var(--faz);">${h.p1_wins}</span>
+          <span style="color:var(--bill);">${h.p2_wins}</span>
+        </div>
+        <div class="h2h-player-right">${h.p2}</div>
       </div>
+      <div class="h2h-draws">Draws: ${h.draws}</div>
     </div>`;
   }).join('');
 }
