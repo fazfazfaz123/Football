@@ -4575,18 +4575,30 @@
             }
         }
 
-        // Clear year selection when clicking anywhere outside of the Watch History by Year card
+
+
+
+        // Clear year selection when clicking outside the year chart AND the year dropdown
         document.addEventListener('click', function(event) {
             const yearCard = document.getElementById('yearChartCard');
-            if (yearCard && !yearCard.contains(event.target)) {
-                if (isYearLocked || document.getElementById('yearFilter').value !== 'all') {
-                    isYearLocked = false;
-                    document.getElementById('yearFilter').value = 'all';
-                    updateLockIndicator();
-                    filterPosters();
-                }
+            const yearFilter = document.getElementById('yearFilter');
+    
+            // Ignore clicks that happen inside the year chart or on the dropdown itself
+            if ((yearCard && yearCard.contains(event.target)) ||
+                (yearFilter && (yearFilter === event.target || yearFilter.contains(event.target)))) {
+                return;
+            }
+
+            if (isYearLocked || (yearFilter && yearFilter.value !== 'all')) {
+                isYearLocked = false;
+                if (yearFilter) yearFilter.value = 'all';
+                updateLockIndicator();
+                filterPosters();
             }
         });
+
+
+
 
         const ratingsCtx = document.getElementById('ratingsChart').getContext('2d');
         const ratingsChartInstance = new Chart(ratingsCtx, {
