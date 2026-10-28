@@ -4533,6 +4533,481 @@
             <div id="worldMap" class="w-full h-[450px]"></div>
         </section>
 
+        <!-- Director Stats -->
+        <section class="bg-[#222831] p-6 rounded-xl border border-[#2c3440] shadow-xl space-y-6">
+            <div>
+                <h2 class="text-lg font-semibold text-white">Director Stats</h2>
+                <p class="text-xs text-[#789] mt-1">Most watched directors in your history, with average rating and combined box-office figures.</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 overflow-x-auto">
+                    <h3 class="text-sm font-semibold text-[#9ab] uppercase tracking-wider mb-3">Most Watched Directors</h3>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-[#789] border-b border-[#2c3440]">
+                                <th class="py-2 px-3 font-medium">#</th>
+                                <th class="py-2 px-3 font-medium">Director</th>
+                                <th class="py-2 px-3 font-medium text-center">Films</th>
+                                <th class="py-2 px-3 font-medium text-center">Avg ★</th>
+                                <th class="py-2 px-3 font-medium text-right">Budget</th>
+                                <th class="py-2 px-3 font-medium text-right">Revenue</th>
+                                <th class="py-2 px-3 font-medium text-right">ROI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">1</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Martin Scorsese</td>
+                        <td class="py-2.5 px-3 text-center text-white">9</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">3.75★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$711M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$1.3B</td>
+                        <td class="py-2.5 px-3 text-right text-white">1.8x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">2</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Ridley Scott</td>
+                        <td class="py-2.5 px-3 text-center text-white">8</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">3.75★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$976M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$2.4B</td>
+                        <td class="py-2.5 px-3 text-right text-white">2.4x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">3</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Quentin Tarantino</td>
+                        <td class="py-2.5 px-3 text-center text-white">7</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">5.00★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$348M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$1.7B</td>
+                        <td class="py-2.5 px-3 text-right text-white">4.9x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">4</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Christopher Nolan</td>
+                        <td class="py-2.5 px-3 text-center text-white">7</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">4.38★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$1.1B</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$5.5B</td>
+                        <td class="py-2.5 px-3 text-right text-white">5.1x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">5</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Steven Spielberg</td>
+                        <td class="py-2.5 px-3 text-center text-white">7</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">3.00★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$326M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$3.2B</td>
+                        <td class="py-2.5 px-3 text-right text-white">9.8x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">6</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Stanley Kubrick</td>
+                        <td class="py-2.5 px-3 text-center text-white">5</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">4.83★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$57M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$189M</td>
+                        <td class="py-2.5 px-3 text-right text-white">3.3x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">7</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Francis Ford Coppola</td>
+                        <td class="py-2.5 px-3 text-center text-white">5</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">4.67★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$137M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$541M</td>
+                        <td class="py-2.5 px-3 text-right text-white">3.9x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">8</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Denis Villeneuve</td>
+                        <td class="py-2.5 px-3 text-center text-white">5</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">4.50★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$582M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$1.7B</td>
+                        <td class="py-2.5 px-3 text-right text-white">2.9x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">9</td>
+                        <td class="py-2.5 px-3 text-white font-medium">David Lynch</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">5.00★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$60M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$81M</td>
+                        <td class="py-2.5 px-3 text-right text-white">1.3x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">10</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Akira Kurosawa</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">4.88★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$12M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$23M</td>
+                        <td class="py-2.5 px-3 text-right text-white">2.0x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">11</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Edgar Wright</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">4.25★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$95M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$370M</td>
+                        <td class="py-2.5 px-3 text-right text-white">3.9x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">12</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Michael Bay</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">4.00★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$359M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$903M</td>
+                        <td class="py-2.5 px-3 text-right text-white">2.5x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">13</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Christopher McQuarrie</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">3.88★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$948M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$2.7B</td>
+                        <td class="py-2.5 px-3 text-right text-white">2.8x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">14</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Paul Greengrass</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">3.67★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$320M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$1.4B</td>
+                        <td class="py-2.5 px-3 text-right text-white">4.3x</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">15</td>
+                        <td class="py-2.5 px-3 text-white font-medium">David Fincher</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054]">2.50★</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$336M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$513M</td>
+                        <td class="py-2.5 px-3 text-right text-white">1.5x</td>
+                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="overflow-x-auto">
+                    <h3 class="text-sm font-semibold text-[#9ab] uppercase tracking-wider mb-3">Highest Rated <span class="font-normal normal-case">(≥3 films)</span></h3>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-[#789] border-b border-[#2c3440]">
+                                <th class="py-2 px-3 font-medium">#</th>
+                                <th class="py-2 px-3 font-medium">Director</th>
+                                <th class="py-2 px-3 font-medium text-center">Films</th>
+                                <th class="py-2 px-3 font-medium text-center">Avg ★</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">1</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Quentin Tarantino</td>
+                        <td class="py-2.5 px-3 text-center text-white">7</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">5.00★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">2</td>
+                        <td class="py-2.5 px-3 text-white font-medium">David Lynch</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">5.00★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">3</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Akira Kurosawa</td>
+                        <td class="py-2.5 px-3 text-center text-white">4</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.88★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">4</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Stanley Kubrick</td>
+                        <td class="py-2.5 px-3 text-center text-white">5</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.83★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">5</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Francis Ford Coppola</td>
+                        <td class="py-2.5 px-3 text-center text-white">5</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.67★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">6</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Denis Villeneuve</td>
+                        <td class="py-2.5 px-3 text-center text-white">5</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.50★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">7</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Michael Mann</td>
+                        <td class="py-2.5 px-3 text-center text-white">3</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.50★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">8</td>
+                        <td class="py-2.5 px-3 text-white font-medium">James Cameron</td>
+                        <td class="py-2.5 px-3 text-center text-white">3</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.50★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">9</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Lana Wachowski, Lilly Wachowski</td>
+                        <td class="py-2.5 px-3 text-center text-white">3</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.50★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">10</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Christopher Nolan</td>
+                        <td class="py-2.5 px-3 text-center text-white">7</td>
+                        <td class="py-2.5 px-3 text-center text-[#00e054] font-semibold">4.38★</td>
+                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Revenue / Budget Analysis -->
+        <section class="bg-[#222831] p-6 rounded-xl border border-[#2c3440] shadow-xl space-y-6">
+            <div>
+                <h2 class="text-lg font-semibold text-white">Revenue &amp; Budget</h2>
+                <p class="text-xs text-[#789] mt-1">Box-office figures for films with available data (378 of 449 have both budget and revenue).</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-[#14181c] rounded-lg p-4 text-center border border-[#2c3440]">
+                    <span class="block text-xs text-[#789] uppercase tracking-wider">Total Budget</span>
+                    <span class="text-xl font-bold text-white mt-1 block">$27.3B</span>
+                    <span class="text-[10px] text-[#789]">398 films</span>
+                </div>
+                <div class="bg-[#14181c] rounded-lg p-4 text-center border border-[#2c3440]">
+                    <span class="block text-xs text-[#789] uppercase tracking-wider">Total Revenue</span>
+                    <span class="text-xl font-bold text-[#00e054] mt-1 block">$99.2B</span>
+                    <span class="text-[10px] text-[#789]">394 films</span>
+                </div>
+                <div class="bg-[#14181c] rounded-lg p-4 text-center border border-[#2c3440]">
+                    <span class="block text-xs text-[#789] uppercase tracking-wider">Avg Budget</span>
+                    <span class="text-xl font-bold text-white mt-1 block">$69M</span>
+                </div>
+                <div class="bg-[#14181c] rounded-lg p-4 text-center border border-[#2c3440]">
+                    <span class="block text-xs text-[#789] uppercase tracking-wider">Overall ROI</span>
+                    <span class="text-xl font-bold text-[#00e054] mt-1 block">3.6x</span>
+                    <span class="text-[10px] text-[#789]">revenue ÷ budget</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-sm font-semibold text-[#9ab] uppercase tracking-wider mb-3">Budget Distribution</h3>
+                    <div class="relative h-56">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-sm font-semibold text-[#9ab] uppercase tracking-wider mb-2">Quick takes</h3>
+                        <ul class="text-sm text-[#9ab] space-y-1.5 list-disc list-inside">
+                            <li>Combined box office: <span class="text-white font-medium">$99.2B</span> against <span class="text-white font-medium">$27.3B</span> spent.</li>
+                            <li>Portfolio return: about <span class="text-[#00e054] font-medium">3.6×</span> production budget.</li>
+                            <li>Best ROI film: <span class="text-white font-medium">Rocky</span> (117x).</li>
+                            <li>Biggest money-loser (by ratio): <span class="text-white font-medium">The Killer</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="overflow-x-auto">
+                    <h3 class="text-sm font-semibold text-[#00e054] uppercase tracking-wider mb-3">Highest ROI Films</h3>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-[#789] border-b border-[#2c3440]">
+                                <th class="py-2 px-3 font-medium">#</th>
+                                <th class="py-2 px-3 font-medium">Film</th>
+                                <th class="py-2 px-3 font-medium">Director</th>
+                                <th class="py-2 px-3 font-medium text-right">Budget</th>
+                                <th class="py-2 px-3 font-medium text-right">Revenue</th>
+                                <th class="py-2 px-3 font-medium text-right">ROI</th>
+                                <th class="py-2 px-3 font-medium text-center">★</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">1</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Rocky <span class="text-[#789] text-xs">(1976)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">John G. Avildsen</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$1M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$117M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">117.3x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">4.0★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">2</td>
+                        <td class="py-2.5 px-3 text-white font-medium">E.T. the Extra-Terrestrial <span class="text-[#789] text-xs">(1982)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Steven Spielberg</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$10M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$797M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">75.9x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">3</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Star Wars <span class="text-[#789] text-xs">(1977)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">George Lucas</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$11M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$775M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">70.5x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">5.0★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">4</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Jaws <span class="text-[#789] text-xs">(1975)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Steven Spielberg</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$7M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$471M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">67.2x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">5</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Get Out <span class="text-[#789] text-xs">(2017)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Jordan Peele</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$4M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$255M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">56.8x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">6</td>
+                        <td class="py-2.5 px-3 text-white font-medium">The Exorcist <span class="text-[#789] text-xs">(1973)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">William Friedkin</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$11M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$431M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">39.2x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">7</td>
+                        <td class="py-2.5 px-3 text-white font-medium">The Good, the Bad and the Ugly <span class="text-[#789] text-xs">(1966)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Sergio Leone</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$1M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$39M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">32.4x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">8</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Dog Day Afternoon <span class="text-[#789] text-xs">(1975)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Sidney Lumet</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$2M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$57M</td>
+                        <td class="py-2.5 px-3 text-right text-[#00e054] font-semibold">31.5x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="overflow-x-auto">
+                    <h3 class="text-sm font-semibold text-red-400 uppercase tracking-wider mb-3">Lowest ROI Films</h3>
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-[#789] border-b border-[#2c3440]">
+                                <th class="py-2 px-3 font-medium">#</th>
+                                <th class="py-2 px-3 font-medium">Film</th>
+                                <th class="py-2 px-3 font-medium">Director</th>
+                                <th class="py-2 px-3 font-medium text-right">Budget</th>
+                                <th class="py-2 px-3 font-medium text-right">Revenue</th>
+                                <th class="py-2 px-3 font-medium text-right">ROI</th>
+                                <th class="py-2 px-3 font-medium text-center">★</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">1</td>
+                        <td class="py-2.5 px-3 text-white font-medium">The Killer <span class="text-[#789] text-xs">(2023)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">David Fincher</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$175M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$362K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.00x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">1.0★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">2</td>
+                        <td class="py-2.5 px-3 text-white font-medium">The Gray Man <span class="text-[#789] text-xs">(2022)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Joe Russo, Anthony Russo</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$200M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$454K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.00x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">3</td>
+                        <td class="py-2.5 px-3 text-white font-medium">The Trial of the Chicago 7 <span class="text-[#789] text-xs">(2020)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Aaron Sorkin</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$35M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$107K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.00x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">4</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Frankenstein <span class="text-[#789] text-xs">(2025)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Guillermo del Toro</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$120M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$481K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.00x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">2.0★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">5</td>
+                        <td class="py-2.5 px-3 text-white font-medium">The Irishman <span class="text-[#789] text-xs">(2019)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Martin Scorsese</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$159M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$969K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.01x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">6</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Nightbitch <span class="text-[#789] text-xs">(2024)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Marielle Heller</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$20M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$171K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.01x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">3.0★</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">7</td>
+                        <td class="py-2.5 px-3 text-white font-medium">Don't Look Up <span class="text-[#789] text-xs">(2021)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Adam McKay</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$75M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$792K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.01x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">—</td>
+                    </tr>
+                    <tr class="border-b border-[#2c3440] hover:bg-[#2c3440]/30">
+                        <td class="py-2.5 px-3 text-[#789]">8</td>
+                        <td class="py-2.5 px-3 text-white font-medium">The Tempest <span class="text-[#789] text-xs">(2010)</span></td>
+                        <td class="py-2.5 px-3 text-[#9ab] text-sm">Julie Taymor</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$20M</td>
+                        <td class="py-2.5 px-3 text-right text-[#9ab]">$347K</td>
+                        <td class="py-2.5 px-3 text-right text-red-400 font-semibold">0.02x</td>
+                        <td class="py-2.5 px-3 text-center text-[#9ab]">3.0★</td>
+                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <script>
@@ -4698,6 +5173,31 @@
                 }
             }
         });
+
+        const budgetCtx = document.getElementById('budgetChart');
+        if (budgetCtx) {
+            new Chart(budgetCtx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ["<$10M", "$10\u201350M", "$50\u2013100M", "$100\u2013200M", "$200M+"],
+                    datasets: [{
+                        label: 'Films',
+                        data: [80, 156, 60, 66, 36],
+                        backgroundColor: '#40bcf4',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#789' } },
+                        y: { grid: { color: '#2c3440' }, ticks: { color: '#789' }, beginAtZero: true }
+                    }
+                }
+            });
+        }
 
         function handleDropdownChange() {
             const selectedYear = document.getElementById('yearFilter').value;
