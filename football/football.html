@@ -638,6 +638,17 @@ let matrixChart = new Chart(document.getElementById('matrixChart'), {
 });
 
 const comps = [...new Set(COMP_STATS.map(c => c.competition))];
+comps.sort((a, b) => {
+  let corA = 0, totA = 0, corB = 0, totB = 0;
+  ['Faz', 'Bill', 'Lenn'].forEach(p => {
+    const sa = COMP_STATS.find(x => x.competition === a && x.player === p);
+    if (sa) { corA += sa.correct; totA += sa.total; }
+    const sb = COMP_STATS.find(x => x.competition === b && x.player === p);
+    if (sb) { corB += sb.correct; totB += sb.total; }
+  });
+  return (totA > 0 ? corA / totA : 0) - (totB > 0 ? corB / totB : 0);
+});
+
 let compChart = new Chart(document.getElementById('compChart'), {
   type: 'bar',
   data: {
@@ -697,101 +708,4 @@ function renderUpcoming() {
 
 function renderStadiums(list) {
   const container = document.getElementById('heatmapContainer');
-  if (!list.length) { container.innerHTML = '<p style="color:var(--muted)">No stadium data available.</p>'; return; }
-  container.innerHTML = list.map(s => {
-    let badgeBg = s.accuracy >= 40 ? 'rgba(52,211,153,0.2)' : (s.accuracy >= 25 ? 'rgba(34,211,238,0.15)' : 'rgba(248,113,113,0.15)');
-    let badgeColor = s.accuracy >= 40 ? 'var(--lenn)' : (s.accuracy >= 25 ? 'var(--faz)' : 'var(--danger)');
-    return `<div class="stadium-card">
-      <div>
-        <div class="stadium-header"><span class="stadium-name">${s.stadium}</span><span class="stadium-badge" style="background:${badgeBg}; color:${badgeColor}">${s.accuracy}%</span></div>
-        <div class="stadium-stats-row"><span>${s.matches} match${s.matches > 1 ? 'es' : ''}</span><span>${s.total_correct}/${s.total_preds} correct</span></div>
-      </div>
-      <div class="stadium-players">
-        <div class="stadium-player-pill"><div class="p-name">Faz</div><div class="p-score">${s.players.faz.correct}/${s.players.faz.preds}</div></div>
-        <div class="stadium-player-pill"><div class="p-name">Bill</div><div class="p-score">${s.players.bill.correct}/${s.players.bill.preds}</div></div>
-        <div class="stadium-player-pill"><div class="p-name">Lenn</div><div class="p-score">${s.players.lenn.correct}/${s.players.lenn.preds}</div></div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function filterStadiums() {
-  const q = document.getElementById('stadiumSearchBox').value.toLowerCase().trim();
-  renderStadiums(q ? STADIUMS.filter(s => s.stadium.toLowerCase().includes(q)) : STADIUMS);
-}
-
-
-function renderWhatsAppSection() {
-  const container = document.getElementById('whatsappContainer');
-  if (!TODAYS_MATCHES.length) { container.innerHTML = '<p style="color:var(--muted)">No matches scheduled for today.</p>'; return; }
-  container.innerHTML = ['Faz', 'Bill', 'Lenn'].map(name => {
-    let pKey = name.toLowerCase() + '_default';
-    let lines = [];
-    let lastComp = null;
-    TODAYS_MATCHES.forEach(m => {
-      if (lastComp !== null && lastComp !== m.comp) {
-        lines.push(''); // One-line blank space between different competitions
-      }
-      let homeName = shortTeam(m.home);
-      let awayName = shortTeam(m.away);
-      let predStr = m[pKey] || '1 - 1';
-      if (name.toLowerCase() === 'lenn') {
-        let parts = predStr.split('-');
-        let hs = parts[0] ? parts[0].trim() : '1';
-        let as = parts[1] ? parts[1].trim() : '1';
-        lines.push(`${homeName} ${hs} ${awayName} ${as}`);
-      } else {
-        lines.push(`${homeName} ${predStr} ${awayName}`);
-      }
-      lastComp = m.comp;
-    });
-    let textVal = lines.join('\n');
-    return `<div class="whatsapp-card">
-      <h3><span>${name}</span></h3>
-      <textarea class="whatsapp-textarea" id="wa-${name.toLowerCase()}">${textVal}</textarea>
-      <button class="whatsapp-btn" onclick="copyWhatsApp('${name.toLowerCase()}', this)">📋 Copy for WhatsApp</button>
-    </div>`;
-  }).join('');
-}
-
-function copyWhatsApp(playerName, btn) {
-  const ta = document.getElementById('wa-' + playerName);
-  ta.select();
-  navigator.clipboard.writeText(ta.value).then(() => {
-    const orig = btn.innerHTML;
-    btn.innerHTML = '✅ Copied!';
-    setTimeout(() => { btn.innerHTML = orig; }, 2000);
-  });
-}
-
-function pill(ok, hasPred) {
-  if (!hasPred) return '<span class="pill empty">–</span>';
-  return ok ? '<span class="pill yes">✓</span>' : '<span class="pill no">✗</span>';
-}
-function shortTeam(t) {
-  return t.replace(/ FC$/,'').replace(/ AFC$/,'').replace(/ United$/,' Utd').replace(/Wanderers /,'').replace(/Hotspur /,'');
-}
-function renderTable(rows) {
-  document.getElementById('matchBody').innerHTML = rows.map(m => {
-    return `<tr>
-      <td>${m.date}</td><td><span class="comp-tag">${m.comp.replace('UEFA ','').replace('EFL ','')}</span></td>
-      <td>${shortTeam(m.home)} &nbsp;vs&nbsp; ${shortTeam(m.away)}</td><td class="scoreline">${m.score}</td>
-      <td>${m.faz_pred || '–'}</td><td>${pill(m.faz_ok, m.faz_pred !== '')}</td>
-      <td>${m.bill_pred || '–'}</td><td>${pill(m.bill_ok, m.bill_pred !== '')}</td>
-      <td>${m.lenn_pred || '–'}</td><td>${pill(m.lenn_ok, m.lenn_pred !== '')}</td>
-      <td>${m.faz_rt}</td><td>${m.bill_rt}</td><td>${m.lenn_rt}</td>
-    </tr>`;
-  }).join('');
-}
-function filterTable() {
-  const comp = document.getElementById('compFilter').value;
-  const q = document.getElementById('searchBox').value.toLowerCase().trim();
-  let rows = MATCHES;
-  if (comp) rows = rows.filter(m => m.comp === comp);
-  if (q) rows = rows.filter(m => m.home.toLowerCase().includes(q) || m.away.toLowerCase().includes(q));
-  renderTable(rows);
-}
-renderTable(MATCHES);
-</script>
-</body>
-</html>
+  if (!list.length) { container.innerHTML =
