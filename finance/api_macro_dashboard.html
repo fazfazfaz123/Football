@@ -291,7 +291,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-29 19:14:11</div>
+            <div class="timestamp">SYNCED · 2026-10-29 19:27:56</div>
         </header>
 
         
@@ -1253,15 +1253,12 @@
             const widthPx = total * barPitch;
 
             const vals = history.map(h => h.mom || 0);
-            const peakAbs = cfg.max_cap || (Math.max(...vals.map(Math.abs), 1.0) * (range === '5y' ? 1.15 : 1.25));
             const yoyVals = history.map(h => h.sec).filter(v => v !== null && v !== undefined);
-            const hasSec = yoyVals.length > 0;
-            const peakSec = Math.max(...yoyVals.map(Math.abs), 3.0) * 1.25;
-
-            // Collect rate values if present (e.g. for UK CPI chart)
             const rateVals = history.map(h => h.rate).filter(v => v !== null && v !== undefined);
-            const hasRate = rateVals.length > 0;
-            const peakRate = hasRate ? Math.max(...rateVals.map(Math.abs), 6.0) * 1.25 : 16.0;
+
+            // Compute unified sharedPeak ceiling for both bars and lines (unifying bank rate & 12M/YoY scale)
+            const maxValFound = Math.max(...vals.map(Math.abs), ...yoyVals.map(Math.abs), ...rateVals.map(Math.abs), cfg.max_cap || 5.0);
+            const sharedPeak = Math.ceil(maxValFound * 1.25);
 
             let barsHtml = '', linesHtml = '', labelsHtml = '', svgPts = [], rateSvgPts = [];
             let lastYr = null;
@@ -1287,7 +1284,7 @@
                     lastYr = h.year;
                 }
                 const val = h.mom || 0;
-                const hPct = Math.min(100, Math.max(0, Math.round((Math.abs(val) / peakAbs) * 80)));
+                const hPct = Math.min(100, Math.max(0, Math.round((Math.abs(val) / sharedPeak) * 80)));
                 const barCls = val >= 0 ? 'bar-pos' : 'bar-neg';
                 const barStyle = val >= 0 ? `bottom:20%; height:${hPct}%; border-radius:3px 3px 0 0;` : `top:80%; height:${hPct}%; border-radius:0 0 3px 3px;`;
                 const secStr = h.sec !== null && h.sec !== undefined ? `${cfg.is_uk_gdp ? '12M' : 'YoY'}: ${h.sec > 0 ? '+' : ''}${h.sec.toFixed(1)}%` : '';
@@ -1301,13 +1298,13 @@
 
                 if (h.sec !== null && h.sec !== undefined) {
                     const cx = xPos + (barWidth / 2);
-                    const cy = Math.max(0, Math.min(160, 128 - (h.sec / peakSec) * 128));
+                    const cy = Math.max(0, Math.min(160, 128 - (h.sec / sharedPeak) * 128));
                     svgPts.push(`${cx},${cy}`);
                 }
 
                 if (rateVal !== null) {
                     const cx = xPos + (barWidth / 2);
-                    const cy = Math.max(0, Math.min(160, 128 - (rateVal / peakRate) * 128));
+                    const cy = Math.max(0, Math.min(160, 128 - (rateVal / sharedPeak) * 128));
                     rateSvgPts.push(`${cx},${cy}`);
                 }
             });
@@ -1320,53 +1317,34 @@
             const highlightBox = (!cfg.is_nfp && total >= 12) ? `<div style="position:absolute; top:0; bottom:0; background:rgba(59,130,246,0.07); left:${(total - 12) * barPitch}px; width:${12 * barPitch}px; pointer-events:none; z-index:2;"></div>` : '';
 
             let rightAxisTicks = '';
-            if (hasSec) {
-                let step = 2;
-                if (peakSec > 10) step = 5;
-                if (peakSec > 20) step = 10;
-
-                const ticks = [];
-                for (let v = step; v < peakSec * 0.92; v += step) {
-                    ticks.push(v);
-                }
-                const selectedTicks = (ticks.length > 2) ? [ticks[Math.floor(ticks.length / 2) - 1], ticks[ticks.length - 1]] : ticks.slice(-2);
-
-                selectedTicks.forEach(val => {
-                    const topPx = Math.round(128 - (val / peakSec) * 128);
-                    if (topPx >= 18 && topPx <= 118) {
-                        rightAxisTicks += `<span style="position:absolute; top:${topPx}px; left:10px; transform:translateY(-50%); color:var(--text-muted); font-size:0.62rem;">${val}%</span>`;
-                    }
-                });
-            } else {
-                const unit = cfg.is_nfp ? 'K' : '%';
-                let step = cfg.is_nfp ? 500 : 1;
-                if (cfg.is_nfp && peakAbs > 2500) step = 1000;
-                const candidate = Math.floor((peakAbs * 0.5) / step) * step;
-                if (candidate > 0) {
-                    const topPx = Math.round(128 - (candidate / peakAbs) * 128);
-                    rightAxisTicks += `<span style="position:absolute; top:${topPx}px; left:10px; transform:translateY(-50%); color:var(--text-muted); font-size:0.62rem;">${candidate}${unit}</span>`;
-                }
+            let step = sharedPeak > 15 ? 5 : 2;
+            const ticks = [];
+            for (let v = step; v < sharedPeak * 0.92; v += step) {
+                ticks.push(v);
             }
+            const selectedTicks = (ticks.length > 2) ? [ticks[Math.floor(ticks.length / 2) - 1], ticks[ticks.length - 1]] : ticks.slice(-2);
 
-            const rightAxisHtml = hasSec ? `
+            selectedTicks.forEach(val => {
+                const topPx = Math.round(128 - (val / sharedPeak) * 128);
+                if (topPx >= 18 && topPx <= 118) {
+                    rightAxisTicks += `<span style="position:absolute; top:${topPx}px; left:10px; transform:translateY(-50%); color:var(--text-muted); font-size:0.62rem;">${val}%</span>`;
+                }
+            });
+
+            const rightAxisHtml = `
                 <div class="cpi-yaxis cpi-yaxis-right">
-                    <span class="axis-tag" style="left:10px; color:var(--amber);">${cfg.is_uk_gdp ? '12M Sum' : 'YoY'}</span>
-                    <span style="position:absolute; top:0; left:10px;">+${peakSec.toFixed(1)}%</span>
+                    <span class="axis-tag" style="left:10px; color:var(--amber);">Scale (%)</span>
+                    <span style="position:absolute; top:0; left:10px;">+${sharedPeak.toFixed(1)}%</span>
                     ${rightAxisTicks}
                     <span style="position:absolute; top:80%; left:10px;">0%</span>
-                </div>
-            ` : `
-                <div class="cpi-yaxis cpi-yaxis-right">
-                    ${rightAxisTicks}
-                    <span style="position:absolute; top:80%; left:10px;">0${cfg.is_nfp ? 'K' : '%'}</span>
                 </div>
             `;
 
             container.innerHTML = `
                 <div class="cpi-chart-wrapper-inner" style="width:${widthPx + 115}px;">
                     <div class="cpi-yaxis">
-                        <span style="position:absolute; top:0; right:10px;">+${peakAbs.toFixed(1)}${cfg.is_nfp ? 'K' : '%'}</span>
-                        <span style="position:absolute; top:80%; right:10px;">0${cfg.is_nfp ? 'K' : '%'}</span>
+                        <span style="position:absolute; top:0; right:10px;">+${sharedPeak.toFixed(1)}%</span>
+                        <span style="position:absolute; top:80%; right:10px;">0%</span>
                     </div>
                     <div style="display:flex; flex-direction:column; width:${widthPx}px;">
                         <div class="cpi-bar-chart" style="width:${widthPx}px; position:relative;">
