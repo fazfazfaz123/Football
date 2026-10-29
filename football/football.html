@@ -309,16 +309,16 @@ footer {
   font-weight: 600;
 }
 
-/* Fixture layout & alignment styling */
+/* Expanded fixture layout & alignment styling to prevent cut-offs */
 .fixture-cell {
   display: flex;
   align-items: center;
-  width: 260px;
+  width: 330px;
 }
 .team-home, .team-away {
   display: flex;
   align-items: center;
-  width: 45%;
+  width: 44%;
 }
 .team-home {
   justify-content: flex-end;
@@ -330,11 +330,11 @@ footer {
 }
 .team-name {
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
+  text-overflow: clip;
 }
 .fixture-vs {
-  width: 10%;
+  width: 12%;
   text-align: center;
   font-weight: 600;
   color: var(--muted);
