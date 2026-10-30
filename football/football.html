@@ -969,8 +969,16 @@ function renderLeagueTable() {
 function initLeagueTables() {
   const sel = document.getElementById("tableComp");
   const comps = Object.keys(TABLES);
-  sel.innerHTML = comps.map(c => `<option value="${c}">${c}</option>`).join("");
-  if (comps.length) renderLeagueTable();
+  // Prefer Premier League as the default on page open
+  const preferred = "Premier League";
+  const ordered = comps.includes(preferred)
+    ? [preferred, ...comps.filter(c => c !== preferred)]
+    : comps;
+  sel.innerHTML = ordered.map(c => `<option value="${c}">${c}</option>`).join("");
+  if (ordered.length) {
+    sel.value = ordered[0];
+    renderLeagueTable();
+  }
 }
 
 function renderHeatmap() {
