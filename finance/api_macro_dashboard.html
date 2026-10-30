@@ -342,7 +342,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-30 12:08:29</div>
+            <div class="timestamp">SYNCED · 2026-10-30 12:14:51</div>
         </header>
 
         <!-- 1. Global matrix -->
@@ -1367,10 +1367,9 @@
                 const rateVal = h.rate !== null && h.rate !== undefined ? h.rate : null;
                 const rateStr = rateVal !== null ? `Rate: ${rateVal.toFixed(2)}%` : '';
 
-                // Hit area uses full pitch width on mobile for easier taps
-                const hitW = isMobile ? barPitch : barWidth;
-                barsHtml += `<div class="chart-bar-wrap" style="width:${hitW}px; flex:0 0 ${hitW}px; margin-right:0;" data-label="${h.label}" data-mom="${momStr}" data-sec="${secStr}" data-rate="${rateStr}">
-                    <div class="chart-bar ${barCls}" style="max-width:${barWidth}px; left:50%; transform:translateX(-50%); ${barStyle}"></div>
+                // Always occupy one pitch slot so bars and line points share the same time axis
+                barsHtml += `<div class="chart-bar-wrap" style="width:${barPitch}px; flex:0 0 ${barPitch}px; margin-right:0;" data-label="${h.label}" data-mom="${momStr}" data-sec="${secStr}" data-rate="${rateStr}">
+                    <div class="chart-bar ${barCls}" style="width:${barWidth}px; max-width:${barWidth}px; left:50%; transform:translateX(-50%); ${barStyle}"></div>
                 </div>`;
 
                 const cx = xPos + (barPitch / 2);
