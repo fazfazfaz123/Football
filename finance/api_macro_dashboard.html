@@ -350,7 +350,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-10-30 22:50:11</div>
+            <div class="timestamp">SYNCED · 2026-10-30 22:53:35</div>
         </header>
 
         <!-- 1. Global matrix -->
@@ -1359,7 +1359,15 @@
                                 'US': '#3b82f6', 'UK': '#10b981', 'EZ': '#f59e0b', 'JP': '#ec4899',
                                 'CA': '#8b5cf6', 'AU': '#06b6d4', 'CH': '#64748b', 'IN': '#ef4444',
                                 'BR': '#14b8a6', 'MX': '#f97316', 'KR': '#84cc16', 'CN': '#6366f1',
-                                'ZA': '#a855f7', 'TR': '#ef4444', 'RU': '#f43f5e', 'NZ': '#22d3ee'
+                                'ZA': '#a855f7', 'TR': '#ef4444', 'RU': '#f43f5e', 'NZ': '#22d3ee',
+                                'PL': '#a3e635'
+                            };
+                            const countryNames = {
+                                'US': 'United States', 'UK': 'United Kingdom', 'EZ': 'Eurozone', 'JP': 'Japan',
+                                'CA': 'Canada', 'AU': 'Australia', 'CH': 'Switzerland', 'IN': 'India',
+                                'BR': 'Brazil', 'MX': 'Mexico', 'KR': 'South Korea', 'CN': 'China',
+                                'ZA': 'South Africa', 'TR': 'Turkey', 'RU': 'Russia', 'NZ': 'New Zealand',
+                                'PL': 'Poland'
                             };
                             const fallbackColors = ['#94a3b8','#cbd5e1','#f472b6','#fb923c','#4ade80','#38bdf8'];
                             let colorIdx = 0;
@@ -1469,7 +1477,8 @@
                                     Object.entries(byCountry).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([code, p]) => {
                                         if (hiddenSeries.has(code)) return;
                                         const color = seriesColors[code] || '#94a3b8';
-                                        html += `<span style="color:${color};">${code}: <strong style="color:var(--text)">${p.val.toFixed(2)}%</strong></span>`;
+                                        const name = countryNames[code] || code;
+                                        html += `<span style="color:${color};">${name}: <strong style="color:var(--text)">${p.val.toFixed(2)}%</strong></span>`;
                                     });
                                     readout.innerHTML = html;
                                     return;
@@ -1492,7 +1501,8 @@
                                 let html = `<span style="color:var(--accent); font-weight:600;">${nearest.date}</span>`;
                                 Object.entries(byCountry).sort((a,b)=>a[0].localeCompare(b[0])).forEach(([code, p]) => {
                                     const color = seriesColors[code] || '#94a3b8';
-                                    html += `<span style="color:${color};">${code}: <strong style="color:var(--text)">${p.val.toFixed(2)}%</strong></span>`;
+                                    const name = countryNames[code] || code;
+                                    html += `<span style="color:${color};">${name}: <strong style="color:var(--text)">${p.val.toFixed(2)}%</strong></span>`;
                                 });
                                 readout.innerHTML = html;
                             }
@@ -1566,7 +1576,13 @@
                                     Object.values(byCountry).forEach(p => {
                                         const y = getY(p.val);
                                         const color = seriesColors[p.code] || '#94a3b8';
+                                        const name = countryNames[p.code] || p.code;
                                         hoverHtml += `<circle cx="${x}" cy="${y}" r="4.5" fill="${color}" stroke="#0e0e13" stroke-width="1.5"/>`;
+                                        // Label next to the point (offset to the right, flip if near right edge)
+                                        const labelX = x + 10;
+                                        const textAnchor = (labelX > width - padding.right - 80) ? 'end' : 'start';
+                                        const actualX = (textAnchor === 'end') ? x - 10 : labelX;
+                                        hoverHtml += `<text x="${actualX}" y="${y + 4}" text-anchor="${textAnchor}" font-size="10.5" font-weight="600" fill="${color}" style="paint-order:stroke; stroke:#0e0e13; stroke-width:3px;">${name}</text>`;
                                     });
                                     hoverGroup.innerHTML = hoverHtml;
                                     if (!pinned) updateReadout(nearest);
