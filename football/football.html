@@ -760,12 +760,17 @@ let raceChart = new Chart(raceCtx, {
         time: {
           unit: 'month',
           displayFormats: {
-            month: 'MMM yyyy'
+            month: 'MMM'
           },
-          tooltipFormat: 'dd MMM yyyy'
+          tooltipFormat: 'dd MMM'
         },
         grid: { color: 'rgba(36,48,73,0.5)' },
-        ticks: { color: '#8b9bb8', maxTicksLimit: 12, maxRotation: 0 }
+        ticks: {
+          color: '#8b9bb8',
+          maxTicksLimit: 12,
+          maxRotation: 0,
+          align: 'center'
+        }
       },
       y: { beginAtZero: true, grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', stepSize: 1 } }
     }
