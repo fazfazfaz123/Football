@@ -764,12 +764,46 @@ let raceChart = new Chart(raceCtx, {
           },
           tooltipFormat: 'dd MMM'
         },
-        grid: { color: 'rgba(36,48,73,0.5)' },
+        grid: { display: false },  // labels only, no grid here
         ticks: {
           color: '#8b9bb8',
           maxTicksLimit: 12,
           maxRotation: 0,
           align: 'center'
+        }
+      },
+      xGrid: {
+        type: 'time',
+        position: 'bottom',
+        time: {
+          unit: 'month',
+          tooltipFormat: 'dd MMM'
+        },
+        grid: {
+          color: 'rgba(36,48,73,0.5)',
+          drawTicks: false,
+          drawOnChartArea: true
+        },
+        ticks: {
+          display: false,  // no labels on the grid scale
+          maxTicksLimit: 24
+        },
+        // Force ticks (grid lines) at month starts only
+        afterBuildTicks: function(scale) {
+          if (!scale.ticks || !scale.ticks.length) return;
+          const filtered = [];
+          const seen = new Set();
+          scale.ticks.forEach(tick => {
+            const d = new Date(tick.value);
+            // Normalize to start of month
+            const start = new Date(d.getFullYear(), d.getMonth(), 1).getTime();
+            if (!seen.has(start)) {
+              seen.add(start);
+              filtered.push({ value: start, major: true });
+            }
+          });
+          // Also ensure end of last month / start of next if needed, but starts cover boundaries
+          scale.ticks = filtered;
         }
       },
       y: { beginAtZero: true, grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', stepSize: 1 } }
