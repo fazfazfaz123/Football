@@ -726,6 +726,17 @@ function setTotalsSeason(season) {
   raceChart.data.datasets[0].data = data.faz || [];
   raceChart.data.datasets[1].data = data.bill || [];
   raceChart.data.datasets[2].data = data.lenn || [];
+  // Sync grid scale range to data dates so month-boundary lines cover the season
+  if (data.dates && data.dates.length) {
+    const min = new Date(data.dates[0]);
+    const max = new Date(data.dates[data.dates.length - 1]);
+    // Extend slightly so start/end of months are included
+    min.setDate(1);
+    max.setMonth(max.getMonth() + 1);
+    max.setDate(0);
+    raceChart.options.scales.xGrid.min = min.getTime();
+    raceChart.options.scales.xGrid.max = max.getTime();
+  }
   raceChart.options.scales.y.min = 0;
   raceChart.update();
 }
@@ -764,17 +775,33 @@ let raceChart = new Chart(raceCtx, {
           },
           tooltipFormat: 'dd MMM'
         },
-        grid: { display: false },  // labels only, no grid here
+        grid: { display: false },
         ticks: {
           color: '#8b9bb8',
           maxTicksLimit: 12,
           maxRotation: 0,
           align: 'center'
+        },
+        // Place label ticks in the middle of each month
+        afterBuildTicks: function(scale) {
+          if (!scale.ticks || !scale.ticks.length) return;
+          const mids = [];
+          const seen = new Set();
+          scale.ticks.forEach(tick => {
+            const d = new Date(tick.value);
+            const mid = new Date(d.getFullYear(), d.getMonth(), 15).getTime();
+            if (!seen.has(mid)) {
+              seen.add(mid);
+              mids.push({ value: mid, major: true });
+            }
+          });
+          scale.ticks = mids;
         }
       },
       xGrid: {
         type: 'time',
         position: 'bottom',
+        display: true,
         time: {
           unit: 'month',
           tooltipFormat: 'dd MMM'
@@ -782,27 +809,25 @@ let raceChart = new Chart(raceCtx, {
         grid: {
           color: 'rgba(36,48,73,0.5)',
           drawTicks: false,
-          drawOnChartArea: true
+          drawOnChartArea: true,
+          lineWidth: 1
         },
         ticks: {
-          display: false,  // no labels on the grid scale
+          display: false,
           maxTicksLimit: 24
         },
-        // Force ticks (grid lines) at month starts only
         afterBuildTicks: function(scale) {
           if (!scale.ticks || !scale.ticks.length) return;
           const filtered = [];
           const seen = new Set();
           scale.ticks.forEach(tick => {
             const d = new Date(tick.value);
-            // Normalize to start of month
             const start = new Date(d.getFullYear(), d.getMonth(), 1).getTime();
             if (!seen.has(start)) {
               seen.add(start);
               filtered.push({ value: start, major: true });
             }
           });
-          // Also ensure end of last month / start of next if needed, but starts cover boundaries
           scale.ticks = filtered;
         }
       },
@@ -810,6 +835,21 @@ let raceChart = new Chart(raceCtx, {
     }
   }
 });
+
+// Set initial grid scale range for current season
+(function() {
+  const dates = (CHARTS_BY_SEASON["2026/27"] || CHART).dates || [];
+  if (dates.length) {
+    const min = new Date(dates[0]);
+    const max = new Date(dates[dates.length - 1]);
+    min.setDate(1);
+    max.setMonth(max.getMonth() + 1);
+    max.setDate(0);
+    raceChart.options.scales.xGrid.min = min.getTime();
+    raceChart.options.scales.xGrid.max = max.getTime();
+    raceChart.update();
+  }
+})();
 
 let animTimer = null;
 function playRace() {
