@@ -567,6 +567,10 @@ footer {
 
   <div class="panel">
     <h2>🎯 Scoreline Heatmap</h2>
+    <div class="controls" style="margin-bottom:12px">
+      <button class="btn active" id="seasonBtn2627" onclick="setHeatmapSeason('2026/27')">2026/27</button>
+      <button class="btn" id="seasonBtn2526" onclick="setHeatmapSeason('2025/26')">2025/26</button>
+    </div>
     <div id="scoreHeatmapContainer"></div>
     <div id="scorelineDetail" style="margin-top:12px;font-size:0.85rem;color:var(--muted)"></div>
   </div>
@@ -1002,14 +1006,23 @@ function initLeagueTables() {
   }
 }
 
+let currentSeason = "2026/27";
+function setHeatmapSeason(season) {
+  currentSeason = season;
+  document.getElementById("seasonBtn2627").classList.toggle("active", season === "2026/27");
+  document.getElementById("seasonBtn2526").classList.toggle("active", season === "2025/26");
+  document.getElementById("scorelineDetail").innerHTML = "";
+  renderHeatmap();
+}
 function renderHeatmap() {
   const container = document.getElementById("scoreHeatmapContainer");
-  if (!HEAT || !HEAT.matrix) { container.innerHTML = "<p>No data</p>"; return; }
-  const max = Math.max(...HEAT.matrix.flat(), 1);
+  const seasonData = (HEAT && HEAT.seasons && HEAT.seasons[currentSeason]) || null;
+  if (!seasonData || !seasonData.matrix) { container.innerHTML = "<p>No data</p>"; return; }
+  const max = Math.max(...seasonData.matrix.flat(), 1);
   let html = '<div class="heatmap-grid-score">';
   html += '<div></div>';
   HEAT.labels.forEach(l => { html += `<div style="text-align:center;font-size:0.7rem;color:var(--muted)">${l}</div>`; });
-  HEAT.matrix.forEach((row, hi) => {
+  seasonData.matrix.forEach((row, hi) => {
     html += `<div style="text-align:right;font-size:0.7rem;color:var(--muted);padding-right:4px">${HEAT.labels[hi]}</div>`;
     row.forEach((cnt, ai) => {
       const intensity = Math.round(255 * (cnt / max));
@@ -1022,7 +1035,8 @@ function renderHeatmap() {
   container.innerHTML = html;
 }
 function showScoreline(key) {
-  const matches = (HEAT.matches_by_cell || {})[key] || [];
+  const seasonData = (HEAT && HEAT.seasons && HEAT.seasons[currentSeason]) || {};
+  const matches = (seasonData.matches_by_cell || {})[key] || [];
   const detail = document.getElementById("scorelineDetail");
   if (!matches.length) { detail.innerHTML = "No example matches"; return; }
   detail.innerHTML = "<strong>Examples:</strong><br>" + matches.map(m => 
