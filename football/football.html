@@ -192,7 +192,8 @@ header .subtitle { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
 .btn:hover, .btn.active { background: var(--faz-dim); border-color: var(--faz); color: var(--faz); }
 @media (max-width: 720px) {
   #seasonBtn2627, #seasonBtn2526,
-  #explorerSeasonBtn2627, #explorerSeasonBtn2526 {
+  #explorerSeasonBtn2627, #explorerSeasonBtn2526,
+  #totalsSeasonBtn2627, #totalsSeasonBtn2526, #totalsSeasonBtn2425 {
     padding: 4px 8px;
     font-size: 0.72rem;
     border-radius: 6px;
@@ -454,6 +455,7 @@ footer {
       <div class="controls" style="margin:0">
         <button class="btn active" id="totalsSeasonBtn2627" onclick="setTotalsSeason('2026/27')">2026/27</button>
         <button class="btn" id="totalsSeasonBtn2526" onclick="setTotalsSeason('2025/26')">2025/26</button>
+        <button class="btn" id="totalsSeasonBtn2425" onclick="setTotalsSeason('2024/25')">2024/25</button>
       </div>
     </div>
     <div class="controls">
@@ -718,6 +720,7 @@ function setTotalsSeason(season) {
   const data = CHARTS_BY_SEASON[season] || {dates: [], faz: [], bill: [], lenn: []};
   document.getElementById("totalsSeasonBtn2627").classList.toggle("active", season === "2026/27");
   document.getElementById("totalsSeasonBtn2526").classList.toggle("active", season === "2025/26");
+  document.getElementById("totalsSeasonBtn2425").classList.toggle("active", season === "2024/25");
   raceChart.data.labels = data.dates || [];
   raceChart.data.datasets[0].data = data.faz || [];
   raceChart.data.datasets[1].data = data.bill || [];
