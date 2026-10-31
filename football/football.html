@@ -566,10 +566,12 @@ footer {
   </div>
 
   <div class="panel">
-    <h2>🎯 Scoreline Heatmap</h2>
-    <div class="controls" style="margin-bottom:12px">
-      <button class="btn active" id="seasonBtn2627" onclick="setHeatmapSeason('2026/27')">2026/27</button>
-      <button class="btn" id="seasonBtn2526" onclick="setHeatmapSeason('2025/26')">2025/26</button>
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+      <h2 style="margin:0">🎯 Scoreline Heatmap</h2>
+      <div class="controls" style="margin:0">
+        <button class="btn active" id="seasonBtn2627" onclick="setHeatmapSeason('2026/27')">2026/27</button>
+        <button class="btn" id="seasonBtn2526" onclick="setHeatmapSeason('2025/26')">2025/26</button>
+      </div>
     </div>
     <div id="scoreHeatmapContainer"></div>
     <div id="scorelineDetail" style="margin-top:12px;font-size:0.85rem;color:var(--muted)"></div>
