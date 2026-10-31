@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evil Plotters · Prediction Race</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -754,7 +755,18 @@ let raceChart = new Chart(raceCtx, {
       }
     },
     scales: {
-      x: { grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', maxTicksLimit: 12 } },
+      x: {
+        type: 'time',
+        time: {
+          unit: 'month',
+          displayFormats: {
+            month: 'MMM yyyy'
+          },
+          tooltipFormat: 'dd MMM yyyy'
+        },
+        grid: { color: 'rgba(36,48,73,0.5)' },
+        ticks: { color: '#8b9bb8', maxTicksLimit: 12, maxRotation: 0 }
+      },
       y: { beginAtZero: true, grid: { color: 'rgba(36,48,73,0.5)' }, ticks: { color: '#8b9bb8', stepSize: 1 } }
     }
   }
