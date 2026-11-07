@@ -71,7 +71,7 @@
         }
         .chart-legend .lg-mom i { height: 8px; width: 8px; border-radius: 2px; background: #3b82f6; }
         .chart-legend .lg-yoy i { background: #f59e0b; }
-        .chart-legend .lg-rate i { background: #06b6d4; border-top: 1px dashed transparent; background-image: repeating-linear-gradient(90deg, #06b6d4 0 3px, transparent 3px 6px); height: 2px; }
+        .chart-legend .lg-rate i { background: #06b6d4; height: 2px; }
         .chart-scroll-hint {
             display: none; font-size: 0.65rem; color: var(--text-dim); text-align: center;
             margin-top: 0.35rem; font-family: 'JetBrains Mono', monospace;
@@ -397,7 +397,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-11-07 19:13:51</div>
+            <div class="timestamp">SYNCED · 2026-11-07 19:21:46</div>
         </header>
 
         <!-- 1. Global matrix -->
@@ -1547,7 +1547,6 @@
                     </div>
                     <span class="cal-countdown" data-meeting-date="2026-12-09">in 32d</span>
                 </div>
-                <div class="cal-next-type"><span class="cal-next-type-inline">FOMC Rate Decision</span></div>
                 <div class="cal-next-detail">Last: <strong>4.00%</strong> · Forecast: <strong>4.00%</strong></div>
             </div>
         
@@ -1560,7 +1559,6 @@
                     </div>
                     <span class="cal-countdown" data-meeting-date="2026-12-17">in 40d</span>
                 </div>
-                <div class="cal-next-type"><span class="cal-next-type-inline">BoE MPC Rate Decision</span></div>
                 <div class="cal-next-detail">Last: <strong>4.00%</strong> · Forecast: <strong>4.00%</strong></div>
             </div>
         
@@ -1573,7 +1571,6 @@
                     </div>
                     <span class="cal-countdown" data-meeting-date="2026-12-17">in 40d</span>
                 </div>
-                <div class="cal-next-type"><span class="cal-next-type-inline">ECB Rate Decision</span></div>
                 <div class="cal-next-detail">Last: <strong>2.50%</strong> · Forecast: <strong>2.50%</strong></div>
             </div>
         </div>
@@ -2109,7 +2106,7 @@
             const strokeW = isMobile ? 2.5 : 2.25;
             const svgOverlay = (svgPts.length || rateSvgPts.length) ? `<svg style="position:absolute; inset:0; width:100%; height:${plotH}px; pointer-events:none; z-index:4;" overflow="hidden">
                 ${svgPts.length ? `<polyline fill="none" stroke="#f59e0b" stroke-width="${strokeW}" stroke-linecap="round" stroke-linejoin="round" points="${svgPts.join(' ')}"/>` : ''}
-                ${rateSvgPts.length ? `<polyline fill="none" stroke="#06b6d4" stroke-width="${strokeW}" stroke-dasharray="4,3" stroke-linecap="round" stroke-linejoin="round" points="${rateSvgPts.join(' ')}"/>` : ''}
+                ${rateSvgPts.length ? `<polyline fill="none" stroke="#06b6d4" stroke-width="${strokeW}" stroke-linecap="round" stroke-linejoin="round" points="${rateSvgPts.join(' ')}"/>` : ''}
             </svg>` : '';
 
             const highlightBox = (!cfg.is_nfp && total >= 12) ? `<div style="position:absolute; top:0; bottom:0; background:rgba(59,130,246,0.07); left:${(total - 12) * barPitch}px; width:${12 * barPitch}px; pointer-events:none; z-index:2;"></div>` : '';
