@@ -264,7 +264,7 @@
         }
         .cmp-row { 
             display: grid; 
-            grid-template-columns: 110px 1fr 55px 95px; 
+            grid-template-columns: 110px 1fr 55px 110px; 
             align-items: center; 
             gap: 0.75rem; 
             font-size: 0.72rem; 
@@ -291,6 +291,7 @@
         }
 
         .cmp-col-label { font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; color: var(--text-dim); text-align: right; }
+        .cmp-next.cmp-col-label { text-align: left; }
         .cmp-bars {
             display: flex;
             flex-direction: column;
@@ -310,7 +311,7 @@
         .cpi-bar { background: linear-gradient(90deg, #d97706, #f59e0b); height: 8px; border-radius: 2px; }
         .cmp-label { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); min-width: 38px; flex-shrink: 0; }
         .cmp-real { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; text-align: right; }
-        .cmp-next { display: flex; flex-direction: column; gap: 0.12rem; align-items: flex-end; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); line-height: 1.25; }
+        .cmp-next { display: flex; flex-direction: column; gap: 0.12rem; align-items: flex-start; font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); line-height: 1.25; }
         .cmp-next-line { white-space: nowrap; }
         .cmp-next-tag { display: inline-block; min-width: 28px; font-size: 0.58rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; opacity: 0.85; }
         .cmp-next-tag.rate { color: #60a5fa; }
@@ -397,7 +398,7 @@
             <div class="title-group">
                 <h1>Macro</h1>
             </div>
-            <div class="timestamp">SYNCED · 2026-11-07 19:21:46</div>
+            <div class="timestamp">SYNCED · 2026-11-07 19:27:06</div>
         </header>
 
         <!-- 1. Global matrix -->
