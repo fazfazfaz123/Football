@@ -726,11 +726,9 @@ function setTotalsSeason(season) {
   raceChart.data.datasets[0].data = data.faz || [];
   raceChart.data.datasets[1].data = data.bill || [];
   raceChart.data.datasets[2].data = data.lenn || [];
-  // Sync grid scale range to data dates so month-boundary lines cover the season
   if (data.dates && data.dates.length) {
     const min = new Date(data.dates[0]);
     const max = new Date(data.dates[data.dates.length - 1]);
-    // Extend slightly so start/end of months are included
     min.setDate(1);
     max.setMonth(max.getMonth() + 1);
     max.setDate(0);
@@ -739,6 +737,50 @@ function setTotalsSeason(season) {
   }
   raceChart.options.scales.y.min = 0;
   raceChart.update();
+  updateTilesForSeason(season);
+}
+
+function updateTilesForSeason(season) {
+  const matches = MATCHES_BY_SEASON[season] || [];
+  const players = ['faz', 'bill', 'lenn'];
+  const stats = {};
+  players.forEach(p => {
+    let correct = 0, preds = 0, streak = 0, streakType = 'cold';
+    let run = 0, runType = null;
+    matches.forEach(m => {
+      const pred = m[p + '_pred'];
+      const ok = m[p + '_ok'];
+      if (pred && pred !== '') {
+        preds++;
+        if (ok) { correct++; }
+        const t = ok ? 'hot' : 'cold';
+        if (t === runType) { run++; } else { runType = t; run = 1; }
+        streak = run; streakType = runType;
+      }
+    });
+    const acc = preds ? (correct / preds * 100).toFixed(1) : '0.0';
+    stats[p] = {correct, preds, acc, streak, streakType};
+  });
+  const ranked = players.slice().sort((a, b) => stats[b].correct - stats[a].correct);
+  const labels = ['1st', '2nd', '3rd'];
+  const board = document.querySelector('.leaderboard');
+  ranked.forEach((p, i) => {
+    const s = stats[p];
+    const scoreEl = document.getElementById('score-' + p);
+    const predEl = document.getElementById('pred-' + p);
+    const accEl = document.getElementById('acc-' + p);
+    const streakEl = document.getElementById('streak-' + p);
+    const rankEl = document.getElementById('rank-' + p);
+    if (scoreEl) scoreEl.textContent = s.correct;
+    if (predEl) predEl.textContent = s.preds;
+    if (accEl) accEl.textContent = s.acc + '%';
+    if (rankEl) rankEl.textContent = labels[i];
+    if (streakEl) {
+      streakEl.textContent = (s.streakType === 'hot' ? '🔥 ' : '❄️ ') + s.streak;
+      streakEl.className = 'streak-badge ' + (s.streakType === 'hot' ? 'streak-hot' : 'streak-cold');
+    }
+    if (board && scoreEl) board.appendChild(scoreEl.closest('.card'));
+  });
 }
 const raceCtx = document.getElementById('raceChart').getContext('2d');
 let raceChart = new Chart(raceCtx, {
