@@ -1088,11 +1088,29 @@
             const filteredMgr = mgrPoints.filter(p => p.x >= currentStartYear);
             const trend = computeTrend(filteredPm, filteredMgr);
 
+            // Dynamic Y scale so points fill the chart for shorter recent tenures
+            const allYs = [...filteredPm, ...filteredMgr].map(p => p.y);
+            const dataMaxY = allYs.length ? Math.max(...allYs) : 1000;
+            let maxY = Math.ceil((dataMaxY * 1.15) / 500) * 500;
+            if (maxY < 1000) maxY = 1000;
+            if (maxY > 8500) maxY = 8500;
+
+            // Choose a sensible step size for ~6–8 grid lines
+            let yStep = 1000;
+            if (maxY <= 1500) yStep = 200;
+            else if (maxY <= 2500) yStep = 500;
+            else if (maxY <= 4500) yStep = 500;
+            else if (maxY <= 6500) yStep = 1000;
+            else yStep = 1000;
+
+            const ySteps = [];
+            for (let y = 0; y <= maxY; y += yStep) ySteps.push(y);
+            if (ySteps[ySteps.length - 1] !== maxY) ySteps.push(maxY);
+
             const padding = { top: 28, right: 32, bottom: 42, left: 58 };
             const minX = currentStartYear;
             const maxX = 2028;
             const minY = 0;
-            const maxY = 8200;
 
             function getX(val) {
                 return padding.left + ((val - minX) / (maxX - minX)) * (width - padding.left - padding.right);
@@ -1113,7 +1131,6 @@
             ctx.textAlign = "right";
             ctx.lineWidth = 1;
 
-            const ySteps = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000];
             ySteps.forEach(yVal => {
                 const y = getY(yVal);
                 ctx.beginPath();
