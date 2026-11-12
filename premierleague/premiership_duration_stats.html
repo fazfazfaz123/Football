@@ -256,6 +256,36 @@
             color: var(--accent-pm);
         }
 
+        .play-toggle {
+            background: var(--accent-pm);
+            border: 1px solid var(--accent-pm);
+            color: #0b1120;
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+            margin-left: 0.25rem;
+        }
+        .play-toggle:hover {
+            filter: brightness(1.1);
+        }
+        .play-toggle.playing {
+            background: var(--surface);
+            color: var(--accent-pm);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+        .anim-year {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--accent-pm);
+            margin-left: 0.5rem;
+            align-self: center;
+            min-width: 3.5rem;
+        }
+
         .chart-hint {
             display: none;
             align-items: center;
@@ -623,6 +653,8 @@
                 <button class="year-toggle" data-year="2010">From 2010</button>
                 <button class="year-toggle" data-year="2020">From 2020</button>
                 <button class="year-toggle" data-year="2025">From 2025</button>
+                <button class="play-toggle" id="playToggle">▶ Play</button>
+                <span class="anim-year" id="animYear"></span>
             </div>
             <div class="chart-scroll" id="scrollContainer">
                 <div class="chart-container">
@@ -1118,6 +1150,9 @@
         const convergenceLabel = document.getElementById("convergenceLabel");
 
         let currentStartYear = 1990;
+        let animCutoff = null;
+        let animFrame = null;
+        let animating = false;
 
         function linearRegression(points) {
             if (points.length < 2) return null;
@@ -1167,8 +1202,9 @@
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(dpr, dpr);
 
-            const filteredPm = pmPoints.filter(p => p.x >= currentStartYear);
-            const filteredMgr = mgrPoints.filter(p => p.x >= currentStartYear);
+            const cutoff = animCutoff != null ? animCutoff : 2028;
+            const filteredPm = pmPoints.filter(p => p.x >= currentStartYear && p.x <= cutoff);
+            const filteredMgr = mgrPoints.filter(p => p.x >= currentStartYear && p.x <= cutoff);
             const trend = computeTrend(filteredPm, filteredMgr);
 
             // Dynamic Y scale so points fill the chart for shorter recent tenures
@@ -1255,30 +1291,31 @@
                 ctx.stroke();
             });
 
+            const lineEnd = Math.min(cutoff, maxX - 0.5);
             if (trend) {
-                // Manager trendline
+                // Manager trendline (up to current cutoff)
                 ctx.beginPath();
                 ctx.strokeStyle = "#c084fc";
                 ctx.lineWidth = 2.5;
                 ctx.lineCap = "round";
                 const mgrStartY = trend.mgr_slope * minX + trend.mgr_intercept;
-                const mgrEndY = trend.mgr_slope * (maxX - 1) + trend.mgr_intercept;
+                const mgrEndY = trend.mgr_slope * lineEnd + trend.mgr_intercept;
                 ctx.moveTo(getX(minX), getY(Math.max(minY, Math.min(maxY, mgrStartY))));
-                ctx.lineTo(getX(maxX - 1), getY(Math.max(minY, Math.min(maxY, mgrEndY))));
+                ctx.lineTo(getX(lineEnd), getY(Math.max(minY, Math.min(maxY, mgrEndY))));
                 ctx.stroke();
 
-                // PM trendline
+                // PM trendline (up to current cutoff)
                 ctx.beginPath();
                 ctx.strokeStyle = "#38bdf8";
                 ctx.lineWidth = 2.5;
                 const pmStartY = trend.pm_slope * minX + trend.pm_intercept;
-                const pmEndY = trend.pm_slope * (maxX - 1) + trend.pm_intercept;
+                const pmEndY = trend.pm_slope * lineEnd + trend.pm_intercept;
                 ctx.moveTo(getX(minX), getY(Math.max(minY, Math.min(maxY, pmStartY))));
-                ctx.lineTo(getX(maxX - 1), getY(Math.max(minY, Math.min(maxY, pmEndY))));
+                ctx.lineTo(getX(lineEnd), getY(Math.max(minY, Math.min(maxY, pmEndY))));
                 ctx.stroke();
 
-                // Convergence
-                if (trend.converge_year != null && trend.converge_year >= minX && trend.converge_year <= maxX) {
+                // Convergence (only if already reached)
+                if (trend.converge_year != null && trend.converge_year >= minX && trend.converge_year <= cutoff) {
                     const cx = getX(trend.converge_year);
                     const cy = getY(trend.pm_slope * trend.converge_year + trend.pm_intercept);
                     ctx.fillStyle = "#fbbf24";
@@ -1294,10 +1331,24 @@
                     ctx.fillText(`Convergence ~${trend.converge_year.toFixed(1)}`, cx + 12, cy - 8);
                     convergenceLabel.textContent = `Convergence (~${trend.converge_year.toFixed(1)})`;
                 } else {
-                    convergenceLabel.textContent = "Convergence (N/A for range)";
+                    convergenceLabel.textContent = animating ? "Convergence…" : "Convergence (N/A for range)";
                 }
             } else {
-                convergenceLabel.textContent = "Convergence (insufficient data)";
+                convergenceLabel.textContent = animating ? "Convergence…" : "Convergence (insufficient data)";
+            }
+
+            // Vertical "now" marker while animating
+            if (animating && cutoff < maxX - 0.2) {
+                const nx = getX(cutoff);
+                ctx.save();
+                ctx.strokeStyle = "rgba(251, 191, 36, 0.55)";
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([4, 3]);
+                ctx.beginPath();
+                ctx.moveTo(nx, padding.top);
+                ctx.lineTo(nx, height - padding.bottom);
+                ctx.stroke();
+                ctx.restore();
             }
 
             canvas.chartInfo = { getX, getY, minX, maxX, minY, maxY, padding, width, height, filteredPm, filteredMgr };
@@ -1352,12 +1403,65 @@
 
         document.querySelectorAll("#yearToggles .year-toggle").forEach(btn => {
             btn.addEventListener("click", () => {
+                stopAnimation();
                 currentStartYear = parseInt(btn.dataset.year, 10);
                 document.querySelectorAll("#yearToggles .year-toggle").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
                 drawChart();
             });
         });
+
+        const playBtn = document.getElementById("playToggle");
+        const animYearEl = document.getElementById("animYear");
+
+        function stopAnimation() {
+            animating = false;
+            animCutoff = null;
+            if (animFrame) cancelAnimationFrame(animFrame);
+            animFrame = null;
+            if (playBtn) {
+                playBtn.textContent = "▶ Play";
+                playBtn.classList.remove("playing");
+            }
+            if (animYearEl) animYearEl.textContent = "";
+        }
+
+        function startAnimation() {
+            if (animating) {
+                stopAnimation();
+                drawChart();
+                return;
+            }
+            animating = true;
+            playBtn.textContent = "⏸ Pause";
+            playBtn.classList.add("playing");
+            const start = currentStartYear;
+            const end = 2028;
+            const duration = Math.max(4000, (end - start) * 280);
+            const t0 = performance.now();
+
+            function step(now) {
+                if (!animating) return;
+                const elapsed = now - t0;
+                const progress = Math.min(1, elapsed / duration);
+                animCutoff = start + (end - start) * progress;
+                if (animYearEl) animYearEl.textContent = Math.floor(animCutoff).toString();
+                drawChart();
+                if (progress < 1) {
+                    animFrame = requestAnimationFrame(step);
+                } else {
+                    animating = false;
+                    animCutoff = null;
+                    playBtn.textContent = "▶ Play";
+                    playBtn.classList.remove("playing");
+                    if (animYearEl) animYearEl.textContent = "";
+                    drawChart();
+                }
+            }
+            animFrame = requestAnimationFrame(step);
+        }
+
+        if (playBtn) playBtn.addEventListener("click", startAnimation);
 
         window.addEventListener("resize", drawChart);
         drawChart();
