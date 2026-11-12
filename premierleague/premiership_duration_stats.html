@@ -455,17 +455,24 @@
         }
         .recent-item {
             display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
+            align-items: baseline;
+            gap: 0.4rem;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.82rem;
+            line-height: 1.4;
         }
         .recent-name {
             font-weight: 600;
-            font-size: 0.92rem;
             color: var(--text-primary);
+            flex-shrink: 0;
         }
         .recent-meta {
-            font-size: 0.8rem;
             color: var(--text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         @media (max-width: 640px) {
             .recent-leavers {
@@ -745,38 +752,54 @@
             <!-- Recent Leavers -->
             <div class="recent-leavers">
                 <div class="recent-col">
-                    <div class="recent-title">Last 3 Premier League Managers to Leave</div>
+                    <div class="recent-title">Last 5 Premier League Managers to Leave</div>
                     <div class="recent-list">
                         
                         <div class="recent-item">
-                            <div class="recent-name">Pierre Sage</div>
-                            <div class="recent-meta"><span class="badge badge-mgr">Crystal Palace</span> · 150 days · left 12 Nov 2026</div>
+                            <span class="recent-name">Pierre Sage</span>
+                            <span class="recent-meta"><span class="badge badge-mgr">Crystal Palace</span> · 150d · 12 Nov 2026</span>
                         </div>
                         <div class="recent-item">
-                            <div class="recent-name">Michael Carrick</div>
-                            <div class="recent-meta"><span class="badge badge-mgr">Manchester United</span> · 303 days · left 12 Nov 2026</div>
+                            <span class="recent-name">Michael Carrick</span>
+                            <span class="recent-meta"><span class="badge badge-mgr">Manchester United</span> · 303d · 12 Nov 2026</span>
                         </div>
                         <div class="recent-item">
-                            <div class="recent-name">Nuno Espírito Santo</div>
-                            <div class="recent-meta"><span class="badge badge-mgr">West Ham United</span> · 402 days · left 03 Nov 2026</div>
+                            <span class="recent-name">Nuno Espírito Santo</span>
+                            <span class="recent-meta"><span class="badge badge-mgr">West Ham United</span> · 402d · 03 Nov 2026</span>
+                        </div>
+                        <div class="recent-item">
+                            <span class="recent-name">Eddie Howe</span>
+                            <span class="recent-meta"><span class="badge badge-mgr">Newcastle United</span> · 1,725d · 30 Jul 2026</span>
+                        </div>
+                        <div class="recent-item">
+                            <span class="recent-name">Vítor Pereira</span>
+                            <span class="recent-meta"><span class="badge badge-mgr">Nottingham Forest</span> · 137d · 02 Jul 2026</span>
                         </div>
                     </div>
                 </div>
                 <div class="recent-col">
-                    <div class="recent-title">Last 3 Prime Ministers to Leave</div>
+                    <div class="recent-title">Last 5 Prime Ministers to Leave</div>
                     <div class="recent-list">
                         
                         <div class="recent-item">
-                            <div class="recent-name">Keir Starmer</div>
-                            <div class="recent-meta"><span class="badge badge-pm">Labour</span> · 746 days · left 20 Jul 2026</div>
+                            <span class="recent-name">Keir Starmer</span>
+                            <span class="recent-meta"><span class="badge badge-pm">Labour</span> · 746d · 20 Jul 2026</span>
                         </div>
                         <div class="recent-item">
-                            <div class="recent-name">Rishi Sunak</div>
-                            <div class="recent-meta"><span class="badge badge-pm">Conservative</span> · 620 days · left 05 Jul 2024</div>
+                            <span class="recent-name">Rishi Sunak</span>
+                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 620d · 05 Jul 2024</span>
                         </div>
                         <div class="recent-item">
-                            <div class="recent-name">Liz Truss</div>
-                            <div class="recent-meta"><span class="badge badge-pm">Conservative</span> · 50 days · left 25 Oct 2022</div>
+                            <span class="recent-name">Liz Truss</span>
+                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 50d · 25 Oct 2022</span>
+                        </div>
+                        <div class="recent-item">
+                            <span class="recent-name">Boris Johnson</span>
+                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 1,140d · 06 Sep 2022</span>
+                        </div>
+                        <div class="recent-item">
+                            <span class="recent-name">Theresa May</span>
+                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 1,107d · 24 Jul 2019</span>
                         </div>
                     </div>
                 </div>
@@ -793,7 +816,7 @@
                 </p>
                 <div class="live-block">
                     <div class="live-header">
-                        <strong>What does the current PM need to reverse the trend?</strong>
+                        <strong>To reverse the trend</strong>
                         <span class="live-tag"><span class="live-dot"></span> <span id="live-today-date">today</span></span>
                     </div>
                     <div id="incumbent-live-comment">Calculating live tenure targets…</div>
@@ -1125,20 +1148,18 @@
             document.getElementById("live-today-date").textContent = now.toLocaleDateString(undefined, options);
 
             const indivStatusHtml = daysToSurpassIndiv > 0
-                ? `must remain in office for at least <strong>${daysToSurpassIndiv.toLocaleString()} more days</strong> (until <strong>${dateIndivSurpass.toLocaleDateString(undefined, options)}</strong>, reaching ~${Math.round(mgrAvg).toLocaleString()} total days / ~${(mgrAvg / 365.25).toFixed(1)} years).`
-                : `<strong style="color: var(--accent-live);">has already surpassed</strong> the all-time manager average of ${Math.round(mgrAvg).toLocaleString()} days!`;
+                ? `needs <strong>${daysToSurpassIndiv.toLocaleString()} more days</strong> (until <strong>${dateIndivSurpass.toLocaleDateString(undefined, options)}</strong>).`
+                : `<strong style="color: var(--accent-live);">already past</strong> the all-time manager average.`;
 
             const cohortStatusHtml = daysToSurpassCohort > 0
-                ? `requires an additional <strong>${daysToSurpassCohort.toLocaleString()} days</strong> in office (a tenure lasting until <strong>${dateCohortSurpass.toLocaleDateString(undefined, options)}</strong>, totaling ~${targetTotalForCohort.toLocaleString()} days / ~${(targetTotalForCohort / 365.25).toFixed(1)} years).`
-                : `<strong style="color: var(--accent-live);">has successfully elevated</strong> the 2020s PM cohort average above the all-time Premier League manager mark!`;
+                ? `needs <strong>${daysToSurpassCohort.toLocaleString()} more days</strong> (until <strong>${dateCohortSurpass.toLocaleDateString(undefined, options)}</strong>).`
+                : `<strong style="color: var(--accent-live);">already above</strong> the manager average.`;
 
             document.getElementById("incumbent-live-comment").innerHTML = `
-                With incumbent Prime Minister <strong>${liveCalc.incumbent_name}</strong> having served
-                <strong style="color: var(--accent-pm);">${servedDays.toLocaleString()} days</strong> in office as of today:
-                <br>• <strong>To surpass an average Premier League manager's stint (${Math.round(mgrAvg).toLocaleString()} days / ~1.8 years):</strong>
-                ${liveCalc.incumbent_name} ${indivStatusHtml}
-                <br>• <strong>To pull the entire 2020s PM cohort average above the all-time manager average (${Math.round(mgrAvg).toLocaleString()} days):</strong>
-                To offset the short tenures of recent predecessors (such as Liz Truss at 50 days), ${liveCalc.incumbent_name} ${cohortStatusHtml}
+                <strong>${liveCalc.incumbent_name}</strong> has served
+                <strong style="color: var(--accent-pm);">${servedDays.toLocaleString()} days</strong>.
+                <br>• Beat avg manager tenure (~${Math.round(mgrAvg).toLocaleString()}d): ${indivStatusHtml}
+                <br>• Lift 2020s PM average above managers: ${cohortStatusHtml}
             `;
         }
 
