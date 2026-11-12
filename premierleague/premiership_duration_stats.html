@@ -397,6 +397,52 @@
             color: var(--accent-mgr);
         }
 
+        /* ── Recent Leavers ── */
+        .recent-leavers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+        .recent-col {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.1rem;
+        }
+        .recent-title {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-faint);
+            margin-bottom: 0.7rem;
+        }
+        .recent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .recent-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .recent-name {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: var(--text-primary);
+        }
+        .recent-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        @media (max-width: 640px) {
+            .recent-leavers {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ── Callout ── */
         .callout {
             margin-top: 1.5rem;
@@ -662,6 +708,46 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Recent Leavers -->
+            <div class="recent-leavers">
+                <div class="recent-col">
+                    <div class="recent-title">Last 3 Premier League Managers to Leave</div>
+                    <div class="recent-list">
+                        
+                        <div class="recent-item">
+                            <div class="recent-name">Michael Carrick</div>
+                            <div class="recent-meta"><span class="badge badge-mgr">Manchester United</span> · 303 days · left 12 Nov 2026</div>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-name">Nuno Espírito Santo</div>
+                            <div class="recent-meta"><span class="badge badge-mgr">West Ham United</span> · 402 days · left 03 Nov 2026</div>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-name">Eddie Howe</div>
+                            <div class="recent-meta"><span class="badge badge-mgr">Newcastle United</span> · 1,725 days · left 30 Jul 2026</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recent-col">
+                    <div class="recent-title">Last 3 Prime Ministers to Leave</div>
+                    <div class="recent-list">
+                        
+                        <div class="recent-item">
+                            <div class="recent-name">Rishi Sunak</div>
+                            <div class="recent-meta"><span class="badge badge-pm">Conservative</span> · 620 days · left 05 Jul 2024</div>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-name">Liz Truss</div>
+                            <div class="recent-meta"><span class="badge badge-pm">Conservative</span> · 50 days · left 25 Oct 2022</div>
+                        </div>
+                        <div class="recent-item">
+                            <div class="recent-name">Boris Johnson</div>
+                            <div class="recent-meta"><span class="badge badge-pm">Conservative</span> · 1,140 days · left 06 Sep 2022</div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="callout">
