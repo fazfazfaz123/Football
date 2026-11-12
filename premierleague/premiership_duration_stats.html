@@ -622,8 +622,25 @@
             .chart-hint {
                 display: flex;
             }
+            .chart-scroll {
+                margin: 0;
+                padding: 0 0 0.25rem;
+            }
             .chart-container {
-                height: 360px;
+                min-width: 0;
+                width: 100%;
+                height: 340px;
+            }
+            .year-toggles {
+                gap: 0.4rem;
+            }
+            .year-toggle, .play-toggle {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
+            .chart-legend {
+                gap: 0.4rem 0.9rem;
+                font-size: 0.7rem;
             }
         }
 
@@ -1277,7 +1294,10 @@
             for (let y = 0; y <= maxY; y += yStep) ySteps.push(y);
             if (ySteps[ySteps.length - 1] !== maxY) ySteps.push(maxY);
 
-            const padding = { top: 28, right: 32, bottom: 42, left: 58 };
+            const isNarrow = width < 560;
+            const padding = isNarrow
+                ? { top: 18, right: 12, bottom: 32, left: 42 }
+                : { top: 28, right: 32, bottom: 42, left: 58 };
             const minX = currentStartYear;
             const maxX = 2028;
             const minY = 0;
@@ -1297,7 +1317,9 @@
 
             ctx.strokeStyle = "rgba(148, 163, 184, 0.1)";
             ctx.fillStyle = "#64748b";
-            ctx.font = "500 11px Inter, -apple-system, sans-serif";
+            ctx.font = isNarrow
+                ? "500 9px Inter, -apple-system, sans-serif"
+                : "500 11px Inter, -apple-system, sans-serif";
             ctx.textAlign = "right";
             ctx.lineWidth = 1;
 
@@ -1307,7 +1329,7 @@
                 ctx.moveTo(padding.left, y);
                 ctx.lineTo(width - padding.right, y);
                 ctx.stroke();
-                ctx.fillText(yVal.toLocaleString() + " d", padding.left - 8, y + 4);
+                ctx.fillText(yVal.toLocaleString(), padding.left - 6, y + 3);
             });
 
             ctx.textAlign = "center";
@@ -1318,7 +1340,7 @@
                 ctx.moveTo(x, height - padding.bottom);
                 ctx.lineTo(x, height - padding.bottom + 5);
                 ctx.stroke();
-                ctx.fillText(yr.toString(), x, height - padding.bottom + 18);
+                ctx.fillText(yr.toString(), x, height - padding.bottom + (isNarrow ? 14 : 18));
             }
 
             // Manager points
