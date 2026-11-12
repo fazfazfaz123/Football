@@ -451,32 +451,42 @@
         .recent-list {
             display: flex;
             flex-direction: column;
-            gap: 0.65rem;
+            gap: 0.4rem;
         }
         .recent-item {
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 4.2rem 6.5rem;
             align-items: baseline;
-            gap: 0.4rem;
-            flex-wrap: nowrap;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            gap: 0.5rem;
             font-size: 0.82rem;
             line-height: 1.4;
+            text-align: left;
         }
         .recent-name {
             font-weight: 600;
             color: var(--text-primary);
-            flex-shrink: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        .recent-meta {
+        .recent-club, .recent-days, .recent-date {
             color: var(--text-muted);
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+        }
+        .recent-days {
+            font-variant-numeric: tabular-nums;
         }
         @media (max-width: 640px) {
             .recent-leavers {
                 grid-template-columns: 1fr;
+            }
+            .recent-item {
+                grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr) 3.6rem 5.5rem;
+                font-size: 0.75rem;
+                gap: 0.35rem;
             }
         }
 
@@ -757,23 +767,33 @@
                         
                         <div class="recent-item">
                             <span class="recent-name">Pierre Sage</span>
-                            <span class="recent-meta"><span class="badge badge-mgr">Crystal Palace</span> · 150d · 12 Nov 2026</span>
+                            <span class="recent-club"><span class="badge badge-mgr">Palace</span></span>
+                            <span class="recent-days">150d</span>
+                            <span class="recent-date">12 Nov 2026</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Michael Carrick</span>
-                            <span class="recent-meta"><span class="badge badge-mgr">Manchester United</span> · 303d · 12 Nov 2026</span>
+                            <span class="recent-club"><span class="badge badge-mgr">Man Utd</span></span>
+                            <span class="recent-days">303d</span>
+                            <span class="recent-date">12 Nov 2026</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Nuno Espírito Santo</span>
-                            <span class="recent-meta"><span class="badge badge-mgr">West Ham United</span> · 402d · 03 Nov 2026</span>
+                            <span class="recent-club"><span class="badge badge-mgr">West Ham</span></span>
+                            <span class="recent-days">402d</span>
+                            <span class="recent-date">03 Nov 2026</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Eddie Howe</span>
-                            <span class="recent-meta"><span class="badge badge-mgr">Newcastle United</span> · 1,725d · 30 Jul 2026</span>
+                            <span class="recent-club"><span class="badge badge-mgr">Newcastle</span></span>
+                            <span class="recent-days">1,725d</span>
+                            <span class="recent-date">30 Jul 2026</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Vítor Pereira</span>
-                            <span class="recent-meta"><span class="badge badge-mgr">Nottingham Forest</span> · 137d · 02 Jul 2026</span>
+                            <span class="recent-club"><span class="badge badge-mgr">Forest</span></span>
+                            <span class="recent-days">137d</span>
+                            <span class="recent-date">02 Jul 2026</span>
                         </div>
                     </div>
                 </div>
@@ -783,23 +803,33 @@
                         
                         <div class="recent-item">
                             <span class="recent-name">Keir Starmer</span>
-                            <span class="recent-meta"><span class="badge badge-pm">Labour</span> · 746d · 20 Jul 2026</span>
+                            <span class="recent-club"><span class="badge badge-pm">Labour</span></span>
+                            <span class="recent-days">746d</span>
+                            <span class="recent-date">20 Jul 2026</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Rishi Sunak</span>
-                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 620d · 05 Jul 2024</span>
+                            <span class="recent-club"><span class="badge badge-pm">Conservative</span></span>
+                            <span class="recent-days">620d</span>
+                            <span class="recent-date">05 Jul 2024</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Liz Truss</span>
-                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 50d · 25 Oct 2022</span>
+                            <span class="recent-club"><span class="badge badge-pm">Conservative</span></span>
+                            <span class="recent-days">50d</span>
+                            <span class="recent-date">25 Oct 2022</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Boris Johnson</span>
-                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 1,140d · 06 Sep 2022</span>
+                            <span class="recent-club"><span class="badge badge-pm">Conservative</span></span>
+                            <span class="recent-days">1,140d</span>
+                            <span class="recent-date">06 Sep 2022</span>
                         </div>
                         <div class="recent-item">
                             <span class="recent-name">Theresa May</span>
-                            <span class="recent-meta"><span class="badge badge-pm">Conservative</span> · 1,107d · 24 Jul 2019</span>
+                            <span class="recent-club"><span class="badge badge-pm">Conservative</span></span>
+                            <span class="recent-days">1,107d</span>
+                            <span class="recent-date">24 Jul 2019</span>
                         </div>
                     </div>
                 </div>
