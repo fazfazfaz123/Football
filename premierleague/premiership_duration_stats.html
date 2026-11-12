@@ -350,12 +350,41 @@
             background: rgba(15, 23, 42, 0.96);
             border: 1px solid var(--border-strong);
             border-radius: 8px;
-            padding: 0.55rem 0.8rem;
+            padding: 0.5rem 0.75rem;
             font-size: 0.8rem;
             pointer-events: none;
             box-shadow: var(--shadow-lg);
             z-index: 20;
             backdrop-filter: blur(8px);
+            max-width: 280px;
+        }
+        .tip-row {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+        }
+        .tip-portrait {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--surface-2);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .tip-fallback {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+            background: var(--surface-2);
+            border: 1px solid rgba(255,255,255,0.15);
         }
 
         /* ── Tables ── */
@@ -1427,6 +1456,32 @@
             canvas.chartInfo = { getX, getY, minX, maxX, minY, maxY, padding, width, height, filteredPm, filteredMgr };
         }
 
+        const portraitCache = {};
+        function lookupName(fullName) {
+            return fullName.replace(/\s*\([^)]*\)\s*$/, "").trim();
+        }
+        function initials(name) {
+            const parts = lookupName(name).split(/\s+/).filter(Boolean);
+            return (parts[0]?.[0] || "") + (parts[1]?.[0] || "");
+        }
+        function fetchPortrait(name) {
+            const key = lookupName(name);
+            if (portraitCache[key]) return Promise.resolve(portraitCache[key]);
+            portraitCache[key] = "loading";
+            const url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(key);
+            return fetch(url)
+                .then(r => r.ok ? r.json() : null)
+                .then(data => {
+                    const src = data && (data.thumbnail?.source || data.originalimage?.source);
+                    portraitCache[key] = src || null;
+                    return portraitCache[key];
+                })
+                .catch(() => {
+                    portraitCache[key] = null;
+                    return null;
+                });
+        }
+
         function handlePointer(clientX, clientY) {
             if (!canvas.chartInfo) return;
             const rect = canvas.getBoundingClientRect();
@@ -1455,11 +1510,34 @@
                 if (top < 10) top = hovered.py + 15;
                 tooltip.style.left = left + "px";
                 tooltip.style.top = top + "px";
+                const key = lookupName(hovered.name);
+                const cached = portraitCache[key];
+                const portraitHtml = (cached && cached !== "loading")
+                    ? `<img class="tip-portrait" src="${cached}" alt="">`
+                    : `<div class="tip-fallback" style="background:${hovered.color};">${initials(hovered.name)}</div>`;
                 tooltip.innerHTML = `
-                    <div style="font-weight: 600; color: ${hovered.color};">${hovered.name}</div>
-                    <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 1px;">${hovered.endLabel || hovered.x.toFixed(1)}</div>
-                    <div style="margin-top: 3px; font-weight: 500;">${hovered.y.toLocaleString()} days (~${(hovered.y/365.25).toFixed(1)} yrs)</div>
+                    <div class="tip-row">
+                        ${portraitHtml}
+                        <div>
+                            <div style="font-weight: 600; color: ${hovered.color};">${hovered.name}</div>
+                            <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 1px;">${hovered.endLabel || hovered.x.toFixed(1)}</div>
+                            <div style="margin-top: 3px; font-weight: 500;">${hovered.y.toLocaleString()} days (~${(hovered.y/365.25).toFixed(1)} yrs)</div>
+                        </div>
+                    </div>
                 `;
+                if (!cached) {
+                    fetchPortrait(hovered.name).then(src => {
+                        if (!src) return;
+                        const img = tooltip.querySelector(".tip-fallback");
+                        if (img) {
+                            const el = document.createElement("img");
+                            el.className = "tip-portrait";
+                            el.src = src;
+                            el.alt = "";
+                            img.replaceWith(el);
+                        }
+                    });
+                }
             } else {
                 tooltip.style.display = "none";
             }
