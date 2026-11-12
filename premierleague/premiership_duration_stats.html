@@ -1482,7 +1482,52 @@
                 });
         }
 
+        function showTooltipFor(point) {
+            if (!canvas.chartInfo || !point) {
+                tooltip.style.display = "none";
+                return;
+            }
+            const px = canvas.chartInfo.getX(point.x);
+            const py = canvas.chartInfo.getY(point.y);
+            tooltip.style.display = "block";
+            let left = px + 12;
+            if (left + 200 > canvas.chartInfo.width) left = px - 210;
+            let top = py - 36;
+            if (top < 8) top = py + 16;
+            tooltip.style.left = left + "px";
+            tooltip.style.top = top + "px";
+            const key = lookupName(point.name);
+            const cached = portraitCache[key];
+            const portraitHtml = (cached && cached !== "loading")
+                ? `<img class="tip-portrait" src="${cached}" alt="">`
+                : `<div class="tip-fallback" style="background:${point.color};">${initials(point.name)}</div>`;
+            tooltip.innerHTML = `
+                <div class="tip-row">
+                    ${portraitHtml}
+                    <div>
+                        <div style="font-weight: 600; color: ${point.color};">${point.name}</div>
+                        <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 1px;">${point.endLabel || point.x.toFixed(1)}</div>
+                        <div style="margin-top: 3px; font-weight: 500;">${point.y.toLocaleString()} days (~${(point.y/365.25).toFixed(1)} yrs)</div>
+                    </div>
+                </div>
+            `;
+            if (!cached) {
+                fetchPortrait(point.name).then(src => {
+                    if (!src) return;
+                    const img = tooltip.querySelector(".tip-fallback");
+                    if (img) {
+                        const el = document.createElement("img");
+                        el.className = "tip-portrait";
+                        el.src = src;
+                        el.alt = "";
+                        img.replaceWith(el);
+                    }
+                });
+            }
+        }
+
         function handlePointer(clientX, clientY) {
+            if (animating) return;
             if (!canvas.chartInfo) return;
             const rect = canvas.getBoundingClientRect();
             const mouseX = clientX - rect.left;
@@ -1503,41 +1548,7 @@
                 }
             });
             if (hovered) {
-                tooltip.style.display = "block";
-                let left = hovered.px + 12;
-                if (left + 160 > canvas.chartInfo.width) left = hovered.px - 165;
-                let top = hovered.py - 30;
-                if (top < 10) top = hovered.py + 15;
-                tooltip.style.left = left + "px";
-                tooltip.style.top = top + "px";
-                const key = lookupName(hovered.name);
-                const cached = portraitCache[key];
-                const portraitHtml = (cached && cached !== "loading")
-                    ? `<img class="tip-portrait" src="${cached}" alt="">`
-                    : `<div class="tip-fallback" style="background:${hovered.color};">${initials(hovered.name)}</div>`;
-                tooltip.innerHTML = `
-                    <div class="tip-row">
-                        ${portraitHtml}
-                        <div>
-                            <div style="font-weight: 600; color: ${hovered.color};">${hovered.name}</div>
-                            <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 1px;">${hovered.endLabel || hovered.x.toFixed(1)}</div>
-                            <div style="margin-top: 3px; font-weight: 500;">${hovered.y.toLocaleString()} days (~${(hovered.y/365.25).toFixed(1)} yrs)</div>
-                        </div>
-                    </div>
-                `;
-                if (!cached) {
-                    fetchPortrait(hovered.name).then(src => {
-                        if (!src) return;
-                        const img = tooltip.querySelector(".tip-fallback");
-                        if (img) {
-                            const el = document.createElement("img");
-                            el.className = "tip-portrait";
-                            el.src = src;
-                            el.alt = "";
-                            img.replaceWith(el);
-                        }
-                    });
-                }
+                showTooltipFor(hovered);
             } else {
                 tooltip.style.display = "none";
             }
@@ -1575,6 +1586,7 @@
                 playBtn.classList.remove("playing");
             }
             if (animYearEl) animYearEl.textContent = "";
+            tooltip.style.display = "none";
         }
 
         function startAnimation() {
@@ -1588,8 +1600,10 @@
             playBtn.classList.add("playing");
             const start = currentStartYear;
             const end = 2028;
-            const duration = Math.max(4000, (end - start) * 280);
+            const duration = Math.max(6000, (end - start) * 400);
             const t0 = performance.now();
+            let prevCutoff = start;
+            let lastShownKey = null;
 
             function step(now) {
                 if (!animating) return;
@@ -1598,6 +1612,22 @@
                 animCutoff = start + (end - start) * progress;
                 if (animYearEl) animYearEl.textContent = Math.floor(animCutoff).toString();
                 drawChart();
+
+                const crossed = [
+                    ...pmPoints.filter(p => p.x > prevCutoff && p.x <= animCutoff).map(p => ({ ...p, color: "#38bdf8", kind: "pm" })),
+                    ...mgrPoints.filter(p => p.x > prevCutoff && p.x <= animCutoff).map(p => ({ ...p, color: "#c084fc", kind: "mgr" }))
+                ];
+                if (crossed.length) {
+                    crossed.sort((a, b) => (b.kind === "pm") - (a.kind === "pm") || b.x - a.x);
+                    const hit = crossed[0];
+                    const key = hit.name + "|" + hit.x;
+                    if (key !== lastShownKey) {
+                        lastShownKey = key;
+                        showTooltipFor(hit);
+                    }
+                }
+                prevCutoff = animCutoff;
+
                 if (progress < 1) {
                     animFrame = requestAnimationFrame(step);
                 } else {
@@ -1606,6 +1636,7 @@
                     playBtn.textContent = "▶ Play";
                     playBtn.classList.remove("playing");
                     if (animYearEl) animYearEl.textContent = "";
+                    tooltip.style.display = "none";
                     drawChart();
                 }
             }
