@@ -1489,13 +1489,6 @@
             }
             const px = canvas.chartInfo.getX(point.x);
             const py = canvas.chartInfo.getY(point.y);
-            tooltip.style.display = "block";
-            let left = px + 12;
-            if (left + 200 > canvas.chartInfo.width) left = px - 210;
-            let top = py - 36;
-            if (top < 8) top = py + 16;
-            tooltip.style.left = left + "px";
-            tooltip.style.top = top + "px";
             const key = lookupName(point.name);
             const cached = portraitCache[key];
             const portraitHtml = (cached && cached !== "loading")
@@ -1511,6 +1504,16 @@
                     </div>
                 </div>
             `;
+            tooltip.style.display = "block";
+            // Place so ~2/3 of the tooltip sits above the point
+            const tipH = tooltip.offsetHeight || 72;
+            let left = px + 12;
+            if (left + 200 > canvas.chartInfo.width) left = px - 210;
+            let top = py - tipH * (2 / 3);
+            if (top < 8) top = 8;
+            if (top + tipH > canvas.chartInfo.height - 8) top = canvas.chartInfo.height - tipH - 8;
+            tooltip.style.left = left + "px";
+            tooltip.style.top = top + "px";
             if (!cached) {
                 fetchPortrait(point.name).then(src => {
                     if (!src) return;
