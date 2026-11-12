@@ -277,13 +277,25 @@
             color: var(--accent-pm);
             border-color: rgba(56, 189, 248, 0.4);
         }
-        .anim-year {
+        .time-scrub {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin: 0.65rem 0 0.4rem;
+        }
+        .time-scrub input[type="range"] {
+            flex: 1;
+            height: 4px;
+            accent-color: var(--accent-pm);
+            cursor: pointer;
+        }
+        .time-scrub-label {
             font-size: 0.78rem;
             font-weight: 600;
             color: var(--accent-pm);
-            margin-left: 0.5rem;
-            align-self: center;
-            min-width: 3.5rem;
+            min-width: 3.2rem;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
         }
 
         .chart-hint {
@@ -718,6 +730,10 @@
                 <button class="year-toggle" data-year="2025">From 2025</button>
                 <button class="play-toggle" id="playToggle">▶ Play</button>
                 <span class="anim-year" id="animYear"></span>
+            </div>
+            <div class="time-scrub">
+                <input type="range" id="timeScrub" min="1990" max="2028" value="2028" step="0.1">
+                <span class="time-scrub-label" id="timeScrubLabel">2028</span>
             </div>
             <div class="chart-scroll" id="scrollContainer">
                 <div class="chart-container">
@@ -1475,8 +1491,8 @@
                 convergenceLabel.textContent = animating ? "Convergence…" : "Convergence (insufficient data)";
             }
 
-            // Vertical "now" marker while animating
-            if (animating && cutoff < maxX - 0.2) {
+            // Vertical "now" marker while animating or scrubbing
+            if (animCutoff != null && cutoff < maxX - 0.2) {
                 const nx = getX(cutoff);
                 ctx.save();
                 ctx.strokeStyle = "rgba(251, 191, 36, 0.55)";
@@ -1606,6 +1622,12 @@
             btn.addEventListener("click", () => {
                 stopAnimation();
                 currentStartYear = parseInt(btn.dataset.year, 10);
+                if (timeScrub) {
+                    timeScrub.min = currentStartYear;
+                    timeScrub.value = 2028;
+                }
+                if (timeScrubLabel) timeScrubLabel.textContent = "2028";
+                animCutoff = null;
                 document.querySelectorAll("#yearToggles .year-toggle").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
                 drawChart();
@@ -1614,10 +1636,32 @@
 
         const playBtn = document.getElementById("playToggle");
         const animYearEl = document.getElementById("animYear");
+        const timeScrub = document.getElementById("timeScrub");
+        const timeScrubLabel = document.getElementById("timeScrubLabel");
+
+        function setScrub(year, syncSlider) {
+            const end = 2028;
+            const clamped = Math.max(currentStartYear, Math.min(end, year));
+            if (syncSlider && timeScrub) timeScrub.value = clamped;
+            if (timeScrubLabel) timeScrubLabel.textContent = Math.round(clamped).toString();
+            animCutoff = clamped >= end - 0.05 ? null : clamped;
+            drawChart();
+            if (animCutoff != null) {
+                const crossed = [
+                    ...pmPoints.filter(p => p.x <= animCutoff).map(p => ({ ...p, color: "#38bdf8", kind: "pm" })),
+                    ...mgrPoints.filter(p => p.x <= animCutoff).map(p => ({ ...p, color: "#c084fc", kind: "mgr" }))
+                ];
+                if (crossed.length) {
+                    crossed.sort((a, b) => b.x - a.x || (b.kind === "pm") - (a.kind === "pm"));
+                    showTooltipFor(crossed[0]);
+                }
+            } else {
+                tooltip.style.display = "none";
+            }
+        }
 
         function stopAnimation() {
             animating = false;
-            animCutoff = null;
             if (animFrame) cancelAnimationFrame(animFrame);
             animFrame = null;
             if (playBtn) {
@@ -1625,7 +1669,6 @@
                 playBtn.classList.remove("playing");
             }
             if (animYearEl) animYearEl.textContent = "";
-            tooltip.style.display = "none";
         }
 
         function startAnimation() {
@@ -1650,6 +1693,8 @@
                 const progress = Math.min(1, elapsed / duration);
                 animCutoff = start + (end - start) * progress;
                 if (animYearEl) animYearEl.textContent = Math.floor(animCutoff).toString();
+                if (timeScrub) timeScrub.value = animCutoff;
+                if (timeScrubLabel) timeScrubLabel.textContent = Math.floor(animCutoff).toString();
                 drawChart();
 
                 const crossed = [
@@ -1675,6 +1720,8 @@
                     playBtn.textContent = "▶ Play";
                     playBtn.classList.remove("playing");
                     if (animYearEl) animYearEl.textContent = "";
+                    if (timeScrub) timeScrub.value = end;
+                    if (timeScrubLabel) timeScrubLabel.textContent = end.toString();
                     tooltip.style.display = "none";
                     drawChart();
                 }
@@ -1683,6 +1730,13 @@
         }
 
         if (playBtn) playBtn.addEventListener("click", startAnimation);
+
+        if (timeScrub) {
+            timeScrub.addEventListener("input", () => {
+                if (animating) stopAnimation();
+                setScrub(parseFloat(timeScrub.value), false);
+            });
+        }
 
         window.addEventListener("resize", drawChart);
         drawChart();
