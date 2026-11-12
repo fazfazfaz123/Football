@@ -665,10 +665,10 @@
                     <thead>
                         <tr>
                             <th>Decade</th>
-                            <th>PMs</th>
-                            <th>Avg PM Tenure</th>
                             <th>Managers</th>
                             <th>Avg Manager Tenure</th>
+                            <th>PMs</th>
+                            <th>Avg PM Tenure</th>
                             <th>PM : Manager</th>
                         </tr>
                     </thead>
@@ -676,34 +676,34 @@
                         
                         <tr>
                             <td><strong>1990–1999</strong></td>
-                            <td>2</td>
-                            <td><strong style="color: var(--accent-pm);">3,026.5 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~8.3 yrs)</span></td>
                             <td>104</td>
                             <td><strong style="color: var(--accent-mgr);">929.7 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~2.5 yrs)</span></td>
+                            <td>2</td>
+                            <td><strong style="color: var(--accent-pm);">3,026.5 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~8.3 yrs)</span></td>
                             <td><strong>3.26×</strong></td>
                         </tr>
                         <tr>
                             <td><strong>2000–2009</strong></td>
-                            <td>1</td>
-                            <td><strong style="color: var(--accent-pm);">1,049 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~2.9 yrs)</span></td>
                             <td>131</td>
                             <td><strong style="color: var(--accent-mgr);">639.4 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~1.8 yrs)</span></td>
+                            <td>1</td>
+                            <td><strong style="color: var(--accent-pm);">1,049 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~2.9 yrs)</span></td>
                             <td><strong>1.64×</strong></td>
                         </tr>
                         <tr>
                             <td><strong>2010–2019</strong></td>
-                            <td>3</td>
-                            <td><strong style="color: var(--accent-pm);">1,500.3 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~4.1 yrs)</span></td>
                             <td>168</td>
                             <td><strong style="color: var(--accent-mgr);">570.9 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~1.6 yrs)</span></td>
+                            <td>3</td>
+                            <td><strong style="color: var(--accent-pm);">1,500.3 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~4.1 yrs)</span></td>
                             <td><strong>2.63×</strong></td>
                         </tr>
                         <tr>
                             <td><strong>2020–Present</strong></td>
-                            <td>4</td>
-                            <td><strong style="color: var(--accent-pm);">382.8 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~1.0 yrs)</span></td>
                             <td>109</td>
                             <td><strong style="color: var(--accent-mgr);">342.7 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~0.9 yrs)</span></td>
+                            <td>4</td>
+                            <td><strong style="color: var(--accent-pm);">382.8 days</strong> <span style="color: var(--text-faint); font-size: 0.8em;">(~1.0 yrs)</span></td>
                             <td><strong>1.12×</strong></td>
                         </tr>
                     </tbody>
@@ -756,12 +756,8 @@
                     Key Takeaway
                 </h3>
                 <p>
-                    <strong>Prime Minister tenures have shortened far faster than Premier League managerial stints.</strong>
-                    Manager tenures contracted by <strong>63.1%</strong> since the 1990s (~930 → ~338 days), while PM tenures fell by <strong>87.4%</strong> (~3,027 → ~376 days for 2020s starts).
-                </p>
-                <p>
-                    <strong>Projected convergence:</strong> Linear regression puts the intersection in <strong>late 2023 / early 2024 (~2024.0)</strong>.
-                    The rapid turnover of the 2020s brought prime ministerial job security into parity with Premier League managerial shelf-life.
+                    <strong>PM tenures fell 87.4%</strong> since the 1990s (~3,027 → ~376 days), vs <strong>63.1%</strong> for managers (~930 → ~338 days).
+                    Linear regression projects convergence around <strong>~2024.0</strong>.
                 </p>
                 <div class="live-block">
                     <div class="live-header">
@@ -1337,7 +1333,7 @@
                 tooltip.style.top = top + "px";
                 tooltip.innerHTML = `
                     <div style="font-weight: 600; color: ${hovered.color};">${hovered.name}</div>
-                    <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 1px;">${hovered.type} · Left ${hovered.endLabel || hovered.x.toFixed(1)}</div>
+                    <div style="color: #94a3b8; font-size: 0.72rem; margin-top: 1px;">${hovered.endLabel || hovered.x.toFixed(1)}</div>
                     <div style="margin-top: 3px; font-weight: 500;">${hovered.y.toLocaleString()} days (~${(hovered.y/365.25).toFixed(1)} yrs)</div>
                 `;
             } else {
