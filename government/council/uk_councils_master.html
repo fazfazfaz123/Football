@@ -119,7 +119,7 @@
             { match: /alliance party|\balliance\b/i, colour: "#F6CB2F" },
             { match: /social democratic and labour party|\bsdlp\b/i, colour: "#2AA82C" },
             { match: /ulster unionist party|\buup\b/i, colour: "#4F5D73" },
-            { match: /traditional unionist voice|\btuv\b/i, colour: "#0D5EAF"},
+            { match: /traditional unionist voice|\btuv\b/i, colour: "#0D5EAF" },
             { match: /\baspire\b/i, colour: "#7B2D8E" },
             { match: /independent|oldham group|cpa|people'?s alliance|community campaign|local alliance/i, colour: "#9B59B6" },
             { match: /vacant/i, colour: "#B0B0B0" }
@@ -134,28 +134,18 @@
             return MIXED_COLOUR;
         }
 
+        function normaliseParty(party) {
+            if (!party) return "";
+            // Treat Labour and Labour Co-operative (and variants) as the same party for colouring
+            if (/labour/i.test(party)) return "Labour";
+            return String(party).trim();
+        }
+
         function fillColour(councillors) {
             const list = (councillors || []).map(normaliseCouncillor);
-            if (!list.length) return MIXED_COLOUR;
-            
-            // Map all variations of Labour and Labour & Co-operative to a standard identifier
-            const normalizedParties = list.map(c => {
-                const p = (c.party || "").trim().toLowerCase();
-                if (/labour/.test(p)) {
-                    return "labour";
-                }
-                return p;
-            });
-
-            const uniqueParties = new Set(normalizedParties.filter(Boolean));
-            
-            // If every councillor in the ward belongs to Labour (including Labour and Co-operative)
-            if (uniqueParties.size === 1 && uniqueParties.has("labour")) {
-                return "#E4003B";
-            }
-
-            if (uniqueParties.size === 1) {
-                return partyColour([...uniqueParties][0]);
+            const parties = new Set(list.map(c => normaliseParty(c.party)).filter(Boolean));
+            if (parties.size === 1) {
+                return partyColour([...parties][0]);
             }
             return MIXED_COLOUR;
         }
