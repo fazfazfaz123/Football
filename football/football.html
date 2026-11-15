@@ -1262,7 +1262,7 @@ function renderLeagueTable() {
       <td>${r.played}</td><td>${r.won}</td><td>${r.drawn}</td><td>${r.lost}</td>
       <td>${r.gf}</td><td>${r.ga}</td><td>${r.gd > 0 ? "+" : ""}${r.gd}</td>
       <td><strong>${r.points}</strong></td>
-      <td>${(r.form || []).map(f => `<span class="form-${f.toLowerCase()}">${f}</span>`).join(" ")}</td>
+      <td>${(r.form || []).map((f, i) => `<span class="form-${f.toLowerCase()}" title="${(r.form_detail || [])[i] || ''}">${f}</span>`).join(" ")}</td>
     </tr>
   `).join("");
 }
