@@ -378,7 +378,14 @@ footer {
 
 
 /* New sections */
-.form-w, .form-d, .form-l { display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:3px; font-size:0.65rem; font-weight:700; margin:0 1px; }
+.form-w, .form-d, .form-l { display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:3px; font-size:0.65rem; font-weight:700; margin:0 1px; position:relative; cursor:help; }
+.form-w:hover::after, .form-d:hover::after, .form-l:hover::after {
+  content: attr(data-tip);
+  position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+  background: #1a1a2e; color: #fff; padding: 4px 8px; border-radius: 4px;
+  font-size: 0.7rem; white-space: nowrap; z-index: 100; margin-bottom: 4px;
+  border: 1px solid #333;
+}
 .form-w { background:#22c55e; color:#000; }
 .form-d { background:#64748b; color:#000; }
 .form-l { background:#ef4444; color:#000; }
@@ -1262,7 +1269,7 @@ function renderLeagueTable() {
       <td>${r.played}</td><td>${r.won}</td><td>${r.drawn}</td><td>${r.lost}</td>
       <td>${r.gf}</td><td>${r.ga}</td><td>${r.gd > 0 ? "+" : ""}${r.gd}</td>
       <td><strong>${r.points}</strong></td>
-      <td>${(r.form || []).map((f, i) => `<span class="form-${f.toLowerCase()}" title="${(r.form_detail || [])[i] || ''}">${f}</span>`).join(" ")}</td>
+      <td>${(r.form || []).map((f, i) => `<span class="form-${f.toLowerCase()}" data-tip="${(r.form_detail || [])[i] || ''}">${f}</span>`).join(" ")}</td>
     </tr>
   `).join("");
 }
