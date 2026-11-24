@@ -405,12 +405,12 @@ footer {
 .live-match { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; }
 .live-match:last-child { margin-bottom: 0; }
 .live-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 0.72rem; }
-.live-score { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.95rem; }
+.live-score { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.72rem; }
 .live-preds { display: flex; gap: 10px; flex-wrap: wrap; font-size: 0.75rem; }
 @media (max-width: 720px) {
   .live-match { padding: 6px 8px; }
   .live-header { font-size: 0.68rem; }
-  .live-score { font-size: 0.82rem; }
+  .live-score { font-size: 0.68rem; }
   .live-preds { font-size: 0.7rem; gap: 8px; }
 }
 .live-pred { display: flex; align-items: center; gap: 6px; }
@@ -466,11 +466,6 @@ footer {
   </div>
 
 
-  <div class="panel live-panel" id="livePanel" style="display:none">
-    <h2><span class="live-dot"></span> Live now</h2>
-    <div id="liveMatches"></div>
-  </div>
-
   <div class="modal-overlay" id="playerModal" onclick="closePlayerModal(event)">
     <div class="modal" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closePlayerModal()">×</button>
@@ -524,6 +519,11 @@ footer {
   <div class="panel">
     <h2>💬 WhatsApp Share</h2>
     <div class="whatsapp-grid" id="whatsappContainer"></div>
+  </div>
+
+  <div class="panel live-panel" id="livePanel" style="display:none">
+    <h2><span class="live-dot"></span> Live now</h2>
+    <div id="liveMatches"></div>
   </div>
 
   <div class="panel">
