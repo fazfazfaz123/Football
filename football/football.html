@@ -405,6 +405,9 @@ footer {
 .live-match { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-bottom: 6px; }
 .live-match:last-child { margin-bottom: 0; }
 .live-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 0.72rem; }
+.live-header .fixture-cell { width: 260px; }
+.live-header .team-home img { margin-left: 4px; }
+.live-header .team-away img { margin-right: 4px; }
 .live-score { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.72rem; }
 .live-preds { display: grid; grid-template-columns: 67px 67px 67px; gap: 2px 3px; font-size: 0.75rem; justify-content: start; }
 @media (max-width: 720px) {
@@ -746,7 +749,7 @@ function renderLiveMatches() {
     }).join('');
     return `<div class="live-match">
       <div class="live-header">
-        <div class="fixture-cell" style="width:auto;flex:1">
+        <div class="fixture-cell">
           <div class="team-home"><span class="team-name">${shortTeam(m.home)}</span>${m.home_crest ? `<img src="${m.home_crest}" alt="">` : ''}</div>
           <div class="fixture-vs">${score}</div>
           <div class="team-away">${m.away_crest ? `<img src="${m.away_crest}" alt="">` : ''}<span class="team-name">${shortTeam(m.away)}</span></div>
