@@ -1371,7 +1371,11 @@ function pill(ok, hasPred) {
 function shortTeam(t) {
   if (!t) return "";
   if (DISPLAY_NAMES[t]) return DISPLAY_NAMES[t];
-  return t.replace(/ (FC|AFC|CF|SC)$/, "");
+  // Try common suffixes so "Club Brugge" matches "Club Brugge KV"
+  for (const suf of [" FC", " AFC", " CF", " SC", " KV", " SK"]) {
+    if (DISPLAY_NAMES[t + suf]) return DISPLAY_NAMES[t + suf];
+  }
+  return t.replace(/ (FC|AFC|CF|SC|KV|SK)$/, "");
 }
 function renderTable(rows) {
   document.getElementById('matchBody').innerHTML = rows.map(m => {
