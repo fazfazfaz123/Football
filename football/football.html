@@ -745,7 +745,7 @@ function renderLiveMatches() {
       return `<span class="live-pred" style="color:${p.color}"><strong>${p.name}</strong> ${p.pred || '–'}${eyes}</span>`;
     }).join('');
     return `<div class="live-match">
-      <div class="live-header"><span class="live-score">${m.home} ${score} ${m.away}</span><span>${m.comp}</span></div>
+      <div class="live-header"><span class="live-score">${shortTeam(m.home)} ${score} ${shortTeam(m.away)}</span><span>${m.comp}</span></div>
       <div class="live-preds">${preds}</div>
     </div>`;
   }).join('');
