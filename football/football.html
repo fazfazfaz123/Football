@@ -411,6 +411,14 @@ footer {
 .live-header .fixture-vs { width: 36px; text-align: center; }
 .live-header .team-home img { margin-left: 4px; }
 .live-header .team-away img { margin-right: 4px; }
+@media (max-width: 720px) {
+  .live-header { font-size: 0.65rem; gap: 4px; }
+  .live-header .team-home { width: 70px; }
+  .live-header .team-away { width: 75px; }
+  .live-header .fixture-vs { width: 30px; }
+  .live-header span:last-child { display: none; }
+  .live-preds { font-size: 0.68rem; }
+}
 .live-score { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 0.72rem; }
 .live-preds { display: grid; grid-template-columns: 67px 67px 67px; gap: 2px 3px; font-size: 0.75rem; justify-content: start; }
 @media (max-width: 720px) {
