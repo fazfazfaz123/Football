@@ -107,23 +107,23 @@
         const PART_FILES = ["data/combined_wards_part_1.js", "data/combined_wards_part_2.js", "data/combined_wards_part_3.js", "data/combined_wards_part_4.js", "data/combined_wards_part_5.js", "data/combined_wards_part_6.js", "data/combined_wards_part_7.js", "data/combined_wards_part_8.js"];
 
         const PARTY_COLOURS = [
-            { match: /labour/i, colour: "#E4003B" },
-            { match: /conservative/i, colour: "#0087DC" },
-            { match: /liberal democrat/i, colour: "#FAA61A" },
-            { match: /\\breform\\b/i, colour: "#12B6CF" },
-            { match: /green/i, colour: "#6AB023" },
-            { match: /scottish national party|\\bsnp\\b/i, colour: "#FDF357" },
-            { match: /plaid cymru/i, colour: "#005B54" },
-            { match: /sinn\s*f[eé]in|sinn fein/i, colour: "#02665F" },
-            { match: /democratic unionist party|\\bdup\\b/i, colour: "#D46A4C" },
-            { match: /alliance party|\\balliance\\b/i, colour: "#F6CB2F" },
-            { match: /social democratic and labour party|\\bsdlp\\b/i, colour: "#2AA82C" },
-            { match: /ulster unionist party|\\buup\\b/i, colour: "#24315C" },
-            { match: /traditional unionist voice|\\btuv\\b/i, colour: "#0D5EAF" },
-            { match: /\\baspire\\b/i, colour: "#7B2D8E" },
-            { match: /independent|oldham group|cpa|people'?s alliance|community campaign|local alliance/i, colour: "#9B59B6" },
-            { match: /vacant/i, colour: "#B0B0B0" }
-        ];
+    { match: /labour/i, colour: "#E4003B", label: "Labour" },
+    { match: /conservative/i, colour: "#0087DC", label: "Conservative" },
+    { match: /liberal democrat/i, colour: "#FAA61A", label: "Liberal Democrat" },
+    { match: /\breform\b/i, colour: "#12B6CF", label: "Reform" },
+    { match: /green/i, colour: "#6AB023", label: "Green" },
+    { match: /scottish national party|\bsnp\b/i, colour: "#FDF357", label: "SNP" },
+    { match: /plaid cymru/i, colour: "#005B54", label: "Plaid Cymru" },
+    { match: /sinn\s*f[eé]in|sinn fein/i, colour: "#02665F", label: "Sinn Féin" },
+    { match: /democratic unionist party|\bdup\b/i, colour: "#D46A4C", label: "DUP" },
+    { match: /alliance party|\balliance\b/i, colour: "#F6CB2F", label: "Alliance" },
+    { match: /social democratic and labour party|\bsdlp\b/i, colour: "#2AA82C", label: "SDLP" },
+    { match: /ulster unionist party|\buup\b/i, colour: "#24315C", label: "UUP" },
+    { match: /traditional unionist voice|\btuv\b/i, colour: "#0D5EAF", label: "TUV" },
+    { match: /\baspire\b/i, colour: "#7B2D8E", label: "Aspire" },
+    { match: /independent|oldham group|cpa|people'?s alliance|community campaign|local alliance/i, colour: "#9B59B6", label: "Independent" },
+    { match: /vacant/i, colour: "#B0B0B0", label: "Vacant" },
+];
         const MIXED_COLOUR = "#808080";
 
         function partyColour(party) {
@@ -258,4 +258,4 @@
     </script>
 </body>
 </html>
-<!-- deployed 2026-11-27T16:53:58Z -->
+<!-- deployed 2026-11-27T16:57:56Z -->
