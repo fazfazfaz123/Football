@@ -103,7 +103,6 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <script>
         const PART_FILES = ["data/combined_wards_part_1.js", "data/combined_wards_part_2.js", "data/combined_wards_part_3.js", "data/combined_wards_part_4.js", "data/combined_wards_part_5.js", "data/combined_wards_part_6.js", "data/combined_wards_part_7.js", "data/combined_wards_part_8.js"];
 
@@ -209,6 +208,7 @@
                         combinedFeatures.push(...partData.features);
                     }
                 }
+                await loadScript("data/council_outlines.js");
             } catch (e) {
                 console.error("Failed loading data chunks:", e);
                 loadingText.textContent = "Error loading map chunks. Check console.";
@@ -240,30 +240,17 @@
                     }
                 }).addTo(map);
 
-                loadingText.textContent = "Drawing council boundaries...";
-                const councilGroups = {};
-                for (const f of combinedFeatures) {
-                    const name = f.properties?.councilName || "Unknown";
-                    (councilGroups[name] ||= []).push(f);
+                if (window.COUNCIL_OUTLINES && window.COUNCIL_OUTLINES.features) {
+                    L.geoJSON(window.COUNCIL_OUTLINES, {
+                        style: { color: "#1a1a1a", weight: 4, opacity: 0.7, fillOpacity: 0 },
+                        interactive: false
+                    }).addTo(map);
+                    const outlineLayer = L.geoJSON(window.COUNCIL_OUTLINES, {
+                        style: { color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0 },
+                        interactive: false
+                    }).addTo(map);
+                    outlineLayer.bringToFront();
                 }
-                const outlines = [];
-                for (const [name, wards] of Object.entries(councilGroups)) {
-                    try {
-                        let merged = wards[0];
-                        for (let i = 1; i < wards.length; i++) {
-                            const u = turf.union(merged, wards[i]);
-                            if (u) merged = u;
-                        }
-                        merged.properties = { councilName: name };
-                        outlines.push(merged);
-                    } catch (e) {
-                        console.warn("Could not outline", name, e);
-                    }
-                }
-                L.geoJSON({ type: "FeatureCollection", features: outlines }, {
-                    style: { color: "#1a1a1a", weight: 1.5, opacity: 0.9, fillOpacity: 0 },
-                    interactive: false
-                }).addTo(map);
 
                 map.fitBounds(geoLayer.getBounds(), { padding: [20, 20] });
                 map.setZoom(map.getZoom() + 1);
@@ -275,4 +262,4 @@
     </script>
 </body>
 </html>
-<!-- deployed 2026-11-27T16:41:50Z -->
+<!-- deployed 2026-11-27T16:45:12Z -->
