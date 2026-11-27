@@ -241,12 +241,8 @@
                 }).addTo(map);
 
                 if (window.COUNCIL_OUTLINES && window.COUNCIL_OUTLINES.features) {
-                    L.geoJSON(window.COUNCIL_OUTLINES, {
-                        style: { color: "#1a1a1a", weight: 4, opacity: 0.7, fillOpacity: 0 },
-                        interactive: false
-                    }).addTo(map);
                     const outlineLayer = L.geoJSON(window.COUNCIL_OUTLINES, {
-                        style: { color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0 },
+                        style: { color: "#ffffff", weight: 2.5, opacity: 1, fillOpacity: 0 },
                         interactive: false
                     }).addTo(map);
                     outlineLayer.bringToFront();
@@ -262,4 +258,4 @@
     </script>
 </body>
 </html>
-<!-- deployed 2026-11-27T16:45:12Z -->
+<!-- deployed 2026-11-27T16:48:13Z -->
