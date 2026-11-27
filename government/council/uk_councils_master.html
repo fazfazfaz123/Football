@@ -156,12 +156,41 @@
             overflow: hidden;
         }
         #council-panel .bar span { display: block; height: 100%; }
+
+        #view-toggle {
+            position: absolute;
+            top: 16px;
+            left: 56px;
+            z-index: 1500;
+            display: flex;
+            background: var(--surface);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        #view-toggle button {
+            border: none;
+            background: transparent;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+        }
+        #view-toggle button.active {
+            background: var(--header-bg);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
     <div id="viewer-container">
         <div id="combined-map-container">
             <div id="combined-map"></div>
+            <div id="view-toggle">
+                <button type="button" id="view-wards" class="active">Wards</button>
+                <button type="button" id="view-councils">Councils</button>
+            </div>
             <aside id="council-panel">
                 <header>
                     <h2 id="council-panel-title">Council</h2>
@@ -224,6 +253,15 @@
             // Treat Labour and Labour Co-operative (and variants) as the same party for colouring
             if (/labour/i.test(party)) return "Labour";
             return String(party).trim();
+        }
+
+        function councilColour(name) {
+            const official = COMPOSITION[nameKey(name)];
+            if (!official) return MIXED_COLOUR;
+            const lead = (official.control || "").split("/")[0].trim();
+            if (lead && !/no overall/i.test(lead)) return partyColour(lead);
+            const top = (official.seats || [])[0];
+            return top ? partyColour(top.party) : MIXED_COLOUR;
         }
 
         function fillColour(councillors) {
@@ -380,13 +418,49 @@
                     }
                 }).addTo(map);
 
+                let councilLayer = null;
                 if (window.COUNCIL_OUTLINES && window.COUNCIL_OUTLINES.features) {
                     const outlineLayer = L.geoJSON(window.COUNCIL_OUTLINES, {
                         style: { color: "#ffffff", weight: 2.5, opacity: 1, fillOpacity: 0 },
                         interactive: false
                     }).addTo(map);
                     outlineLayer.bringToFront();
+
+                    councilLayer = L.geoJSON(window.COUNCIL_OUTLINES, {
+                        style: (feature) => ({
+                            fillColor: councilColour(feature.properties?.councilName),
+                            weight: 1.5,
+                            color: "#ffffff",
+                            fillOpacity: 0.7
+                        }),
+                        onEachFeature: (feature, layer) => {
+                            const name = feature.properties?.councilName || "Council";
+                            layer.bindTooltip(
+                                `<div class="tooltip-inner"><h4>${escapeHtml(name)}</h4></div>`,
+                                { direction: "auto", sticky: true, className: "info-tooltip" }
+                            );
+                            layer.on({
+                                mouseover: (e) => e.target.setStyle({ weight: 2.5, color: "#002D62", fillOpacity: 0.9 }),
+                                mouseout: (e) => councilLayer.resetStyle(e.target),
+                                click: () => showCouncil(name)
+                            });
+                        }
+                    });
                 }
+
+                function setView(mode) {
+                    document.getElementById("view-wards").classList.toggle("active", mode === "wards");
+                    document.getElementById("view-councils").classList.toggle("active", mode === "councils");
+                    if (mode === "councils" && councilLayer) {
+                        map.removeLayer(geoLayer);
+                        councilLayer.addTo(map);
+                    } else {
+                        if (councilLayer) map.removeLayer(councilLayer);
+                        geoLayer.addTo(map);
+                    }
+                }
+                document.getElementById("view-wards").addEventListener("click", () => setView("wards"));
+                document.getElementById("view-councils").addEventListener("click", () => setView("councils"));
 
                 map.fitBounds(geoLayer.getBounds(), { padding: [20, 20] });
                 map.setZoom(map.getZoom() + 1);
@@ -398,4 +472,4 @@
     </script>
 </body>
 </html>
-<!-- deployed 2026-11-27T18:50:40Z -->
+<!-- deployed 2026-11-27T19:05:36Z -->
