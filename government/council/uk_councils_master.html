@@ -489,6 +489,7 @@
                     map._singleCouncil = one;
                 }
                 function setView(mode, keepZoom) {
+                    document.getElementById("council-panel").classList.remove("open");
                     if (map._singleCouncil) {
                         map.removeLayer(map._singleCouncil);
                         map._singleCouncil = null;
@@ -519,4 +520,4 @@
     </script>
 </body>
 </html>
-<!-- deployed 2026-11-28T12:19:41Z -->
+<!-- deployed 2026-11-28T12:22:24Z -->
