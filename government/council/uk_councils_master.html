@@ -338,52 +338,6 @@
             return { rows, total, wards, control };
         }
 
-        function partyKey(party) {
-            return String(party || "").toLowerCase()
-                .replace(/\(.*?\)/g, " ")
-                .replace(/\bconservative and unionists?\b/g, "conservative")
-                .replace(/\b(scottish|welsh) conservatives?\b/g, "conservative")
-                .replace(/.*\breform\b.*/, "reform")
-                .replace(/\bscottish green\b/g, "green")
-                .replace(/\bscottish national\b/g, "snp")
-                .replace(/\bplaid cymru\b.*/, "plaid cymru")
-                .replace(/\b(the|party|uk|group)\b/g, " ")
-                .replace(/s\b/g, "")
-                .replace(/[^a-z0-9]+/g, " ")
-                .trim();
-        }
-
-        function splitOther(official, summary) {
-            const seats = (official.seats || []).map(s => ({ party: s.party, count: s.count }));
-            const otherIdx = seats.findIndex(s => /^other$/i.test(s.party));
-            if (otherIdx < 0) return seats;
-            const other = seats[otherIdx];
-            const known = new Set(seats.filter(s => s !== other).map(s => partyKey(s.party)));
-            const extra = [];
-            for (const [party, n] of (summary.rows || [])) {
-                const key = partyKey(party);
-                if (!key || key === "other" || known.has(key)) continue;
-                extra.push({ party, count: n });
-                known.add(key);
-            }
-            if (!extra.length) return seats;
-            const budget = other.count;
-            const used = extra.reduce((n, s) => n + s.count, 0);
-            const scale = used > budget ? budget / used : 1;
-            const named = extra.map(s => ({ party: s.party, count: Math.max(1, Math.round(s.count * scale)) }));
-            let taken = named.reduce((n, s) => n + s.count, 0);
-            while (taken > budget && named.length) {
-                named.sort((a, b) => b.count - a.count);
-                named[0].count -= 1;
-                taken -= 1;
-                if (named[0].count <= 0) named.shift();
-            }
-            const out = seats.filter(s => s !== other).concat(named);
-            if (budget - taken > 0) out.push({ party: "Other", count: budget - taken });
-            out.sort((a, b) => b.count - a.count);
-            return out;
-        }
-
         function showCouncil(councilName) {
             const panel = document.getElementById("council-panel");
             const official = COMPOSITION[nameKey(councilName)];
@@ -392,9 +346,8 @@
             if (usable) {
                 document.getElementById("council-panel-control").textContent = official.control || "No overall control";
                 document.getElementById("council-panel-meta").textContent = official.total + " councillors";
-                const seats = splitOther(official, councilSummary(councilName));
                 const list = document.getElementById("council-panel-parties");
-                list.innerHTML = seats.map(s => {
+                list.innerHTML = (official.seats || []).map(s => {
                     const colour = partyColour(s.party);
                     const pct = official.total ? Math.round(100 * s.count / official.total) : 0;
                     return `<li><span class="party-dot" style="background:${colour}"></span><span>${escapeHtml(s.party)}</span><span class="bar"><span style="width:${pct}%;background:${colour}"></span></span><span class="count">${s.count}</span></li>`;
@@ -567,4 +520,4 @@
     </script>
 </body>
 </html>
-<!-- deployed 2026-11-28T14:51:51Z -->
+<!-- deployed 2026-11-28T15:08:51Z -->
