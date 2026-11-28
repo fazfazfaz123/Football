@@ -978,9 +978,9 @@ let raceChart = new Chart(raceCtx, {
   data: {
     labels: (CHARTS_BY_SEASON["2026/27"] || CHART).dates,
     datasets: [
-      { label: 'Faz', data: (CHARTS_BY_SEASON["2026/27"] || CHART).faz, borderColor: initialColors.faz, backgroundColor: 'rgba(34,211,238,0.08)', fill: true, tension: 0.25, borderWidth: 2.5 },
-      { label: 'Bill', data: (CHARTS_BY_SEASON["2026/27"] || CHART).bill, borderColor: initialColors.bill, backgroundColor: 'rgba(167,139,250,0.06)', fill: true, tension: 0.25, borderWidth: 2.5 },
-      { label: 'Lenn', data: (CHARTS_BY_SEASON["2026/27"] || CHART).lenn, borderColor: initialColors.lenn, backgroundColor: 'rgba(52,211,153,0.06)', fill: true, tension: 0.25, borderWidth: 2.5 },
+      { label: 'Faz', data: (CHARTS_BY_SEASON["2026/27"] || CHART).faz, borderColor: initialColors.faz, backgroundColor: 'rgba(34,211,238,0.08)', fill: true, tension: 0.25, borderWidth: 2.5, pointRadius: 0 },
+      { label: 'Bill', data: (CHARTS_BY_SEASON["2026/27"] || CHART).bill, borderColor: initialColors.bill, backgroundColor: 'rgba(167,139,250,0.06)', fill: true, tension: 0.25, borderWidth: 2.5, pointRadius: 0 },
+      { label: 'Lenn', data: (CHARTS_BY_SEASON["2026/27"] || CHART).lenn, borderColor: initialColors.lenn, backgroundColor: 'rgba(52,211,153,0.06)', fill: true, tension: 0.25, borderWidth: 2.5, pointRadius: 0 },
     ]
   },
   options: {
@@ -1056,9 +1056,9 @@ let rollingChart = new Chart(document.getElementById('rollingChart'), {
   data: {
     labels: CHART.rolling_dates,
     datasets: [
-      { label: 'Faz', data: CHART.rolling_faz, borderColor: initialColors.faz, borderWidth: 2.5, tension: 0.4, cubicInterpolationMode: 'monotone', pointRadius: 2 },
-      { label: 'Bill', data: CHART.rolling_bill, borderColor: initialColors.bill, borderWidth: 2.5, tension: 0.4, cubicInterpolationMode: 'monotone', pointRadius: 2 },
-      { label: 'Lenn', data: CHART.rolling_lenn, borderColor: initialColors.lenn, borderWidth: 2.5, tension: 0.4, cubicInterpolationMode: 'monotone', pointRadius: 2 }
+      { label: 'Faz', data: CHART.rolling_faz, borderColor: initialColors.faz, borderWidth: 2.5, tension: 0.4, cubicInterpolationMode: 'monotone', pointRadius: 0 },
+      { label: 'Bill', data: CHART.rolling_bill, borderColor: initialColors.bill, borderWidth: 2.5, tension: 0.4, cubicInterpolationMode: 'monotone', pointRadius: 0 },
+      { label: 'Lenn', data: CHART.rolling_lenn, borderColor: initialColors.lenn, borderWidth: 2.5, tension: 0.4, cubicInterpolationMode: 'monotone', pointRadius: 0 }
     ]
   },
   options: {
