@@ -341,8 +341,8 @@
         function partyKey(party) {
             return String(party || "").toLowerCase()
                 .replace(/\(.*?\)/g, " ")
-                .replace(/\bconservative and unionist\b/g, "conservative")
-                .replace(/\bwelsh conservatives?\b/g, "conservative")
+                .replace(/\bconservative and unionists?\b/g, "conservative")
+                .replace(/\b(scottish|welsh) conservatives?\b/g, "conservative")
                 .replace(/\bscottish green\b/g, "green")
                 .replace(/\bscottish national\b/g, "snp")
                 .replace(/\bplaid cymru\b.*/, "plaid cymru")
@@ -566,4 +566,4 @@
     </script>
 </body>
 </html>
-<!-- deployed 2026-11-28T14:46:29Z -->
+<!-- deployed 2026-11-28T14:48:36Z -->
